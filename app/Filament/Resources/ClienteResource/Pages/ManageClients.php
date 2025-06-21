@@ -1,0 +1,18 @@
+<?php
+
+namespace App\Filament\Resources\ClienteResource\Pages;
+
+use App\Filament\Resources\ClientResource;
+use Filament\Resources\Pages\ManageRecords;
+
+class ManageClients extends ManageRecords
+{
+    protected static string $resource = ClientResource::class;
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            //
+        ];
+    }
+}
