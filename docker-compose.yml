@@ -1,0 +1,23 @@
+services:
+    backend:
+        tty: true
+        image: docker.io/bitnami/laravel:latest
+        ports:
+            - 8000:8000
+        environment:
+            - LARAVEL_DATABASE_TYPE=${DB_CONNECTION}
+            - LARAVEL_DATABASE_HOST=${DB_HOST}
+            - LARAVEL_DATABASE_NAME=${DB_DATABASE}
+            - LARAVEL_DATABASE_USER=${DB_USERNAME}
+            - LARAVEL_DATABASE_PASSWORD=${DB_PASSWORD}
+        volumes:
+            - .:/app
+            - ./docker/php.ini:/opt/bitnami/php/etc/php.ini
+        container_name: it-caribe-backend
+        networks:
+            - it-caribe-network
+        restart: unless-stopped
+
+networks:
+    it-caribe-network:
+        external: true

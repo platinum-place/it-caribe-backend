@@ -26,23 +26,23 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        if (config('app.debug')) {
-            return;
-        }
-
-        $exceptions->render(function (QueryException $e) {
-            return response()->json(['Error' => __('Unprocessable Entity')], 422);
-        });
-
-        $exceptions->render(function (RequestException $e) {
-            return response()->json(['Error' => __('Bad Gateway')], 502);
-        });
-
-        $exceptions->render(function (ConnectionException $e) {
-            return response()->json(['Error' => __('Service Unavailable')], 503);
-        });
-
-        $exceptions->render(function (NotFoundHttpException $e) {
-            return response()->json(['Error' => $e->getMessage()], 404);
-        });
+//        if (config('app.debug')) {
+//            return;
+//        }
+//
+//        $exceptions->render(function (QueryException $e) {
+//            return response()->json(['Error' => __('Unprocessable Entity')], 422);
+//        });
+//
+//        $exceptions->render(function (RequestException $e) {
+//            return response()->json(['Error' => __('Bad Gateway')], 502);
+//        });
+//
+//        $exceptions->render(function (ConnectionException $e) {
+//            return response()->json(['Error' => __('Service Unavailable')], 503);
+//        });
+//
+//        $exceptions->render(function (NotFoundHttpException $e) {
+//            return response()->json(['Error' => $e->getMessage()], 404);
+//        });
     })->create();
