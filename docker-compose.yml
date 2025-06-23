@@ -10,6 +10,7 @@ services:
             - LARAVEL_DATABASE_NAME=${DB_DATABASE}
             - LARAVEL_DATABASE_USER=${DB_USERNAME}
             - LARAVEL_DATABASE_PASSWORD=${DB_PASSWORD}
+            - LARAVEL_SKIP_COMPOSER_UPDATE=yes
         volumes:
             - .:/app
             - ./docker/php.ini:/opt/bitnami/php/etc/php.ini
