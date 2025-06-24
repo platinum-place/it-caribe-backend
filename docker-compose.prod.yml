@@ -18,7 +18,6 @@ services:
         networks:
             - it-caribe-network
         restart: unless-stopped
-        user: "${UID}:${GID}"
 
 networks:
     it-caribe-network:
