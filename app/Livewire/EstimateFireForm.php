@@ -6,6 +6,7 @@ use App\Helpers\Cotizacion;
 use App\Helpers\Cotizaciones;
 use App\Helpers\CotizarAuto;
 use App\Helpers\CotizarIncendio;
+use App\Helpers\CotizarVida;
 use App\Models\Vehicle\VehicleMake;
 use App\Models\Vehicle\VehicleModel;
 use App\Services\ZohoCRMService;
@@ -70,10 +71,6 @@ class EstimateFireForm extends Component implements HasForms
                     ->label('Dirección')
                     ->required()
                     ->columnSpanFull(),
-
-                TextInput::make('plan')
-                    ->default('Seguro Incendio Hipotecario')
-                    ->hidden(),
             ])
             ->statePath('data')
             ->columns();
@@ -87,17 +84,16 @@ class EstimateFireForm extends Component implements HasForms
 
         $cotizacion = new Cotizacion;
 
-                    $cotizacion->suma = $data["suma"];
-                    $cotizacion->plan = 'Vida';
-                    $cotizacion->plazo = $data["plazo"];
-                    $cotizacion->fecha_deudor = $data["deudor"];
+        $cotizacion->suma = $data["suma"];
+        $cotizacion->plan = 'Seguro Incendio Hipotecario';
+        $cotizacion->plazo = $data["plazo"];
 
-                    $cotizacion->fecha_codeudor = $data["codeudor"];
-                    $cotizacion->garante = $data["garante"];
-                    $cotizacion->tipo_pago = $data["tipo_pago"];
+        $cotizacion->direccion = $data['direccion'];
+        $cotizacion->prestamo = $data['prestamo'];
+        $cotizacion->construccion = $data['construccion'];
+        $cotizacion->riesgo = $data['riesgo'];
 
-                    $cotizar = new CotizarVida($cotizacion, $libreria);
-
+        $cotizar = new CotizarIncendio($cotizacion, $libreria);
         $cotizar->cotizar_planes();
 
         $this->dispatch('fill-estimate-table', $cotizacion->planes);
