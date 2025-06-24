@@ -100,16 +100,6 @@
 </div>
 
 <div class="col-12" style="height: 20px;">
-</div>
-
-<div class="col-12" style="height: 20px;">
-</div>
-
-<div class="col-12" style="height: 20px;">
-</div>
-
-<div class="col-12" style="height: 20px;">
-</div>
 
 <div class="row">
     <div class="col-4">
@@ -135,7 +125,6 @@
 
 
 @section('css')
-<!-- Tamaño ideal para la plantilla -->
 <style>
     @page {
         size: A3;

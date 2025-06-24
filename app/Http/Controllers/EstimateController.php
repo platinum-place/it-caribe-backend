@@ -21,8 +21,8 @@ class EstimateController extends Controller
 //            ]);
 //
 //            $pdf->setPaper('A4');
-
-            //return $pdf->stream("Cotización No" . $cotizacion->getFieldValue('Quote_Number') . ".pdf");
+//
+//            return $pdf->stream("Cotización No" . $cotizacion->getFieldValue('Quote_Number') . ".pdf");
 
             return view('legacy.cotizaciones.cotizacion', [
                 'cotizacion' => $cotizacion,

@@ -2,7 +2,7 @@
 <div class="card-group border">
     <div class="card border-0">
         <div class="card-body">
-            <img src="{{ asset("img/espacio.png") }}" height="50" width="150">
+            <img src="{{ asset("img/espacio.png") }}" height="10" width="80">
 
             <p style="font-size: 12px;">
                 <b>DAÑOS PROPIOS</b> <br>
@@ -52,12 +52,12 @@
             @endphp
             <div class="card border-0">
                 <div class="card-body">
-                    <img src="{{ public_path('img/aseguradoras/' . $plan->getFieldValue('Vendor_Name')->getLookupLabel() . '.png') }}" height="50" width="150">
+                    <img src="{{ asset('img/aseguradoras/' . $plan->getFieldValue('Vendor_Name')->getLookupLabel() . '.png') }}" height="10" width="80">
 
                     <p style="font-size: 12px;">
                         <br>
                         RD${{ number_format($riesgo_compresivo) }}<br>
-                        {{ $plan->getFieldValue('Riesgos_comprensivos_deducible')  }}<br>
+                        <?php echo $plan->getFieldValue('Riesgos_comprensivos_deducible')  ?><br>
                         {{ $plan->getFieldValue('Rotura_de_cristales_deducible')  }}<br>
                         RD$ {{ number_format($colision) }}<br>
                         RD$ {{ number_format($incendio) }}
