@@ -1,5 +1,5 @@
 services:
-    backend:
+    app:
         tty: true
         image: docker.io/bitnami/laravel:latest
         ports:
@@ -14,12 +14,42 @@ services:
         volumes:
             - .:/app
             - ./docker/php.ini:/opt/bitnami/php/etc/php.ini
-        container_name: it-caribe-backend
+        container_name: ${APP_NAME}-app
         networks:
-            - it-caribe-network
+            - app-network
         restart: unless-stopped
         user: "${UID}:${GID}"
 
+    postgresql:
+        image: docker.io/bitnami/postgresql:17
+        container_name: ${APP_NAME}-pgsql
+        restart: unless-stopped
+        ports:
+            - '5432:5432'
+        environment:
+            - POSTGRESQL_USERNAME=${DB_USERNAME}
+            - POSTGRESQL_PASSWORD=${DB_PASSWORD}
+            - POSTGRESQL_DATABASE=${DB_DATABASE}
+        volumes:
+            - 'postgresql_data:/bitnami/postgresql'
+        networks:
+            - app-network
+
+    nginx:
+        image: docker.io/bitnami/nginx:1.28
+        ports:
+            - '80:8080'
+        container_name: ${APP_NAME}-nginx
+        restart: unless-stopped
+        volumes:
+            - .:/app
+            - ./docker/nginx/laravel.conf:/opt/bitnami/nginx/conf/server_blocks/laravel.conf:ro
+        networks:
+            - app-network
+
+volumes:
+    postgresql_data:
+        driver: local
+
 networks:
-    it-caribe-network:
-        external: true
+    app-network:
