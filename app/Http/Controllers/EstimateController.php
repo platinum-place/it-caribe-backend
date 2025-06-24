@@ -15,19 +15,19 @@ class EstimateController extends Controller
         $cotizacion = $libreria->getRecord('Quotes', $id);
 
         if ($cotizacion->getFieldValue('Quote_Stage') == 'Cotizando') {
-//            $pdf = Pdf::loadView('legacy.cotizaciones.cotizacion', [
-//                'cotizacion' => $cotizacion,
-//                'libreria' => $libreria,
-//            ]);
-//
-//            $pdf->setPaper('A4');
-//
-//            return $pdf->stream("Cotización No" . $cotizacion->getFieldValue('Quote_Number') . ".pdf");
-
-            return view('legacy.cotizaciones.cotizacion', [
+            $pdf = Pdf::loadView('legacy.cotizaciones.cotizacion', [
                 'cotizacion' => $cotizacion,
                 'libreria' => $libreria,
             ]);
+
+            $pdf->setPaper('A4');
+
+            return $pdf->stream("Cotización No" . $cotizacion->getFieldValue('Quote_Number') . ".pdf");
+
+//            return view('legacy.cotizaciones.cotizacion', [
+//                'cotizacion' => $cotizacion,
+//                'libreria' => $libreria,
+//            ]);
         } else {
             // informacion sobre las coberturas, la aseguradora,las coberturas
             $plan = $libreria->getRecord('Products', $cotizacion->getFieldValue('Coberturas')

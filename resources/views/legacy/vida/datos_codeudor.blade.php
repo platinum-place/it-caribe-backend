@@ -1,4 +1,4 @@
-<div style="width: 100%; overflow: hidden; border: 1px solid #ddd;">
+<div style="width: 100%; overflow: hidden; border: 1px solid #ddd; font-size: 12px;">
     <div style="float: left; width: 50%; padding: 10px; box-sizing: border-box;">
         <table style="width: 100%; border-collapse: collapse;">
             <tbody>
