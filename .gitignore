@@ -21,3 +21,5 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+ZCRMClientLibrary.log
+zcrm_oauthtokens.txt
