@@ -56,7 +56,8 @@ class EstimateFireForm extends Component implements HasForms
                 Select::make('riesgo')
                     ->label('Tipo de Riesgo')
                     ->options([
-                        'Vivienda' => 'Vivienda'
+                        'Vivienda' => 'Vivienda',
+                        'Riesgo comercial' => 'Riesgo comercial'
                     ])
                     ->default('Vivienda'),
 

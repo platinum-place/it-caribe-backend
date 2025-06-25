@@ -21,7 +21,9 @@ class CotizarIncendio extends Cotizar
         $tasas = $this->zoho->searchRecordsByCriteria('Tasas', $criterio);
 
         foreach ((array) $tasas as $tasa) {
-            $valortasa = $tasa->getFieldValue('Name') / 100;
+            if($this->cotizacion->riesgo == $tasa->getFieldValue('Riesgo')){
+                $valortasa = $tasa->getFieldValue('Name') / 100;
+            }
         }
 
         return $valortasa;
