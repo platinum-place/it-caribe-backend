@@ -21,8 +21,13 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->trustProxies(at: '*');
 
         $middleware->api([
+            \App\Http\Middleware\HandleLargeUploads::class,
             SecurityHeaders::class,
             EnsureJsonRequest::class,
+        ]);
+
+        $middleware->web([
+            \App\Http\Middleware\HandleLargeUploads::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
