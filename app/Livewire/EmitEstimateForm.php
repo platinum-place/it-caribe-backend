@@ -83,7 +83,11 @@ class EmitEstimateForm extends Component implements HasForms
                 FileUpload::make('documentos')
                     ->label('Adjuntar documentos')
                     ->multiple()
-                    ->required(),
+                    ->required()
+//                    ->maxSize(10240)
+//                    ->acceptedFileTypes(['application/pdf', 'image/*'])
+//                    ->disk('local')
+//                    ->directory('documentos'),
             ])
             ->statePath('data')
             ->live();

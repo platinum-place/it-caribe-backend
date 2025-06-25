@@ -10,8 +10,8 @@ services:
         networks:
             - app-network
         environment:
-            - PHP_UPLOAD_MAX_FILESIZE=100M
-            - PHP_POST_MAX_SIZE=100M
+            - PHP_UPLOAD_MAX_FILESIZE=200MB
+            - PHP_POST_MAX_SIZE=200MB
             - PHP_MAX_EXECUTION_TIME=300
 
     workspace:
