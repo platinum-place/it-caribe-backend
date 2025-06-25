@@ -38,8 +38,8 @@ class AppServiceProvider extends ServiceProvider
 
         Passport::tokensExpireIn(CarbonInterval::days(15));
 
-//        Route::post('/livewire/upload-file', [CustomLivewireController::class, 'handle'])
-//            ->name('livewire.upload-file')
-//            ->middleware('web');
+        Route::post('/livewire/upload-file', [CustomLivewireController::class, 'handle'])
+            ->name('livewire.upload-file')
+            ->middleware('web');
     }
 }
