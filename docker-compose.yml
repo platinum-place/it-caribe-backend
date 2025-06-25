@@ -41,27 +41,15 @@ services:
         networks:
             - app-network
 
-#    nginx:
-#        image: docker.io/bitnami/nginx:1.28
-#        ports:
-#            - '80:8080'
-#        container_name: ${APP_NAME}-nginx
-#        restart: unless-stopped
-#        volumes:
-#            - .:/app
-#            - ./docker/nginx/laravel.conf:/opt/bitnami/nginx/conf/server_blocks/laravel.conf:ro
-#        networks:
-#            - app-network
-
-    apache:
-        image: docker.io/bitnami/apache:2.4
+    nginx:
+        image: docker.io/bitnami/nginx:1.28
         ports:
-            - 80:8080
-            - 443:8443
+            - '80:8080'
+        container_name: ${APP_NAME}-nginx
+        restart: unless-stopped
         volumes:
             - .:/app
-            - ./docker/apache/laravel.conf:/opt/bitnami/apache/conf/vhosts/laravel.conf:ro
-        container_name: ${APP_NAME}-apache
+            - ./docker/nginx/laravel.conf:/opt/bitnami/nginx/conf/server_blocks/laravel.conf:ro
         networks:
             - app-network
 
