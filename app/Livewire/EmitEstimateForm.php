@@ -85,7 +85,6 @@ class EmitEstimateForm extends Component implements HasForms
                     ->multiple()
                     ->required()
                     ->previewable(false)
-                    ->disk('temp')
                     ->visibility('private')
 //                    ->maxSize(10240)
 //                    ->acceptedFileTypes(['application/pdf', 'image/*']),
