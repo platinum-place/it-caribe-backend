@@ -84,6 +84,9 @@ class EmitEstimateForm extends Component implements HasForms
                     ->label('Adjuntar documentos')
                     ->multiple()
                     ->required()
+                    ->previewable(false)
+                    ->disk('temp')
+                    ->visibility('private')
 //                    ->maxSize(10240)
 //                    ->acceptedFileTypes(['application/pdf', 'image/*']),
             ])
