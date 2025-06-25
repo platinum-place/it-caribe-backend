@@ -9,6 +9,10 @@ services:
         container_name: ${APP_NAME}-php-fpm
         networks:
             - app-network
+        environment:
+            - PHP_UPLOAD_MAX_FILESIZE=100M
+            - PHP_POST_MAX_SIZE=100M
+            - PHP_MAX_EXECUTION_TIME=300
 
     workspace:
         tty: true
