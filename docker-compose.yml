@@ -1,9 +1,18 @@
 services:
-    app:
+    php-fpm:
+        image: docker.io/bitnami/php-fpm:8.4
+        ports:
+            - 9000:9000
+        volumes:
+            - .:/app
+            - ./docker/php.ini:/opt/bitnami/php/etc/php.ini
+        container_name: ${APP_NAME}-php-fpm
+        networks:
+            - app-network
+
+    workspace:
         tty: true
         image: docker.io/bitnami/laravel:latest
-        ports:
-            - 8000:8000
         environment:
             - LARAVEL_DATABASE_TYPE=${DB_CONNECTION}
             - LARAVEL_DATABASE_HOST=${DB_HOST}
@@ -14,16 +23,12 @@ services:
         volumes:
             - .:/app
             - ./docker/php.ini:/opt/bitnami/php/etc/php.ini
-        container_name: ${APP_NAME}-app
+        container_name: ${APP_NAME}-workspace
         networks:
             - app-network
-        restart: unless-stopped
-        user: "${UID}:${GID}"
 
     postgresql:
         image: docker.io/bitnami/postgresql:17
-        container_name: ${APP_NAME}-pgsql
-        restart: unless-stopped
         ports:
             - '5432:5432'
         environment:
@@ -32,18 +37,31 @@ services:
             - POSTGRESQL_DATABASE=${DB_DATABASE}
         volumes:
             - 'postgresql_data:/bitnami/postgresql'
+        container_name: ${APP_NAME}-postgresql
         networks:
             - app-network
 
-    nginx:
-        image: docker.io/bitnami/nginx:1.28
+#    nginx:
+#        image: docker.io/bitnami/nginx:1.28
+#        ports:
+#            - '80:8080'
+#        container_name: ${APP_NAME}-nginx
+#        restart: unless-stopped
+#        volumes:
+#            - .:/app
+#            - ./docker/nginx/laravel.conf:/opt/bitnami/nginx/conf/server_blocks/laravel.conf:ro
+#        networks:
+#            - app-network
+
+    apache:
+        image: docker.io/bitnami/apache:2.4
         ports:
-            - '80:8080'
-        container_name: ${APP_NAME}-nginx
-        restart: unless-stopped
+            - 80:8080
+            - 443:8443
         volumes:
             - .:/app
-            - ./docker/nginx/laravel.conf:/opt/bitnami/nginx/conf/server_blocks/laravel.conf:ro
+            - ./docker/apache/laravel.conf:/opt/bitnami/apache/conf/vhosts/laravel.conf:ro
+        container_name: ${APP_NAME}-apache
         networks:
             - app-network
 
