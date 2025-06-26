@@ -85,22 +85,6 @@ class CotizarAuto extends Cotizar
                     }
                 }
             }
-
-
-            if($valortasa == 0){
-                $criterio = "((Plan:equals:$planid) and (A_o:equals:0))";
-                $tasas = $this->zoho->searchRecordsByCriteria('Tasas', $criterio);
-
-                foreach ((array) $tasas as $tasa) {
-                    if (in_array($this->cotizacion->modelotipo, $tasa->getFieldValue('Grupo_de_veh_culo'))) {
-                        if($this->cotizacion->plan == $tasa->getFieldValue('Tipo')){
-                            $valortasa = $tasa->getFieldValue('Name') / 100;
-                        }
-                    }
-                }
-
-
-            }
         }
 
         return $valortasa;
