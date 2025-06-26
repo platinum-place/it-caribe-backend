@@ -83,7 +83,7 @@ class CotizarAuto extends Cotizar
                     if (
                         $this->cotizacion->suma >= $tasa->getFieldValue('Suma_limite')
                         and
-                        $this->cotizacion->suma < $tasa->getFieldValue('Suma_hasta')
+                        $this->cotizacion->suma <= $tasa->getFieldValue('Suma_hasta')
                     ) {
                         $valortasa = $tasa->getFieldValue('Name') / 100;
                     }
