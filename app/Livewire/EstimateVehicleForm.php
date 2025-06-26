@@ -73,8 +73,12 @@ class EstimateVehicleForm extends Component implements HasForms
                 Select::make('plan')
                     ->label('Plan')
                     ->options([
-                        'Mensual full' => 'Mensual Full',
-                        'Anual full' => 'Anual Full',
+                        'Full' => 'Full',
+                        'Ley' => 'Ley',
+                        'Clásico' => 'Clásico',
+                        'Econo' => 'Econo',
+                        'Premier' => 'Premier',
+                        'Eléctrico/Híbrido' => 'Eléctrico/Híbrido',
                     ])
                     ->default('Mensual full')
                     ->required(),
@@ -100,6 +104,15 @@ class EstimateVehicleForm extends Component implements HasForms
                 Checkbox::make('salvamento')
                     ->label('Salvamento')
                     ->inline(false),
+
+                Select::make('estado')
+                    ->label('Estado')
+                    ->options([
+                        'Nuevo' => 'Nuevo',
+                        'Usado' => 'Usado',
+                    ])
+                    ->default('Nuevo')
+                    ->required(),
             ])
             ->statePath('data')
             ->columns();

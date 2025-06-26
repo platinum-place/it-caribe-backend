@@ -59,6 +59,10 @@ class CotizarIncendio extends Cotizar
             // si no hubo un excepcion
             if (empty($comentario)) {
                 $prima = $this->calcular_prima($cobertura->getEntityId()) / 12;
+
+                if(!empty($cobertura->getFieldValue('Valor_asistencia_vial'))){
+                    $prima = $prima + $cobertura->getFieldValue('Valor_asistencia_vial');
+                }
             }
 
             // lista con los resultados de cada calculo

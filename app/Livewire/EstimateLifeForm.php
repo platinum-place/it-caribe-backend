@@ -58,7 +58,7 @@ class EstimateLifeForm extends Component implements HasForms
                     ->inline(false),
 
                 Select::make('tipo_pago')
-                    ->label('Tipo de pago')
+                    ->label('Tipo de crédito')
                     ->options([
                         'Línea de Crédito' => 'Línea de Crédito',
                         'Préstamo Personal' => 'Préstamo Personal',

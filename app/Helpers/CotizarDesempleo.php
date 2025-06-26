@@ -74,6 +74,10 @@ class CotizarDesempleo extends Cotizar
             if (empty($comentario)) {
                 $prima = $this->calcular_prima($cobertura->getEntityId());
 
+                if($prima == 0 and !empty($cobertura->getFieldValue('Prima_m_nima'))){
+                    $prima = $cobertura->getFieldValue('Prima_m_nima');
+                }
+
                 // en caso de haber algun problema
                 if ($prima == 0) {
                     $comentario = 'La edad del deudor no esta dentro del limite permitido.';

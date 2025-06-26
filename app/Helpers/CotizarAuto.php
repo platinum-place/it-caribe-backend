@@ -51,13 +51,60 @@ class CotizarAuto extends Cotizar
                 if (! empty($tasa->getFieldValue('Suma_limite'))) {
                     if ($this->cotizacion->suma >= $tasa->getFieldValue('Suma_limite')) {
                         if (empty($tasa->getFieldValue('Suma_hasta'))) {
-                            $valortasa = $tasa->getFieldValue('Name') / 100;
+                            if (! empty($tasa->getFieldValue('Tipo'))) {
+                                if($this->cotizacion->plan == $tasa->getFieldValue('Tipo')){
+                                    $valortasa = $tasa->getFieldValue('Name') / 100;
+                                }
+                            }
+                            else{
+                                $valortasa = $tasa->getFieldValue('Name') / 100;
+                            }
                         } elseif ($this->cotizacion->suma < $tasa->getFieldValue('Suma_hasta')) {
-                            $valortasa = $tasa->getFieldValue('Name') / 100;
+                            if (! empty($tasa->getFieldValue('Tipo'))) {
+                                if($this->cotizacion->plan == $tasa->getFieldValue('Tipo')){
+                                    $valortasa = $tasa->getFieldValue('Name') / 100;
+                                }
+                            }
+                            else{
+                                $valortasa = $tasa->getFieldValue('Name') / 100;
+                            }
                         }
                     }
                 } else {
+                    if (! empty($tasa->getFieldValue('Tipo'))) {
+                        if($this->cotizacion->plan == $tasa->getFieldValue('Tipo')){
+                            $valortasa = $tasa->getFieldValue('Name') / 100;
+                        }
+                    }
+                    else{
+                        $valortasa = $tasa->getFieldValue('Name') / 100;
+                    }
+                }
+            }
+
+
+        }
+
+        if($valortasa == 0){
+
+            $criterio = "((Plan:equals:$planid) and (A_o:equals:0))";
+            $tasas = $this->zoho->searchRecordsByCriteria('Tasas', $criterio);
+
+            foreach ((array) $tasas as $tasa) {
+                if (in_array($this->cotizacion->modelotipo, $tasa->getFieldValue('Grupo_de_veh_culo'))) {
                     $valortasa = $tasa->getFieldValue('Name') / 100;
+                }
+            }
+
+            if($valortasa == 0){
+
+                $criterio = "((Plan:equals:$planid) and (Suma_hasta:equals:".intval($this->cotizacion->suma).'))';
+                $tasas = $this->zoho->searchRecordsByCriteria('Tasas', $criterio);
+
+                foreach ((array) $tasas as $tasa) {
+                    if (in_array($this->cotizacion->modelotipo, $tasa->getFieldValue('Grupo_de_veh_culo'))) {
+                        $valortasa = $tasa->getFieldValue('Name') / 100;
+                    }
                 }
             }
         }
