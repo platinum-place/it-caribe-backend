@@ -116,4 +116,85 @@ class ZohoCRMService
 
         return ZohoCRM::insertRecords($module, $token, $data);
     }
+
+    public function searchRecords2(string $module, string $criteria, ?int $page = 1, ?int $perPage = 200): ?array
+    {
+        $token = $this->oauth->getAccessToken();
+        $response = ZohoCRM::searchRecords($module, $token, $criteria, $page, $perPage);
+        if (empty($response)) {
+            throw new NotFoundHttpException(__('Records not found in Zoho'));
+        }
+        return $response;
+    }
+
+    public function searchAllRecords(string $module, string $criteria, ?int $perPage = 200): array
+    {
+        $allRecords = [];
+        $currentPage = 1;
+        $hasMoreRecords = true;
+
+        while ($hasMoreRecords) {
+            try {
+                $token = $this->oauth->getAccessToken();
+                $response = ZohoCRM::searchRecords($module, $token, $criteria, $currentPage, $perPage);
+
+                if (empty($response) || !isset($response['data']) || empty($response['data'])) {
+                    $hasMoreRecords = false;
+                    break;
+                }
+
+                $allRecords = array_merge($allRecords, $response['data']);
+
+                if (count($response['data']) < $perPage) {
+                    $hasMoreRecords = false;
+                } else {
+                    $currentPage++;
+                }
+
+            } catch (\Exception $e) {
+                $hasMoreRecords = false;
+            }
+        }
+
+        if (empty($allRecords)) {
+            throw new NotFoundHttpException(__('Records not found in Zoho'));
+        }
+
+        return ['data' => $allRecords];
+    }
+
+    public function searchAllRecordsAlternative(string $module, string $criteria, ?int $perPage = 200): array
+    {
+        $allRecords = [];
+        $currentPage = 1;
+        $hasMoreRecords = true;
+
+        while ($hasMoreRecords) {
+            try {
+                $response = $this->searchRecords($module, $criteria, $currentPage, $perPage);
+
+                if (isset($response['data']) && !empty($response['data'])) {
+                    $allRecords = array_merge($allRecords, $response['data']);
+
+                    // Si recibimos menos registros que el máximo, es la última página
+                    if (count($response['data']) < $perPage) {
+                        $hasMoreRecords = false;
+                    } else {
+                        $currentPage++;
+                    }
+                } else {
+                    $hasMoreRecords = false;
+                }
+
+            } catch (NotFoundHttpException $e) {
+                $hasMoreRecords = false;
+            }
+        }
+
+        if (empty($allRecords)) {
+            throw new NotFoundHttpException(__('Records not found in Zoho'));
+        }
+
+        return ['data' => $allRecords];
+    }
 }

@@ -49,8 +49,13 @@ class EstimateVehicleForm extends Component implements HasForms
                             return [];
                         }
 
-                        return VehicleModel::where('vehicle_make_id', $makeId)
-                            ->pluck('name', 'id');
+                        return VehicleModel::with('type')
+                            ->where('vehicle_make_id', $makeId)
+                            ->get()
+                            ->mapWithKeys(function ($model) {
+                                $label = $model->name . ($model->type ? ' (' . $model->type->name . ')' : '');
+                                return [$model->id => $label];
+                            });
                     })
                     ->searchable()
                     ->required()
@@ -75,9 +80,8 @@ class EstimateVehicleForm extends Component implements HasForms
                     ->options([
                         'Full' => 'Full',
                         'Ley' => 'Ley',
-                        'Clásico' => 'Clásico',
                         'Econo' => 'Econo',
-                        'Premier' => 'Premier',
+                        'Premier' => '0 KM',
                         'Eléctrico/Híbrido' => 'Eléctrico/Híbrido',
                         'Empleado' => 'Empleado',
                     ])
@@ -143,7 +147,8 @@ class EstimateVehicleForm extends Component implements HasForms
 
         $cotizacion->marcaid = $vehicleMake['data'][0]['id'];
         $cotizacion->modeloid = $vehicleModel['data'][0]['id'];
-        $cotizacion->modelotipo = $vehicleModel['data'][0]['Tipo'];
+        $cotizacion->modelotipo = VehicleModel::find($data['modelo'])->type->name;
+
         $cotizacion->salvamento = $data['salvamento'];
 
         $cotizar = new CotizarAuto($cotizacion, $libreria);
