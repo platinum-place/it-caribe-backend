@@ -76,18 +76,24 @@ class CotizarAuto extends Cotizar
                                 and
                                 $this->cotizacion->suma >= $tasa->getFieldValue('Suma_limite')) {
                                 $valortasa = $tasa->getFieldValue('Name') / 100;
+                                break;
                             } else {
                                 $valortasa = $tasa->getFieldValue('Name') / 100;
+                                break;
                             }
                         }
                     } else {
                         $valortasa = $tasa->getFieldValue('Name') / 100;
+                        break;
                     }
                 } elseif
                 (empty($tasa->getFieldValue('Grupo_de_veh_culo'))) {
                     $valortasa = $tasa->getFieldValue('Name') / 100;
+                    break;
                 }
             }
+
+
         }
 
 
@@ -149,7 +155,7 @@ class CotizarAuto extends Cotizar
 
         // calcular prima
         // calculo para cotizacion auto
-        $prima = $this->cotizacion->suma * ($tasa + ($tasa * $recargo));
+        $prima = $this->cotizacion->suma * $tasa;
 
         // si el valor de la prima es muy bajo
         if ($prima > 0 and $prima < $prima_minima) {
