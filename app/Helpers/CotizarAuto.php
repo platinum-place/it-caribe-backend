@@ -70,18 +70,21 @@ class CotizarAuto extends Cotizar
                 }
 
                 if (in_array($this->cotizacion->modelotipo, $tasa->getFieldValue('Grupo_de_veh_culo'))) {
-                    if (!empty($tasa->getFieldValue('Suma_limite'))) {
-                        if ($this->cotizacion->suma >= $tasa->getFieldValue('Suma_limite')) {
-                            if (empty($tasa->getFieldValue('Suma_hasta'))) {
+                    if (!empty($tasa->getFieldValue('Suma_hasta'))) {
+                        if ($this->cotizacion->suma <= $tasa->getFieldValue('Suma_hasta')) {
+                            if (!empty($tasa->getFieldValue('Suma_limite'))
+                                and
+                                $this->cotizacion->suma >= $tasa->getFieldValue('Suma_limite')) {
                                 $valortasa = $tasa->getFieldValue('Name') / 100;
-                            } elseif ($this->cotizacion->suma <= $tasa->getFieldValue('Suma_hasta')) {
+                            } else {
                                 $valortasa = $tasa->getFieldValue('Name') / 100;
                             }
                         }
                     } else {
                         $valortasa = $tasa->getFieldValue('Name') / 100;
                     }
-                } elseif (empty($tasa->getFieldValue('Grupo_de_veh_culo'))) {
+                } elseif
+                (empty($tasa->getFieldValue('Grupo_de_veh_culo'))) {
                     $valortasa = $tasa->getFieldValue('Name') / 100;
                 }
             }
@@ -91,7 +94,8 @@ class CotizarAuto extends Cotizar
         return $valortasa;
     }
 
-    private function calcular_recargo($aseguradoraid)
+    private
+    function calcular_recargo($aseguradoraid)
     {
         $valorrecargo = 0;
 
@@ -132,7 +136,8 @@ class CotizarAuto extends Cotizar
         return $valorrecargo;
     }
 
-    private function calcular_prima($coberturaid, $aseguradoraid, $prima_minima)
+    private
+    function calcular_prima($coberturaid, $aseguradoraid, $prima_minima)
     {
         // calcular tasa
         // en caso de error que el valor termine en 0
@@ -159,7 +164,8 @@ class CotizarAuto extends Cotizar
         return $prima;
     }
 
-    private function verificar_comentarios(
+    private
+    function verificar_comentarios(
         $Restringir_veh_culos_de_uso,
         $Suma_asegurada_min,
         $Suma_asegurada_max,
@@ -190,7 +196,8 @@ class CotizarAuto extends Cotizar
         return '';
     }
 
-    public function cotizar_planes()
+    public
+    function cotizar_planes()
     {
         // planes relacionados al banco
         $criterio = '((Corredor:equals:' . 3222373000092390001 . ') and (Product_Category:equals:Auto))';
