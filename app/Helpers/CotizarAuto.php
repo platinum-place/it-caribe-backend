@@ -41,40 +41,8 @@ class CotizarAuto extends Cotizar
     private function calcular_tasa($planid)
     {
         $valortasa = 0;
-        // encontrar la tasa
-        $criterio = "((Plan:equals:$planid) and (A_o:equals:" . $this->cotizacion->ano . '))';
-        $tasas = $this->zoho->searchRecordsByCriteria('Tasas', $criterio);
 
-        foreach ((array)$tasas as $tasa) {
-            // bucar entre los grupos de vehiculo
-            if (in_array($this->cotizacion->modelotipo, $tasa->getFieldValue('Grupo_de_veh_culo'))) {
-                if (!empty($tasa->getFieldValue('Suma_limite'))) {
-                    if ($this->cotizacion->suma >= $tasa->getFieldValue('Suma_limite')) {
-                        if (empty($tasa->getFieldValue('Suma_hasta'))) {
-                            if ($this->cotizacion->plan == $tasa->getFieldValue('Tipo')) {
-                                $valortasa = $tasa->getFieldValue('Name') / 100;
-                            }
-                        } elseif ($this->cotizacion->suma <= $tasa->getFieldValue('Suma_hasta')) {
-                            if ($this->cotizacion->plan == $tasa->getFieldValue('Tipo')) {
-                                $valortasa = $tasa->getFieldValue('Name') / 100;
-                            }
-                        }
-                    }
-                } else {
-                    if (!empty($tasa->getFieldValue('Tipo'))) {
-                        if ($this->cotizacion->plan == $tasa->getFieldValue('Tipo')) {
-                            $valortasa = $tasa->getFieldValue('Name') / 100;
-                        }
-                    }
-                }
-            } elseif (empty($tasa->getFieldValue('Grupo_de_veh_culo'))) {
-                if ($this->cotizacion->plan == $tasa->getFieldValue('Tipo')) {
-                    $valortasa = $tasa->getFieldValue('Name') / 100;
-                }
-            }
-        }
-
-        if ($valortasa == 0) {
+        if ($planid == 3222373000208204050) {
             $criterio = "Plan:equals:3222373000208204050";
             $tasas = $this->zoho->searchRecordsByCriteria('Tasas', $criterio);
 
@@ -90,6 +58,35 @@ class CotizarAuto extends Cotizar
                 }
             }
         }
+
+        if ($valortasa == 0) {
+            // encontrar la tasa
+            $criterio = "((Plan:equals:$planid) and (A_o:equals:" . $this->cotizacion->ano . '))';
+            $tasas = $this->zoho->searchRecordsByCriteria('Tasas', $criterio);
+
+            foreach ((array)$tasas as $tasa) {
+                if ($this->cotizacion->plan != $tasa->getFieldValue('Tipo')) {
+                    continue;
+                }
+
+                if (in_array($this->cotizacion->modelotipo, $tasa->getFieldValue('Grupo_de_veh_culo'))) {
+                    if (!empty($tasa->getFieldValue('Suma_limite'))) {
+                        if ($this->cotizacion->suma >= $tasa->getFieldValue('Suma_limite')) {
+                            if (empty($tasa->getFieldValue('Suma_hasta'))) {
+                                $valortasa = $tasa->getFieldValue('Name') / 100;
+                            } elseif ($this->cotizacion->suma <= $tasa->getFieldValue('Suma_hasta')) {
+                                $valortasa = $tasa->getFieldValue('Name') / 100;
+                            }
+                        }
+                    } else {
+                        $valortasa = $tasa->getFieldValue('Name') / 100;
+                    }
+                } elseif (empty($tasa->getFieldValue('Grupo_de_veh_culo'))) {
+                    $valortasa = $tasa->getFieldValue('Name') / 100;
+                }
+            }
+        }
+
 
         return $valortasa;
     }
