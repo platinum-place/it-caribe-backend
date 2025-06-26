@@ -51,23 +51,13 @@ class CotizarAuto extends Cotizar
                 if (! empty($tasa->getFieldValue('Suma_limite'))) {
                     if ($this->cotizacion->suma >= $tasa->getFieldValue('Suma_limite')) {
                         if (empty($tasa->getFieldValue('Suma_hasta'))) {
-                            if (! empty($tasa->getFieldValue('Tipo'))) {
                                 if($this->cotizacion->plan == $tasa->getFieldValue('Tipo')){
                                     $valortasa = $tasa->getFieldValue('Name') / 100;
                                 }
-                            }
-                            else{
-                                $valortasa = $tasa->getFieldValue('Name') / 100;
-                            }
                         } elseif ($this->cotizacion->suma < $tasa->getFieldValue('Suma_hasta')) {
-                            if (! empty($tasa->getFieldValue('Tipo'))) {
                                 if($this->cotizacion->plan == $tasa->getFieldValue('Tipo')){
                                     $valortasa = $tasa->getFieldValue('Name') / 100;
                                 }
-                            }
-                            else{
-                                $valortasa = $tasa->getFieldValue('Name') / 100;
-                            }
                         }
                     }
                 } else {
@@ -75,9 +65,6 @@ class CotizarAuto extends Cotizar
                         if($this->cotizacion->plan == $tasa->getFieldValue('Tipo')){
                             $valortasa = $tasa->getFieldValue('Name') / 100;
                         }
-                    }
-                    else{
-                        $valortasa = $tasa->getFieldValue('Name') / 100;
                     }
                 }
             }elseif(empty($tasa->getFieldValue('Grupo_de_veh_culo'))){
@@ -94,7 +81,9 @@ class CotizarAuto extends Cotizar
 
             foreach ((array) $tasas as $tasa) {
                 if (in_array($this->cotizacion->modelotipo, $tasa->getFieldValue('Grupo_de_veh_culo'))) {
-                    $valortasa = $tasa->getFieldValue('Name') / 100;
+                    if($this->cotizacion->plan == $tasa->getFieldValue('Tipo')){
+                        $valortasa = $tasa->getFieldValue('Name') / 100;
+                    }
                 }
             }
 
@@ -105,7 +94,9 @@ class CotizarAuto extends Cotizar
 
                 foreach ((array) $tasas as $tasa) {
                     if (in_array($this->cotizacion->modelotipo, $tasa->getFieldValue('Grupo_de_veh_culo'))) {
-                        $valortasa = $tasa->getFieldValue('Name') / 100;
+                        if($this->cotizacion->plan == $tasa->getFieldValue('Tipo')){
+                            $valortasa = $tasa->getFieldValue('Name') / 100;
+                        }
                     }
                 }
             }
