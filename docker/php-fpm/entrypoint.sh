@@ -17,4 +17,7 @@ fi
 chown www-data:www-data /var/www/html/ZCRMClientLibrary.log 2>/dev/null || true
 chown www-data:www-data /var/www/html/zcrm_oauthtokens.txt 2>/dev/null || true
 
+chmod 777 /var/www/html/ZCRMClientLibrary.log 2>/dev/null || true
+chmod 77 /var/www/html/zcrm_oauthtokens.txt 2>/dev/null || true
+
 exec "$@"

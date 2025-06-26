@@ -80,9 +80,11 @@ class CotizarAuto extends Cotizar
                         $valortasa = $tasa->getFieldValue('Name') / 100;
                     }
                 }
-            }
-
-
+            }elseif(empty($tasa->getFieldValue('Grupo_de_veh_culo'))){
+                if($this->cotizacion->plan == $tasa->getFieldValue('Tipo')){
+                    $valortasa = $tasa->getFieldValue('Name') / 100;
+                }
+}
         }
 
         if($valortasa == 0){

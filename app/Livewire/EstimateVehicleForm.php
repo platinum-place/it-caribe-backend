@@ -79,6 +79,7 @@ class EstimateVehicleForm extends Component implements HasForms
                         'Econo' => 'Econo',
                         'Premier' => 'Premier',
                         'Eléctrico/Híbrido' => 'Eléctrico/Híbrido',
+                        'Empleado' => 'Empleado',
                     ])
                     ->default('Mensual full')
                     ->required(),
