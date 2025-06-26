@@ -42,60 +42,63 @@ class CotizarAuto extends Cotizar
     {
         $valortasa = 0;
 
-        if ($planid == 3222373000208204050) {
-            $criterio = "Plan:equals:3222373000208204050";
-            $tasas = $this->zoho->searchRecordsByCriteria('Tasas', $criterio);
+        $criterio = "Plan:equals:$planid";
+        $tasas = $this->zoho->searchRecordsByCriteria('Tasas', $criterio);
 
-            foreach ((array)$tasas as $tasa) {
-                if (in_array($this->cotizacion->modelotipo, $tasa->getFieldValue('Grupo_de_veh_culo'))) {
-                    if (
-                        $this->cotizacion->suma >= $tasa->getFieldValue('Suma_limite')
-                        and
-                        $this->cotizacion->suma <= $tasa->getFieldValue('Suma_hasta')
-                    ) {
-                        $valortasa = $tasa->getFieldValue('Name') / 100;
-                    }
-                }
-            }
-        }
-
-        if ($valortasa == 0) {
-            // encontrar la tasa
-            $criterio = "((Plan:equals:$planid) and (A_o:equals:" . $this->cotizacion->ano . '))';
-            $tasas = $this->zoho->searchRecordsByCriteria('Tasas', $criterio);
-
-            foreach ((array)$tasas as $tasa) {
-                if ($this->cotizacion->plan != $tasa->getFieldValue('Tipo')) {
-                    continue;
-                }
-
-                if (in_array($this->cotizacion->modelotipo, $tasa->getFieldValue('Grupo_de_veh_culo'))) {
-                    if (!empty($tasa->getFieldValue('Suma_hasta'))) {
-                        if ($this->cotizacion->suma <= $tasa->getFieldValue('Suma_hasta')) {
-                            if (!empty($tasa->getFieldValue('Suma_limite'))
-                                and
-                                $this->cotizacion->suma >= $tasa->getFieldValue('Suma_limite')) {
-                                $valortasa = $tasa->getFieldValue('Name') / 100;
-                                break;
-                            } else {
-                                $valortasa = $tasa->getFieldValue('Name') / 100;
-                                break;
-                            }
-                        }
-                    } else {
-                        $valortasa = $tasa->getFieldValue('Name') / 100;
-                        break;
-                    }
-                } elseif
-                (empty($tasa->getFieldValue('Grupo_de_veh_culo'))) {
-                    $valortasa = $tasa->getFieldValue('Name') / 100;
-                    break;
-                }
+        foreach ((array)$tasas as $tasa) {
+            if (
+                !empty($tasa->getFieldValue('Grupo_de_veh_culo')) and
+                !in_array($this->cotizacion->modelotipo, $tasa->getFieldValue('Grupo_de_veh_culo'))
+            ) {
+                continue;
             }
 
+            if ($this->cotizacion->plan != $tasa->getFieldValue('Tipo')) {
+                continue;
+            }
 
+            if (
+                !empty($tasa->getFieldValue('Suma_hasta')) and
+                !($this->cotizacion->suma <= $tasa->getFieldValue('Suma_hasta'))
+            ) {
+                continue;
+            }
+
+            if (
+                !empty($tasa->getFieldValue('Suma_limite')) and
+                !($this->cotizacion->suma >= $tasa->getFieldValue('Suma_hasta'))
+            ) {
+                continue;
+            }
+
+            if (
+                !empty($tasa->getFieldValue('A_o')) and
+                !($this->cotizacion->ano == $tasa->getFieldValue('A_o'))
+            ) {
+                continue;
+            }
+
+            $valortasa = $tasa->getFieldValue('Name') / 100;
+
+            break;
         }
 
+//        if($planid == 3222373000207247165) {
+//            dd(
+//                $tasa->getEntityId(),
+//                $tasa->getFieldValue('Name'),
+//                $tasa->getFieldValue('Suma_limite'),
+//                $tasa->getFieldValue('Suma_hasta'),
+//                $tasa->getFieldValue('Tipo'),
+//                $tasa->getFieldValue('Grupo_de_veh_culo'),
+//                $this->cotizacion,
+//                $this->cotizacion->suma,
+//                $valortasa,
+//                $this->cotizacion->suma * $valortasa,
+//                (($this->cotizacion->suma * $valortasa) / 12) + 220
+//            )
+//            ;
+//        }
 
         return $valortasa;
     }
@@ -158,9 +161,9 @@ class CotizarAuto extends Cotizar
         $prima = $this->cotizacion->suma * $tasa;
 
         // si el valor de la prima es muy bajo
-        if ($prima > 0 and $prima < $prima_minima) {
-            $prima = $prima_minima;
-        }
+//        if ($prima > 0 and $prima < $prima_minima) {
+//            $prima = $prima_minima;
+//        }
 
         // en caso de ser mensual
         if ($this->cotizacion->tipo_pago == 'Mensual') {
