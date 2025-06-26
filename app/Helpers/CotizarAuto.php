@@ -173,7 +173,7 @@ class CotizarAuto extends Cotizar
         }
 
         // en caso de ser mensual
-        if ($this->cotizacion->plan == 'Mensual full' || $this->cotizacion->plan == 'Mensual Ley') {
+        if ($this->cotizacion->tipo_pago == 'Mensual') {
             $prima = $prima / 12;
         }
 

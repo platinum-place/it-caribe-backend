@@ -105,11 +105,11 @@ class EstimateVehicleForm extends Component implements HasForms
                     ->label('Salvamento')
                     ->inline(false),
 
-                Select::make('estado')
-                    ->label('Estado')
+                Select::make('tipo')
+                    ->label('Tipo')
                     ->options([
-                        'Nuevo' => 'Nuevo',
-                        'Usado' => 'Usado',
+                        'Mensual' => 'Mensual',
+                        'Anual' => 'Anual',
                     ])
                     ->default('Nuevo')
                     ->required(),
@@ -132,6 +132,7 @@ class EstimateVehicleForm extends Component implements HasForms
         $cotizacion->ano = $data['ano'];
         $cotizacion->uso = $data['uso'];
         $cotizacion->estado = $data['estado'];
+        $cotizacion->tipo_pago = $data['tipo'];
 
         $criteria = 'Name:equals:'.VehicleMake::find($data['marca'])->name;
         $vehicleMake = app(ZohoCRMService::class)->searchRecords('Marcas', $criteria);
