@@ -100,7 +100,7 @@ class EstimateVehicleForm extends Component implements HasForms
                 Select::make('estado')
                     ->label('Estado')
                     ->options([
-                        'Nuevo' => 'Nuevo',
+                        'Nuevo' => '0 KM',
                         'Usado' => 'Usado',
                     ])
                     ->default('Nuevo')
