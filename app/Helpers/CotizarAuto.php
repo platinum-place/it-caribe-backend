@@ -24,10 +24,10 @@ class CotizarAuto extends Cotizar
 
     private function vehiculo_restringido($aseguradoraid): string
     {
-        $criterio = '((Marca:equals:'.$this->cotizacion->marcaid.") and (Aseguradora:equals:$aseguradoraid))";
+        $criterio = '((Marca:equals:' . $this->cotizacion->marcaid . ") and (Aseguradora:equals:$aseguradoraid))";
         $marcas = $this->zoho->searchRecordsByCriteria('Restringidos', $criterio);
 
-        foreach ((array) $marcas as $marca) {
+        foreach ((array)$marcas as $marca) {
             if (empty($marca->getFieldValue('Modelo'))) {
                 return 'Marca restrigida.';
             } elseif ($this->cotizacion->modeloid == $marca->getFieldValue('Modelo')->getEntityId()) {
@@ -42,45 +42,49 @@ class CotizarAuto extends Cotizar
     {
         $valortasa = 0;
         // encontrar la tasa
-        $criterio = "((Plan:equals:$planid) and (A_o:equals:".$this->cotizacion->ano.'))';
+        $criterio = "((Plan:equals:$planid) and (A_o:equals:" . $this->cotizacion->ano . '))';
         $tasas = $this->zoho->searchRecordsByCriteria('Tasas', $criterio);
 
-        foreach ((array) $tasas as $tasa) {
+        foreach ((array)$tasas as $tasa) {
             // bucar entre los grupos de vehiculo
             if (in_array($this->cotizacion->modelotipo, $tasa->getFieldValue('Grupo_de_veh_culo'))) {
-                if (! empty($tasa->getFieldValue('Suma_limite'))) {
+                if (!empty($tasa->getFieldValue('Suma_limite'))) {
                     if ($this->cotizacion->suma >= $tasa->getFieldValue('Suma_limite')) {
                         if (empty($tasa->getFieldValue('Suma_hasta'))) {
-                                if($this->cotizacion->plan == $tasa->getFieldValue('Tipo')){
-                                    $valortasa = $tasa->getFieldValue('Name') / 100;
-                                }
+                            if ($this->cotizacion->plan == $tasa->getFieldValue('Tipo')) {
+                                $valortasa = $tasa->getFieldValue('Name') / 100;
+                            }
                         } elseif ($this->cotizacion->suma < $tasa->getFieldValue('Suma_hasta')) {
-                                if($this->cotizacion->plan == $tasa->getFieldValue('Tipo')){
-                                    $valortasa = $tasa->getFieldValue('Name') / 100;
-                                }
+                            if ($this->cotizacion->plan == $tasa->getFieldValue('Tipo')) {
+                                $valortasa = $tasa->getFieldValue('Name') / 100;
+                            }
                         }
                     }
                 } else {
-                    if (! empty($tasa->getFieldValue('Tipo'))) {
-                        if($this->cotizacion->plan == $tasa->getFieldValue('Tipo')){
+                    if (!empty($tasa->getFieldValue('Tipo'))) {
+                        if ($this->cotizacion->plan == $tasa->getFieldValue('Tipo')) {
                             $valortasa = $tasa->getFieldValue('Name') / 100;
                         }
                     }
                 }
-            }elseif(empty($tasa->getFieldValue('Grupo_de_veh_culo'))){
-                if($this->cotizacion->plan == $tasa->getFieldValue('Tipo')){
+            } elseif (empty($tasa->getFieldValue('Grupo_de_veh_culo'))) {
+                if ($this->cotizacion->plan == $tasa->getFieldValue('Tipo')) {
                     $valortasa = $tasa->getFieldValue('Name') / 100;
                 }
-}
+            }
         }
 
-        if($valortasa == 0){
-            $criterio = "((Plan:equals:$planid) and (Suma_hasta:equals:".intval($this->cotizacion->suma).'))';
+        if ($valortasa == 0) {
+            $criterio = "Plan:equals:3222373000208204050";
             $tasas = $this->zoho->searchRecordsByCriteria('Tasas', $criterio);
 
-            foreach ((array) $tasas as $tasa) {
+            foreach ((array)$tasas as $tasa) {
                 if (in_array($this->cotizacion->modelotipo, $tasa->getFieldValue('Grupo_de_veh_culo'))) {
-                    if($this->cotizacion->plan == $tasa->getFieldValue('Tipo')){
+                    if (
+                        $this->cotizacion->suma >= $tasa->getFieldValue('Suma_limite')
+                        and
+                        $this->cotizacion->suma < $tasa->getFieldValue('Suma_hasta')
+                    ) {
                         $valortasa = $tasa->getFieldValue('Name') / 100;
                     }
                 }
@@ -95,10 +99,10 @@ class CotizarAuto extends Cotizar
         $valorrecargo = 0;
 
         // verificar si la aseguradora tiene algun recargo para la marca o modelo
-        $criterio = '((Marca:equals:'.$this->cotizacion->marcaid.") and (Aseguradora:equals:$aseguradoraid))";
+        $criterio = '((Marca:equals:' . $this->cotizacion->marcaid . ") and (Aseguradora:equals:$aseguradoraid))";
         $recargos = $this->zoho->searchRecordsByCriteria('Recargos', $criterio);
 
-        foreach ((array) $recargos as $recargo) {
+        foreach ((array)$recargos as $recargo) {
             $modeloTipo = $this->cotizacion->modelotipo;
             $modeloId = $this->cotizacion->modeloid;
             $ano = $this->cotizacion->ano;
@@ -164,7 +168,8 @@ class CotizarAuto extends Cotizar
         $Suma_asegurada_max,
         $Max_antig_edad,
         $aseguradoraid
-    ): string {
+    ): string
+    {
         // verificar limites de uso
         if ($comentario = $this->uso_restringido($Restringir_veh_culos_de_uso)) {
             return $comentario;
@@ -191,10 +196,10 @@ class CotizarAuto extends Cotizar
     public function cotizar_planes()
     {
         // planes relacionados al banco
-        $criterio = '((Corredor:equals:'. 3222373000092390001 .') and (Product_Category:equals:Auto))';
+        $criterio = '((Corredor:equals:' . 3222373000092390001 . ') and (Product_Category:equals:Auto))';
         $coberturas = $this->zoho->searchRecordsByCriteria('Products', $criterio);
 
-        foreach ((array) $coberturas as $cobertura) {
+        foreach ((array)$coberturas as $cobertura) {
             // inicializacion de variables
             $prima = 0;
 
