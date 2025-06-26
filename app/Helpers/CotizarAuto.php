@@ -75,8 +75,7 @@ class CotizarAuto extends Cotizar
         }
 
         if($valortasa == 0){
-
-            $criterio = "((Plan:equals:$planid) and (A_o:equals:0))";
+            $criterio = "((Plan:equals:$planid) and (Suma_hasta:equals:".intval($this->cotizacion->suma).'))';
             $tasas = $this->zoho->searchRecordsByCriteria('Tasas', $criterio);
 
             foreach ((array) $tasas as $tasa) {
@@ -87,9 +86,9 @@ class CotizarAuto extends Cotizar
                 }
             }
 
-            if($valortasa == 0){
 
-                $criterio = "((Plan:equals:$planid) and (Suma_hasta:equals:".intval($this->cotizacion->suma).'))';
+            if($valortasa == 0){
+                $criterio = "((Plan:equals:$planid) and (A_o:equals:0))";
                 $tasas = $this->zoho->searchRecordsByCriteria('Tasas', $criterio);
 
                 foreach ((array) $tasas as $tasa) {
@@ -99,6 +98,8 @@ class CotizarAuto extends Cotizar
                         }
                     }
                 }
+
+
             }
         }
 
