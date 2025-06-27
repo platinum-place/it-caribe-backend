@@ -15,6 +15,20 @@ class CotizarDesempleo2 extends Cotizar
         $tasas = $this->zoho->searchRecordsByCriteria('Tasas', $criterio);
 
         foreach ((array)$tasas as $tasa) {
+            if (
+                !empty($tasa->getFieldValue('Tipo')) &&
+                $this->cotizacion->tipo_equipo != $tasa->getFieldValue('Tipo')
+            ) {
+                continue;
+            }
+
+            if (
+                !empty($tasa->getFieldValue('Riesgo')) &&
+                $this->cotizacion->tipo_pago != $tasa->getFieldValue('Riesgo')
+            ) {
+                continue;
+            }
+
             $this->desempleo = $tasa->getFieldValue('Name');
         }
     }

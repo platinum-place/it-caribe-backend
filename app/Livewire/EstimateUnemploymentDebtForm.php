@@ -94,6 +94,8 @@ class EstimateUnemploymentDebtForm extends Component implements HasForms
         $cotizacion->cuota = $data['cuota'];
         $cotizacion->plazo = $data['plazo'];
         $cotizacion->suma = $data['suma'];
+        $cotizacion->tipo_pago = $data['tipo_pago'];
+        $cotizacion->tipo_equipo = $data['tipo_deudor'];
 
         $cotizar = new CotizarDesempleo2($cotizacion, $libreria);
 
