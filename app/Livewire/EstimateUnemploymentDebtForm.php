@@ -6,6 +6,7 @@ use App\Helpers\Cotizacion;
 use App\Helpers\Cotizaciones;
 use App\Helpers\CotizarAuto;
 use App\Helpers\CotizarDesempleo;
+use App\Helpers\CotizarDesempleo2;
 use App\Models\Vehicle\VehicleMake;
 use App\Models\Vehicle\VehicleModel;
 use App\Services\ZohoCRMService;
@@ -44,7 +45,7 @@ class EstimateUnemploymentDebtForm extends Component implements HasForms
                     ->required(),
 
                 TextInput::make('cuota')
-                    ->label('Cuota Mensual')
+                    ->label('Cuota prestamo')
                     ->numeric()
                     ->required(),
 
@@ -54,9 +55,27 @@ class EstimateUnemploymentDebtForm extends Component implements HasForms
                     ->required(),
 
                 TextInput::make('suma')
-                    ->label('Suma Asegurada')
+                    ->label('Monto del prestamo')
                     ->numeric()
                     ->required(),
+
+                Select::make('tipo_pago')
+                    ->label('Tipo de pago')
+                    ->options([
+                        'Único' => 'Único',
+                        'Mensual' => 'Mensual',
+                    ])
+                    ->required()
+                    ->placeholder('Seleccione una opción'),
+
+                Select::make('tipo_deudor')
+                    ->label('Tipo Deudor')
+                    ->options([
+                        'Privado' => 'Privado',
+                        'Público' => 'Público',
+                    ])
+                    ->required()
+                    ->placeholder('Seleccione una opción'),
             ])
             ->statePath('data')
             ->columns(2);
@@ -76,7 +95,7 @@ class EstimateUnemploymentDebtForm extends Component implements HasForms
         $cotizacion->plazo = $data['plazo'];
         $cotizacion->suma = $data['suma'];
 
-        $cotizar = new CotizarDesempleo($cotizacion, $libreria);
+        $cotizar = new CotizarDesempleo2($cotizacion, $libreria);
 
         $cotizar->cotizar_planes();
 
