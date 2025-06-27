@@ -41,10 +41,11 @@ class CotizarAuto extends Cotizar
     private function calcular_tasa($planid)
     {
         $valortasa = 0;
-
         $criterio = "Plan:equals:$planid";
         $tasas = $this->zoho->searchRecordsByCriteria('Tasas', $criterio);
+        $tasasValidas = [];
 
+// Filtrar tasas válidas
         foreach ((array)$tasas as $tasa) {
             if (
                 !empty($tasa->getFieldValue('Grupo_de_veh_culo')) and
@@ -52,52 +53,42 @@ class CotizarAuto extends Cotizar
             ) {
                 continue;
             }
-
             if ($this->cotizacion->plan != $tasa->getFieldValue('Tipo')) {
                 continue;
             }
-
             if (
-                !empty($tasa->getFieldValue('Suma_hasta')) and
-                !($this->cotizacion->suma <= $tasa->getFieldValue('Suma_hasta'))
+                !empty($tasa->getFieldValue('A_o')) &&
+                $this->cotizacion->ano != $tasa->getFieldValue('A_o')
+            ) {
+                continue;
+            }
+            if (
+                !empty($tasa->getFieldValue('Suma_hasta')) &&
+                $this->cotizacion->suma > $tasa->getFieldValue('Suma_hasta')
+            ) {
+                continue;
+            }
+            if (
+                !empty($tasa->getFieldValue('Suma_limite')) &&
+                $this->cotizacion->suma < $tasa->getFieldValue('Suma_limite')
             ) {
                 continue;
             }
 
-            if (
-                !empty($tasa->getFieldValue('Suma_limite')) and
-                !($this->cotizacion->suma >= $tasa->getFieldValue('Suma_limite'))
-            ) {
-                continue;
-            }
+            $tasasValidas[] = $tasa;
+        }
 
-            if (
-                !empty($tasa->getFieldValue('A_o')) and
-                !($this->cotizacion->ano == $tasa->getFieldValue('A_o'))
-            ) {
-                continue;
-            }
+        if (!empty($tasasValidas)) {
+            usort($tasasValidas, function($a, $b) {
+                $tieneAnoA = !empty($a->getFieldValue('A_o'));
+                $tieneAnoB = !empty($b->getFieldValue('A_o'));
 
-            $valortasa = $tasa->getFieldValue('Name') / 100;
+                if ($tieneAnoA && !$tieneAnoB) return -1;
+                if (!$tieneAnoA && $tieneAnoB) return 1;
+                return 0;
+            });
 
-//            if($planid == 3222373000208204050) {
-//                dd(
-//                    $tasa->getEntityId(),
-//                    $tasa->getFieldValue('Name'),
-//                    $tasa->getFieldValue('Suma_limite'),
-//                    $this->cotizacion->suma,
-//                    $tasa->getFieldValue('Suma_hasta'),
-//                    $tasa->getFieldValue('Tipo'),
-//                    $tasa->getFieldValue('Grupo_de_veh_culo'),
-//                    $this->cotizacion,
-//                    $valortasa,
-//                    $this->cotizacion->suma * $valortasa,
-//                    (($this->cotizacion->suma * $valortasa) / 12) + 220
-//                )
-//                ;
-//            }
-
-            break;
+            $valortasa = $tasasValidas[0]->getFieldValue('Name') / 100;
         }
 
         return $valortasa;
