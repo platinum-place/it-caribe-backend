@@ -66,7 +66,7 @@ class CotizarAuto extends Cotizar
 
             if (
                 !empty($tasa->getFieldValue('Suma_limite')) and
-                !($this->cotizacion->suma >= $tasa->getFieldValue('Suma_hasta'))
+                !($this->cotizacion->suma >= $tasa->getFieldValue('Suma_limite'))
             ) {
                 continue;
             }
@@ -80,25 +80,25 @@ class CotizarAuto extends Cotizar
 
             $valortasa = $tasa->getFieldValue('Name') / 100;
 
+//            if($planid == 3222373000208204050) {
+//                dd(
+//                    $tasa->getEntityId(),
+//                    $tasa->getFieldValue('Name'),
+//                    $tasa->getFieldValue('Suma_limite'),
+//                    $this->cotizacion->suma,
+//                    $tasa->getFieldValue('Suma_hasta'),
+//                    $tasa->getFieldValue('Tipo'),
+//                    $tasa->getFieldValue('Grupo_de_veh_culo'),
+//                    $this->cotizacion,
+//                    $valortasa,
+//                    $this->cotizacion->suma * $valortasa,
+//                    (($this->cotizacion->suma * $valortasa) / 12) + 220
+//                )
+//                ;
+//            }
+
             break;
         }
-
-//        if($planid == 3222373000207247165) {
-//            dd(
-//                $tasa->getEntityId(),
-//                $tasa->getFieldValue('Name'),
-//                $tasa->getFieldValue('Suma_limite'),
-//                $tasa->getFieldValue('Suma_hasta'),
-//                $tasa->getFieldValue('Tipo'),
-//                $tasa->getFieldValue('Grupo_de_veh_culo'),
-//                $this->cotizacion,
-//                $this->cotizacion->suma,
-//                $valortasa,
-//                $this->cotizacion->suma * $valortasa,
-//                (($this->cotizacion->suma * $valortasa) / 12) + 220
-//            )
-//            ;
-//        }
 
         return $valortasa;
     }
