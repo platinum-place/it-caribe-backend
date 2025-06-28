@@ -90,7 +90,7 @@ class CotizarIncendio3 extends Cotizar
     public function cotizar_planes()
     {
         // planes relacionados al banco
-        $criterio = '((Corredor:equals:' . 3222373000092390001 . ') and (Product_Category:equals:Leasing))';
+        $criterio = '((Corredor:equals:' . 3222373000092390001 . ') and (Product_Category:equals:Incendio))';
         $coberturas = $this->zoho->searchRecordsByCriteria('Products', $criterio);
 
         foreach ((array)$coberturas as $cobertura) {
@@ -103,9 +103,9 @@ class CotizarIncendio3 extends Cotizar
                 $cobertura->getFieldValue('Suma_asegurada_max')
             );
 
-            if ($this->cotizacion->prestamo > $cobertura->getFieldValue('Pr_stamo_max')) {
-                $comentario = 'El valor de prestamo supera el límite establecido.';
-            }
+//            if ($this->cotizacion->prestamo > $cobertura->getFieldValue('Pr_stamo_max')) {
+//                $comentario = 'El valor de prestamo supera el límite establecido.';
+//            }
 
             // si no hubo un excepcion
             if (empty($comentario)) {
@@ -120,7 +120,6 @@ class CotizarIncendio3 extends Cotizar
                 $prima = $primaVida + $primaIncendio;
             }
 
-            // lista con los resultados de cada calculo
             $this->cotizacion->planes[] = [
                 'aseguradora' => $cobertura->getFieldValue('Product_Name'),
                 'planid' => $cobertura->getEntityId(),
