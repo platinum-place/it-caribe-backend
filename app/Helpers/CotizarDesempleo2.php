@@ -29,6 +29,17 @@ class CotizarDesempleo2 extends Cotizar
                 continue;
             }
 
+            if ($coberturaid == 3222373000222056967 and $this->cotizacion->tipo_pago == 'Mensual') {//MAPFRE
+                if (
+                    $this->cotizacion->suma >= $tasa->getFieldValue('Suma_limite')
+                    and
+                    $this->cotizacion->suma <= $tasa->getFieldValue('Suma_hasta')
+                ) {
+
+                    $this->vida = $tasa->getFieldValue('Name');
+                }
+            }
+
             $this->desempleo = $tasa->getFieldValue('Name');
         }
     }
@@ -49,6 +60,10 @@ class CotizarDesempleo2 extends Cotizar
 
         if ($coberturaid == 3222373000222056967) {//MAPFRE
             $prima_desempleo = $this->cotizacion->cuota * ($this->desempleo / 100);
+        }
+
+        if (!empty($this->vida)) {
+            $prima_desempleo = $this->vida;
         }
 
         return $prima_desempleo;
