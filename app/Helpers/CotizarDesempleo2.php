@@ -37,6 +37,7 @@ class CotizarDesempleo2 extends Cotizar
                 ) {
 
                     $this->vida = $tasa->getFieldValue('Name');
+                    dd($this->vida,$this->cotizacion->suma,$tasa->getFieldValue('Suma_limite'),tasa->getFieldValue('Suma_hasta'));
                 }
             }
 

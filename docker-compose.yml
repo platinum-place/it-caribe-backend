@@ -1,32 +1,4 @@
 services:
-#    php-fpm:
-#        image: docker.io/bitnami/php-fpm:8.4
-#        ports:
-#            - 9000:9000
-#        volumes:
-#            - .:/app
-#            - ./docker/php.ini:/opt/bitnami/php/etc/php.ini
-#        container_name: ${APP_NAME}-php-fpm
-#        networks:
-#            - app-network
-
-#    workspace:
-#        tty: true
-#        image: docker.io/bitnami/laravel:latest
-#        environment:
-#            - LARAVEL_DATABASE_TYPE=${DB_CONNECTION}
-#            - LARAVEL_DATABASE_HOST=${DB_HOST}
-#            - LARAVEL_DATABASE_NAME=${DB_DATABASE}
-#            - LARAVEL_DATABASE_USER=${DB_USERNAME}
-#            - LARAVEL_DATABASE_PASSWORD=${DB_PASSWORD}
-#            - LARAVEL_SKIP_COMPOSER_UPDATE=yes
-#        volumes:
-#            - .:/app
-#            - ./docker/php.ini:/opt/bitnami/php/etc/php.ini
-#        container_name: ${APP_NAME}-workspace
-#        networks:
-#            - app-network
-
     postgresql:
         image: docker.io/bitnami/postgresql:17
         ports:
@@ -40,18 +12,6 @@ services:
         container_name: ${APP_NAME}-postgresql
         networks:
             - app-network
-
-#    nginx:
-#        image: docker.io/bitnami/nginx:1.28
-#        ports:
-#            - '80:8080'
-#        container_name: ${APP_NAME}-nginx
-#        restart: unless-stopped
-#        volumes:
-#            - .:/app
-#            - ./docker/nginx/laravel.conf:/opt/bitnami/nginx/conf/server_blocks/laravel.conf:ro
-#        networks:
-#            - app-network
 
     php-fpm:
         build:
@@ -74,6 +34,19 @@ services:
             - ./:/var/www/html
         networks:
             - app-network
+
+    php-cli:
+        build:
+            context: ./docker/php-cli
+            dockerfile: Dockerfile
+        container_name: ${APP_NAME}-php-cli
+        volumes:
+            - ./:/var/www/html
+        networks:
+            - app-network
+        environment:
+            - UID=${UID:-1000}
+            - GID=${GID:-1000}
 
 volumes:
     postgresql_data:
