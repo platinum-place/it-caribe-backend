@@ -6,6 +6,7 @@ use App\Helpers\Cotizacion;
 use App\Helpers\Cotizaciones;
 use App\Helpers\CotizarAuto;
 use App\Helpers\CotizarIncendio;
+use App\Helpers\CotizarIncendio3;
 use App\Helpers\CotizarVida;
 use App\Models\Vehicle\VehicleMake;
 use App\Models\Vehicle\VehicleModel;
@@ -35,6 +36,28 @@ class EstimateFireForm extends Component implements HasForms
     {
         return $form
             ->schema([
+                DatePicker::make('deudor')
+                    ->label('Fecha de Nacimiento Deudor')
+                    ->required()
+                    ->maxDate(now()),
+
+                DatePicker::make('codeudor')
+                    ->label('Fecha de Nacimiento Codeudor (Si aplica)')
+                    ->maxDate(now()),
+
+                Checkbox::make('garante')
+                    ->label('Garante')
+                    ->inline(false),
+
+                Select::make('tipo_pago')
+                    ->label('Tipo de crédito')
+                    ->options([
+                        'Línea de Crédito' => 'Línea de Crédito',
+                        'Préstamo Personal' => 'Préstamo Personal',
+                    ])
+                    ->required()
+                    ->placeholder('Seleccione una opción'),
+
                 TextInput::make('suma')
                     ->label('Valor de la Propiedad')
                     ->numeric()
@@ -86,7 +109,7 @@ class EstimateFireForm extends Component implements HasForms
         $cotizacion = new Cotizacion;
 
         $cotizacion->suma = $data["suma"];
-        $cotizacion->plan = 'Seguro Incendio Hipotecario';
+        $cotizacion->plan = 'Seguro Vida Hipotecario';
         $cotizacion->plazo = $data["plazo"];
 
         $cotizacion->direccion = $data['direccion'];
@@ -94,7 +117,13 @@ class EstimateFireForm extends Component implements HasForms
         $cotizacion->construccion = $data['construccion'];
         $cotizacion->riesgo = $data['riesgo'];
 
-        $cotizar = new CotizarIncendio($cotizacion, $libreria);
+        $cotizacion->fecha_deudor = $data["deudor"];
+
+        $cotizacion->fecha_codeudor = $data["codeudor"];
+        $cotizacion->garante = $data["garante"];
+        $cotizacion->tipo_pago = $data["tipo_pago"];
+
+        $cotizar = new CotizarIncendio3($cotizacion, $libreria);
         $cotizar->cotizar_planes();
 
         $this->dispatch('fill-estimate-table', $cotizacion->planes);
