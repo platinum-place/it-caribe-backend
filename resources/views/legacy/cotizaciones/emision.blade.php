@@ -15,7 +15,7 @@
                 }
             @endphp
             @if($logoBase64)
-                <img src="{{ $logoBase64 }}" width="100" height="100">
+                <img src="{{ $logoBase64 }}" width="150" height="75">
             @endif
         </div>
 
@@ -34,7 +34,7 @@
                     certificado
                 @endif
 
-<br>
+                <br>
 
                 @if (in_array($cotizacion->getFieldValue('Plan'), [
                     'Full',
@@ -52,7 +52,7 @@
             </h4>
         </div>
 
-        <div class="col-4">
+        <div class="col-8">
             <p style="text-align: right">
                 <b>Póliza No.</b> {{ $plan->getFieldValue("P_liza") }} <br>
                 <b>Fecha Inicio</b> {{ date('d/m/Y', strtotime($cotizacion->getFieldValue("Vigencia_desde"))) }} <br>

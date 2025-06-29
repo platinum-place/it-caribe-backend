@@ -20,8 +20,6 @@ class EstimateController extends Controller
                 'libreria' => $libreria,
             ]);
 
-            $pdf->setPaper('A4');
-
             return $pdf->stream("Cotización No" . $cotizacion->getFieldValue('Quote_Number') . ".pdf");
 
 //            return view('legacy.cotizaciones.cotizacion', [
@@ -44,8 +42,6 @@ class EstimateController extends Controller
                 'plan' => $plan,
                 'libreria' => $libreria,
             ]);
-
-            $pdf->setPaper('A4');
 
             return $pdf->stream("Emisión No" . $cotizacion->getFieldValue('Quote_Number') . ".pdf");
         }

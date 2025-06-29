@@ -15,7 +15,7 @@
             @endphp
 
             @if($logoBase64)
-                <img src="{{ $logoBase64 }}" style="width: 150px; height: 100px;" alt="">
+                <img src="{{ $logoBase64 }}" style="width: 150px; height: 70px;" alt="">
             @endif
 
             <table width="100%" style="border-collapse: collapse;">

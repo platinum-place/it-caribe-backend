@@ -38,7 +38,7 @@
             </h4>
         </div>
 
-        <div class="col-4">
+        <div class="col-8">
             <p style="text-align: right">
                 <b>Fecha</b> {{ date('d/m/Y', strtotime($cotizacion->getCreatedTime())) }} <br>
                 <b>Válido hasta</b> {{ date('d/m/Y', strtotime($cotizacion->getFieldValue('Valid_Till'))) }} <br>
