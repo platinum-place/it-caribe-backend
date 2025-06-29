@@ -23,7 +23,14 @@
             <h4 class="text-center text-uppercase">
                 cotización <br>
 
-                @if ($cotizacion->getFieldValue("Plan") == "Anual Full" or $cotizacion->getFieldValue("Plan") == "Mensual Full")
+                @if (in_array($cotizacion->getFieldValue('Plan'), [
+                    'Full',
+                    'Ley',
+                    'Econo',
+                    '0 KM',
+                    'Eléctrico/Híbrido',
+                    'Empleado',
+                ]))
                     seguro vehí­culo de motor <br>
                 @endif
 
@@ -43,7 +50,14 @@
     <h5 class="d-flex justify-content-center bg-primary text-white">DATOS DEL CLIENTE</h5>
     @include('legacy.layouts.datos_cliente')
 
-    @if ($cotizacion->getFieldValue("Plan") == "Anual Full" or $cotizacion->getFieldValue("Plan") == "Mensual Full")
+    @if (in_array($cotizacion->getFieldValue('Plan'), [
+        'Full',
+        'Ley',
+        'Econo',
+        '0 KM',
+        'Eléctrico/Híbrido',
+        'Empleado',
+    ]))
         <h5 class="d-flex justify-content-center bg-primary text-white">DATOS DEL VEHÍCULO</h5>
         @include('legacy.auto.datos_vehiculo')
     @endif
@@ -53,13 +67,20 @@
         @include('legacy.vida.datos_codeudor')
     @endif
 
-    @if ($cotizacion->getFieldValue("Plan") == "Anual Full" || $cotizacion->getFieldValue("Plan") == "Mensual Full")
+    @if (in_array($cotizacion->getFieldValue('Plan'), [
+        'Full',
+        'Ley',
+        'Econo',
+        '0 KM',
+        'Eléctrico/Híbrido',
+        'Empleado',
+    ]))
         @include('legacy.auto.detalles_cotizacion')
     @elseif ($cotizacion->getFieldValue("Plan") == "Vida/Desempleo")
         @include('legacy.desempleo.detalles_cotizacion')
     @elseif ($cotizacion->getFieldValue("Plan") == "Vida")
         @include('legacy.vida.detalles_cotizacion')
-    @elseif ($cotizacion->getFieldValue("Plan") == "Seguro Incendio Hipotecario")
+    @elseif ($cotizacion->getFieldValue("Plan") == "Seguro Vida Hipotecario")
         @include('legacy.incendio.detalles_cotizacion')
     @elseif ($cotizacion->getFieldValue("Plan") == "Seguro Incendio Leasing")
         @include('legacy.incendio.detalles_cotizacion_leasing')

@@ -1,5 +1,9 @@
 FROM php:8.4-cli
 
+# Argumentos para el usuario
+ARG UID=1000
+ARG GID=1000
+
 RUN apt-get update && apt-get install -y \
     git \
     curl \
@@ -35,6 +39,10 @@ RUN pecl install xdebug \
  && docker-php-ext-enable xdebug
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+
+# Crear grupo y usuario con los mismos IDs del host
+RUN groupadd -g ${GID} appgroup && \
+    useradd -u ${UID} -g appgroup -m -s /bin/bash appuser
 
 WORKDIR /var/www/html
 

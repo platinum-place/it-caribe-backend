@@ -33,11 +33,21 @@ class EstimateController extends Controller
             $plan = $libreria->getRecord('Products', $cotizacion->getFieldValue('Coberturas')
                 ->getEntityId());
 
-            return view('legacy.cotizaciones.emision', [
+//            return view('legacy.cotizaciones.emision', [
+//                'cotizacion' => $cotizacion,
+//                'plan' => $plan,
+//                'libreria' => $libreria,
+//            ]);
+
+            $pdf = Pdf::loadView('legacy.cotizaciones.emision', [
                 'cotizacion' => $cotizacion,
                 'plan' => $plan,
                 'libreria' => $libreria,
             ]);
+
+            $pdf->setPaper('A4');
+
+            return $pdf->stream("Emisión No" . $cotizacion->getFieldValue('Quote_Number') . ".pdf");
         }
     }
 

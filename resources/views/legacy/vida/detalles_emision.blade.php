@@ -16,19 +16,9 @@
             </p>
 
             <p style="font-size: 15px;">
-                @php
-                if (session('cuenta_id') == "3222373000005967119") {
-                    <b>Prima Neta</b> <br>
-                    <b>Impuestos</b> <br>
-                    <b>Prima total con imp. incluidos</b><br>
-                    <b>Cargos mantenimiento de cuenta</b><br>
-                    <b>Gran total a pagar</b
-                } else {
-                    <b>Prima Neta</b> <br>
-                    <b>ISC</b> <br>
-                    <b>Prima Total</b>
-                }
-                @endphp
+                <b>Prima Neta</b> <br>
+                <b>ISC</b> <br>
+                <b>Prima Total</b>
             </p>
         </div>
     </div>
@@ -49,16 +39,9 @@
             </p>
 
             <p style="font-size: 15px;">
-                @php
                 RD$ {{ number_format($cotizacion->getFieldValue('Prima_neta'), 2) }}
                 <br>RD$ {{ number_format($cotizacion->getFieldValue('ISC'), 2) }}
                 <br>RD$ {{ number_format($cotizacion->getFieldValue('Prima'), 2) }}
-
-                if (session('cuenta_id') == "3222373000005967119") {
-                    <br>RD$ {{ number_format($cotizacion->getFieldValue('Monto_mantenimiento'), 2) }}
-                    <br>RD$ {{ number_format($cotizacion->getFieldValue('Prima') + $cotizacion->getFieldValue('Monto_mantenimiento'), 2) }}
-                }
-                @endphp
             </p>
         </div>
     </div>
