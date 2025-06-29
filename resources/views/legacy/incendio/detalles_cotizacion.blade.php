@@ -1,4 +1,4 @@
-<h5 class="d-flex justify-content-center bg-primary text-white">PRIMA MENSUAL</h5>
+<h5 class="d-flex justify-content-center bg-primary text-white">PRIMA</h5>
 <table style="width: 100%; border: 1px solid #ddd; border-collapse: collapse;" cellpadding="10">
     <tr>
         <td style="font-size: 12px; vertical-align: top;">
