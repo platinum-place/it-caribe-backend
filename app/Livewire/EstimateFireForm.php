@@ -4,13 +4,7 @@ namespace App\Livewire;
 
 use App\Helpers\Cotizacion;
 use App\Helpers\Cotizaciones;
-use App\Helpers\CotizarAuto;
-use App\Helpers\CotizarIncendio;
 use App\Helpers\CotizarIncendio3;
-use App\Helpers\CotizarVida;
-use App\Models\Vehicle\VehicleMake;
-use App\Models\Vehicle\VehicleModel;
-use App\Services\ZohoCRMService;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
@@ -18,7 +12,6 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
-use Filament\Forms\Get;
 use Livewire\Component;
 
 class EstimateFireForm extends Component implements HasForms
@@ -80,14 +73,14 @@ class EstimateFireForm extends Component implements HasForms
                     ->label('Tipo de Riesgo')
                     ->options([
                         'Vivienda' => 'Vivienda',
-                        'Riesgo comercial' => 'Riesgo comercial'
+                        'Riesgo comercial' => 'Riesgo comercial',
                     ])
                     ->default('Vivienda'),
 
                 Select::make('construccion')
                     ->label('Tipo de Construcción')
                     ->options([
-                        'Superior' => 'Superior'
+                        'Superior' => 'Superior',
                     ])
                     ->default('Superior'),
 
@@ -108,20 +101,20 @@ class EstimateFireForm extends Component implements HasForms
 
         $cotizacion = new Cotizacion;
 
-        $cotizacion->suma = $data["suma"];
+        $cotizacion->suma = $data['suma'];
         $cotizacion->plan = 'Seguro Vida Hipotecario';
-        $cotizacion->plazo = $data["plazo"];
+        $cotizacion->plazo = $data['plazo'];
 
         $cotizacion->direccion = $data['direccion'];
         $cotizacion->prestamo = $data['prestamo'];
         $cotizacion->construccion = $data['construccion'];
         $cotizacion->riesgo = $data['riesgo'];
 
-        $cotizacion->fecha_deudor = $data["deudor"];
+        $cotizacion->fecha_deudor = $data['deudor'];
 
-        $cotizacion->fecha_codeudor = $data["codeudor"];
-        $cotizacion->garante = $data["garante"];
-        $cotizacion->tipo_pago = $data["tipo_pago"];
+        $cotizacion->fecha_codeudor = $data['codeudor'];
+        $cotizacion->garante = $data['garante'];
+        $cotizacion->tipo_pago = $data['tipo_pago'];
 
         $cotizar = new CotizarIncendio3($cotizacion, $libreria);
         $cotizar->cotizar_planes();

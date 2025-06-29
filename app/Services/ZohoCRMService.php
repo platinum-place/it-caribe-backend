@@ -124,6 +124,7 @@ class ZohoCRMService
         if (empty($response)) {
             throw new NotFoundHttpException(__('Records not found in Zoho'));
         }
+
         return $response;
     }
 
@@ -138,7 +139,7 @@ class ZohoCRMService
                 $token = $this->oauth->getAccessToken();
                 $response = ZohoCRM::searchRecords($module, $token, $criteria, $currentPage, $perPage);
 
-                if (empty($response) || !isset($response['data']) || empty($response['data'])) {
+                if (empty($response) || ! isset($response['data']) || empty($response['data'])) {
                     $hasMoreRecords = false;
                     break;
                 }
@@ -173,7 +174,7 @@ class ZohoCRMService
             try {
                 $response = $this->searchRecords($module, $criteria, $currentPage, $perPage);
 
-                if (isset($response['data']) && !empty($response['data'])) {
+                if (isset($response['data']) && ! empty($response['data'])) {
                     $allRecords = array_merge($allRecords, $response['data']);
 
                     // Si recibimos menos registros que el máximo, es la última página

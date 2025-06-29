@@ -90,7 +90,7 @@ class EmitEstimateForm extends Component implements HasForms
 
     public function getDownloadUrl(): ?string
     {
-        if (!$this->selectedInsurance) {
+        if (! $this->selectedInsurance) {
             return null;
         }
 
@@ -103,8 +103,9 @@ class EmitEstimateForm extends Component implements HasForms
 
         // Validar que se hayan subido documentos desde el request normal
         $request = request();
-        if (!$request->hasFile('documentos') || empty($request->file('documentos'))) {
+        if (! $request->hasFile('documentos') || empty($request->file('documentos'))) {
             session()->flash('error', 'Debe adjuntar al menos un documento.');
+
             return;
         }
 

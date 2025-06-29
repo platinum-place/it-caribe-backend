@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Zoho;
 use Barryvdh\DomPDF\Facade\Pdf;
-use http\Env\Response;
 
 class EstimateController extends Controller
 {
@@ -20,22 +19,22 @@ class EstimateController extends Controller
                 'libreria' => $libreria,
             ]);
 
-            return $pdf->stream("Cotización No" . $cotizacion->getFieldValue('Quote_Number') . ".pdf");
+            return $pdf->stream('Cotización No'.$cotizacion->getFieldValue('Quote_Number').'.pdf');
 
-//            return view('legacy.cotizaciones.cotizacion', [
-//                'cotizacion' => $cotizacion,
-//                'libreria' => $libreria,
-//            ]);
+            //            return view('legacy.cotizaciones.cotizacion', [
+            //                'cotizacion' => $cotizacion,
+            //                'libreria' => $libreria,
+            //            ]);
         } else {
             // informacion sobre las coberturas, la aseguradora,las coberturas
             $plan = $libreria->getRecord('Products', $cotizacion->getFieldValue('Coberturas')
                 ->getEntityId());
 
-//            return view('legacy.cotizaciones.emision', [
-//                'cotizacion' => $cotizacion,
-//                'plan' => $plan,
-//                'libreria' => $libreria,
-//            ]);
+            //            return view('legacy.cotizaciones.emision', [
+            //                'cotizacion' => $cotizacion,
+            //                'plan' => $plan,
+            //                'libreria' => $libreria,
+            //            ]);
 
             $pdf = Pdf::loadView('legacy.cotizaciones.emision', [
                 'cotizacion' => $cotizacion,
@@ -43,20 +42,21 @@ class EstimateController extends Controller
                 'libreria' => $libreria,
             ]);
 
-            return $pdf->stream("Emisión No" . $cotizacion->getFieldValue('Quote_Number') . ".pdf");
+            return $pdf->stream('Emisión No'.$cotizacion->getFieldValue('Quote_Number').'.pdf');
         }
     }
 
     public function condicionado($id)
     {
-        $libreria = new Zoho();
-        $attachments = $libreria->getAttachments("Products", $id);
-        $file = $libreria->downloadAttachment("Products", $id, $attachments[0]->getId(), storage_path('app/private'));
+        $libreria = new Zoho;
+        $attachments = $libreria->getAttachments('Products', $id);
+        $file = $libreria->downloadAttachment('Products', $id, $attachments[0]->getId(), storage_path('app/private'));
+
         return response()->streamDownload(function () use ($file) {
             echo $file;
-        }, "Condicionado.pdf", [
+        }, 'Condicionado.pdf', [
             'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'attachment; filename="Condicionado.pdf"'
+            'Content-Disposition' => 'attachment; filename="Condicionado.pdf"',
         ]);
     }
 }

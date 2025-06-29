@@ -74,7 +74,7 @@ class CotizarDesempleo extends Cotizar
             if (empty($comentario)) {
                 $prima = $this->calcular_prima($cobertura->getEntityId());
 
-                if($prima == 0 and !empty($cobertura->getFieldValue('Prima_m_nima'))){
+                if ($prima == 0 and ! empty($cobertura->getFieldValue('Prima_m_nima'))) {
                     $prima = $cobertura->getFieldValue('Prima_m_nima');
                 }
 

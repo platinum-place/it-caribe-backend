@@ -14,22 +14,22 @@ class CotizarDesempleo2 extends Cotizar
         $criterio = "Plan:equals:$coberturaid";
         $tasas = $this->zoho->searchRecordsByCriteria('Tasas', $criterio);
 
-        foreach ((array)$tasas as $tasa) {
+        foreach ((array) $tasas as $tasa) {
             if (
-                !empty($tasa->getFieldValue('Tipo')) &&
+                ! empty($tasa->getFieldValue('Tipo')) &&
                 $this->cotizacion->tipo_equipo != $tasa->getFieldValue('Tipo')
             ) {
                 continue;
             }
 
             if (
-                !empty($tasa->getFieldValue('Riesgo')) &&
+                ! empty($tasa->getFieldValue('Riesgo')) &&
                 $this->cotizacion->tipo_pago != $tasa->getFieldValue('Riesgo')
             ) {
                 continue;
             }
 
-            if ($coberturaid == 3222373000222056967 and $this->cotizacion->tipo_pago == 'Mensual') {//MAPFRE
+            if ($coberturaid == 3222373000222056967 and $this->cotizacion->tipo_pago == 'Mensual') {// MAPFRE
                 if (
                     $this->cotizacion->suma >= $tasa->getFieldValue('Suma_limite')
                     and
@@ -50,19 +50,19 @@ class CotizarDesempleo2 extends Cotizar
 
         $prima_desempleo = 0;
 
-        if ($coberturaid == 3222373000203458058) {//SEGUROS SURA
+        if ($coberturaid == 3222373000203458058) {// SEGUROS SURA
             $prima_desempleo = ($this->cotizacion->cuota) * ($this->desempleo / 1000);
         }
 
-        if ($coberturaid == 3222373000203458044) {//HUMANO SEGUROS
+        if ($coberturaid == 3222373000203458044) {// HUMANO SEGUROS
             $prima_desempleo = ($this->cotizacion->suma) * ($this->desempleo / 100);
         }
 
-        if ($coberturaid == 3222373000222056967) {//MAPFRE
+        if ($coberturaid == 3222373000222056967) {// MAPFRE
             $prima_desempleo = $this->cotizacion->cuota * ($this->desempleo / 100);
         }
 
-        if (!empty($this->vida)) {
+        if (! empty($this->vida)) {
             $prima_desempleo = $this->vida;
         }
 
@@ -85,10 +85,10 @@ class CotizarDesempleo2 extends Cotizar
     public function cotizar_planes()
     {
         // planes relacionados al banco
-        $criterio = '((Corredor:equals:' . 3222373000092390001 . ') and (Product_Category:equals:Desempleo))';
+        $criterio = '((Corredor:equals:'. 3222373000092390001 .') and (Product_Category:equals:Desempleo))';
         $coberturas = $this->zoho->searchRecordsByCriteria('Products', $criterio);
 
-        foreach ((array)$coberturas as $cobertura) {
+        foreach ((array) $coberturas as $cobertura) {
             // inicializacion de variables
             $prima = 0;
 
@@ -103,7 +103,7 @@ class CotizarDesempleo2 extends Cotizar
             if (empty($comentario)) {
                 $prima = $this->calcular_prima($cobertura->getEntityId());
 
-                if ($prima == 0 and !empty($cobertura->getFieldValue('Prima_m_nima'))) {
+                if ($prima == 0 and ! empty($cobertura->getFieldValue('Prima_m_nima'))) {
                     $prima = $cobertura->getFieldValue('Prima_m_nima');
                 }
 

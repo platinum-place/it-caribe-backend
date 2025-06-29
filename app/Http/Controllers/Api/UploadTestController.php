@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class UploadTestController extends Controller
 {
@@ -28,7 +28,7 @@ class UploadTestController extends Controller
             ]);
 
             $file = $request->file('file');
-            
+
             $fileInfo = [
                 'original_name' => $file->getClientOriginalName(),
                 'size' => $file->getSize(),
@@ -40,7 +40,7 @@ class UploadTestController extends Controller
 
             // Store the file
             $path = $file->store('test-uploads', 'temp');
-            
+
             Log::info('File stored successfully', ['path' => $path]);
 
             // Clean up test file after 5 seconds (for testing)
@@ -64,6 +64,7 @@ class UploadTestController extends Controller
 
         } catch (\Illuminate\Validation\ValidationException $e) {
             Log::error('Validation error', ['errors' => $e->errors()]);
+
             return response()->json([
                 'success' => false,
                 'error' => 'Validation failed',

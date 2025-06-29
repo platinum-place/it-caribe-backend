@@ -3,7 +3,6 @@
 namespace App\Filament\Imports\Vehicle;
 
 use App\Models\Vehicle\VehicleModel;
-use App\Models\Vehicle\VehicleType;
 use Filament\Actions\Imports\ImportColumn;
 use Filament\Actions\Imports\Importer;
 use Filament\Actions\Imports\Models\Import;
@@ -42,7 +41,7 @@ class VehicleModelImporter extends Importer
 
     public function resolveRecord(): ?VehicleModel
     {
-        return new VehicleModel();
+        return new VehicleModel;
     }
 
     public static function getCompletedNotificationBody(Import $import): string
@@ -50,7 +49,7 @@ class VehicleModelImporter extends Importer
         $body = __('The import has been completed successfully. :rows row(s) imported', ['rows' => number_format($import->successful_rows)]);
 
         if ($failedRowsCount = $import->getFailedRowsCount()) {
-            $body .= ' ' . __(':rows row(s) have failed to import', ['rows' => number_format($failedRowsCount)]);
+            $body .= ' '.__(':rows row(s) have failed to import', ['rows' => number_format($failedRowsCount)]);
         }
 
         return $body;

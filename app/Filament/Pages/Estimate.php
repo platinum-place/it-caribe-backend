@@ -5,7 +5,6 @@ namespace App\Filament\Pages;
 use App\Helpers\Cotizaciones;
 use Filament\Actions\Action;
 use Filament\Pages\Page;
-use Illuminate\Http\Request;
 
 class Estimate extends Page
 {
@@ -27,8 +26,11 @@ class Estimate extends Page
 
     // Propiedades para los datos del formulario
     public array $insuranceOptions = [];
+
     public string $customerName = '';
+
     public string $customerDocument = '';
+
     public bool $dataLoaded = false;
 
     public function mount(int $id): void
@@ -39,7 +41,7 @@ class Estimate extends Page
 
     private function loadQuoteData(): void
     {
-        if (!$this->dataLoaded) {
+        if (! $this->dataLoaded) {
             $libreria = new Cotizaciones;
             $quote = $libreria->getRecord('Quotes', $this->id);
 

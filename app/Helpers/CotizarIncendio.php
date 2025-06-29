@@ -21,7 +21,7 @@ class CotizarIncendio extends Cotizar
         $tasas = $this->zoho->searchRecordsByCriteria('Tasas', $criterio);
 
         foreach ((array) $tasas as $tasa) {
-            if($this->cotizacion->riesgo == $tasa->getFieldValue('Riesgo')){
+            if ($this->cotizacion->riesgo == $tasa->getFieldValue('Riesgo')) {
                 $valortasa = $tasa->getFieldValue('Name') / 100;
             }
         }
@@ -60,7 +60,7 @@ class CotizarIncendio extends Cotizar
             if (empty($comentario)) {
                 $prima = $this->calcular_prima($cobertura->getEntityId()) / 12;
 
-                if(!empty($cobertura->getFieldValue('Valor_asistencia_vial'))){
+                if (! empty($cobertura->getFieldValue('Valor_asistencia_vial'))) {
                     $prima = $prima + $cobertura->getFieldValue('Valor_asistencia_vial');
                 }
             }

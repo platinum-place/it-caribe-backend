@@ -25,7 +25,6 @@ class SecurityHeaders
         $response->headers->set('Referrer-Policy', 'no-referrer-when-downgrade');
         $response->headers->set('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline';");
 
-
         $response->headers->remove('X-Powered-By');
         $response->headers->remove('Server');
         $response->headers->remove('X-AspNet-Version');

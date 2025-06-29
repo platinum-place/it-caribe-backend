@@ -1,4 +1,4 @@
-<div class="page-break"></div>
+<div style="page-break-before: always;"></div>
 
 <table width="100%" style="border-collapse: collapse; font-size: 15px;">
     <tr>

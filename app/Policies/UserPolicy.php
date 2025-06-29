@@ -5,7 +5,6 @@ namespace App\Policies;
 use App\Enums\Action;
 use App\Enums\Model;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class UserPolicy
 {

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Filament\Pages\Emit;
 use App\Helpers\Cotizaciones;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -14,7 +13,7 @@ class EmitEstimateController extends Controller
         $libreria = new Cotizaciones;
         $quote = $libreria->getRecord('Quotes', $id);
 
-        if (!$quote) {
+        if (! $quote) {
             abort(404, 'Cotización no encontrada');
         }
 
@@ -31,8 +30,8 @@ class EmitEstimateController extends Controller
 
         return view('emit-estimate-form', compact(
             'id',
-            'insuranceOptions', 
-            'customerName', 
+            'insuranceOptions',
+            'customerName',
             'customerDocument'
         ));
     }
@@ -60,7 +59,7 @@ class EmitEstimateController extends Controller
             $libreria = new Cotizaciones;
             $cotizacion = $libreria->getRecord('Quotes', $id);
 
-            if (!$cotizacion) {
+            if (! $cotizacion) {
                 return back()->withErrors(['error' => 'Cotización no encontrada.']);
             }
 
@@ -73,12 +72,13 @@ class EmitEstimateController extends Controller
             }
 
             // Redirigir a la página de emisión de Filament
-            return redirect()->to('/admin/emit/' . $id)
+            return redirect()->to('/admin/emit/'.$id)
                 ->with('success', 'Cotización emitida exitosamente.');
 
         } catch (\Exception $e) {
-            Log::error('Error emitiendo cotización: ' . $e->getMessage());
-            return back()->withErrors(['error' => 'Error procesando la cotización: ' . $e->getMessage()]);
+            Log::error('Error emitiendo cotización: '.$e->getMessage());
+
+            return back()->withErrors(['error' => 'Error procesando la cotización: '.$e->getMessage()]);
         }
     }
 

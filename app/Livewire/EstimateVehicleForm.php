@@ -53,7 +53,8 @@ class EstimateVehicleForm extends Component implements HasForms
                             ->where('vehicle_make_id', $makeId)
                             ->get()
                             ->mapWithKeys(function ($model) {
-                                $label = $model->name . ($model->type ? ' (' . $model->type->name . ')' : '');
+                                $label = $model->name.($model->type ? ' ('.$model->type->name.')' : '');
+
                                 return [$model->id => $label];
                             });
                     })

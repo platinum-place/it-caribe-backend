@@ -6,7 +6,6 @@ use App\Enums\Action;
 use App\Enums\Model;
 use App\Models\User;
 use App\Models\Vehicle\VehicleMake;
-use Illuminate\Auth\Access\Response;
 
 class VehicleMakePolicy
 {

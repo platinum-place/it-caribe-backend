@@ -4,7 +4,6 @@ namespace App\Livewire;
 
 use App\Helpers\Cotizacion;
 use App\Helpers\Cotizaciones;
-use App\Helpers\CotizarIncendio;
 use App\Helpers\CotizarVida;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\DatePicker;
@@ -82,14 +81,14 @@ class EstimateLifeForm extends Component implements HasForms
 
         $cotizacion = new Cotizacion;
 
-        $cotizacion->suma = $data["suma"];
+        $cotizacion->suma = $data['suma'];
         $cotizacion->plan = 'Vida';
-        $cotizacion->plazo = $data["plazo"];
-        $cotizacion->fecha_deudor = $data["deudor"];
+        $cotizacion->plazo = $data['plazo'];
+        $cotizacion->fecha_deudor = $data['deudor'];
 
-        $cotizacion->fecha_codeudor = $data["codeudor"];
-        $cotizacion->garante = $data["garante"];
-        $cotizacion->tipo_pago = $data["tipo_pago"];
+        $cotizacion->fecha_codeudor = $data['codeudor'];
+        $cotizacion->garante = $data['garante'];
+        $cotizacion->tipo_pago = $data['tipo_pago'];
 
         $cotizar = new CotizarVida($cotizacion, $libreria);
 
