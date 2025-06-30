@@ -73,6 +73,9 @@ class VehicleModelResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->translateLabel(),
+                Tables\Columns\TextColumn::make('id')
+                    ->searchable()
+                    ->label(__('ID')),
                 Tables\Columns\TextColumn::make('make.name')
                     ->searchable()
                     ->label(__('Vehicle make')),
