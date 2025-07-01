@@ -95,7 +95,7 @@ class EstimateVehicleForm extends Component implements HasForms
                         'Privado' => 'Privado',
                         'Publico' => 'Público',
                     ])
-                    ->default('Privado')
+                    ->default('Público')
                     ->required(),
 
                 Select::make('estado')
@@ -119,6 +119,15 @@ class EstimateVehicleForm extends Component implements HasForms
                     ])
                     ->default('Nuevo')
                     ->required(),
+
+                Select::make('tipo_equipo')
+                    ->label('Tipo de motor')
+                    ->options([
+                        '4 cilindros' => '4 cilindros',
+                        '6 cilindros' => '6 cilindros',
+                    ])
+                    ->default('4 cilindros')
+                    ->required(),
             ])
             ->statePath('data')
             ->columns();
@@ -139,6 +148,7 @@ class EstimateVehicleForm extends Component implements HasForms
         $cotizacion->uso = $data['uso'];
         $cotizacion->estado = $data['estado'];
         $cotizacion->tipo_pago = $data['tipo'];
+        $cotizacion->tipo_equipo = $data['tipo_equipo'];
 
         $criteria = 'Name:equals:'.VehicleMake::find($data['marca'])->name;
         $vehicleMake = app(ZohoCRMService::class)->searchRecords('Marcas', $criteria);

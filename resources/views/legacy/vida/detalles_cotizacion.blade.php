@@ -147,3 +147,17 @@
         </tr>
     </table>
 @endif
+
+<table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+    <tr>
+        <td style="padding: 10px; text-align: justify;">
+            <p>a) Las aseguradoras, al efectuar su proceso de evaluación de riesgo, se reservan el derecho de aceptación del mismo. En caso de que la aseguradora seleccionada decline el riesgo, el cliente será notificado y en lo inmediato deberá escoger otra aseguradora que haya presentado cotización.</p>
+
+            <p>b) La aseguradora se reserva el derecho para realizar variación de prima y coberturas en esta cotización de seguros suscrita con el cliente.</p>
+
+            <p><strong>Vigencia:</strong> Por el período del préstamo.</p>
+
+            <p>He leído y estoy de acuerdo en seleccionar la aseguradora: ________________________________</p>
+        </td>
+    </tr>
+</table>

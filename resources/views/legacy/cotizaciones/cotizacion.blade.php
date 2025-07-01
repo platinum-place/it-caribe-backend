@@ -27,7 +27,7 @@
                     'Full',
                     'Ley',
                     'Econo',
-                    '0 KM',
+                    'Premier',
                     'Eléctrico/Híbrido',
                     'Empleado',
                 ]))
@@ -54,7 +54,7 @@
         'Full',
         'Ley',
         'Econo',
-        '0 KM',
+        'Premier',
         'Eléctrico/Híbrido',
         'Empleado',
     ]))
@@ -71,7 +71,7 @@
         'Full',
         'Ley',
         'Econo',
-        '0 KM',
+        'Premier',
         'Eléctrico/Híbrido',
         'Empleado',
     ]))

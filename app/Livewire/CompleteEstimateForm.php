@@ -59,6 +59,7 @@ class CompleteEstimateForm extends Component implements HasForms
                                     ->label('RNC/Cédula')
                                     ->required(),
                                 DatePicker::make('fecha')
+                                    ->required()
                                     ->label('Fecha de Nacimiento'),
                                 TextInput::make('correo')
                                     ->label('Correo Electrónico')
