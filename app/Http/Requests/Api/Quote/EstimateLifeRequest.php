@@ -33,7 +33,7 @@ class EstimateLifeRequest extends FormRequest
             'MontoOriginal' => ['required', 'numeric'],
             'NombreCliente' => ['required', 'string', 'max:255'],
             'IdenCliente' => ['required', 'string', 'max:50'],
-            'FechaNacimiento' => ['required', 'date'],
+            'FechaNacimiento' => ['required', 'date_format:Y-m-d,d/m/Y,Y-m-d\TH:i:sP'],
             'Telefono1' => ['required', 'string'],
             'Direccion' => ['required', 'string', 'max:255'],
             'codeudor' => ['nullable', 'boolean'],
