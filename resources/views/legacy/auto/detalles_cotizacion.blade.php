@@ -106,11 +106,8 @@
                                 ) {
                                     echo 'No aplica <br>';
                                 } else {
-                                    if ($plan->getFieldValue('Valor_asistencia_vial')) {
-                                        echo "Aplica (RD$". number_format($plan->getFieldValue('Valor_asistencia_vial')) . ") <br>";
-                                    } else {
-                                        echo 'Aplica <br>';
-                                    }
+                                                            echo 'Aplica <br>';
+
                                 }
                             } else {
                                 echo 'No aplica <br>';
