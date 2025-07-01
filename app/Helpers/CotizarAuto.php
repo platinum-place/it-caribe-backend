@@ -85,8 +85,6 @@ class CotizarAuto extends Cotizar
                  $this->cotizacion->tipo_equipo == $tasa->getFieldValue('Riesgo')
              ) {
                  continue;
-             }else{
-                         $this->prima_minima = true;
              }
 
             $tasasValidas[] = $tasa;
