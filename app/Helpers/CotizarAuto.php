@@ -249,9 +249,9 @@ class CotizarAuto extends Cotizar
                     $prima = $prima + $cobertura->getFieldValue('Valor_asistencia_vial');
 
 
-                    if($this->prima_minima){
-$prima = $this->prima_minima;
-                    }
+//                     if($this->prima_minima){
+// $prima = $this->prima_minima;
+//                     }
                 }
             }
 
