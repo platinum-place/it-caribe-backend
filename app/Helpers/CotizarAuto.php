@@ -4,8 +4,6 @@ namespace App\Helpers;
 
 class CotizarAuto extends Cotizar
 {
-    public $prima_minima;
-
     private function uso_restringido($Restringir_veh_culos_de_uso): string
     {
         if (in_array($this->cotizacion->uso, $Restringir_veh_culos_de_uso)) {
@@ -43,23 +41,19 @@ class CotizarAuto extends Cotizar
     private function calcular_tasa($planid)
     {
         $valortasa = 0;
-        $this->prima_minima = false;
         $criterio = "Plan:equals:$planid";
         $tasas = $this->zoho->searchRecordsByCriteria('Tasas', $criterio);
         $tasasValidas = [];
 
         // Filtrar tasas válidas
         foreach ((array) $tasas as $tasa) {
-                        if (
-                ! empty($tasa->getFieldValue('Tipo')) &&
-                $this->cotizacion->plan == $tasa->getFieldValue('Tipo')
-            ) {
-                continue;
-            }
             if (
                 ! empty($tasa->getFieldValue('Grupo_de_veh_culo')) and
                 ! in_array($this->cotizacion->modelotipo, $tasa->getFieldValue('Grupo_de_veh_culo'))
             ) {
+                continue;
+            }
+            if ($this->cotizacion->plan != $tasa->getFieldValue('Tipo')) {
                 continue;
             }
             if (
@@ -80,12 +74,6 @@ class CotizarAuto extends Cotizar
             ) {
                 continue;
             }
-             if (
-                 ! empty($tasa->getFieldValue('Riesgo')) &&
-                 $this->cotizacion->tipo_equipo == $tasa->getFieldValue('Riesgo')
-             ) {
-                 continue;
-             }
 
             $tasasValidas[] = $tasa;
         }
@@ -245,11 +233,6 @@ class CotizarAuto extends Cotizar
                     }
 
                     $prima = $prima + $cobertura->getFieldValue('Valor_asistencia_vial');
-
-
-//                     if($this->prima_minima){
-// $prima = $this->prima_minima;
-//                     }
                 }
             }
 
