@@ -48,18 +48,18 @@ class CotizarAuto extends Cotizar
         // Filtrar tasas válidas
         foreach ((array) $tasas as $tasa) {
             if (
+                ! empty($tasa->getFieldValue('A_o')) &&
+                $this->cotizacion->ano != $tasa->getFieldValue('A_o')
+            ) {
+                continue;
+            }
+            if (
                 ! empty($tasa->getFieldValue('Grupo_de_veh_culo')) and
                 ! in_array($this->cotizacion->modelotipo, $tasa->getFieldValue('Grupo_de_veh_culo'))
             ) {
                 continue;
             }
             if ($this->cotizacion->plan != $tasa->getFieldValue('Tipo')) {
-                continue;
-            }
-            if (
-                ! empty($tasa->getFieldValue('A_o')) &&
-                $this->cotizacion->ano != $tasa->getFieldValue('A_o')
-            ) {
                 continue;
             }
             if (
