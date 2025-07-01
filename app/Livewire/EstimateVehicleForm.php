@@ -125,9 +125,7 @@ class EstimateVehicleForm extends Component implements HasForms
                     ->options([
                         '4 cilindros' => '4 cilindros',
                         '6 cilindros' => '6 cilindros',
-                    ])
-                    ->default('4 cilindros')
-                    ->required(),
+                    ]),
             ])
             ->statePath('data')
             ->columns();
