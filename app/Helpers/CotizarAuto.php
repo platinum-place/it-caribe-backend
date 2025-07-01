@@ -80,14 +80,14 @@ class CotizarAuto extends Cotizar
             ) {
                 continue;
             }
-            if (
-                ! empty($tasa->getFieldValue('Riesgo')) &&
-                $this->cotizacion->tipo_equipo == $tasa->getFieldValue('Riesgo')
-            ) {
-                continue;
-            }else{
-                        $this->prima_minima = true;
-            }
+            // if (
+            //     ! empty($tasa->getFieldValue('Riesgo')) &&
+            //     $this->cotizacion->tipo_equipo == $tasa->getFieldValue('Riesgo')
+            // ) {
+            //     continue;
+            // }else{
+            //             $this->prima_minima = true;
+            // }
 
             $tasasValidas[] = $tasa;
         }
