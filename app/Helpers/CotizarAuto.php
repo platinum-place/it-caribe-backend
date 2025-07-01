@@ -78,23 +78,23 @@ class CotizarAuto extends Cotizar
             $tasasValidas[] = $tasa;
         }
 
-        if (! empty($tasasValidas)) {
-            usort($tasasValidas, function ($a, $b) {
-                $tieneAnoA = ! empty($a->getFieldValue('A_o'));
-                $tieneAnoB = ! empty($b->getFieldValue('A_o'));
-
-                if ($tieneAnoA && ! $tieneAnoB) {
-                    return -1;
-                }
-                if (! $tieneAnoA && $tieneAnoB) {
-                    return 1;
-                }
-
-                return 0;
-            });
-
-            $valortasa = $tasasValidas[0]->getFieldValue('Name') / 100;
-        }
+//        if (! empty($tasasValidas)) {
+//            usort($tasasValidas, function ($a, $b) {
+//                $tieneAnoA = ! empty($a->getFieldValue('A_o'));
+//                $tieneAnoB = ! empty($b->getFieldValue('A_o'));
+//
+//                if ($tieneAnoA && ! $tieneAnoB) {
+//                    return -1;
+//                }
+//                if (! $tieneAnoA && $tieneAnoB) {
+//                    return 1;
+//                }
+//
+//                return 0;
+//            });
+//
+//            $valortasa = $tasasValidas[0]->getFieldValue('Name') / 100;
+//        }
 
         return $valortasa;
     }
