@@ -25,7 +25,5 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->environment('production')) {
             URL::forceScheme('https');
         }
-
-        Passport::tokensExpireIn(CarbonInterval::days(15));
     }
 }
