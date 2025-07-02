@@ -84,6 +84,10 @@ class EstimateFireForm extends Component implements HasForms
                     ])
                     ->default('Superior'),
 
+                Checkbox::make('no_vida')
+                    ->label('Quitar Vida')
+                    ->inline(false),
+
                 TextInput::make('direccion')
                     ->label('Dirección')
                     ->required()
@@ -117,6 +121,8 @@ class EstimateFireForm extends Component implements HasForms
         $cotizacion->tipo_pago = $data['tipo_pago'];
 
         $cotizar = new CotizarIncendio3($cotizacion, $libreria);
+
+        $cotizar->no_vida = $data['no_vida'] ?? false;
         $cotizar->cotizar_planes();
 
         $this->dispatch('fill-estimate-table', $cotizacion->planes);
