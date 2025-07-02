@@ -6,7 +6,7 @@ use Laravel\Passport\Http\Middleware\EnsureClientIsResourceOwner;
 Route::middleware(EnsureClientIsResourceOwner::class)->group(function () {
     Route::post('/cotizador/colectiva', [\App\Http\Controllers\Api\VehicleQuoteController::class, 'estimateVehicle']);
     Route::post('/cotizador/EmitirAuto', [\App\Http\Controllers\Api\VehicleQuoteController::class, 'issueVehicle']);
-    Route::get('/cotizador/CancelarAuto', [\App\Http\Controllers\Api\VehicleQuoteController::class, 'cancelVehicle']);
+    Route::post('/cotizador/CancelarAuto', [\App\Http\Controllers\Api\VehicleQuoteController::class, 'cancelVehicle']);
 
     Route::get('/cotizador/ValorPromedio', [\App\Http\Controllers\Api\QuoteController::class, 'valueVehicle']);
     Route::post('/cotizador/ValidarInspeccion', [\App\Http\Controllers\Api\QuoteController::class, 'validateInspection']);
@@ -20,7 +20,7 @@ Route::middleware(EnsureClientIsResourceOwner::class)->group(function () {
 
     Route::post('/cotizador/CotizaDesempleoDeuda', [\App\Http\Controllers\Api\UnemploymentDebtController::class, 'estimateUnemploymentDebt']);
     Route::post('/cotizador/EmitirDesempleoDeuda', [\App\Http\Controllers\Api\UnemploymentDebtController::class, 'issueUnemploymentDebt']);
-    Route::get('/cotizador/CancelarDesempleoDeuda', [\App\Http\Controllers\Api\UnemploymentDebtController::class, 'cancelUnemploymentDebt']);
+    Route::post('/cotizador/CancelarDesempleoDeuda', [\App\Http\Controllers\Api\UnemploymentDebtController::class, 'cancelUnemploymentDebt']);
 
     Route::post('/cotizador/CotizaDesempleo', [\App\Http\Controllers\Api\UnemploymentController::class, 'estimateUnemployment']);
     Route::post('/cotizador/EmitirDesempleo', [\App\Http\Controllers\Api\UnemploymentController::class, 'issueUnemployment']);
@@ -28,7 +28,7 @@ Route::middleware(EnsureClientIsResourceOwner::class)->group(function () {
 
     Route::post('/cotizador/CotizaIncendio', [\App\Http\Controllers\Api\FireController::class, 'estimateFire']);
     Route::post('/cotizador/EmitirIncendio', [\App\Http\Controllers\Api\FireController::class, 'issueFire']);
-    Route::get('/cotizador/CancelarIncendio', [\App\Http\Controllers\Api\FireController::class, 'cancelFire']);
+    Route::post('/cotizador/CancelarIncendio', [\App\Http\Controllers\Api\FireController::class, 'cancelFire']);
 
     Route::get('/cotizador/GetTipoEmpleado', [\App\Http\Controllers\Api\QuoteController::class, 'employmentTypes']);
     Route::get('/cotizador/GetGiroDelNegocio', [\App\Http\Controllers\Api\QuoteController::class, 'businessTypes']);
