@@ -20,3 +20,5 @@ Route::middleware(Authenticate::class)
     ->group(function () {
         Route::post('emit-estimate/{id}', [\App\Http\Controllers\EmitEstimateController::class, 'store'])->name('emit-estimate.store');
     });
+
+require_once __DIR__.'/web/filament.php';

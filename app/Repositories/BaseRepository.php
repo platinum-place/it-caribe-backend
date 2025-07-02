@@ -2,26 +2,14 @@
 
 namespace App\Repositories;
 
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class BaseRepository
 {
-    public function __construct(
-        protected Model $model {
-            get
-    {
-        return $this->model;
-    }
-            set(Model $value) {
-                $this->model = $value;
-            }
-        })
-    {
-    }
+    public function __construct(protected Model $model) {}
 
-    public function search(array $params = []): LengthAwarePaginator
+    public function search(array $params = [], ?bool $onlyTrashed = false): LengthAwarePaginator
     {
         $builder = $this->model->newQuery();
 
@@ -29,15 +17,14 @@ class BaseRepository
             $builder->where($field, $value);
         }
 
+        if ($onlyTrashed) {
+            $builder->onlyTrashed();
+        }
+
         return $builder->paginate();
     }
 
-    public function all(): Collection
-    {
-        return $this->model->all();
-    }
-
-    public function getById(int|string $id, ?array $relations = [], ?bool $onlyTrashed = false): ?Model
+    public function getById(int|string $id, ?array $relations = [], ?bool $onlyTrashed = false): Model
     {
         $builder = $this->model->newQuery();
 
