@@ -70,11 +70,11 @@ class CotizarIncendio3 extends Cotizar
 
         $monto_prima = 0;
         if (! empty($this->cotizacion->fecha_codeudor)) {
-            $prima_deudor = ($this->cotizacion->suma / 1000) * $this->deudor;
-            $prima_codeudor = ($this->cotizacion->suma / 1000) * ($this->codeudor - $this->deudor);
+            $prima_deudor = ($this->cotizacion->prestamo / 1000) * $this->deudor;
+            $prima_codeudor = ($this->cotizacion->prestamo / 1000) * ($this->codeudor - $this->deudor);
             $monto_prima = $prima_deudor + $prima_codeudor;
         } else {
-            $monto_prima = ($this->cotizacion->suma / 1000) * $this->deudor;
+            $monto_prima = ($this->cotizacion->prestamo / 1000) * $this->deudor;
         }
 
         return $monto_prima;
