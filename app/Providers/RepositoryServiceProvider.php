@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Contracts\Repositories\Partners\VendorRepositoryContract;
 use App\Contracts\Repositories\UserRepositoryContract;
+use App\Repositories\Partner\VendorRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Support\ServiceProvider;
 
@@ -10,6 +12,7 @@ class RepositoryServiceProvider extends ServiceProvider
 {
     protected array $repositories = [
         UserRepositoryContract::class => UserRepository::class,
+        VendorRepositoryContract::class => VendorRepository::class,
     ];
 
     /**

@@ -24,7 +24,11 @@ class AuthenticateController extends Controller
 
         $token = $user->createToken('api')->plainTextToken;
 
-        return new LoginResource($user)->additional(['token' => $token]);
+        return new LoginResource($user)->additional([
+            'meta' => [
+                'token' => $token
+            ]
+        ]);
     }
 
     /**

@@ -10,6 +10,6 @@ class Vendor extends Model
     use softDeletes;
 
     protected $fillable = [
-        'identification', 'name', 'profile_photo_path',
+        'identification', 'name',
     ];
 }

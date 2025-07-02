@@ -17,7 +17,6 @@ return new class extends Migration
             $table->softDeletes();
             $table->string('identification')->unique();
             $table->string('name');
-            $table->string('profile_photo_path')->nullable();
         });
     }
 
