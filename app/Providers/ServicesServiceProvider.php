@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-
 use App\Contracts\Services\UserServiceContract;
 use App\Services\UserService;
 use Illuminate\Support\ServiceProvider;

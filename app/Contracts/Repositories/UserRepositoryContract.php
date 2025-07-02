@@ -2,9 +2,4 @@
 
 namespace App\Contracts\Repositories;
 
-use Illuminate\Database\Query\Builder;
-
-interface UserRepositoryContract extends BaseRepositoryContract
-{
-
-}
+interface UserRepositoryContract extends BaseRepositoryContract {}

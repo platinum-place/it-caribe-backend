@@ -151,7 +151,7 @@ class Zoho
         // recorre los planes/productos al registro
         foreach ($planes as $plan) {
             $lineItem = ZCRMInventoryLineItem::getInstance(null);
-            $lineItem->setListPrice(round($plan['total'],2));
+            $lineItem->setListPrice(round($plan['total'], 2));
             $lineItem->setProduct(ZCRMRecord::getInstance('Products', $plan['planid']));
             $lineItem->setQuantity(1);
             if (! empty($plan['monto_mantenimiento'])) {

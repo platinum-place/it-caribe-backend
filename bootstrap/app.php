@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Middleware\EnsureJsonRequest;
-use App\Http\Middleware\SecurityHeaders;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -19,15 +17,6 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->trustProxies(at: '*');
-
-        $middleware->validateCsrfTokens(except: [
-            'livewire/*',
-        ]);
-
-        $middleware->api([
-            SecurityHeaders::class,
-            EnsureJsonRequest::class,
-        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //        if (config('app.debug')) {

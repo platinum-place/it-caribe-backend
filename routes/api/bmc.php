@@ -1,9 +1,15 @@
 <?php
 
+use App\Http\Middleware\EnsureJsonRequest;
+use App\Http\Middleware\SecurityHeaders;
 use Illuminate\Support\Facades\Route;
 use Laravel\Passport\Http\Middleware\EnsureClientIsResourceOwner;
 
-Route::middleware(EnsureClientIsResourceOwner::class)->group(function () {
+Route::middleware([
+    EnsureClientIsResourceOwner::class,
+    SecurityHeaders::class,
+    EnsureJsonRequest::class,
+])->group(function () {
     Route::post('/cotizador/colectiva', [\App\Http\Controllers\Api\VehicleQuoteController::class, 'estimateVehicle']);
     Route::post('/cotizador/EmitirAuto', [\App\Http\Controllers\Api\VehicleQuoteController::class, 'issueVehicle']);
     Route::get('/cotizador/CancelarAuto', [\App\Http\Controllers\Api\VehicleQuoteController::class, 'cancelVehicle']);

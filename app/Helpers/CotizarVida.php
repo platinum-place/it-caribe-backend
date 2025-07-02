@@ -105,9 +105,9 @@ class CotizarVida extends Cotizar
 
                 // en caso de haber algun problema
                 if ($prima == 0) {
-                    if(empty($this->codeudor)){
+                    if (empty($this->codeudor)) {
                         $comentario = 'La edad del deudor no esta dentro del limite permitido.';
-                    }else{
+                    } else {
                         $comentario = 'La edad del codeudor no esta dentro del limite permitido.';
                     }
                 }

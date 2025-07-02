@@ -2,7 +2,4 @@
 
 namespace App\Contracts\Services;
 
-interface UserServiceContract extends BaseServiceContract
-{
-
-}
+interface UserServiceContract extends BaseServiceContract {}

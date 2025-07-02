@@ -20,6 +20,7 @@
         "laravel-lang/common": "^6.7",
         "laravel/framework": "^12.0",
         "laravel/passport": "^13.0",
+        "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.10.1",
         "simplesoftwareio/simple-qrcode": "^4.2",
         "spatie/laravel-permission": "^6.17",
@@ -41,7 +42,6 @@
             "Database\\Seeders\\": "database/seeders/"
         },
         "files": [
-            "constants.php",
             "helpers.php"
         ]
     },

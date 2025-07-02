@@ -8,9 +8,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class BaseService
 {
-    public function __construct(protected BaseRepository $repository)
-    {
-    }
+    public function __construct(protected BaseRepository $repository) {}
 
     public function search(array $params = [], ?bool $onlyTrashed = false): LengthAwarePaginator
     {

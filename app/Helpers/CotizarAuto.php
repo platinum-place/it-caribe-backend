@@ -24,10 +24,10 @@ class CotizarAuto extends Cotizar
 
     private function vehiculo_restringido($aseguradoraid): string
     {
-        $criterio = '((Marca:equals:' . $this->cotizacion->marcaid . ") and (Aseguradora:equals:$aseguradoraid))";
+        $criterio = '((Marca:equals:'.$this->cotizacion->marcaid.") and (Aseguradora:equals:$aseguradoraid))";
         $marcas = $this->zoho->searchRecordsByCriteria('Restringidos', $criterio);
 
-        foreach ((array)$marcas as $marca) {
+        foreach ((array) $marcas as $marca) {
             if (empty($marca->getFieldValue('Modelo'))) {
                 return 'Marca restrigida.';
             } elseif ($this->cotizacion->modeloid == $marca->getFieldValue('Modelo')->getEntityId()) {
@@ -41,24 +41,24 @@ class CotizarAuto extends Cotizar
     private function calcular_tasa($planid)
     {
         $valortasa = 0;
-        $criterio = "((Plan:equals:$planid) and (A_o:equals:" . $this->cotizacion->ano . ") and (Tipo:equals:" . $this->cotizacion->plan . "))";
+        $criterio = "((Plan:equals:$planid) and (A_o:equals:".$this->cotizacion->ano.') and (Tipo:equals:'.$this->cotizacion->plan.'))';
         $tasas = $this->zoho->searchRecordsByCriteria('Tasas', $criterio);
 
-        foreach ((array)$tasas as $tasa) {
+        foreach ((array) $tasas as $tasa) {
             if (
-                !empty($tasa->getFieldValue('Grupo_de_veh_culo')) and
-                !in_array($this->cotizacion->modelotipo, $tasa->getFieldValue('Grupo_de_veh_culo'))
+                ! empty($tasa->getFieldValue('Grupo_de_veh_culo')) and
+                ! in_array($this->cotizacion->modelotipo, $tasa->getFieldValue('Grupo_de_veh_culo'))
             ) {
                 continue;
             }
             if (
-                !empty($tasa->getFieldValue('Suma_hasta')) &&
+                ! empty($tasa->getFieldValue('Suma_hasta')) &&
                 $this->cotizacion->suma > $tasa->getFieldValue('Suma_hasta')
             ) {
                 continue;
             }
             if (
-                !empty($tasa->getFieldValue('Suma_limite')) &&
+                ! empty($tasa->getFieldValue('Suma_limite')) &&
                 $this->cotizacion->suma < $tasa->getFieldValue('Suma_limite')
             ) {
                 continue;
@@ -71,29 +71,29 @@ class CotizarAuto extends Cotizar
             return $valortasa;
         }
 
-        $criterio = "((Plan:equals:$planid) and (Tipo:equals:" . $this->cotizacion->plan . "))";
+        $criterio = "((Plan:equals:$planid) and (Tipo:equals:".$this->cotizacion->plan.'))';
         $tasas = $this->zoho->searchRecordsByCriteria('Tasas', $criterio);
 
-        foreach ((array)$tasas as $tasa) {
+        foreach ((array) $tasas as $tasa) {
             if (
-                !empty($tasa->getFieldValue('A_o'))
+                ! empty($tasa->getFieldValue('A_o'))
             ) {
                 continue;
             }
             if (
-                !empty($tasa->getFieldValue('Grupo_de_veh_culo')) and
-                !in_array($this->cotizacion->modelotipo, $tasa->getFieldValue('Grupo_de_veh_culo'))
+                ! empty($tasa->getFieldValue('Grupo_de_veh_culo')) and
+                ! in_array($this->cotizacion->modelotipo, $tasa->getFieldValue('Grupo_de_veh_culo'))
             ) {
                 continue;
             }
             if (
-                !empty($tasa->getFieldValue('Suma_hasta')) &&
+                ! empty($tasa->getFieldValue('Suma_hasta')) &&
                 $this->cotizacion->suma > $tasa->getFieldValue('Suma_hasta')
             ) {
                 continue;
             }
             if (
-                !empty($tasa->getFieldValue('Suma_limite')) &&
+                ! empty($tasa->getFieldValue('Suma_limite')) &&
                 $this->cotizacion->suma < $tasa->getFieldValue('Suma_limite')
             ) {
                 continue;
@@ -110,10 +110,10 @@ class CotizarAuto extends Cotizar
         $valorrecargo = 0;
 
         // verificar si la aseguradora tiene algun recargo para la marca o modelo
-        $criterio = '((Marca:equals:' . $this->cotizacion->marcaid . ") and (Aseguradora:equals:$aseguradoraid))";
+        $criterio = '((Marca:equals:'.$this->cotizacion->marcaid.") and (Aseguradora:equals:$aseguradoraid))";
         $recargos = $this->zoho->searchRecordsByCriteria('Recargos', $criterio);
 
-        foreach ((array)$recargos as $recargo) {
+        foreach ((array) $recargos as $recargo) {
             $modeloTipo = $this->cotizacion->modelotipo;
             $modeloId = $this->cotizacion->modeloid;
             $ano = $this->cotizacion->ano;
@@ -179,8 +179,7 @@ class CotizarAuto extends Cotizar
         $Suma_asegurada_max,
         $Max_antig_edad,
         $aseguradoraid
-    ): string
-    {
+    ): string {
         // verificar limites de uso
         if ($comentario = $this->uso_restringido($Restringir_veh_culos_de_uso)) {
             return $comentario;
@@ -207,10 +206,10 @@ class CotizarAuto extends Cotizar
     public function cotizar_planes()
     {
         // planes relacionados al banco
-        $criterio = '((Corredor:equals:' . 3222373000092390001 . ') and (Product_Category:equals:Auto))';
+        $criterio = '((Corredor:equals:'. 3222373000092390001 .') and (Product_Category:equals:Auto))';
         $coberturas = $this->zoho->searchRecordsByCriteria('Products', $criterio);
 
-        foreach ((array)$coberturas as $cobertura) {
+        foreach ((array) $coberturas as $cobertura) {
             // inicializacion de variables
             $prima = 0;
 

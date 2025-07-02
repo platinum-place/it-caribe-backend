@@ -1,6 +1,5 @@
 FROM php:8.4-cli
 
-# Argumentos para el usuario
 ARG UID=1000
 ARG GID=1000
 
@@ -40,7 +39,6 @@ RUN pecl install xdebug \
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
-# Crear grupo y usuario con los mismos IDs del host
 RUN groupadd -g ${GID} appgroup && \
     useradd -u ${UID} -g appgroup -m -s /bin/bash appuser
 
