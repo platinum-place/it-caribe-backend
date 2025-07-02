@@ -5,7 +5,7 @@ namespace App\Contracts\Services;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-interface BaseServiceInterface
+interface BaseServiceContract
 {
     public function search(array $params = [], ?bool $onlyTrashed = false): LengthAwarePaginator;
 

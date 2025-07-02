@@ -5,7 +5,7 @@ namespace App\Contracts\Repositories;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-interface BaseRepositoryInterface
+interface BaseRepositoryContract
 {
     public function search(array $params = [], ?bool $onlyTrashed = false): LengthAwarePaginator;
 
