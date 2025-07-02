@@ -16,7 +16,7 @@ Route::middleware(EnsureClientIsResourceOwner::class)->group(function () {
 
     Route::post('/cotizador/CotizaVida', [\App\Http\Controllers\Api\LifeController::class, 'estimateLife']);
     Route::post('/cotizador/EmitirVida', [\App\Http\Controllers\Api\LifeController::class, 'issueLife']);
-    Route::get('/cotizador/CancelarVida', [\App\Http\Controllers\Api\LifeController::class, 'cancelLife']);
+    Route::post('/cotizador/CancelarVida', [\App\Http\Controllers\Api\LifeController::class, 'cancelLife']);
 
     Route::post('/cotizador/CotizaDesempleoDeuda', [\App\Http\Controllers\Api\UnemploymentDebtController::class, 'estimateUnemploymentDebt']);
     Route::post('/cotizador/EmitirDesempleoDeuda', [\App\Http\Controllers\Api\UnemploymentDebtController::class, 'issueUnemploymentDebt']);
@@ -24,7 +24,7 @@ Route::middleware(EnsureClientIsResourceOwner::class)->group(function () {
 
     Route::post('/cotizador/CotizaDesempleo', [\App\Http\Controllers\Api\UnemploymentController::class, 'estimateUnemployment']);
     Route::post('/cotizador/EmitirDesempleo', [\App\Http\Controllers\Api\UnemploymentController::class, 'issueUnemployment']);
-    Route::get('/cotizador/CancelarDesempleo', [\App\Http\Controllers\Api\UnemploymentController::class, 'cancelUnemployment']);
+    Route::post('/cotizador/CancelarDesempleo', [\App\Http\Controllers\Api\UnemploymentController::class, 'cancelUnemployment']);
 
     Route::post('/cotizador/CotizaIncendio', [\App\Http\Controllers\Api\FireController::class, 'estimateFire']);
     Route::post('/cotizador/EmitirIncendio', [\App\Http\Controllers\Api\FireController::class, 'issueFire']);
