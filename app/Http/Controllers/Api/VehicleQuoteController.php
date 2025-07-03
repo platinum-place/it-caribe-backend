@@ -87,10 +87,10 @@ class VehicleQuoteController extends Controller
                 $amount = round($amount, 2);
             }
 
-            $criteria = 'Name:equals:'.VehicleMake::find($request->get('Marca'))->name;
+            $criteria = 'Name:equals:'.VehicleMake::firstWhere('code',$request->get('Marca'))->name;
             $vehicleMake = $this->crm->searchRecords('Marcas', $criteria);
 
-            $criteria = 'Name:equals:'.VehicleModel::find($request->get('Modelo'))->name;
+            $criteria = 'Name:equals:'.VehicleModel::firstWhere('code',$request->get('Modelo'))->name;
             $vehicleModel = $this->crm->searchRecords('Modelos', $criteria);
 
             $data = [
