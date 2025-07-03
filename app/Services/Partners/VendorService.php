@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Partner;
+namespace App\Services\Partners;
 
 use App\Contracts\Repositories\Partners\VendorRepositoryContract;
 use App\Contracts\Services\Partners\VendorServiceContract;
