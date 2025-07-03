@@ -100,8 +100,6 @@ class VehicleModelResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                     Tables\Actions\ForceDeleteBulkAction::make(),
                     Tables\Actions\RestoreBulkAction::make(),
-                    Tables\Actions\ExportBulkAction::make()
-                        ->exporter(VehicleModelExporter::class),
                 ]),
             ]);
     }
