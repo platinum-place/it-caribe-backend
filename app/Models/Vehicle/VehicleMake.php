@@ -11,7 +11,7 @@ class VehicleMake extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'id', 'name',
+        'id', 'name','code',
     ];
 
     public function models(): HasMany

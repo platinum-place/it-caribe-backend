@@ -11,7 +11,7 @@ class VehicleModel extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'id', 'name', 'vehicle_make_id', 'vehicle_type_id',
+        'id', 'name', 'code', 'vehicle_make_id', 'vehicle_type_id',
     ];
 
     public function make(): BelongsTo
