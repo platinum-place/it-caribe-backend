@@ -41,9 +41,11 @@ class ProductController extends Controller
         $fields = ['id', 'Vendor_Name', 'Product_Name'];
         $response = $this->crm->getRecords('Products', $fields, $id);
 
+        $response2 = $this->crm->getRecords('Vendors', ['Nombre'], (int) $response['data'][0]['Vendor_Name']['id']);
+
         $product = [
             'IdAseguradora' => (int) $response['data'][0]['Vendor_Name']['id'],
-            'Aseguradora' => $response['data'][0]['Vendor_Name']['Nombre'],
+            'Aseguradora' => $response2['data'][0]['Nombre'],
         ];
 
         return response()->json($product);
