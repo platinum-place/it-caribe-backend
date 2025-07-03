@@ -4,8 +4,10 @@ namespace App\Providers;
 
 use App\Contracts\Services\Partners\VendorServiceContract;
 use App\Contracts\Services\UserServiceContract;
-use App\Services\Partner\VendorService;
+use App\Contracts\Services\Vehicle\VehicleMakeServiceContract;
+use App\Services\Partners\VendorService;
 use App\Services\UserService;
+use App\Services\Vehicle\VehicleMakeService;
 use Illuminate\Support\ServiceProvider;
 
 class ServicesServiceProvider extends ServiceProvider
@@ -13,6 +15,7 @@ class ServicesServiceProvider extends ServiceProvider
     protected array $services = [
         UserServiceContract::class => UserService::class,
         VendorServiceContract::class => VendorService::class,
+        VehicleMakeServiceContract::class => VehicleMakeService::class,
     ];
 
     /**
