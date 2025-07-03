@@ -13,17 +13,23 @@ class VehicleModelsImport implements ToModel, WithHeadingRow
      */
     public function model(array $row)
     {
-        return VehicleModel::updateOrCreate(
-            [
-                'id' => $row['modelovehiculo_id'],
-            ],
-            [
-                'id' => $row['modelovehiculo_id'],
-                'name' => $row['description'],
-                'code' => $row['codigosgs'],
-                'vehicle_make_id' => $row['marcavehiculo_id'],
-                // 'vehicle_type_id' => /**  $row['modelovehiculo_id']*/ 1,
-            ]
-        );
+        $attributes = [
+            'id' => $row['modelovehiculo_id'],
+        ];
+
+        $values = [
+            'id' => $row['modelovehiculo_id'],
+            'name' => $row['description'],
+            'code' => $row['codigosgs'],
+            'vehicle_make_id' => $row['marcavehiculo_id'],
+        ];
+
+        $exists = VehicleModel::where('id', $row['modelovehiculo_id'])->exists();
+
+        if (!$exists) {
+            $values['vehicle_type_id'] = 1;
+        }
+
+        return VehicleModel::updateOrCreate($attributes, $values);
     }
 }
