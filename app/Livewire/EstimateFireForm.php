@@ -64,7 +64,7 @@ class EstimateFireForm extends Component implements HasForms
                     ->prefix('$'),
 
                 TextInput::make('plazo')
-                    ->label('Plazo')
+                    ->label('Plazo en meses')
                     ->numeric()
                     ->required()
                     ->minValue(1),
@@ -85,7 +85,7 @@ class EstimateFireForm extends Component implements HasForms
                     ->default('Superior'),
 
                 Checkbox::make('no_vida')
-                    ->label('Quitar Vida')
+                    ->label('Quitar plan Vida')
                     ->inline(false),
 
                 TextInput::make('direccion')
