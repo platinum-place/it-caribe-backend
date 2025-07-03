@@ -40,8 +40,10 @@ class SearchEstimateTable extends Component
         return collect($this->cotizaciones)->filter(function ($cotizacion) {
             $searchTerm = strtolower($this->search);
 
-            return str_contains(strtolower($cotizacion['id'] ?? ''), $searchTerm) ||
-                   str_contains(strtolower($cotizacion['RNC_C_dula'] ?? ''), $searchTerm);
+            return str_contains(strtolower($emision['id'] ?? ''), $searchTerm) ||
+                str_contains(strtolower($emision['RNC_C_dula'] ?? ''), $searchTerm) ||
+                str_contains(strtolower($emision['Nombre'] ?? ''), $searchTerm) ||
+                str_contains(strtolower($emision['Apellido'] ?? ''), $searchTerm);
         });
     }
 
