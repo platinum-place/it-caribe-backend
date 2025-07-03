@@ -9,7 +9,9 @@ use Illuminate\Http\Request;
 
 class VehicleMakeController extends Controller
 {
-    public function __construct(protected VehicleMakeServiceContract $contract) {}
+    public function __construct(protected VehicleMakeServiceContract $contract)
+    {
+    }
 
     /**
      * Display a listing of the resource.
@@ -66,5 +68,12 @@ class VehicleMakeController extends Controller
         $record = $this->contract->restore($id);
 
         return new VehicleMakeResource($record);
+    }
+
+    public function import(Request $request)
+    {
+        $this->contract->import($request->file('file'));
+
+        return response()->noContent();
     }
 }
