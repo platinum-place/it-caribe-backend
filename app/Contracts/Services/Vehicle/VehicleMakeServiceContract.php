@@ -6,5 +6,5 @@ use App\Contracts\Services\BaseServiceContract;
 
 interface VehicleMakeServiceContract extends BaseServiceContract
 {
-    public function import( $file);
+    public function import($file);
 }

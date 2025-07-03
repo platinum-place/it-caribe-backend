@@ -26,8 +26,8 @@ class AuthenticateController extends Controller
 
         return new LoginResource($user)->additional([
             'meta' => [
-                'token' => $token
-            ]
+                'token' => $token,
+            ],
         ]);
     }
 

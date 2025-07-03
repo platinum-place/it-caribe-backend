@@ -2,7 +2,6 @@
 
 namespace App\Imports\Vehicle;
 
-use App\Models\Vehicle\VehicleMake;
 use App\Models\Vehicle\VehicleModel;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -10,8 +9,6 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 class VehicleModelsImport implements ToModel, WithHeadingRow
 {
     /**
-     * @param array $row
-     *
      * @return \Illuminate\Database\Eloquent\Model|null
      */
     public function model(array $row)
@@ -25,7 +22,7 @@ class VehicleModelsImport implements ToModel, WithHeadingRow
                 'name' => $row['description'],
                 'code' => $row['codigosgs'],
                 'vehicle_make_id' => $row['marcavehiculo_id'],
-                //'vehicle_type_id' => /**  $row['modelovehiculo_id']*/ 1,
+                // 'vehicle_type_id' => /**  $row['modelovehiculo_id']*/ 1,
             ]
         );
     }

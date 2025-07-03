@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\Vehicle\VehicleTypeResource\Pages;
 
-use App\Filament\Imports\Vehicle\VehicleTypeImporter;
 use App\Filament\Resources\Vehicle\VehicleTypeResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ManageRecords;

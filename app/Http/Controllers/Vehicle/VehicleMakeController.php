@@ -9,9 +9,7 @@ use Illuminate\Http\Request;
 
 class VehicleMakeController extends Controller
 {
-    public function __construct(protected VehicleMakeServiceContract $contract)
-    {
-    }
+    public function __construct(protected VehicleMakeServiceContract $contract) {}
 
     /**
      * Display a listing of the resource.

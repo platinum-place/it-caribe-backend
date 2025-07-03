@@ -15,7 +15,7 @@ class VehicleMakeService extends BaseService implements VehicleMakeServiceContra
         parent::__construct($repository);
     }
 
-    public function import( $file)
+    public function import($file)
     {
         Excel::import(new VehicleMakesImport, $file);
     }

@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\Vehicle;
 
-use App\Filament\Exports\Vehicle\VehicleTypeExporter;
 use App\Filament\Resources\Vehicle\VehicleTypeResource\Pages;
 use App\Models\Vehicle\VehicleType;
 use Filament\Forms;
