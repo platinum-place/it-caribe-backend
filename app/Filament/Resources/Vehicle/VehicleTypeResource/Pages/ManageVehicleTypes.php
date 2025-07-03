@@ -15,10 +15,6 @@ class ManageVehicleTypes extends ManageRecords
     {
         return [
             Actions\CreateAction::make(),
-            Actions\ImportAction::make()
-                ->importer(VehicleTypeImporter::class)
-                ->label(__('Import :name', ['name' => __('Vehicle types')]))
-                ->modalHeading(__('Import :name', ['name' => __('Vehicle types')])),
         ];
     }
 }

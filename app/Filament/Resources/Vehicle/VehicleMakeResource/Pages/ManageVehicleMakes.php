@@ -15,10 +15,6 @@ class ManageVehicleMakes extends ManageRecords
     {
         return [
             Actions\CreateAction::make(),
-            Actions\ImportAction::make()
-                ->importer(VehicleMakeImporter::class)
-                ->label(__('Import :name', ['name' => __('Vehicle makes')]))
-                ->modalHeading(__('Import :name', ['name' => __('Vehicle makes')])),
         ];
     }
 }
