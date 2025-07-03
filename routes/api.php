@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Auth\AuthenticateController;
 use App\Http\Controllers\Partners\VendorController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Vehicle\VehicleMakeController;
