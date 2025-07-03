@@ -50,8 +50,6 @@
 
             <p><strong>D.</strong> La aseguradora se reserva el derecho para realizar variaciones de prima y coberturas en la cotización de seguros suscrita con el cliente, con previa comunicación al banco y al cliente.</p>
 
-            <p><strong>E.</strong> Propiedades en proximidades mayores o iguales a 500 metros de playas o ríos deben ser inspeccionadas por la aseguradora antes de formalizar la facilidad.</p>
-
             <p><strong>F.</strong> La cobertura otorgada bajo esta póliza queda condicionada a las cláusulas y condiciones especificadas en los anexos, los cuales han sido incluidos en la póliza definitiva, cuyas condiciones completas están contenidas en la copia que reposa en la entidad financiera y aseguradora:</p>
 
             <ul style="margin-top: 0; margin-bottom: 10px; padding-left: 20px;">
@@ -61,6 +59,8 @@
             </ul>
 
             <p><strong>G.</strong> <strong>Vigencia:</strong> Esta póliza será válida hasta la cancelación del préstamo.</p>
+
+            <p><strong>H.</strong> Propiedades en proximidades menores o iguales a 500 metros de playas o ríos deben ser inspeccionadas por la aseguradora antes de formalizar la facilidad.</p>
 
             <p><strong>Exclusiones:</strong></p>
             <ul style="margin-top: 0; margin-bottom: 10px; padding-left: 20px;">
