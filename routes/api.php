@@ -20,6 +20,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('vehicle-makes', VehicleMakeController::class);
 
     Route::put('vehicle-models/{id}/restore', [VehicleModelController::class, 'restore'])->name('vehicle-models.restore');
+    Route::post('vehicle-models/import', [VehicleModelController::class, 'import'])->name('vehicle-models.import');
     Route::apiResource('vehicle-models', VehicleModelController::class);
 
     Route::put('vehicle-types/{id}/restore', [VehicleTypeController::class, 'restore'])->name('vehicle-types.restore');

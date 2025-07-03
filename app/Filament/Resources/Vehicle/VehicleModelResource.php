@@ -85,6 +85,9 @@ class VehicleModelResource extends Resource
                 Tables\Columns\TextColumn::make('type.name')
                     ->searchable()
                     ->label(__('Vehicle type')),
+                Tables\Columns\TextColumn::make('code')
+                    ->searchable()
+                    ->label(__('Codigo SGS')),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),

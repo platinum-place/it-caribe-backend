@@ -67,4 +67,11 @@ class VehicleModelController extends Controller
 
         return new VehicleModelResource($record);
     }
+
+    public function import(Request $request)
+    {
+        $this->contract->import($request->file('file'));
+
+        return response()->noContent();
+    }
 }

@@ -64,6 +64,9 @@ class VehicleMakeResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
                     ->translateLabel(),
+                Tables\Columns\TextColumn::make('code')
+                    ->searchable()
+                    ->label(__('Codigo SGS')),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
