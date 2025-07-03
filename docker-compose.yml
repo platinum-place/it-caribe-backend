@@ -13,16 +13,6 @@ services:
         networks:
             - app-network
 
-    php-fpm:
-        build:
-            context: ./docker/php-fpm
-            dockerfile: Dockerfile
-        container_name: ${APP_NAME}-php-fpm
-        volumes:
-            - ./:/var/www/html
-        networks:
-            - app-network
-
     nginx:
         build:
             context: ./docker/nginx
@@ -35,10 +25,25 @@ services:
         networks:
             - app-network
 
-    php-cli:
+    php-fpm:
         build:
-            context: ./docker/php-cli
-            dockerfile: Dockerfile
+            context: ./docker
+            dockerfile: php-fpm/Dockerfile
+        container_name: ${APP_NAME}-php-fpm
+        environment:
+            - UID=${UID:-1000}
+            - GID=${GID:-1000}
+        volumes:
+            - ./:/var/www/html
+        networks:
+            - app-network
+
+    php-cli:
+        tty: true
+        stdin_open: true
+        build:
+            context: ./docker
+            dockerfile: php-cli/Dockerfile
             args:
                 UID: ${UID:-1000}
                 GID: ${GID:-1000}

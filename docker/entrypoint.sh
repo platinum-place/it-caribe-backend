@@ -29,4 +29,8 @@ chown "$UID":"$GID" ZCRMClientLibrary.log
 
 umask 002
 
-exec gosu "$UID":"$GID" "$@"
+if [ "$1" = "php-fpm" ]; then
+    exec "$@"
+else
+    exec gosu "$UID":"$GID" "$@"
+fi
