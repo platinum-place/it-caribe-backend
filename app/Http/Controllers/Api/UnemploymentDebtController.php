@@ -93,6 +93,7 @@ class UnemploymentDebtController extends Controller
 
             $responseQuote = $this->crm->insertRecords('Quotes', $data);
             $tmp = TmpQuote::create(['id_crm' => $responseQuote['data'][0]['details']['id']]);
+            $response2 = $this->crm->getRecords('Vendors', ['Nombre'], (int)$product['Vendor_Name']['id']);
 
             $quotes[] = [
                 'Impuesto' => number_format($amount * 0.16, 1, '.', ''),
@@ -104,7 +105,7 @@ class UnemploymentDebtController extends Controller
                 'Fecha' => date('Y-m-d\TH:i:s.vP'),
                 'IdenCliente' => $request->get('IdenCliente'),
                 'Telefono' => $request->get('Telefono'),
-                'Aseguradora' => $product['Vendor_Name']['Nombre'],
+                'Aseguradora' => $response2['data'][0]['Nombre'],
                 'MontoPrestamo' => number_format(0.0, 1, '.', ''),
                 'Cuota' => number_format($request->get('Cuota'), 1, '.', ''),
                 'PlazoMeses' => $request->get('Plazo') * 12,

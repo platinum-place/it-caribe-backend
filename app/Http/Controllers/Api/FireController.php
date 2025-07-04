@@ -80,6 +80,7 @@ class FireController extends Controller
 
             $responseQuote = $this->crm->insertRecords('Quotes', $data);
             $tmp = TmpQuote::create(['id_crm' => $responseQuote['data'][0]['details']['id']]);
+            $response2 = $this->crm->getRecords('Vendors', ['Nombre'], (int)$product['Vendor_Name']['id']);
 
             $quotes[] = [
                 'Impuesto' => number_format($amount * 0.16, 1, '.', ''),
@@ -102,7 +103,7 @@ class FireController extends Controller
                 'TipoConstruccion' => 'Superior',
                 'Ubicacion' => $request->get('Ubicacion'),
                 'identificador' => $tmp->id,
-                'Aseguradora' => $product['Vendor_Name']['Nombre'],
+                'Aseguradora' => $response2['data'][0]['Nombre'],
                 'Error' => $alert,
                 'PrimaVida' => number_format(0.0, 1, '.', ''),
                 'cotz_id' => $responseQuote['data'][0]['details']['id'],
