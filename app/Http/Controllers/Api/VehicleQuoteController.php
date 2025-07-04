@@ -131,11 +131,12 @@ class VehicleQuoteController extends Controller
 
             $responseProduct = $this->crm->insertRecords('Quotes', $data);
             $tmp = TmpQuote::create(['id_crm' => $responseProduct['data'][0]['details']['id']]);
+$r =
 
             $response[] = [
                 'passcode' => null,
                 'ofertaid' => null,
-                'Prima' => number_format($amount - ($amount * 1.16), 1, '.', ''),
+                'Prima' => number_format($amount - ($amount * 0.16), 1, '.', ''),
                 'Impuesto' => number_format($amount * 0.16, 1, '.', ''),
                 'PrimaTotal' => number_format($amount, 1, '.', ''),
                 'PrimaCuota' => number_format(0.0, 1, '.', ''),

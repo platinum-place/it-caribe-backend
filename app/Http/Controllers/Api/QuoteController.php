@@ -181,7 +181,7 @@ class QuoteController extends Controller
             $response[] = [
                 'Passcode' => null,
                 'OfertaID' => null,
-                'Prima' => $amount - ($amount * 1.16),
+                'Prima' => $amount - ($amount * 0.16),
                 'Impuesto' => $amount * 0.16,
                 'PrimaTotal' => $amount,
                 'PrimaCuota' => null,
