@@ -134,12 +134,12 @@ class VehicleQuoteController extends Controller
 $r =
 
             $response[] = [
-                'passcode' => null,
-                'ofertaid' => null,
+                'passcode' => "",
+                'ofertaid' => $responseProduct['data'][0]['details']['id'],
                 'Prima' => number_format($amount - ($amount * 0.16), 1, '.', ''),
                 'Impuesto' => number_format($amount * 0.16, 1, '.', ''),
                 'PrimaTotal' => number_format($amount, 1, '.', ''),
-                'PrimaCuota' => number_format(0.0, 1, '.', ''),
+                'PrimaCuota' => number_format($amount, 1, '.', ''),
                 'Planid' => TmpVendorProduct::firstWhere('id_crm', $product['id'])->id,
                 'Plan' => 'Plan Mensual Full',
                 'Aseguradora' => $product['Vendor_Name']['Nombre'],
@@ -150,7 +150,7 @@ $r =
                     [
                         'Cobertura' => 'Fianza judicial',
                         'Valor' => '1,000,000',
-                        'Error' => null,
+                        'Error' => "",
                     ],
                 ],
             ];
