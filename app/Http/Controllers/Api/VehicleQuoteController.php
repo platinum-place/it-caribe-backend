@@ -133,6 +133,9 @@ class VehicleQuoteController extends Controller
             $tmp = TmpQuote::create(['id_crm' => $responseProduct['data'][0]['details']['id']]);
 $r =
 
+$response2 = $this->crm->getRecords('Vendors', ['Nombre'], (int)$product['Vendor_Name']['id']);
+
+
             $response[] = [
                 'passcode' => null,
                 'ofertaid' => null,
@@ -142,7 +145,7 @@ $r =
                 'PrimaCuota' => number_format(0.0, 1, '.', ''),
                 'Planid' => TmpVendorProduct::firstWhere('id_crm', $product['id'])->id,
                 'Plan' => 'Plan Mensual Full',
-                'Aseguradora' => $product['Vendor_Name']['Nombre'],
+                'Aseguradora' => $response2['data'][0]['Nombre'],
                 'IdCotizacion' => $tmp->id,
                 'Fecha' => date('d/m/Y H:i:s A'),
                 'Error' => $alert,
