@@ -175,6 +175,7 @@ class InsuranceLawController
 
             $responseQuote = $this->crm->insertRecords('Quotes', $data);
             $tmp = TmpQuote::create(['id_crm' => $responseQuote['data'][0]['details']['id']]);
+            $response2 = $this->crm->getRecords('Vendors', ['Nombre'], (int)$product['Vendor_Name']['id']);
 
             $response[] = [
                 'Passcode' => null,
@@ -185,7 +186,7 @@ class InsuranceLawController
                 'PrimaCuota' => null,
                 'Planid' => $product['id'],
                 'Plan' => 'Plan Mensual Full',
-                'Aseguradora' => $product['Vendor_Name']['Nombre'],
+                'Aseguradora' => $response2['data'][0]['Nombre'],
                 'Idcotizacion' => $tmp->id,
                 'Fecha' => now()->toDateTimeString(),
                 'CoberturasList' => null,

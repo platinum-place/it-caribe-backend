@@ -71,12 +71,13 @@ class LifeController extends Controller
 
             $responseProduct = $this->crm->insertRecords('Quotes', $data);
             $tmp = TmpQuote::create(['id_crm' => $responseProduct['data'][0]['details']['id']]);
+            $response2 = $this->crm->getRecords('Vendors', ['Nombre'], (int)$product['Vendor_Name']['id']);
 
             $response[] = [
                 'Impuesto' => number_format(0.0, 1, '.', ''),
                 'Prima' => number_format($amount, 1, '.', ''),
                 'identificador' => $tmp->id,
-                'Aseguradora' => $product['Vendor_Name']['Nombre'],
+                'Aseguradora' => $response2['data'][0]['Nombre'],
                 'MontoOrig' => number_format($request->get('MontoOriginal'), 1, '.', ''),
                 'Anios' => $request->get('PlazoAnios'),
                 'EdadTerminar' => $request->get('Edad') - $request->get('PlazoAnios'),
