@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Quote\CancelVehicleRequest;
 use App\Http\Requests\Api\Quote\EstimateVehicleRequest;
 use App\Http\Requests\Api\Quote\IssueVehicleRequest;
+use App\Models\Partners\TmpVendorProduct;
 use App\Models\Vehicle\VehicleMake;
 use App\Models\Vehicle\VehicleModel;
 use App\Services\ZohoCRMService;
@@ -136,7 +137,7 @@ class VehicleQuoteController extends Controller
                 'Impuesto' => number_format($amount * 0.16, 1, '.', ''),
                 'PrimaTotal' => number_format($amount, 1, '.', ''),
                 'PrimaCuota' => number_format(0.0, 1, '.', ''),
-                'Planid' => (int) $product['id'],
+                'Planid' => TmpVendorProduct::firstWhere('id_crm', $product['id'])->id,
                 'Plan' => 'Plan Mensual Full',
                 'Aseguradora' => $product['Vendor_Name']['name'],
                 'IdCotizacion' => number_to_uuid($responseProduct['data'][0]['details']['id']),

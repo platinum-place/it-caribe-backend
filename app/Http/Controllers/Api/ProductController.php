@@ -3,13 +3,16 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Partners\TmpVendorProduct;
 use App\Services\ZohoCRMService;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
 
 class ProductController extends Controller
 {
-    public function __construct(protected ZohoCRMService $crm) {}
+    public function __construct(protected ZohoCRMService $crm)
+    {
+    }
 
     /**
      * @throws RequestException
@@ -21,11 +24,11 @@ class ProductController extends Controller
         $response = $this->crm->searchRecords('Products', $criteria);
 
         $products = collect($response['data'])
-            ->map(fn ($product) => [
-                'IdProducto' => (int) $product['id'],
+            ->map(fn($product) => [
+                'IdProducto' => TmpVendorProduct::firstWhere('id_crm', $product['id'])->id,
                 'Producto' => $product['Product_Category'],
             ])
-            ->sortBy(fn ($product) => reset($product))
+            ->sortBy(fn($product) => reset($product))
             ->values()
             ->toArray();
 
@@ -38,13 +41,15 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        $fields = ['id', 'Vendor_Name', 'Product_Name'];
-        $response = $this->crm->getRecords('Products', $fields, $id);
+        $tmp = TmpVendorProduct::findOrFail($id);
 
-        $response2 = $this->crm->getRecords('Vendors', ['Nombre'], (int) $response['data'][0]['Vendor_Name']['id']);
+        $fields = ['id', 'Vendor_Name', 'Product_Name'];
+        $response = $this->crm->getRecords('Products', $fields, $tmp->id_crm);
+
+        $response2 = $this->crm->getRecords('Vendors', ['Nombre'], (int)$response['data'][0]['Vendor_Name']['id']);
 
         $product = [
-            'IdAseguradora' => (int) $response['data'][0]['Vendor_Name']['id'],
+            'IdAseguradora' => (int)$response['data'][0]['Vendor_Name']['id'],
             'Aseguradora' => $response2['data'][0]['Nombre'],
         ];
 
