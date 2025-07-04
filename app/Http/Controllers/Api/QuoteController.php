@@ -7,6 +7,7 @@ use App\Http\Requests\Api\Quote\EstimateVehicleRequest;
 use App\Http\Requests\Api\Quote\InspectRequest;
 use App\Http\Requests\Api\Quote\IssueVehicleRequest;
 use App\Http\Requests\Api\Quote\ValidateInspectionRequest;
+use App\Models\Insurance\TmpQuote;
 use App\Services\ZohoCRMService;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
@@ -175,6 +176,7 @@ class QuoteController extends Controller
             ];
 
             $responseProduct = $this->crm->insertRecords('Quotes', $data);
+            $tmp = TmpQuote::create(['id_crm' => $responseProduct['data'][0]['details']['id']]);
 
             $response[] = [
                 'Passcode' => null,
@@ -186,7 +188,7 @@ class QuoteController extends Controller
                 'Planid' => $product['id'],
                 'Plan' => 'Plan Mensual Full',
                 'Aseguradora' => $product['Vendor_Name']['name'],
-                'Idcotizacion' => number_to_uuid($responseProduct['data'][0]['details']['id']),
+                'Idcotizacion' => $tmp->id,
                 'Fecha' => now()->toDateTimeString(),
                 'CoberturasList' => null,
                 'Alerta' => $alert,
@@ -203,10 +205,10 @@ class QuoteController extends Controller
      */
     public function issueVehicle(IssueVehicleRequest $request)
     {
-        $id = uuid_to_number($request->get('cotzid'));
+        $tmp = TmpQuote::findOrFail($request->get('cotzid'));
 
         $fields = ['id', 'Quoted_Items'];
-        $quote = $this->crm->getRecords('Quotes', $fields, $id)['data'][0];
+        $quote = $this->crm->getRecords('Quotes', $fields, $tmp->id_crm)['data'][0];
 
         foreach ($quote['Quoted_Items'] as $line) {
             $data = [
@@ -219,7 +221,7 @@ class QuoteController extends Controller
                 'Prima' => round($line['Net_Total'], 2),
             ];
 
-            $this->crm->updateRecords('Quotes', $id, $data);
+            $this->crm->updateRecords('Quotes', $tmp->id_crm, $data);
 
             break;
         }
@@ -243,15 +245,15 @@ class QuoteController extends Controller
      */
     public function validateInspection(ValidateInspectionRequest $request)
     {
-        $id = uuid_to_number($request->get('cotz_id'));
+        $tmp = TmpQuote::findOrFail($request->get('cotz_id'));
 
         $fields = ['id', 'Quoted_Items'];
-        $quote = $this->crm->getRecords('Quotes', $fields, $id)['data'][0];
+        $quote = $this->crm->getRecords('Quotes', $fields, $tmp->id_crm)['data'][0];
 
         $data = [
             'Depurado' => true,
         ];
-        $this->crm->updateRecords('Quotes', $id, $data);
+        $this->crm->updateRecords('Quotes', $tmp->id_crm, $data);
 
         return response()->json(['Error' => '']);
     }
@@ -262,7 +264,7 @@ class QuoteController extends Controller
      */
     public function inspect(InspectRequest $request)
     {
-        $id = uuid_to_number($request->get('cotz_id'));
+        $tmp = TmpQuote::findOrFail($request->get('cotz_id'));
 
         $photos = [
             'Foto1' => 'Foto Parte frontal',
@@ -298,11 +300,11 @@ class QuoteController extends Controller
                 default => throw new \Exception(__('validation.mimetypes', ['values' => '.jpg,.png']))
             };
 
-            $path = "photos/{$id}/uploads/".date('YmdHis')."/$title.$extension";
+            $path = "photos/{$tmp->id_crm}/uploads/".date('YmdHis')."/$title.$extension";
 
             Storage::put($path, $imageData);
 
-            $this->crm->uploadAnAttachment('Quotes', $id, $path);
+            $this->crm->uploadAnAttachment('Quotes', $tmp->id_crm, $path);
         }
 
         return response()->json(['Error' => '']);
@@ -315,14 +317,14 @@ class QuoteController extends Controller
      */
     public function getQRInspect(ValidateInspectionRequest $request)
     {
-        $id = uuid_to_number($request->get('cotz_id'));
+        $tmp = TmpQuote::findOrFail($request->get('cotz_id'));
 
         $fields = ['id', 'Quoted_Items'];
-        $quote = $this->crm->getRecords('Quotes', $fields, $id)['data'][0];
+        $quote = $this->crm->getRecords('Quotes', $fields, $tmp->id_crm)['data'][0];
 
         $qr = base64_encode(QrCode::format('svg')
             ->size(80)
-            ->generate("https://gruponobesrl.zcrmportals.com/portal/GrupoNobeSRL/crm/tab/Quotes/$id"));
+            ->generate("https://gruponobesrl.zcrmportals.com/portal/GrupoNobeSRL/crm/tab/Quotes/{$tmp->id_crm}"));
 
         return response()->json([
             'QR' => $qr,
@@ -336,15 +338,15 @@ class QuoteController extends Controller
      */
     public function getPhotos(ValidateInspectionRequest $request)
     {
-        $id = uuid_to_number($request->get('cotz_id'));
+        $tmp = TmpQuote::findOrFail($request->get('cotz_id'));
 
         $fields = ['id', 'File_Name'];
-        $attachments = $this->crm->attachmentList('Quotes', $id, $fields);
+        $attachments = $this->crm->attachmentList('Quotes', $tmp->id_crm, $fields);
 
         $response = [];
 
         foreach ($attachments['data'] as $attachment) {
-            $imageData = $this->crm->getAttachment('Quotes', $id, $attachment['id']);
+            $imageData = $this->crm->getAttachment('Quotes', $tmp->id_crm, $attachment['id']);
 
             $finfo = finfo_open(FILEINFO_MIME_TYPE);
             $mimeType = finfo_buffer($finfo, $imageData);
@@ -356,7 +358,7 @@ class QuoteController extends Controller
                 default => throw new \Exception(__('validation.mimetypes', ['values' => '.jpg,.png']))
             };
 
-            $path = "photos/{$id}/downloads/".date('YmdHis')."/{$attachment['File_Name']}.$extension";
+            $path = "photos/{$tmp->id_crm}/downloads/".date('YmdHis')."/{$attachment['File_Name']}.$extension";
 
             Storage::put($path, $imageData);
 
