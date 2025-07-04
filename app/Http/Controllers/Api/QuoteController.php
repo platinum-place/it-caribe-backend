@@ -187,7 +187,7 @@ class QuoteController extends Controller
                 'PrimaCuota' => null,
                 'Planid' => $product['id'],
                 'Plan' => 'Plan Mensual Full',
-                'Aseguradora' => $product['Vendor_Name']['name'],
+                'Aseguradora' => $product['Vendor_Name']['Nombre'],
                 'Idcotizacion' => $tmp->id,
                 'Fecha' => now()->toDateTimeString(),
                 'CoberturasList' => null,

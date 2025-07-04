@@ -74,7 +74,7 @@ class LifeController extends Controller
                 'Impuesto' => number_format(0.0, 1, '.', ''),
                 'Prima' => number_format($amount, 1, '.', ''),
                 'identificador' => $tmp->id,
-                'Aseguradora' => $product['Vendor_Name']['name'],
+                'Aseguradora' => $product['Vendor_Name']['Nombre'],
                 'MontoOrig' => number_format($request->get('MontoOriginal'), 1, '.', ''),
                 'Anios' => 0,
                 'EdadTerminar' => 0,

@@ -104,7 +104,7 @@ class UnemploymentDebtController extends Controller
                 'Fecha' => date('Y-m-d\TH:i:s.vP'),
                 'IdenCliente' => $request->get('IdenCliente'),
                 'Telefono' => $request->get('Telefono'),
-                'Aseguradora' => $product['Vendor_Name']['name'],
+                'Aseguradora' => $product['Vendor_Name']['Nombre'],
                 'MontoPrestamo' => number_format(0.0, 1, '.', ''),
                 'Cuota' => number_format($request->get('Cuota'), 1, '.', ''),
                 'PlazoMeses' => $request->get('Plazo') * 12,
