@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Requests\Api\Unemployment\CancelUnemploymentRequest;
 use App\Http\Requests\Api\Unemployment\EstimateUnemploymentRequest;
 use App\Http\Requests\Api\Unemployment\IssueUnemploymentRequest;
+use App\Models\Insurance\TmpQuote;
 use App\Services\ZohoCRMService;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
@@ -91,10 +92,11 @@ class UnemploymentController
             ];
 
             $responseQuote = $this->crm->insertRecords('Quotes', $data);
+            $tmp = TmpQuote::create(['id_crm' => $responseQuote['data'][0]['details']['id']]);
 
             $quotes[] = [
                 'Impuesto' => number_format($amount * 0.16, 1, '.', ''),
-                'identificador' => number_to_uuid($responseQuote['data'][0]['details']['id']),
+                'identificador' => $tmp->id,
                 'Cliente' => $request->get('Cliente'),
                 'Direccion' => $request->get('Direccion'),
                 'Fecha' => now()->format('Y-m-d\TH:i:sP'),
@@ -121,10 +123,10 @@ class UnemploymentController
      */
     public function issueUnemployment(IssueUnemploymentRequest $request)
     {
-        $id = uuid_to_number($request->get('Identificador'));
+        $tmp = TmpQuote::findOrFail($request->get('Identificador'));
 
         $fields = ['id', 'Quoted_Items'];
-        $quote = $this->crm->getRecords('Quotes', $fields, $id)['data'][0];
+        $quote = $this->crm->getRecords('Quotes', $fields, $tmp->id_crm)['data'][0];
 
         foreach ($quote['Quoted_Items'] as $line) {
             $data = [
@@ -137,7 +139,7 @@ class UnemploymentController
                 'Prima' => round($line['Net_Total'], 2),
             ];
 
-            $this->crm->updateRecords('Quotes', $id, $data);
+            $this->crm->updateRecords('Quotes', $tmp->id_crm, $data);
 
             break;
         }
@@ -151,12 +153,12 @@ class UnemploymentController
      */
     public function cancelUnemployment(CancelUnemploymentRequest $request)
     {
-        $id = uuid_to_number($request->get('Identificador'));
+        $tmp = TmpQuote::findOrFail($request->get('Identificador'));
 
         $fields = ['id', 'Plan', 'Quoted_Items'];
-        $quote = $this->crm->getRecords('Quotes', $fields, $id)['data'][0];
+        $quote = $this->crm->getRecords('Quotes', $fields, $tmp->id_crm)['data'][0];
 
-        if ($quote['Plan'] != 'Vida/Desempleo') {
+        if ($quote['Plan'] !== 'Vida/Desempleo') {
             throw new NotFoundHttpException(__('Not Found'));
         }
 
@@ -164,7 +166,7 @@ class UnemploymentController
             'Quote_Stage' => 'Cancelada',
         ];
 
-        $this->crm->updateRecords('Quotes', $id, $data);
+        $this->crm->updateRecords('Quotes', $tmp->id_crm, $data);
 
         return response()->json(['Error' => '']);
     }

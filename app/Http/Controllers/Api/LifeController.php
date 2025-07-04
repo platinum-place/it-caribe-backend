@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Quote\EstimateLifeRequest;
 use App\Http\Requests\Api\Quote\IssueLifeRequest;
+use App\Models\Insurance\TmpQuote;
 use App\Services\ZohoCRMService;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
@@ -67,11 +68,12 @@ class LifeController extends Controller
             ];
 
             $responseProduct = $this->crm->insertRecords('Quotes', $data);
+            $tmp = TmpQuote::create(['id_crm' => $responseProduct['data'][0]['details']['id']]);
 
             $response[] = [
                 'Impuesto' => number_format(0.0, 1, '.', ''),
                 'Prima' => number_format($amount, 1, '.', ''),
-                'identificador' => number_to_uuid($responseProduct['data'][0]['details']['id']),
+                'identificador' => $tmp->id,
                 'Aseguradora' => $product['Vendor_Name']['name'],
                 'MontoOrig' => number_format($request->get('MontoOriginal'), 1, '.', ''),
                 'Anios' => 0,
@@ -99,10 +101,10 @@ class LifeController extends Controller
      */
     public function issueLife(IssueLifeRequest $request)
     {
-        $id = uuid_to_number($request->get('Identificador'));
+        $tmp = TmpQuote::findOrFail($request->get('Identificador'));
 
         $fields = ['id', 'Quoted_Items'];
-        $quote = $this->crm->getRecords('Quotes', $fields, $id)['data'][0];
+        $quote = $this->crm->getRecords('Quotes', $fields, $tmp->id_crm)['data'][0];
 
         foreach ($quote['Quoted_Items'] as $line) {
             $data = [
@@ -115,7 +117,7 @@ class LifeController extends Controller
                 'Prima' => round($line['Net_Total'], 2),
             ];
 
-            $this->crm->updateRecords('Quotes', $id, $data);
+            $this->crm->updateRecords('Quotes', $tmp->id_crm, $data);
 
             break;
         }
@@ -130,16 +132,16 @@ class LifeController extends Controller
      */
     public function cancelLife(IssueLifeRequest $request)
     {
-        $id = uuid_to_number($request->get('Identificador'));
+        $tmp = TmpQuote::findOrFail($request->get('Identificador'));
 
         $fields = ['id', 'Quoted_Items'];
-        $quote = $this->crm->getRecords('Quotes', $fields, $id)['data'][0];
+        $quote = $this->crm->getRecords('Quotes', $fields, $tmp->id_crm)['data'][0];
 
         $data = [
             'Quote_Stage' => 'Cancelada',
         ];
 
-        $this->crm->updateRecords('Quotes', $id, $data);
+        $this->crm->updateRecords('Quotes', $tmp->id_crm, $data);
 
         return response()->json(['Error' => '']);
     }

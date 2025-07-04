@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Quote\CancelVehicleRequest;
 use App\Http\Requests\Api\Quote\EstimateVehicleRequest;
 use App\Http\Requests\Api\Quote\IssueVehicleRequest;
+use App\Models\Insurance\TmpQuote;
 use App\Models\Partners\TmpVendorProduct;
 use App\Models\Vehicle\VehicleMake;
 use App\Models\Vehicle\VehicleModel;
@@ -129,6 +130,7 @@ class VehicleQuoteController extends Controller
             ];
 
             $responseProduct = $this->crm->insertRecords('Quotes', $data);
+            $tmp = TmpQuote::create(['id_crm' => $responseProduct['data'][0]['details']['id']]);
 
             $response[] = [
                 'passcode' => null,
@@ -140,7 +142,7 @@ class VehicleQuoteController extends Controller
                 'Planid' => TmpVendorProduct::firstWhere('id_crm', $product['id'])->id,
                 'Plan' => 'Plan Mensual Full',
                 'Aseguradora' => $product['Vendor_Name']['name'],
-                'IdCotizacion' => number_to_uuid($responseProduct['data'][0]['details']['id']),
+                'IdCotizacion' => $tmp->id,
                 'Fecha' => date('d/m/Y H:i:s A'),
                 'Error' => $alert,
                 'CoberturasList' => [
@@ -166,10 +168,10 @@ class VehicleQuoteController extends Controller
      */
     public function issueVehicle(IssueVehicleRequest $request)
     {
-        $id = uuid_to_number($request->get('cotzid'));
+        $tmp = TmpQuote::findOrFail($request->get('cotzid'));
 
         $fields = ['id', 'Quoted_Items'];
-        $quote = $this->crm->getRecords('Quotes', $fields, $id)['data'][0];
+        $quote = $this->crm->getRecords('Quotes', $fields, $tmp->id_crm)['data'][0];
 
         foreach ($quote['Quoted_Items'] as $line) {
             $data = [
@@ -182,7 +184,7 @@ class VehicleQuoteController extends Controller
                 'Prima' => round($line['Net_Total'], 2),
             ];
 
-            $this->crm->updateRecords('Quotes', $id, $data);
+            $this->crm->updateRecords('Quotes', $tmp->id_crm, $data);
 
             break;
         }
@@ -192,16 +194,16 @@ class VehicleQuoteController extends Controller
 
     public function cancelVehicle(CancelVehicleRequest $request)
     {
-        $id = uuid_to_number($request->get('IdCotizacion'));
+        $tmp = TmpQuote::findOrFail($request->get('IdCotizacion'));
 
         $fields = ['id', 'Quoted_Items'];
-        $quote = $this->crm->getRecords('Quotes', $fields, $id)['data'][0];
+        $quote = $this->crm->getRecords('Quotes', $fields, $tmp->id_crm)['data'][0];
 
         $data = [
             'Quote_Stage' => 'Cancelada',
         ];
 
-        $this->crm->updateRecords('Quotes', $id, $data);
+        $this->crm->updateRecords('Quotes', $tmp->id_crm, $data);
 
         return response()->json(['Error' => '']);
     }

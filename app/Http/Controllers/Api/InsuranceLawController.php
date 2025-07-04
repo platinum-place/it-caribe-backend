@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Requests\Api\InsuranceLaw\DisableVehicleLawRequest;
 use App\Http\Requests\Api\InsuranceLaw\EstimateVehicleLawRequest;
 use App\Http\Requests\Api\InsuranceLaw\SearchDocumentRequest;
+use App\Models\Insurance\TmpQuote;
 use App\Services\ZohoCRMService;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
@@ -171,6 +172,7 @@ class InsuranceLawController
             ];
 
             $responseQuote = $this->crm->insertRecords('Quotes', $data);
+            $tmp = TmpQuote::create(['id_crm' => $responseQuote['data'][0]['details']['id']]);
 
             $response[] = [
                 'Passcode' => null,
@@ -182,7 +184,7 @@ class InsuranceLawController
                 'Planid' => $product['id'],
                 'Plan' => 'Plan Mensual Full',
                 'Aseguradora' => $product['Vendor_Name']['name'],
-                'Idcotizacion' => number_to_uuid($responseQuote['data'][0]['details']['id']),
+                'Idcotizacion' => $tmp->id,
                 'Fecha' => now()->toDateTimeString(),
                 'CoberturasList' => null,
                 'Alerta' => $alert,
@@ -261,15 +263,15 @@ class InsuranceLawController
      */
     public function disableVehicleLaw(DisableVehicleLawRequest $request, string $id)
     {
-        $id = uuid_to_number($id);
+        $tmp = TmpQuote::findOrFail($id);
 
         $fields = ['id', 'Quoted_Items'];
-        $this->crm->getRecords('Quotes', $fields, $id);
+        $this->crm->getRecords('Quotes', $fields, $tmp->id_crm);
 
         $data = [
             'Quote_Stage' => 'Cancelada',
         ];
-        $this->crm->updateRecords('Quotes', $id, $data);
+        $this->crm->updateRecords('Quotes', $tmp->id_crm, $data);
 
         return response()->json(['Error' => '']);
     }
