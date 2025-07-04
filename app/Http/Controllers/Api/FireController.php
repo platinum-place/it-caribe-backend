@@ -102,7 +102,7 @@ class FireController extends Controller
                 'TipoConstruccion' => 'Superior',
                 'Ubicacion' => $request->get('Ubicacion'),
                 'identificador' => $tmp->id,
-                'Aseguradora' => $product['Vendor_Name']['name'],
+                'Aseguradora' => $product['Vendor_Name']['Nombre'],
                 'Error' => $alert,
                 'PrimaVida' => number_format(0.0, 1, '.', ''),
                 'cotz_id' => $responseQuote['data'][0]['details']['id'],

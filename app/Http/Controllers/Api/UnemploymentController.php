@@ -102,7 +102,7 @@ class UnemploymentController
                 'Fecha' => now()->format('Y-m-d\TH:i:sP'),
                 'TipoEmpleado' => $request->get('idTipoEmpleado'),
                 'IdentCliente' => $request->get('IdentCliente'),
-                'Aseguradora' => $product['Vendor_Name']['name'],
+                'Aseguradora' => $product['Vendor_Name']['Nombre'],
                 'MontoOriginal' => number_format($request->get('MontoOriginal'), 1, '.', ''),
                 'Cuota' => number_format($request->get('Cuota'), 1, '.', ''),
                 'PlazoMeses' => $request->get('Plazo') * 12,

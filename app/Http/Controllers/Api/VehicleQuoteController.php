@@ -141,7 +141,7 @@ class VehicleQuoteController extends Controller
                 'PrimaCuota' => number_format(0.0, 1, '.', ''),
                 'Planid' => TmpVendorProduct::firstWhere('id_crm', $product['id'])->id,
                 'Plan' => 'Plan Mensual Full',
-                'Aseguradora' => $product['Vendor_Name']['name'],
+                'Aseguradora' => $product['Vendor_Name']['Nombre'],
                 'IdCotizacion' => $tmp->id,
                 'Fecha' => date('d/m/Y H:i:s A'),
                 'Error' => $alert,
