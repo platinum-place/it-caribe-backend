@@ -80,7 +80,7 @@ class LifeController extends Controller
                 'Aseguradora' => $response2['data'][0]['Nombre'],
                 'MontoOrig' => number_format($request->get('MontoOriginal'), 1, '.', ''),
                 'Anios' => $request->get('PlazoAnios'),
-                'EdadTerminar' => $request->get('Edad') - $request->get('PlazoAnios'),
+                'EdadTerminar' => $request->get('Edad') + $request->get('PlazoAnios'),
                 'Cliente' => $request->get('NombreCliente'),
                 'Fecha' => date('Y-m-d\TH:i:sP'),
                 'Direccion' => $request->get('Direccion'),
