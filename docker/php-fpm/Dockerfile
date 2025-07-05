@@ -1,52 +1,47 @@
-FROM php:8.4-fpm
+FROM php:8.4-fpm-alpine
+
+RUN apk add --no-cache \
+    libzip-dev \
+    oniguruma-dev \
+    libpng-dev \
+    libjpeg-turbo-dev \
+    freetype-dev \
+    icu-dev \
+    postgresql-dev \
+    shadow
+
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) \
+        pdo_mysql \
+        pdo_pgsql \
+        zip \
+        gd \
+        mbstring \
+        intl \
+        bcmath \
+        exif \
+        pcntl
 
 ARG UID=1000
 ARG GID=1000
+RUN groupmod -g $GID www-data && \
+    usermod -u $UID -g $GID www-data
 
-RUN apt-get update && apt-get install -y \
-    libpng-dev \
-    libonig-dev \
-    libxml2-dev \
-    libicu-dev \
-    libpq-dev \
-    libzip-dev \
-    libcurl4-openssl-dev \
-    zip \
-    unzip \
-    gosu \
-  && rm -rf /var/lib/apt/lists/*
+RUN mkdir -p /var/www/html \
+    && chown -R www-data:www-data /var/www/html
 
-RUN docker-php-ext-configure intl
+RUN echo "user = www-data" >> /usr/local/etc/php-fpm.d/www.conf \
+    && echo "group = www-data" >> /usr/local/etc/php-fpm.d/www.conf \
+    && echo "listen.owner = www-data" >> /usr/local/etc/php-fpm.d/www.conf \
+    && echo "listen.group = www-data" >> /usr/local/etc/php-fpm.d/www.conf \
+    && echo "listen.mode = 0666" >> /usr/local/etc/php-fpm.d/www.conf
 
-RUN docker-php-ext-install \
-    pdo_mysql \
-    pdo_pgsql \
-    mbstring \
-    exif \
-    pcntl \
-    bcmath \
-    gd \
-    intl \
-    zip \
-    xml \
-    curl
-
-RUN groupadd -g ${GID} appgroup && \
-    useradd -u ${UID} -g appgroup -m -s /bin/bash appuser
-
-RUN sed -i 's/^user = www-data$/user = appuser/' /usr/local/etc/php-fpm.d/www.conf && \
-    sed -i 's/^group = www-data$/group = appgroup/' /usr/local/etc/php-fpm.d/www.conf
-
-RUN mkdir -p /var/log/php-fpm && \
-    chown -R appuser:appgroup /var/log/php-fpm
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 WORKDIR /var/www/html
 
-COPY entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh
+USER www-data
 
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
-
-EXPOSE 9000
-
+ENTRYPOINT ["/entrypoint.sh"]
 CMD ["php-fpm"]
