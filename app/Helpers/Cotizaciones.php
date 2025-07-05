@@ -8,11 +8,11 @@ class Cotizaciones extends Zoho
 {
     public function emisiones($plan_criterio)
     {
-        $cuenta_criterio = '(Account_Name:equals:' . 3222373000092390001 . ')';
+        $cuenta_criterio = '(Account_Name:equals:'. 3222373000092390001 .')';
         $estado_criterio = '(Quote_Stage:starts_with:E)';
 
         if (session('admin') == false) {
-            $user_criterio = '(Account_Name:equals:' . 3222373000092390001 . ')';
+            $user_criterio = '(Account_Name:equals:'. 3222373000092390001 .')';
             $criterio = "($cuenta_criterio and $estado_criterio and $plan_criterio and $user_criterio)";
         } else {
             $criterio = "($cuenta_criterio and $estado_criterio and $plan_criterio)";
@@ -37,9 +37,9 @@ class Cotizaciones extends Zoho
     public function lista_cotizaciones(): ?array
     {
         if (session('admin') == true) {
-            $criterio = '((Account_Name:equals:' . 3222373000092390001 . ') and (Quote_Stage:starts_with:C))';
+            $criterio = '((Account_Name:equals:'. 3222373000092390001 .') and (Quote_Stage:starts_with:C))';
         } else {
-            $criterio = '((Account_Name:equals:' . 3222373000092390001 . ') and (Contact_Name:equals:' . 3222373000203318001 . ') and (Quote_Stage:starts_with:C))';
+            $criterio = '((Account_Name:equals:'. 3222373000092390001 .') and (Contact_Name:equals:'. 3222373000203318001 .') and (Quote_Stage:starts_with:C))';
         }
 
         return $this->searchRecordsByCriteria('Quotes', $criterio);
@@ -48,9 +48,9 @@ class Cotizaciones extends Zoho
     public function lista_emisiones(): ?array
     {
         if (session('admin') == true) {
-            $criterio = '((Account_Name:equals:' . 3222373000092390001 . ') and (Quote_Stage:starts_with:E))';
+            $criterio = '((Account_Name:equals:'. 3222373000092390001 .') and (Quote_Stage:starts_with:E))';
         } else {
-            $criterio = '((Account_Name:equals:' . 3222373000092390001 . ') and (Contact_Name:equals:' . 3222373000203318001 . ') and (Quote_Stage:starts_with:E))';
+            $criterio = '((Account_Name:equals:'. 3222373000092390001 .') and (Contact_Name:equals:'. 3222373000203318001 .') and (Quote_Stage:starts_with:E))';
         }
 
         return $this->searchRecordsByCriteria('Quotes', $criterio);
@@ -68,13 +68,13 @@ class Cotizaciones extends Zoho
                     'Coberturas' => $planid,
                     'Quote_Stage' => 'Emitida',
                     'Vigencia_desde' => date('Y-m-d'),
-                    //'Valid_Till' => date('Y-m-d', strtotime(date('Y-m-d').'+ 1 years')),
+                    // 'Valid_Till' => date('Y-m-d', strtotime(date('Y-m-d').'+ 1 years')),
                 ];
 
-                if (!empty($cotizacion->getFieldValue('Cuota'))) {
-                    $cambios['Valid_Till'] = date('Y-m-d', strtotime(date('Y-m-d') . '+ ' . $cotizacion->getFieldValue('Cuota') . ' months'));
+                if (! empty($cotizacion->getFieldValue('Cuota'))) {
+                    $cambios['Valid_Till'] = date('Y-m-d', strtotime(date('Y-m-d').'+ '.$cotizacion->getFieldValue('Cuota').' months'));
                 } else {
-                    $cambios['Valid_Till'] = date('Y-m-d', strtotime(date('Y-m-d') . '+ 1 years'));
+                    $cambios['Valid_Till'] = date('Y-m-d', strtotime(date('Y-m-d').'+ 1 years'));
                 }
 
                 $cambios['Prima_neta'] = round($lineItem->getNetTotal() / 1.16, 2);
@@ -94,11 +94,11 @@ class Cotizaciones extends Zoho
     public function adjuntar_archivo($documentos, $id)
     {
         foreach ($documentos as $documento) {
-            if ($documento->isValid() && !$documento->hasMoved()) {
+            if ($documento->isValid() && ! $documento->hasMoved()) {
                 // subir el archivo al servidor
-                $documento->move(storage_path() . '/uploads');
+                $documento->move(storage_path().'/uploads');
                 // ruta del archivo subido
-                $ruta = storage_path() . '/uploads/' . $documento->getClientName();
+                $ruta = storage_path().'/uploads/'.$documento->getClientName();
                 // funcion para adjuntar el archivo
                 $this->uploadAttachment('Quotes', $id, $ruta);
                 // borrar el archivo del servidor local

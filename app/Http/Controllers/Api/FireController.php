@@ -13,9 +13,7 @@ use Throwable;
 
 class FireController extends Controller
 {
-    public function __construct(protected ZohoCRMService $crm)
-    {
-    }
+    public function __construct(protected ZohoCRMService $crm) {}
 
     /**
      * @throws RequestException
@@ -36,7 +34,7 @@ class FireController extends Controller
             $amount = 0;
 
             try {
-                $criteria = 'Plan:equals:' . $product['id'];
+                $criteria = 'Plan:equals:'.$product['id'];
                 $taxes = $this->crm->searchRecords('Tasas', $criteria);
 
                 foreach ($taxes['data'] as $tax) {
@@ -53,7 +51,7 @@ class FireController extends Controller
 
             $data = [
                 'Subject' => $request->get('Cliente'),
-                'Valid_Till' => date('Y-m-d', strtotime(date('Y-m-d') . '+ 30 days')),
+                'Valid_Till' => date('Y-m-d', strtotime(date('Y-m-d').'+ 30 days')),
                 'Vigencia_desde' => date('Y-m-d'),
                 'Account_Name' => 3222373000092390001,
                 'Contact_Name' => 3222373000203318001,
@@ -80,14 +78,14 @@ class FireController extends Controller
 
             $responseQuote = $this->crm->insertRecords('Quotes', $data);
             $tmp = TmpQuote::create(['id_crm' => $responseQuote['data'][0]['details']['id']]);
-            $response2 = $this->crm->getRecords('Vendors', ['Nombre'], (int)$product['Vendor_Name']['id']);
+            $response2 = $this->crm->getRecords('Vendors', ['Nombre'], (int) $product['Vendor_Name']['id']);
 
             $quotes[] = [
                 'Impuesto' => number_format($amount * 0.16, 1, '.', ''),
                 'Prima' => number_format($amount, 1, '.', ''),
                 'Cuota' => number_format($request->get('Cuota'), 1, '.', ''),
                 'Plazo' => $request->get('Plazo'),
-                'TiempoLaborando' => (int)$request->get('TiempoLaborando'),
+                'TiempoLaborando' => (int) $request->get('TiempoLaborando'),
                 'MontoOriginal' => number_format($request->get('MontoOriginal'), 1, '.', ''),
                 'idTipoEmpleado' => $request->get('IdentCliente'),
                 'FormaDePago' => $request->get('FormaDePago'),
@@ -157,7 +155,7 @@ class FireController extends Controller
                 'Coberturas' => $line['Product_Name']['id'],
                 'Quote_Stage' => 'Emitida',
                 'Vigencia_desde' => date('Y-m-d'),
-                'Valid_Till' => date('Y-m-d', strtotime(date('Y-m-d') . '+ 1 years')),
+                'Valid_Till' => date('Y-m-d', strtotime(date('Y-m-d').'+ 1 years')),
                 'Prima_neta' => round($line['Net_Total'] / 1.16, 2),
                 'ISC' => round($line['Net_Total'] - ($line['Net_Total'] / 1.16), 2),
                 'Prima' => round($line['Net_Total'], 2),

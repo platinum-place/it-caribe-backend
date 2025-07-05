@@ -89,10 +89,10 @@ class VehicleQuoteController extends Controller
                 $amount = round($amount, 2);
             }
 
-            $criteria = 'Name:equals:'.VehicleMake::firstWhere('code',$request->get('Marca'))->name;
+            $criteria = 'Name:equals:'.VehicleMake::firstWhere('code', $request->get('Marca'))->name;
             $vehicleMake = $this->crm->searchRecords('Marcas', $criteria);
 
-            $criteria = 'Name:equals:'.VehicleModel::firstWhere('code',$request->get('Modelo'))->name;
+            $criteria = 'Name:equals:'.VehicleModel::firstWhere('code', $request->get('Modelo'))->name;
             $vehicleModel = $this->crm->searchRecords('Modelos', $criteria);
 
             $data = [
@@ -131,10 +131,9 @@ class VehicleQuoteController extends Controller
 
             $responseProduct = $this->crm->insertRecords('Quotes', $data);
             $tmp = TmpQuote::create(['id_crm' => $responseProduct['data'][0]['details']['id']]);
-$r =
+            $r =
 
-$response2 = $this->crm->getRecords('Vendors', ['Nombre'], (int)$product['Vendor_Name']['id']);
-
+            $response2 = $this->crm->getRecords('Vendors', ['Nombre'], (int) $product['Vendor_Name']['id']);
 
             $response[] = [
                 'passcode' => null,

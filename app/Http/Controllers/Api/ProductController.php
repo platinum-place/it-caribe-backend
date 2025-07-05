@@ -10,9 +10,7 @@ use Illuminate\Http\Client\RequestException;
 
 class ProductController extends Controller
 {
-    public function __construct(protected ZohoCRMService $crm)
-    {
-    }
+    public function __construct(protected ZohoCRMService $crm) {}
 
     /**
      * @throws RequestException
@@ -24,11 +22,11 @@ class ProductController extends Controller
         $response = $this->crm->searchRecords('Products', $criteria);
 
         $products = collect($response['data'])
-            ->map(fn($product) => [
+            ->map(fn ($product) => [
                 'IdProducto' => TmpVendorProduct::firstWhere('id_crm', $product['id'])->id,
                 'Producto' => $product['Product_Category'],
             ])
-            ->sortBy(fn($product) => reset($product))
+            ->sortBy(fn ($product) => reset($product))
             ->values()
             ->toArray();
 
@@ -46,10 +44,10 @@ class ProductController extends Controller
         $fields = ['id', 'Vendor_Name', 'Product_Name'];
         $response = $this->crm->getRecords('Products', $fields, $tmp->id_crm);
 
-        $response2 = $this->crm->getRecords('Vendors', ['Nombre'], (int)$response['data'][0]['Vendor_Name']['id']);
+        $response2 = $this->crm->getRecords('Vendors', ['Nombre'], (int) $response['data'][0]['Vendor_Name']['id']);
 
         $product = [
-            'IdAseguradora' => (int)$response['data'][0]['Vendor_Name']['id'],
+            'IdAseguradora' => (int) $response['data'][0]['Vendor_Name']['id'],
             'Aseguradora' => $response2['data'][0]['Nombre'],
         ];
 

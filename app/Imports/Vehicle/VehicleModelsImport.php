@@ -26,7 +26,7 @@ class VehicleModelsImport implements ToModel, WithHeadingRow
 
         $exists = VehicleModel::where('id', $row['modelovehiculo_id'])->exists();
 
-        if (!$exists) {
+        if (! $exists) {
             $values['vehicle_type_id'] = 1;
         }
 
