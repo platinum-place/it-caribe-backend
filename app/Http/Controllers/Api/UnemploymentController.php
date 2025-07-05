@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Requests\Api\Unemployment\CancelUnemploymentRequest;
 use App\Http\Requests\Api\Unemployment\EstimateUnemploymentRequest;
 use App\Http\Requests\Api\Unemployment\IssueUnemploymentRequest;
-use App\Models\Insurance\TmpQuote;
+use App\Models\TmpQuote;
 use App\Services\ZohoCRMService;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;

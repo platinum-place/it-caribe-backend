@@ -7,7 +7,7 @@ use App\Http\Requests\Api\Quote\EstimateVehicleRequest;
 use App\Http\Requests\Api\Quote\InspectRequest;
 use App\Http\Requests\Api\Quote\IssueVehicleRequest;
 use App\Http\Requests\Api\Quote\ValidateInspectionRequest;
-use App\Models\Insurance\TmpQuote;
+use App\Models\TmpQuote;
 use App\Services\ZohoCRMService;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;

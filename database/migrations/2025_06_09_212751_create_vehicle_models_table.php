@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\Vehicle\VehicleMake;
-use App\Models\Vehicle\VehicleType;
+use App\Models\VehicleMake;
+use App\Models\VehicleType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

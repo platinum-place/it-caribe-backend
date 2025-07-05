@@ -2,16 +2,16 @@
 
 namespace App\Providers;
 
-use App\Contracts\Repositories\Partners\VendorRepositoryContract;
 use App\Contracts\Repositories\UserRepositoryContract;
-use App\Contracts\Repositories\Vehicle\VehicleMakeRepositoryContract;
-use App\Contracts\Repositories\Vehicle\VehicleModelRepositoryContract;
-use App\Contracts\Repositories\Vehicle\VehicleTypeRepositoryContract;
-use App\Repositories\Partners\VendorRepository;
+use App\Contracts\Repositories\VehicleMakeRepositoryContract;
+use App\Contracts\Repositories\VehicleModelRepositoryContract;
+use App\Contracts\Repositories\VehicleTypeRepositoryContract;
+use App\Contracts\Repositories\VendorRepositoryContract;
 use App\Repositories\UserRepository;
-use App\Repositories\Vehicle\VehicleMakeRepository;
-use App\Repositories\Vehicle\VehicleModelRepository;
-use App\Repositories\Vehicle\VehicleTypeRepository;
+use App\Repositories\VehicleMakeRepository;
+use App\Repositories\VehicleModelRepository;
+use App\Repositories\VehicleTypeRepository;
+use App\Repositories\VendorRepository;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider

@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Controllers\Partners\VendorController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\Vehicle\VehicleMakeController;
-use App\Http\Controllers\Vehicle\VehicleModelController;
-use App\Http\Controllers\Vehicle\VehicleTypeController;
+use App\Http\Controllers\VehicleMakeController;
+use App\Http\Controllers\VehicleModelController;
+use App\Http\Controllers\VehicleTypeController;
+use App\Http\Controllers\VendorController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -28,4 +28,3 @@ Route::middleware('auth:sanctum')->group(function () {
 
 require_once __DIR__.'/api/auth.php';
 require_once __DIR__.'/api/external.php';
-require_once __DIR__.'/api/bmc.php';

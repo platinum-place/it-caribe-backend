@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Quote\EstimateFireRequest;
 use App\Http\Requests\Api\Quote\IssueLifeRequest;
-use App\Models\Insurance\TmpQuote;
+use App\Models\TmpQuote;
 use App\Services\ZohoCRMService;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
