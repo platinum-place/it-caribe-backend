@@ -7,11 +7,15 @@ use App\Contracts\Services\VehicleMakeServiceContract;
 use App\Contracts\Services\VehicleModelServiceContract;
 use App\Contracts\Services\VehicleTypeServiceContract;
 use App\Contracts\Services\VendorServiceContract;
+use App\Contracts\Services\ZohoOauthAccessTokenServiceContract;
+use App\Contracts\Services\ZohoOauthRefreshTokenServiceContract;
 use App\Services\UserService;
 use App\Services\VehicleMakeService;
 use App\Services\VehicleModelService;
 use App\Services\VehicleTypeService;
 use App\Services\VendorService;
+use App\Services\ZohoOauthAccessTokenService;
+use App\Services\ZohoOauthRefreshTokenService;
 use Illuminate\Support\ServiceProvider;
 
 class ServicesServiceProvider extends ServiceProvider
@@ -22,6 +26,8 @@ class ServicesServiceProvider extends ServiceProvider
         VehicleMakeServiceContract::class => VehicleMakeService::class,
         VehicleTypeServiceContract::class => VehicleTypeService::class,
         VehicleModelServiceContract::class => VehicleModelService::class,
+        ZohoOauthAccessTokenServiceContract::class => ZohoOauthAccessTokenService::class,
+        ZohoOauthRefreshTokenServiceContract::class => ZohoOauthRefreshTokenService::class,
     ];
 
     /**

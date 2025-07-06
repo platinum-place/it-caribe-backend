@@ -7,11 +7,15 @@ use App\Contracts\Repositories\VehicleMakeRepositoryContract;
 use App\Contracts\Repositories\VehicleModelRepositoryContract;
 use App\Contracts\Repositories\VehicleTypeRepositoryContract;
 use App\Contracts\Repositories\VendorRepositoryContract;
+use App\Contracts\Repositories\ZohoOauthAccessTokenRepositoryContract;
+use App\Contracts\Repositories\ZohoOauthRefreshTokenRepositoryContract;
 use App\Repositories\UserRepository;
 use App\Repositories\VehicleMakeRepository;
 use App\Repositories\VehicleModelRepository;
 use App\Repositories\VehicleTypeRepository;
 use App\Repositories\VendorRepository;
+use App\Repositories\ZohoOauthAccessTokenRepository;
+use App\Repositories\ZohoOauthRefreshTokenRepository;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -22,6 +26,8 @@ class RepositoryServiceProvider extends ServiceProvider
         VehicleMakeRepositoryContract::class => VehicleMakeRepository::class,
         VehicleTypeRepositoryContract::class => VehicleTypeRepository::class,
         VehicleModelRepositoryContract::class => VehicleModelRepository::class,
+        ZohoOauthAccessTokenRepositoryContract::class => ZohoOauthAccessTokenRepository::class,
+        ZohoOauthRefreshTokenRepositoryContract::class => ZohoOauthRefreshTokenRepository::class,
     ];
 
     /**

@@ -5,6 +5,8 @@ use App\Http\Controllers\VehicleMakeController;
 use App\Http\Controllers\VehicleModelController;
 use App\Http\Controllers\VehicleTypeController;
 use App\Http\Controllers\VendorController;
+use App\Http\Controllers\ZohoOauthAccessTokenController;
+use App\Http\Controllers\ZohoOauthRefreshTokenController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -24,6 +26,12 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::put('vehicle-types/{id}/restore', [VehicleTypeController::class, 'restore'])->name('vehicle-types.restore');
     Route::apiResource('vehicle-types', VehicleTypeController::class);
+
+    Route::put('zoho-oauth-access-tokens/{id}/restore', [ZohoOauthAccessTokenController::class, 'restore'])->name('zoho-oauth-access-tokens.restore');
+    Route::apiResource('zoho-oauth-access-tokens', ZohoOauthAccessTokenController::class);
+
+    Route::put('zoho-oauth-refresh-tokens/{id}/restore', [ZohoOauthRefreshTokenController::class, 'restore'])->name('zoho-oauth-refresh-tokens.restore');
+    Route::apiResource('zoho-oauth-refresh-tokens', ZohoOauthRefreshTokenController::class);
 });
 
 require_once __DIR__.'/api/auth.php';
