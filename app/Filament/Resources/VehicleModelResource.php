@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\Vehicle\VehicleModelResource\Pages;
 use App\Models\VehicleModel;
 use Filament\Forms;
 use Filament\Forms\Form;

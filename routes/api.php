@@ -7,6 +7,7 @@ use App\Http\Controllers\VehicleTypeController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\ZohoOauthAccessTokenController;
 use App\Http\Controllers\ZohoOauthRefreshTokenController;
+use App\Http\Controllers\ZohoServiceController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -32,6 +33,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::put('zoho-oauth-refresh-tokens/{id}/restore', [ZohoOauthRefreshTokenController::class, 'restore'])->name('zoho-oauth-refresh-tokens.restore');
     Route::apiResource('zoho-oauth-refresh-tokens', ZohoOauthRefreshTokenController::class);
+
+    Route::get('zoho-services/generate-token', [ZohoServiceController::class, 'generateToken'])->name('zoho-services.generateToken');
+    Route::get('zoho-services/token', [ZohoServiceController::class, 'token'])->name('zoho-services.token');
 });
 
 require_once __DIR__.'/api/auth.php';

@@ -33,15 +33,15 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 ARG UID=1000
 ARG GID=1000
-RUN groupmod -g $GID www-data && \
-    usermod -u $UID -g $GID www-data
-
-RUN mkdir -p /var/www/html \
-    && chown -R www-data:www-data /var/www/html
-
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+RUN deluser www-data && \
+    delgroup www-data && \
+    addgroup -g ${GID} www-data && \
+    adduser -u ${UID} -G www-data -s /bin/sh -D www-data
 
 WORKDIR /var/www/html
+
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh && \
+    chown www-data:www-data /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
