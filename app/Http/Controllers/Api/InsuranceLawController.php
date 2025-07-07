@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Requests\Api\InsuranceLaw\DisableVehicleLawRequest;
 use App\Http\Requests\Api\InsuranceLaw\EstimateVehicleLawRequest;
 use App\Http\Requests\Api\InsuranceLaw\SearchDocumentRequest;
-use App\Models\Insurance\TmpQuote;
+use App\Models\TmpQuote;
 use App\Services\ZohoCRMService;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
@@ -13,9 +13,7 @@ use Throwable;
 
 class InsuranceLawController
 {
-    public function __construct(protected ZohoCRMService $crm)
-    {
-    }
+    public function __construct(protected ZohoCRMService $crm) {}
 
     /**
      * @throws RequestException
@@ -45,7 +43,7 @@ class InsuranceLawController
             }
 
             try {
-                $criteria = '((Marca:equals:' . $request->get('Marca') . ') and (Aseguradora:equals:' . $product['Vendor_Name']['id'] . '))';
+                $criteria = '((Marca:equals:'.$request->get('Marca').') and (Aseguradora:equals:'.$product['Vendor_Name']['id'].'))';
                 $brands = $this->crm->searchRecords('Restringidos', $criteria);
 
                 foreach ($brands['data'] as $brand) {
@@ -62,12 +60,12 @@ class InsuranceLawController
             $taxAmount = 0;
 
             try {
-                $criteria = 'Plan:equals:' . $product['id'];
+                $criteria = 'Plan:equals:'.$product['id'];
                 $taxes = $this->crm->searchRecords('Tasas', $criteria);
 
                 foreach ($taxes['data'] as $tax) {
                     if (in_array($request->get('TipoVehiculo'), $tax['Grupo_de_veh_culo'])) {
-                        if (!empty($tax['Suma_limite'])) {
+                        if (! empty($tax['Suma_limite'])) {
                             if ($request->get('MontoOriginal') >= $tax['Suma_limite']) {
                                 if (empty($tax['Suma_hasta'])) {
                                     $taxAmount = $tax['Name'] / 100;
@@ -84,14 +82,14 @@ class InsuranceLawController
 
             }
 
-            if (!$taxAmount) {
+            if (! $taxAmount) {
                 $alert = 'No se encontraron tasas.';
             }
 
             $surchargeAmount = 0;
 
             try {
-                $criteria = '((Marca:equals:' . $request->get('Marca') . ') and (Aseguradora:equals:' . $product['Vendor_Name']['id'] . '))';
+                $criteria = '((Marca:equals:'.$request->get('Marca').') and (Aseguradora:equals:'.$product['Vendor_Name']['id'].'))';
                 $surcharges = $this->crm->searchRecords('Recargos', $criteria);
 
                 foreach ($surcharges['data'] as $surcharge) {
@@ -141,7 +139,7 @@ class InsuranceLawController
 
             $data = [
                 'Subject' => $request->get('NombreCliente'),
-                'Valid_Till' => date('Y-m-d', strtotime(date('Y-m-d') . '+ 30 days')),
+                'Valid_Till' => date('Y-m-d', strtotime(date('Y-m-d').'+ 30 days')),
                 'Vigencia_desde' => date('Y-m-d'),
                 'Account_Name' => 3222373000092390001,
                 'Contact_Name' => 3222373000203318001,
@@ -174,8 +172,7 @@ class InsuranceLawController
             ];
 
             $responseQuote = $this->crm->insertRecords('Quotes', $data);
-            $tmp = TmpQuote::create(['id_crm' => $responseQuote['data'][0]['details']['id']]);
-            $response2 = $this->crm->getRecords('Vendors', ['Nombre'], (int)$product['Vendor_Name']['id']);
+            $response2 = $this->crm->getRecords('Vendors', ['Nombre'], (int) $product['Vendor_Name']['id']);
 
             $response[] = [
                 'Passcode' => null,
@@ -187,7 +184,7 @@ class InsuranceLawController
                 'Planid' => $product['id'],
                 'Plan' => 'Plan Mensual Full',
                 'Aseguradora' => $response2['data'][0]['Nombre'],
-                'Idcotizacion' => $tmp->id,
+                'Idcotizacion' => (string)$responseQuote['data'][0]['details']['id'],
                 'Fecha' => now()->toDateTimeString(),
                 'CoberturasList' => null,
                 'Alerta' => $alert,
@@ -266,15 +263,13 @@ class InsuranceLawController
      */
     public function disableVehicleLaw(DisableVehicleLawRequest $request, string $id)
     {
-        $tmp = TmpQuote::findOrFail($id);
-
         $fields = ['id', 'Quoted_Items'];
-        $this->crm->getRecords('Quotes', $fields, $tmp->id_crm);
+        $this->crm->getRecords('Quotes', $fields, $id);
 
         $data = [
             'Quote_Stage' => 'Cancelada',
         ];
-        $this->crm->updateRecords('Quotes', $tmp->id_crm, $data);
+        $this->crm->updateRecords('Quotes', $id, $data);
 
         return response()->json(['Error' => '']);
     }

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Vehicle\VehicleMake;
-use App\Models\Vehicle\VehicleType;
+use App\Models\VehicleMake;
+use App\Models\VehicleType;
 use App\Services\ZohoCRMService;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
@@ -65,7 +65,7 @@ class VehicleController extends Controller
         //
         //        return response()->json($models);
 
-        $models = \App\Models\Vehicle\VehicleModel::with('make')
+        $models = \App\Models\VehicleModel::with('make')
             ->where('vehicle_make_id', $brandId)
             ->select('id', 'name', 'vehicle_make_id')
             ->get()

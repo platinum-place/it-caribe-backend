@@ -25,7 +25,7 @@ class CancelUnemploymentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'Identificador' => ['required', 'uuid'],
+            'Identificador' => ['required'],
         ];
     }
 

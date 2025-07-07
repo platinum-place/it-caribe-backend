@@ -2,13 +2,13 @@
 
 namespace App\Services;
 
-use App\Repositories\BaseRepository;
+use App\Contracts\Repositories\BaseRepositoryContract;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class BaseService
 {
-    public function __construct(protected BaseRepository $repository) {}
+    public function __construct(protected BaseRepositoryContract $repository) {}
 
     public function search(array $params = [], ?bool $onlyTrashed = false): LengthAwarePaginator
     {

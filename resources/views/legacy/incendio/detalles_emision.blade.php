@@ -14,30 +14,51 @@
             </p>
 
             <p>
+                <b>Años</b> <br>
+                <b>Edad al terminar</b> <br>
+                <b>Prima Vida mensual</b> <br>
+                <b>Prima Incendio mensual</b> <br>
+            </p>
+
+            <p>
                 <b>Prima Neta</b><br>
                 <b>ISC</b><br>
-                <b>Prima Total</b>
+                <b>Prima Total Mensual</b> <br>
+                <b>Prima Total Anual</b>
             </p>
         </td>
-        <td style="font-size: 12px; vertical-align: top;">
-            <p>
-                RD$ {{ number_format($cotizacion->getFieldValue("Suma_asegurada")) }} <br>
-                RD$ {{ number_format($cotizacion->getFieldValue("Prestamo")) }} <br>
-                {{ $cotizacion->getFieldValue("Plazo") }} meses
-            </p>
+        @foreach ($cotizacion->getLineItems() as $lineItem)
+            @if ($lineItem->getProduct()->getEntityId() == $cotizacion->getFieldValue("Coberturas")->getEntityId())
+                <td style="font-size: 12px; vertical-align: top;">
+                    <p>
+                        RD$ {{ number_format($cotizacion->getFieldValue("Suma_asegurada")) }} <br>
+                        RD$ {{ number_format($cotizacion->getFieldValue("Prestamo")) }} <br>
+                        {{ $cotizacion->getFieldValue("Plazo") }} meses
+                    </p>
 
-            <p>
-                {{ $cotizacion->getFieldValue("Construcci_n") }} <br>
-                {{ $cotizacion->getFieldValue("Riesgo") }}
-            </p>
+                    <p>
+                        {{ $cotizacion->getFieldValue("Construcci_n") }} <br>
+                        {{ $cotizacion->getFieldValue("Riesgo") }}
+                    </p>
 
-            <p>
-                RD$ {{ number_format($cotizacion->getFieldValue('Prima_neta'), 2) }} <br>
-                RD$ {{ number_format($cotizacion->getFieldValue('ISC'), 2) }} <br>
-                RD$ {{ number_format($cotizacion->getFieldValue('Prima'), 2) }}
-            </p>
-        </td>
+                    <p>
+                        {{ \Carbon\Carbon::parse($cotizacion->getFieldValue("Fecha_de_nacimiento"))->age }} años<br>
+                        {{ \Carbon\Carbon::parse($cotizacion->getFieldValue("Fecha_de_nacimiento"))->age  + ($cotizacion->getFieldValue("Plazo") / 12) }}
+                        años<br>
+                        RD$ {{ number_format(json_decode($lineItem->getDescription(),true)['prima_vida'] ?? 0.0, 2) }}  <br>
+                        RD$ {{ number_format(json_decode($lineItem->getDescription(),true)['prima_incendio'] ?? 0.0, 2) }}
+                    </p>
+
+                    <p>
+                        RD$ {{ number_format($cotizacion->getFieldValue('Prima_neta'), 2) }} <br>
+                        RD$ {{ number_format($cotizacion->getFieldValue('ISC'), 2) }} <br>
+                        RD$ {{ number_format($cotizacion->getFieldValue('Prima'), 2) }} <br>
+                        RD$ {{ number_format($cotizacion->getFieldValue('Prima') * 12, 2) }}
+                    </p>
+                </td>
     </tr>
+    @endif
+    @endforeach
 </table>
 <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
     <tr>

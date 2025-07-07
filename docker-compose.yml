@@ -19,7 +19,7 @@ services:
             dockerfile: Dockerfile
         container_name: ${APP_NAME}-nginx
         ports:
-            - 80:8080
+            - '80:8080'
         volumes:
             - ./:/var/www/html
         networks:
@@ -27,8 +27,11 @@ services:
 
     php-fpm:
         build:
-            context: ./docker
-            dockerfile: php-fpm/Dockerfile
+            context: ./docker/php-fpm
+            dockerfile: Dockerfile
+            args:
+                UID: ${UID:-1000}
+                GID: ${GID:-1000}
         container_name: ${APP_NAME}-php-fpm
         environment:
             - UID=${UID:-1000}
@@ -42,8 +45,8 @@ services:
         tty: true
         stdin_open: true
         build:
-            context: ./docker
-            dockerfile: php-cli/Dockerfile
+            context: ./docker/php-cli
+            dockerfile: Dockerfile
             args:
                 UID: ${UID:-1000}
                 GID: ${GID:-1000}
@@ -55,6 +58,8 @@ services:
             - ./:/var/www/html
         networks:
             - app-network
+        depends_on:
+            - postgresql
 
 volumes:
     postgresql_data:

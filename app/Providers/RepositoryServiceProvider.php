@@ -2,16 +2,26 @@
 
 namespace App\Providers;
 
-use App\Contracts\Repositories\Partners\VendorRepositoryContract;
+use App\Contracts\Repositories\ProductCategoryRepositoryContract;
+use App\Contracts\Repositories\ProductRepositoryContract;
+use App\Contracts\Repositories\ProductTypeRepositoryContract;
 use App\Contracts\Repositories\UserRepositoryContract;
-use App\Contracts\Repositories\Vehicle\VehicleMakeRepositoryContract;
-use App\Contracts\Repositories\Vehicle\VehicleModelRepositoryContract;
-use App\Contracts\Repositories\Vehicle\VehicleTypeRepositoryContract;
-use App\Repositories\Partners\VendorRepository;
+use App\Contracts\Repositories\VehicleMakeRepositoryContract;
+use App\Contracts\Repositories\VehicleModelRepositoryContract;
+use App\Contracts\Repositories\VehicleTypeRepositoryContract;
+use App\Contracts\Repositories\VendorRepositoryContract;
+use App\Contracts\Repositories\ZohoOauthAccessTokenRepositoryContract;
+use App\Contracts\Repositories\ZohoOauthRefreshTokenRepositoryContract;
+use App\Repositories\ProductCategoryRepository;
+use App\Repositories\ProductRepository;
+use App\Repositories\ProductTypeRepository;
 use App\Repositories\UserRepository;
-use App\Repositories\Vehicle\VehicleMakeRepository;
-use App\Repositories\Vehicle\VehicleModelRepository;
-use App\Repositories\Vehicle\VehicleTypeRepository;
+use App\Repositories\VehicleMakeRepository;
+use App\Repositories\VehicleModelRepository;
+use App\Repositories\VehicleTypeRepository;
+use App\Repositories\VendorRepository;
+use App\Repositories\ZohoOauthAccessTokenRepository;
+use App\Repositories\ZohoOauthRefreshTokenRepository;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -22,6 +32,11 @@ class RepositoryServiceProvider extends ServiceProvider
         VehicleMakeRepositoryContract::class => VehicleMakeRepository::class,
         VehicleTypeRepositoryContract::class => VehicleTypeRepository::class,
         VehicleModelRepositoryContract::class => VehicleModelRepository::class,
+        ZohoOauthAccessTokenRepositoryContract::class => ZohoOauthAccessTokenRepository::class,
+        ZohoOauthRefreshTokenRepositoryContract::class => ZohoOauthRefreshTokenRepository::class,
+        ProductTypeRepositoryContract::class => ProductTypeRepository::class,
+        ProductCategoryRepositoryContract::class => ProductCategoryRepository::class,
+        ProductRepositoryContract::class => ProductRepository::class,
     ];
 
     /**

@@ -25,7 +25,7 @@ class IssueVehicleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'cotzid' => ['required', 'uuid'],
+            'cotzid' => ['required'],
             'ofertaID' => ['required', 'integer'],
             'FechaVencimiento' => ['required', 'date_format:d/m/Y'],
         ];

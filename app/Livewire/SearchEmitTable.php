@@ -20,7 +20,7 @@ class SearchEmitTable extends Component
 
     public function mount()
     {
-        $criteria = '((Account_Name:equals:' . 3222373000092390001 . ') and (Contact_Name:equals:' . 3222373000203318001 . ') and (Quote_Stage:starts_with:E))';
+        $criteria = '((Account_Name:equals:'. 3222373000092390001 .') and (Contact_Name:equals:'. 3222373000203318001 .') and (Quote_Stage:starts_with:E))';
         $emisiones = app(ZohoCRMService::class)->searchRecords('Quotes', $criteria);
 
         $this->emisiones = $emisiones['data'];

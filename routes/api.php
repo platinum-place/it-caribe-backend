@@ -1,10 +1,16 @@
 <?php
 
-use App\Http\Controllers\Partners\VendorController;
+use App\Http\Controllers\ProductCategoryController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductTypeController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\Vehicle\VehicleMakeController;
-use App\Http\Controllers\Vehicle\VehicleModelController;
-use App\Http\Controllers\Vehicle\VehicleTypeController;
+use App\Http\Controllers\VehicleMakeController;
+use App\Http\Controllers\VehicleModelController;
+use App\Http\Controllers\VehicleTypeController;
+use App\Http\Controllers\VendorController;
+use App\Http\Controllers\ZohoOauthAccessTokenController;
+use App\Http\Controllers\ZohoOauthRefreshTokenController;
+use App\Http\Controllers\ZohoServiceController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -24,8 +30,25 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::put('vehicle-types/{id}/restore', [VehicleTypeController::class, 'restore'])->name('vehicle-types.restore');
     Route::apiResource('vehicle-types', VehicleTypeController::class);
+
+    Route::put('zoho-oauth-access-tokens/{id}/restore', [ZohoOauthAccessTokenController::class, 'restore'])->name('zoho-oauth-access-tokens.restore');
+    Route::apiResource('zoho-oauth-access-tokens', ZohoOauthAccessTokenController::class);
+
+    Route::put('zoho-oauth-refresh-tokens/{id}/restore', [ZohoOauthRefreshTokenController::class, 'restore'])->name('zoho-oauth-refresh-tokens.restore');
+    Route::apiResource('zoho-oauth-refresh-tokens', ZohoOauthRefreshTokenController::class);
+
+    Route::get('zoho-services/generate-token', [ZohoServiceController::class, 'generateToken'])->name('zoho-services.generateToken');
+    Route::get('zoho-services/token', [ZohoServiceController::class, 'token'])->name('zoho-services.token');
+
+    Route::put('product-categories/{id}/restore', [ProductCategoryController::class, 'restore'])->name('product-categories.restore');
+    Route::apiResource('product-categories', ProductCategoryController::class);
+
+    Route::put('product-types/{id}/restore', [ProductTypeController::class, 'restore'])->name('product-types.restore');
+    Route::apiResource('product-types', ProductTypeController::class);
+
+    Route::put('products/{id}/restore', [ProductController::class, 'restore'])->name('products.restore');
+    Route::apiResource('products', ProductController::class);
 });
 
 require_once __DIR__.'/api/auth.php';
 require_once __DIR__.'/api/external.php';
-require_once __DIR__.'/api/bmc.php';

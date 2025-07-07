@@ -30,7 +30,8 @@
             <p>
                 <b>Prima Neta</b><br>
                 <b>ISC</b><br>
-                <b>Prima Total</b>
+                <b>Prima Total Mensual</b> <br>
+                <b>Prima Total Anual</b>
             </p>
         </td>
 
@@ -70,7 +71,8 @@
                     <p>
                         RD$ {{ number_format($lineItem->getNetTotal() / 1.16, 2) }} <br>
                         RD$ {{ number_format($lineItem->getNetTotal() - $lineItem->getNetTotal() / 1.16, 2) }} <br>
-                        RD$ {{ number_format($lineItem->getNetTotal(), 2) }}
+                        RD$ {{ number_format($lineItem->getNetTotal(), 2) }} <br>
+                        RD$ {{ number_format($lineItem->getNetTotal() * 12, 2) }}
                     </p>
                 </td>
             @endif

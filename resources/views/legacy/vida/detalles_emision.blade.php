@@ -18,7 +18,8 @@
             <p>
                 <b>Prima Neta</b><br>
                 <b>ISC</b><br>
-                <b>Prima Total</b>
+                <b>Prima Total Mensual</b> <br>
+                <b>Prima Total Anual</b>
             </p>
         </td>
         <td style="font-size: 12px; vertical-align: top;">
@@ -38,7 +39,8 @@
             <p>
                 RD$ {{ number_format($cotizacion->getFieldValue('Prima_neta'), 2) }} <br>
                 RD$ {{ number_format($cotizacion->getFieldValue('ISC'), 2) }} <br>
-                RD$ {{ number_format($cotizacion->getFieldValue('Prima'), 2) }}
+                RD$ {{ number_format($cotizacion->getFieldValue('Prima'), 2) }} <br>
+                RD$ {{ number_format($cotizacion->getFieldValue('Prima') * 12, 2) }}
             </p>
         </td>
     </tr>
@@ -47,52 +49,28 @@
 <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
     <tr>
         <td style="padding: 10px; text-align: justify;">
-            <p><strong>A)</strong> <strong>Desempleo:</strong> El seguro de desempleo cubre hasta 6 meses la cuota del préstamo en caso de desempleo involuntario, siempre y cuando el asegurado permanezca desempleado. Cobertura para empleados públicos y privados.</p>
-
-            <p><strong>B)</strong> <strong>Periodo de carencia:</strong> Es el tiempo que debe transcurrir desde la incorporación del asegurado en la póliza y durante el cual, en caso de ocurrir un desempleo involuntario, no estará cubierto por la aseguradora.</p>
-
+            <p>A. Las aseguradoras, al efectuar su proceso de evaluación de riesgo, se reservan el derecho de aceptación del mismo. En caso de que la aseguradora seleccionada decline el riesgo, el cliente será notificado y en lo inmediato deberá escoger otra aseguradora que haya presentado cotización.</p>
+            <p>B. Autorizo que la prima correspondiente a los seguros aceptados por mi persona sea debitada o agregada al monto del préstamo otorgado a mi favor por Banco Múltiple Caribe, S.A., entidad que asume la responsabilidad de entregar a la aseguradora dicha partida, de conformidad al acuerdo entre ambas partes.</p>
+            <p>C. Por este medio, les autorizo endosar mi póliza, a favor de Banco Múltiple Caribe, S.A., hasta sus intereses.</p>
+            <p>D. Clientes con más de un préstamo y con seguro de vida deben revisar el monto asegurado acumulado para evaluar si requiere otros requisitos médicos según la tabla de aseguradoras.</p>
+            <p>E. La aseguradora se reserva el derecho para realizar variación de prima y coberturas en la cotización de seguros suscrita con el cliente.</p>
+            <p>F. La cobertura otorgada bajo esta póliza queda condicionada a las cláusulas y condiciones especificadas en los anexos, los cuales han sido incluidos en la póliza definitiva, cuyas condiciones completas están contenidas en la copia que reposa en la entidad financiera y aseguradora:</p>
             <ul style="margin-top: 0; margin-bottom: 10px; padding-left: 20px;">
-                <li>El periodo de carencia será de (3) meses para empleados privados.</li>
-                <li>El periodo de carencia será de (5) meses para empleados de empresas públicas y militares.</li>
-                <li>Asalariado independiente: este periodo no aplica para profesionales independientes.</li>
-            </ul>
-
-            <p><strong>C)</strong> Las aseguradoras, al efectuar su proceso de evaluación de riesgo, se reservan el derecho de aceptación de este. En caso de que la aseguradora seleccionada decline el riesgo, el cliente será notificado y deberá escoger otra aseguradora que haya presentado cotización.</p>
-
-            <p><strong>D)</strong> Autorizo que la prima correspondiente a los seguros aceptados por mi persona sea debitada o agregada al monto del préstamo otorgado a mi favor por Banco Múltiple Caribe, S.A., entidad que asume la responsabilidad de entregar a la aseguradora dicha partida, de conformidad al acuerdo entre ambas partes.</p>
-
-            <p><strong>E)</strong> Por este medio, les autorizo endosar mi póliza, a favor de Banco Múltiple Caribe, S.A., hasta sus intereses.</p>
-
-            <p><strong>F)</strong> La aseguradora se reserva el derecho para realizar variación de prima y coberturas en la cotización de seguros suscrita con el cliente, con previa comunicación al banco y al cliente.</p>
-
-            <p><strong>G)</strong> El beneficio de la cobertura aplicará para deudores o asegurados militares y empleados de empresas públicas que hayan permanecido laborando en la empresa al menos (24) veinticuatro meses consecutivos antes de la ocurrencia del despido.</p>
-
-            <p><strong>H)</strong> La cobertura otorgada bajo esta póliza queda condicionada a las cláusulas y condiciones especificadas en los anexos, los cuales han sido incluidos en la póliza definitiva, cuyas condiciones completas están contenidas en la copia que reposa en la entidad financiera y aseguradora:</p>
-
-            <ul style="margin-top: 0; margin-bottom: 10px; padding-left: 20px;">
-                <li>Podrán consultarla a través de la página de internet <a href="https://www.bancocaribe.com.do" style="color: black; text-decoration: underline;">www.bancocaribe.com.do</a>.</li>
-                <li>Las condiciones generales de la póliza podrán ser solicitadas en Sura. Puede dirigirse a su oficina principal en la Av. John F. Kennedy, Santo Domingo, o contactarse al 809-985-5000.</li>
+                <li>Podrán consultarla a través de la página de internet www.bancocaribe.com.do/seguro-de-vida.</li>
+                <li>Las condiciones generales de la póliza podrán ser solicitadas en {{ $aseguradora->getFieldValue('Nombre') }}. Puede dirigirse a su oficina principal en la {{ $aseguradora->getFieldValue('Street') }}, o contactarse al {{ $aseguradora->getFieldValue('Phone') }}.</li>
                 <li>Pueden contactarse con Sentinel Corredores de Seguros al 809-732-0202 o dirigirse a su oficina en la calle César A. Canó No. 354, Las Praderas, Santo Domingo.</li>
             </ul>
-
-            <p><strong>I)</strong> <strong>Vigencia:</strong> La póliza será válida hasta la cancelación del préstamo.</p>
-
+            <p>G. Vigencia: La póliza será válida hasta la cancelación del préstamo.</p>
             <p><strong>Exclusiones:</strong></p>
             <ul style="margin-top: 0; margin-bottom: 10px; padding-left: 20px;">
-                <li>A) Pérdida del empleo por incumplimiento del contrato de trabajo y las disposiciones del Código de Trabajo. Terminación por renuncia o pérdida voluntaria del empleo.</li>
-                <li>B) Empleados con incapacidad por accidente, enfermedad, desorden mental o embarazo.</li>
-                <li>C) Para la cobertura de discapacidad temporal por accidentes aplican las personas que sean trabajadores, comerciantes y profesionales independientes, siempre que estén percibiendo un ingreso. No aplican jubilados, pensionados o personas que hayan sido retiradas del seguro.</li>
-                <li>D) Periodo en el que el asegurado pase fuera del país más de 30 días consecutivos.</li>
-                <li>E) Personas con contratos de trabajo informales y trabajos a tiempo completo no suscritos en la Tesorería de la Seguridad Social y en el Ministerio de Trabajo.</li>
-                <li>F) Deudor-asegurado que se encuentre de licencia sin disfrute de sueldo.</li>
-                <li>G) Asegurado con más de un empleo que pierda menos del 50% de sus ingresos.</li>
-                <li>H) <strong>Exclusiones por mora:</strong> Si la prima presenta un atraso de más de 120 días, será excluido de la póliza. Aplica para cuota mensual.</li>
+                <li>A. Asegurado que practique cualquier tipo de deporte de alto riesgo o que preste servicios de vehículos públicos o aéreos. (De acuerdo a formulario).</li>
+                <li>B. La aseguradora se reserva el derecho de no pagar ninguna reclamación que surja como consecuencia de suicidio o tentativa de suicidio, siempre y cuando ocurra dentro del plazo de 2 años.<li>
+                <li>C. La compañía no pagara la indemnización por fallecimiento de un asegurado que sufra cualquier lesión por accidente o cualquier enfermedad provocada por participar activamente en guerra, rebelión, motín o cualquier otra relacionada a estas. Tampoco indemnizara por fallecimiento por estar cometiendo algún delito como robo, asalto, asesinato o por causa de intervenciones quirúrgicas ilícitas o estéticas.<li>
+                <li>D. Hospitalización o incapacidad total y permanente causada por enfermedad, lesión o condición preexistente originada antes del inicio de vigencia de la cobertura.<li>
+                <li>E. Epidemias declaradas por las autoridades competentes.<li>
+                <li>F. Fallecimiento ocasionado por cualquier enfermedad del Síndrome de Inmunodeficiencia Adquirida – SIDA, virusVIH o cualquier otro desorden inmunológico.<li>
+                <li>G. Exclusiones por mora: Si la prima presenta un atraso de mas de 120 días, sera excluido de la póliza.</li>
             </ul>
-
-            <br>
-
-            <p><strong>Nombre del cliente:</strong> ________________________________________</p>
-            <p><strong>Cédula:</strong> _________________________________________________</p>
         </td>
     </tr>
 </table>

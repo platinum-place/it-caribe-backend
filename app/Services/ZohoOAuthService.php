@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\Zoho\ZohoOauthAccessToken;
-use App\Models\Zoho\ZohoOauthRefreshToken;
+use App\Models\ZohoOauthAccessToken;
+use App\Models\ZohoOauthRefreshToken;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
 use ZohoOAuth;

@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\Vehicle\VehicleMake;
-use App\Models\Vehicle\VehicleType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,8 +16,8 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->string('name');
-            $table->foreignIdFor(VehicleMake::class)->constrained();
-            $table->foreignIdFor(VehicleType::class)->constrained();
+            $table->foreignIdFor(\App\Models\VehicleMake::class)->constrained();
+            $table->foreignIdFor(\App\Models\VehicleType::class)->constrained();
         });
     }
 

@@ -2,16 +2,30 @@
 
 namespace App\Providers;
 
-use App\Contracts\Services\Partners\VendorServiceContract;
+use App\Contracts\Services\ProductCategoryServiceContract;
+use App\Contracts\Services\ProductServiceContract;
+use App\Contracts\Services\ProductTypeServiceContract;
 use App\Contracts\Services\UserServiceContract;
-use App\Contracts\Services\Vehicle\VehicleMakeServiceContract;
-use App\Contracts\Services\Vehicle\VehicleModelServiceContract;
-use App\Contracts\Services\Vehicle\VehicleTypeServiceContract;
-use App\Services\Partners\VendorService;
+use App\Contracts\Services\VehicleMakeServiceContract;
+use App\Contracts\Services\VehicleModelServiceContract;
+use App\Contracts\Services\VehicleTypeServiceContract;
+use App\Contracts\Services\VendorServiceContract;
+use App\Contracts\Services\ZohoAPIServiceContract;
+use App\Contracts\Services\ZohoOauthAccessTokenServiceContract;
+use App\Contracts\Services\ZohoOauthRefreshTokenServiceContract;
+use App\Contracts\Services\ZohoServiceContract;
+use App\Services\ProductCategoryService;
+use App\Services\ProductService;
+use App\Services\ProductTypeService;
 use App\Services\UserService;
-use App\Services\Vehicle\VehicleMakeService;
-use App\Services\Vehicle\VehicleModelService;
-use App\Services\Vehicle\VehicleTypeService;
+use App\Services\VehicleMakeService;
+use App\Services\VehicleModelService;
+use App\Services\VehicleTypeService;
+use App\Services\VendorService;
+use App\Services\ZohoAPIServiceService;
+use App\Services\ZohoOauthAccessTokenService;
+use App\Services\ZohoOauthRefreshTokenService;
+use App\Services\ZohoService;
 use Illuminate\Support\ServiceProvider;
 
 class ServicesServiceProvider extends ServiceProvider
@@ -22,6 +36,13 @@ class ServicesServiceProvider extends ServiceProvider
         VehicleMakeServiceContract::class => VehicleMakeService::class,
         VehicleTypeServiceContract::class => VehicleTypeService::class,
         VehicleModelServiceContract::class => VehicleModelService::class,
+        ZohoOauthAccessTokenServiceContract::class => ZohoOauthAccessTokenService::class,
+        ZohoOauthRefreshTokenServiceContract::class => ZohoOauthRefreshTokenService::class,
+        ZohoAPIServiceContract::class => ZohoAPIServiceService::class,
+        ZohoServiceContract::class => ZohoService::class,
+        ProductTypeServiceContract::class => ProductTypeService::class,
+        ProductCategoryServiceContract::class => ProductCategoryService::class,
+        ProductServiceContract::class => ProductService::class,
     ];
 
     /**

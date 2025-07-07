@@ -138,7 +138,8 @@ class CotizarIncendio3 extends Cotizar
                 'total' => $prima,
                 'suma' => $this->cotizacion->suma,
                 'comentario' => $comentario,
-                'prima_vida' => $primaVida,
+                'prima_vida' => round($primaVida, 2),
+                'prima_incendio' => round($primaIncendio, 2),
             ];
         }
     }

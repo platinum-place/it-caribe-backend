@@ -161,6 +161,14 @@ class Zoho
                     ])
                 );
             }
+            if (! empty($plan['prima_vida'])) {
+                $lineItem->setDescription(
+                    json_encode([
+                        'prima_vida' => $plan['prima_vida'],
+                        'prima_incendio' => $plan['prima_incendio'],
+                    ])
+                );
+            }
             $record->addLineItem($lineItem);
         }
 

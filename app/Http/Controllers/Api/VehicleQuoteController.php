@@ -6,10 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Quote\CancelVehicleRequest;
 use App\Http\Requests\Api\Quote\EstimateVehicleRequest;
 use App\Http\Requests\Api\Quote\IssueVehicleRequest;
-use App\Models\Insurance\TmpQuote;
-use App\Models\Partners\TmpVendorProduct;
-use App\Models\Vehicle\VehicleMake;
-use App\Models\Vehicle\VehicleModel;
+use App\Models\TmpQuote;
+use App\Models\TmpVendorProduct;
+use App\Models\VehicleMake;
+use App\Models\VehicleModel;
 use App\Services\ZohoCRMService;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
@@ -89,10 +89,10 @@ class VehicleQuoteController extends Controller
                 $amount = round($amount, 2);
             }
 
-            $criteria = 'Name:equals:'.VehicleMake::firstWhere('code',$request->get('Marca'))->name;
+            $criteria = 'Name:equals:'.VehicleMake::firstWhere('code', $request->get('Marca'))->name;
             $vehicleMake = $this->crm->searchRecords('Marcas', $criteria);
 
-            $criteria = 'Name:equals:'.VehicleModel::firstWhere('code',$request->get('Modelo'))->name;
+            $criteria = 'Name:equals:'.VehicleModel::firstWhere('code', $request->get('Modelo'))->name;
             $vehicleModel = $this->crm->searchRecords('Modelos', $criteria);
 
             $data = [
@@ -130,11 +130,8 @@ class VehicleQuoteController extends Controller
             ];
 
             $responseProduct = $this->crm->insertRecords('Quotes', $data);
-            $tmp = TmpQuote::create(['id_crm' => $responseProduct['data'][0]['details']['id']]);
-$r =
 
-$response2 = $this->crm->getRecords('Vendors', ['Nombre'], (int)$product['Vendor_Name']['id']);
-
+            $response2 = $this->crm->getRecords('Vendors', ['Nombre'], (int) $product['Vendor_Name']['id']);
 
             $response[] = [
                 'passcode' => "",
@@ -146,7 +143,7 @@ $response2 = $this->crm->getRecords('Vendors', ['Nombre'], (int)$product['Vendor
                 'Planid' => TmpVendorProduct::firstWhere('id_crm', $product['id'])->id,
                 'Plan' => 'Plan Mensual Full',
                 'Aseguradora' => $response2['data'][0]['Nombre'],
-                'IdCotizacion' => $tmp->id,
+                'IdCotizacion' => (string)$responseProduct['data'][0]['details']['id'],
                 'Fecha' => date('d/m/Y H:i:s A'),
                 'Error' => $alert,
                 'CoberturasList' => [
@@ -172,10 +169,8 @@ $response2 = $this->crm->getRecords('Vendors', ['Nombre'], (int)$product['Vendor
      */
     public function issueVehicle(IssueVehicleRequest $request)
     {
-        $tmp = TmpQuote::findOrFail($request->get('cotzid'));
-
         $fields = ['id', 'Quoted_Items'];
-        $quote = $this->crm->getRecords('Quotes', $fields, $tmp->id_crm)['data'][0];
+        $quote = $this->crm->getRecords('Quotes', $fields, $request->get('cotzid'))['data'][0];
 
         foreach ($quote['Quoted_Items'] as $line) {
             $data = [
@@ -188,7 +183,7 @@ $response2 = $this->crm->getRecords('Vendors', ['Nombre'], (int)$product['Vendor
                 'Prima' => round($line['Net_Total'], 2),
             ];
 
-            $this->crm->updateRecords('Quotes', $tmp->id_crm, $data);
+            $this->crm->updateRecords('Quotes', $request->get('cotzid'), $data);
 
             break;
         }
@@ -198,16 +193,14 @@ $response2 = $this->crm->getRecords('Vendors', ['Nombre'], (int)$product['Vendor
 
     public function cancelVehicle(CancelVehicleRequest $request)
     {
-        $tmp = TmpQuote::findOrFail($request->get('IdCotizacion'));
-
         $fields = ['id', 'Quoted_Items'];
-        $quote = $this->crm->getRecords('Quotes', $fields, $tmp->id_crm)['data'][0];
+        $quote = $this->crm->getRecords('Quotes', $fields, $request->get('IdCotizacion'))['data'][0];
 
         $data = [
             'Quote_Stage' => 'Cancelada',
         ];
 
-        $this->crm->updateRecords('Quotes', $tmp->id_crm, $data);
+        $this->crm->updateRecords('Quotes', $request->get('IdCotizacion'), $data);
 
         return response()->json(['Error' => '']);
     }

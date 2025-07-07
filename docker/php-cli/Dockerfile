@@ -3,49 +3,47 @@ FROM php:8.4-cli
 ARG UID=1000
 ARG GID=1000
 
+# Instala dependencias del sistema, incluyendo libicu-dev
 RUN apt-get update && apt-get install -y \
     git \
     curl \
-    zip \
-    unzip \
-    libzip-dev \
-    libxml2-dev \
-    libicu-dev \
-    libpq-dev \
     libpng-dev \
     libonig-dev \
-    libcurl4-openssl-dev \
-    nodejs \
-    npm \
-    gosu \
- && rm -rf /var/lib/apt/lists/*
-
-RUN docker-php-ext-configure intl \
- && docker-php-ext-install \
-    pdo_mysql \
-    pdo_pgsql \
-    mbstring \
-    exif \
-    pcntl \
-    bcmath \
-    gd \
-    intl \
+    libxml2-dev \
     zip \
-    xml \
-    curl
+    unzip \
+    libpq-dev \
+    libzip-dev \
+    libicu-dev \
+    gosu \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN pecl install xdebug \
- && docker-php-ext-enable xdebug
+# Instala extensiones de PHP, incluyendo intl
+RUN docker-php-ext-install pdo pdo_pgsql mbstring exif pcntl bcmath gd zip intl
 
-COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+# Instala Node.js y npm
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs
 
-RUN groupadd -g ${GID} appgroup && \
-    useradd -u ${UID} -g appgroup -m -s /bin/bash appuser
+# Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Create system user to run Composer and Artisan Commands
+# First, remove the existing www-data user if it exists
+RUN if id "www-data" >/dev/null 2>&1; then userdel www-data; fi
+RUN if getent group www-data >/dev/null 2>&1; then groupdel www-data; fi
+
+# Create new group and user with specified UID/GID
+RUN groupadd --force -g $GID www-data
+RUN useradd -ms /bin/bash --no-user-group -g www-data -u $UID www-data
 
 WORKDIR /var/www/html
 
+# Copy entrypoint script
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
-CMD ["bash"]
+
+CMD ["php", "-a"]
