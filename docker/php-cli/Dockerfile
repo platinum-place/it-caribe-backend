@@ -3,7 +3,7 @@ FROM php:8.4-cli
 ARG UID=1000
 ARG GID=1000
 
-# Install system dependencies
+# Instala dependencias del sistema, incluyendo libicu-dev
 RUN apt-get update && apt-get install -y \
     git \
     curl \
@@ -14,12 +14,13 @@ RUN apt-get update && apt-get install -y \
     unzip \
     libpq-dev \
     libzip-dev \
+    libicu-dev \
     gosu \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Install PHP extensions
-RUN docker-php-ext-install pdo pdo_pgsql mbstring exif pcntl bcmath gd zip
+# Instala extensiones de PHP, incluyendo intl
+RUN docker-php-ext-install pdo pdo_pgsql mbstring exif pcntl bcmath gd zip intl
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
