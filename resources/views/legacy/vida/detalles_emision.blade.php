@@ -18,7 +18,8 @@
             <p>
                 <b>Prima Neta</b><br>
                 <b>ISC</b><br>
-                <b>Prima Total</b>
+                <b>Prima Total Mensual</b> <br>
+                <b>Prima Total Anual</b>
             </p>
         </td>
         <td style="font-size: 12px; vertical-align: top;">
@@ -38,7 +39,8 @@
             <p>
                 RD$ {{ number_format($cotizacion->getFieldValue('Prima_neta'), 2) }} <br>
                 RD$ {{ number_format($cotizacion->getFieldValue('ISC'), 2) }} <br>
-                RD$ {{ number_format($cotizacion->getFieldValue('Prima'), 2) }}
+                RD$ {{ number_format($cotizacion->getFieldValue('Prima'), 2) }} <br>
+                RD$ {{ number_format($cotizacion->getFieldValue('Prima') * 12, 2) }}
             </p>
         </td>
     </tr>
@@ -76,18 +78,6 @@
             </ul>
 
             <p><strong>I)</strong> <strong>Vigencia:</strong> La póliza será válida hasta la cancelación del préstamo.</p>
-
-            <p><strong>Exclusiones:</strong></p>
-            <ul style="margin-top: 0; margin-bottom: 10px; padding-left: 20px;">
-                <li>A) Pérdida del empleo por incumplimiento del contrato de trabajo y las disposiciones del Código de Trabajo. Terminación por renuncia o pérdida voluntaria del empleo.</li>
-                <li>B) Empleados con incapacidad por accidente, enfermedad, desorden mental o embarazo.</li>
-                <li>C) Para la cobertura de discapacidad temporal por accidentes aplican las personas que sean trabajadores, comerciantes y profesionales independientes, siempre que estén percibiendo un ingreso. No aplican jubilados, pensionados o personas que hayan sido retiradas del seguro.</li>
-                <li>D) Periodo en el que el asegurado pase fuera del país más de 30 días consecutivos.</li>
-                <li>E) Personas con contratos de trabajo informales y trabajos a tiempo completo no suscritos en la Tesorería de la Seguridad Social y en el Ministerio de Trabajo.</li>
-                <li>F) Deudor-asegurado que se encuentre de licencia sin disfrute de sueldo.</li>
-                <li>G) Asegurado con más de un empleo que pierda menos del 50% de sus ingresos.</li>
-                <li>H) <strong>Exclusiones por mora:</strong> Si la prima presenta un atraso de más de 120 días, será excluido de la póliza. Aplica para cuota mensual.</li>
-            </ul>
 
             <br>
 

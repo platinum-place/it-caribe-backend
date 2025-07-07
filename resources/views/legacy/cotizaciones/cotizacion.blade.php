@@ -68,6 +68,7 @@
     @endif
 
     @if (in_array($cotizacion->getFieldValue('Plan'), [
+    'Mensual Full',
         'Full',
         'Ley',
         'Econo',

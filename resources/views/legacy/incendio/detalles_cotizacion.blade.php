@@ -28,9 +28,17 @@
             </p>
 
             <p>
+                <b>Años</b> <br>
+                <b>Edad al terminar</b> <br>
+                <b>Prima Vida mensual</b> <br>
+                <b>Prima Incendio mensual</b> <br>
+            </p>
+
+            <p>
                 <b>Prima Neta</b><br>
                 <b>ISC</b><br>
-                <b>Prima Total</b>
+                <b>Prima Total Mensual</b> <br>
+                <b>Prima Total Anual</b>
             </p>
         </td>
 
@@ -66,9 +74,17 @@
                     </p>
 
                     <p>
+                        {{ \Carbon\Carbon::parse($cotizacion->getFieldValue("Fecha_de_nacimiento"))->age }} años <br>
+                        {{ \Carbon\Carbon::parse($cotizacion->getFieldValue("Fecha_de_nacimiento"))->age  + ($cotizacion->getFieldValue("Plazo") / 12) }} años <br>
+                        RD$ {{ json_decode($lineItem->getDescription(),true)['prima_vida'] }}  <br>
+                        RD$  {{ json_decode($lineItem->getDescription(),true)['prima_incendio'] }}
+                    </p>
+
+                    <p>
                         RD$ {{ number_format($lineItem->getNetTotal() / 1.16, 2) }} <br>
                         RD$ {{ number_format($lineItem->getNetTotal() - $lineItem->getNetTotal() / 1.16, 2) }} <br>
                         RD$ {{ number_format($lineItem->getNetTotal(), 2) }}
+                        RD$ {{ number_format($lineItem->getNetTotal() * 12, 2) }}
                     </p>
                 </td>
             @endif
