@@ -2,7 +2,4 @@
 
 namespace App\Contracts\Services;
 
-interface ProductTypeServiceContract extends BaseServiceContract
-{
-
-}
+interface ProductTypeServiceContract extends BaseServiceContract {}

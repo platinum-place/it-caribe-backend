@@ -4,15 +4,15 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class ProductTypeSeeder extends Seeder
+class ProductCategorySeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        foreach (\App\Enums\ProductType::cases() as $type) {
-            \App\Models\ProductType::updateOrCreate(
+        foreach (\App\Enums\ProductCategory::cases() as $type) {
+            \App\Models\ProductCategory::updateOrCreate(
                 ['id' => $type->value],
                 ['id' => $type->value],
             );

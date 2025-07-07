@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Contracts\Repositories\BaseRepositoryContract;
-use App\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 

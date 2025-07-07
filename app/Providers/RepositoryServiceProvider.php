@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Contracts\Repositories\ProductCategoryRepositoryContract;
+use App\Contracts\Repositories\ProductRepositoryContract;
 use App\Contracts\Repositories\ProductTypeRepositoryContract;
 use App\Contracts\Repositories\UserRepositoryContract;
 use App\Contracts\Repositories\VehicleMakeRepositoryContract;
@@ -10,6 +12,8 @@ use App\Contracts\Repositories\VehicleTypeRepositoryContract;
 use App\Contracts\Repositories\VendorRepositoryContract;
 use App\Contracts\Repositories\ZohoOauthAccessTokenRepositoryContract;
 use App\Contracts\Repositories\ZohoOauthRefreshTokenRepositoryContract;
+use App\Repositories\ProductCategoryRepository;
+use App\Repositories\ProductRepository;
 use App\Repositories\ProductTypeRepository;
 use App\Repositories\UserRepository;
 use App\Repositories\VehicleMakeRepository;
@@ -31,6 +35,8 @@ class RepositoryServiceProvider extends ServiceProvider
         ZohoOauthAccessTokenRepositoryContract::class => ZohoOauthAccessTokenRepository::class,
         ZohoOauthRefreshTokenRepositoryContract::class => ZohoOauthRefreshTokenRepository::class,
         ProductTypeRepositoryContract::class => ProductTypeRepository::class,
+        ProductCategoryRepositoryContract::class => ProductCategoryRepository::class,
+        ProductRepositoryContract::class => ProductRepository::class,
     ];
 
     /**

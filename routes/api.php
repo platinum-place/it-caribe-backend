@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ProductCategoryController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductTypeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleMakeController;
@@ -40,6 +42,12 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::put('product-types/{id}/restore', [ProductTypeController::class, 'restore'])->name('product-types.restore');
     Route::apiResource('product-types', ProductTypeController::class);
+
+    Route::put('product-categories/{id}/restore', [ProductCategoryController::class, 'restore'])->name('product-categories.restore');
+    Route::apiResource('product-categories', ProductCategoryController::class);
+
+    Route::put('products/{id}/restore', [ProductController::class, 'restore'])->name('products.restore');
+    Route::apiResource('products', ProductController::class);
 });
 
 require_once __DIR__.'/api/auth.php';

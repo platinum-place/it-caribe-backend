@@ -2,7 +2,4 @@
 
 namespace App\Contracts\Repositories;
 
-interface ProductTypeRepositoryContract extends BaseRepositoryContract
-{
-
-}
+interface ProductTypeRepositoryContract extends BaseRepositoryContract {}

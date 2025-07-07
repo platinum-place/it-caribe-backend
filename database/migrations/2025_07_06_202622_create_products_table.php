@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('vehicle_models', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->softDeletes();
-            $table->string('name');
-            $table->foreignIdFor(\App\Models\VehicleMake::class)->constrained();
-            $table->foreignIdFor(\App\Models\VehicleType::class)->constrained();
+            $table->foreignIdFor(\App\Models\ProductCategory::class)->constrained();
+            $table->foreignIdFor(\App\Models\ProductType::class)->constrained();
+            $table->foreignIdFor(\App\Models\Vendor::class)->constrained();
         });
     }
 
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('vehicle_models');
+        Schema::dropIfExists('products');
     }
 };
