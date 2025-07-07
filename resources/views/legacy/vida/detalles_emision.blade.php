@@ -57,7 +57,7 @@
             <p>F. La cobertura otorgada bajo esta póliza queda condicionada a las cláusulas y condiciones especificadas en los anexos, los cuales han sido incluidos en la póliza definitiva, cuyas condiciones completas están contenidas en la copia que reposa en la entidad financiera y aseguradora:</p>
             <ul style="margin-top: 0; margin-bottom: 10px; padding-left: 20px;">
                 <li>Podrán consultarla a través de la página de internet www.bancocaribe.com.do/seguro-de-vida.</li>
-                <li>Las condiciones generales de la póliza podrán ser solicitadas en {{ $aseguradora->getFieldValue('Nombre') }}. Puede dirigirse a su oficina principal en la {{ $aseguradora->getFieldValue('Nombre') }}, o contactarse al {{ $aseguradora->getFieldValue('Nombre') }}.</li>
+                <li>Las condiciones generales de la póliza podrán ser solicitadas en {{ $aseguradora->getFieldValue('Nombre') }}. Puede dirigirse a su oficina principal en la {{ $aseguradora->getFieldValue('Street') }}, o contactarse al {{ $aseguradora->getFieldValue('Phone') }}.</li>
                 <li>Pueden contactarse con Sentinel Corredores de Seguros al 809-732-0202 o dirigirse a su oficina en la calle César A. Canó No. 354, Las Praderas, Santo Domingo.</li>
             </ul>
             <p>G. Vigencia: La póliza será válida hasta la cancelación del préstamo.</p>
