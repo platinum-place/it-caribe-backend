@@ -30,6 +30,8 @@ class EstimateController extends Controller
             // informacion sobre las coberturas, la aseguradora,las coberturas
             $plan = $libreria->getRecord('Products', $cotizacion->getFieldValue('Coberturas')
                 ->getEntityId());
+            $aseguradora = $libreria->getRecord('Vendors', $plan->getFieldValue('Vendor_Name')
+                ->getEntityId());
 
             //            return view('legacy.cotizaciones.emision', [
             //                'cotizacion' => $cotizacion,
@@ -41,6 +43,7 @@ class EstimateController extends Controller
                 'cotizacion' => $cotizacion,
                 'plan' => $plan,
                 'libreria' => $libreria,
+                'aseguradora' => $aseguradora,
             ]);
 
             return $pdf->stream('Emisión No'.$cotizacion->getFieldValue('Quote_Number').'.pdf');
