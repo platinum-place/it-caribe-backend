@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Contracts\Services\ProductTypeServiceContract;
 use App\Contracts\Services\UserServiceContract;
 use App\Contracts\Services\VehicleMakeServiceContract;
 use App\Contracts\Services\VehicleModelServiceContract;
@@ -11,6 +12,7 @@ use App\Contracts\Services\ZohoAPIServiceContract;
 use App\Contracts\Services\ZohoOauthAccessTokenServiceContract;
 use App\Contracts\Services\ZohoOauthRefreshTokenServiceContract;
 use App\Contracts\Services\ZohoServiceContract;
+use App\Services\ProductTypeService;
 use App\Services\UserService;
 use App\Services\VehicleMakeService;
 use App\Services\VehicleModelService;
@@ -32,8 +34,9 @@ class ServicesServiceProvider extends ServiceProvider
         VehicleModelServiceContract::class => VehicleModelService::class,
         ZohoOauthAccessTokenServiceContract::class => ZohoOauthAccessTokenService::class,
         ZohoOauthRefreshTokenServiceContract::class => ZohoOauthRefreshTokenService::class,
-        ZohoServiceContract::class => ZohoService::class,
         ZohoAPIServiceContract::class => ZohoAPIServiceService::class,
+        ZohoServiceContract::class => ZohoService::class,
+        ProductTypeServiceContract::class => ProductTypeService::class,
     ];
 
     /**

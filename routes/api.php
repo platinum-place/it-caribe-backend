@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductTypeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleMakeController;
 use App\Http\Controllers\VehicleModelController;
@@ -36,6 +37,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('zoho-services/generate-token', [ZohoServiceController::class, 'generateToken'])->name('zoho-services.generateToken');
     Route::get('zoho-services/token', [ZohoServiceController::class, 'token'])->name('zoho-services.token');
+
+    Route::put('product-types/{id}/restore', [ProductTypeController::class, 'restore'])->name('product-types.restore');
+    Route::apiResource('product-types', ProductTypeController::class);
 });
 
 require_once __DIR__.'/api/auth.php';
