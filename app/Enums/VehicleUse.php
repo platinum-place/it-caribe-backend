@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum VehicleUse : int
+enum VehicleUse: int
 {
     case PRIVATE = 0;
 
