@@ -19,7 +19,7 @@
 
                 <tr>
                     <th style="text-align: left; padding: 5px; font-weight: bold;">Fecha de Nacimiento</th>
-                    <td style="padding: 5px;">{{ $cotizacion->getFieldValue("Fecha_de_nacimiento") }}</td>
+                    <td style="padding: 5px;">{{ date('d/m/Y',strtotime($cotizacion->getFieldValue("Fecha_de_nacimiento"))) }}</td>
                 </tr>
 
                 @if ($cotizacion->getFieldValue("Plan") == "Vida")
