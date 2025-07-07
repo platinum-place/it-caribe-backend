@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Helpers\Cotizacion;
 use App\Helpers\Cotizaciones;
@@ -10,6 +10,7 @@ use App\Helpers\CotizarIncendio;
 use App\Helpers\CotizarIncendio2;
 use App\Helpers\CotizarVida;
 use App\Helpers\Zoho;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class LegacyController extends Controller
