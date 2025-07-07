@@ -45,8 +45,8 @@
                         {{ \Carbon\Carbon::parse($cotizacion->getFieldValue("Fecha_de_nacimiento"))->age }} años<br>
                         {{ \Carbon\Carbon::parse($cotizacion->getFieldValue("Fecha_de_nacimiento"))->age  + ($cotizacion->getFieldValue("Plazo") / 12) }}
                         años<br>
-                        RD$ {{ json_decode($lineItem->getDescription(),true)['prima_vida'] ?? 0 }} <br>
-                        RD$ {{ json_decode($lineItem->getDescription(),true)['prima_incendio'] ?? 0 }}
+                        RD$ {{ number_format(json_decode($lineItem->getDescription(),true)['prima_vida'] ?? 0.0, 2) }}  <br>
+                        RD$ {{ number_format(json_decode($lineItem->getDescription(),true)['prima_incendio'] ?? 0.0, 2) }}
                     </p>
 
                     <p>
