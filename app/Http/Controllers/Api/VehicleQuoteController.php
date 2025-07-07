@@ -130,8 +130,6 @@ class VehicleQuoteController extends Controller
             ];
 
             $responseProduct = $this->crm->insertRecords('Quotes', $data);
-            $tmp = TmpQuote::create(['id_crm' => $responseProduct['data'][0]['details']['id']]);
-            $r =
 
             $response2 = $this->crm->getRecords('Vendors', ['Nombre'], (int) $product['Vendor_Name']['id']);
 
@@ -145,7 +143,7 @@ class VehicleQuoteController extends Controller
                 'Planid' => TmpVendorProduct::firstWhere('id_crm', $product['id'])->id,
                 'Plan' => 'Plan Mensual Full',
                 'Aseguradora' => $response2['data'][0]['Nombre'],
-                'IdCotizacion' => $tmp->id,
+                'IdCotizacion' => (string)$responseProduct['data'][0]['details']['id'],
                 'Fecha' => date('d/m/Y H:i:s A'),
                 'Error' => $alert,
                 'CoberturasList' => [
@@ -171,10 +169,8 @@ class VehicleQuoteController extends Controller
      */
     public function issueVehicle(IssueVehicleRequest $request)
     {
-        $tmp = TmpQuote::findOrFail($request->get('cotzid'));
-
         $fields = ['id', 'Quoted_Items'];
-        $quote = $this->crm->getRecords('Quotes', $fields, $tmp->id_crm)['data'][0];
+        $quote = $this->crm->getRecords('Quotes', $fields, $request->get('cotzid'))['data'][0];
 
         foreach ($quote['Quoted_Items'] as $line) {
             $data = [
@@ -187,7 +183,7 @@ class VehicleQuoteController extends Controller
                 'Prima' => round($line['Net_Total'], 2),
             ];
 
-            $this->crm->updateRecords('Quotes', $tmp->id_crm, $data);
+            $this->crm->updateRecords('Quotes', $request->get('cotzid'), $data);
 
             break;
         }
@@ -197,16 +193,14 @@ class VehicleQuoteController extends Controller
 
     public function cancelVehicle(CancelVehicleRequest $request)
     {
-        $tmp = TmpQuote::findOrFail($request->get('IdCotizacion'));
-
         $fields = ['id', 'Quoted_Items'];
-        $quote = $this->crm->getRecords('Quotes', $fields, $tmp->id_crm)['data'][0];
+        $quote = $this->crm->getRecords('Quotes', $fields, $request->get('IdCotizacion'))['data'][0];
 
         $data = [
             'Quote_Stage' => 'Cancelada',
         ];
 
-        $this->crm->updateRecords('Quotes', $tmp->id_crm, $data);
+        $this->crm->updateRecords('Quotes', $request->get('IdCotizacion'), $data);
 
         return response()->json(['Error' => '']);
     }

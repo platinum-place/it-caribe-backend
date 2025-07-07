@@ -77,7 +77,6 @@ class FireController extends Controller
             ];
 
             $responseQuote = $this->crm->insertRecords('Quotes', $data);
-            $tmp = TmpQuote::create(['id_crm' => $responseQuote['data'][0]['details']['id']]);
             $response2 = $this->crm->getRecords('Vendors', ['Nombre'], (int) $product['Vendor_Name']['id']);
 
             $quotes[] = [
@@ -100,7 +99,7 @@ class FireController extends Controller
                 'Construccion' => 'Vivienda',
                 'TipoConstruccion' => 'Superior',
                 'Ubicacion' => $request->get('Ubicacion'),
-                'identificador' => $tmp->id,
+                'identificador' => (string)$responseQuote['data'][0]['details']['id'],
                 'Aseguradora' => $response2['data'][0]['Nombre'],
                 'Error' => $alert,
                 'PrimaVida' => number_format(0.0, 1, '.', ''),
@@ -145,10 +144,8 @@ class FireController extends Controller
      */
     public function issueFire(IssueLifeRequest $request)
     {
-        $tmp = TmpQuote::findOrFail($request->get('Identificador'));
-
         $fields = ['id', 'Quoted_Items'];
-        $quote = $this->crm->getRecords('Quotes', $fields, $tmp->id_crm)['data'][0];
+        $quote = $this->crm->getRecords('Quotes', $fields, $request->get('Identificador'))['data'][0];
 
         foreach ($quote['Quoted_Items'] as $line) {
             $data = [
@@ -161,7 +158,7 @@ class FireController extends Controller
                 'Prima' => round($line['Net_Total'], 2),
             ];
 
-            $this->crm->updateRecords('Quotes', $tmp->id_crm, $data);
+            $this->crm->updateRecords('Quotes', $request->get('Identificador'), $data);
 
             break;
         }
@@ -171,16 +168,14 @@ class FireController extends Controller
 
     public function cancelFire(IssueLifeRequest $request)
     {
-        $tmp = TmpQuote::findOrFail($request->get('Identificador'));
-
         $fields = ['id', 'Quoted_Items'];
-        $quote = $this->crm->getRecords('Quotes', $fields, $tmp->id_crm)['data'][0];
+        $quote = $this->crm->getRecords('Quotes', $fields, $request->get('Identificador'))['data'][0];
 
         $data = [
             'Quote_Stage' => 'Cancelada',
         ];
 
-        $this->crm->updateRecords('Quotes', $tmp->id_crm, $data);
+        $this->crm->updateRecords('Quotes', $request->get('Identificador'), $data);
 
         return response()->json(['Error' => '']);
     }

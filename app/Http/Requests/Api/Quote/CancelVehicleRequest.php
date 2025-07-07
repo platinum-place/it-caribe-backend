@@ -25,7 +25,7 @@ class CancelVehicleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'IdCotizacion' => ['required', 'uuid'],
+            'IdCotizacion' => ['required'],
         ];
     }
 

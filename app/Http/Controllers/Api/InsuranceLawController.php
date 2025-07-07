@@ -172,7 +172,6 @@ class InsuranceLawController
             ];
 
             $responseQuote = $this->crm->insertRecords('Quotes', $data);
-            $tmp = TmpQuote::create(['id_crm' => $responseQuote['data'][0]['details']['id']]);
             $response2 = $this->crm->getRecords('Vendors', ['Nombre'], (int) $product['Vendor_Name']['id']);
 
             $response[] = [
@@ -185,7 +184,7 @@ class InsuranceLawController
                 'Planid' => $product['id'],
                 'Plan' => 'Plan Mensual Full',
                 'Aseguradora' => $response2['data'][0]['Nombre'],
-                'Idcotizacion' => $tmp->id,
+                'Idcotizacion' => (string)$responseQuote['data'][0]['details']['id'],
                 'Fecha' => now()->toDateTimeString(),
                 'CoberturasList' => null,
                 'Alerta' => $alert,
@@ -264,15 +263,13 @@ class InsuranceLawController
      */
     public function disableVehicleLaw(DisableVehicleLawRequest $request, string $id)
     {
-        $tmp = TmpQuote::findOrFail($id);
-
         $fields = ['id', 'Quoted_Items'];
-        $this->crm->getRecords('Quotes', $fields, $tmp->id_crm);
+        $this->crm->getRecords('Quotes', $fields, $id);
 
         $data = [
             'Quote_Stage' => 'Cancelada',
         ];
-        $this->crm->updateRecords('Quotes', $tmp->id_crm, $data);
+        $this->crm->updateRecords('Quotes', $id, $data);
 
         return response()->json(['Error' => '']);
     }

@@ -42,7 +42,7 @@ class ProductController extends Controller
         $tmp = TmpVendorProduct::findOrFail($id);
 
         $fields = ['id', 'Vendor_Name', 'Product_Name'];
-        $response = $this->crm->getRecords('Products', $fields, $tmp->id_crm);
+        $response = $this->crm->getRecords('Products', $fields, $id);
 
         $response2 = $this->crm->getRecords('Vendors', ['Nombre'], (int) $response['data'][0]['Vendor_Name']['id']);
 
