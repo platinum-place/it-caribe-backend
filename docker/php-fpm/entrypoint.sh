@@ -1,10 +1,9 @@
-#!/bin/sh
+#!/bin/bash
+set -e
 
-if [ -n "$UID" ] && [ -n "$GID" ]; then
-    groupmod -g "$GID" www-data
-    usermod -u $UID -g "$GID" www-data
-fi
+# Ensure correct permissions for Laravel directories
+chmod -R 775 /var/www/html/storage
+chmod -R 775 /var/www/html/bootstrap/cache
 
-chown -R www-data:www-data /var/www/html
-
-exec "$@"
+# Start PHP-FPM
+exec php-fpm

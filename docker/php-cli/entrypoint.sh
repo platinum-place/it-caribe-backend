@@ -1,17 +1,21 @@
-#!/bin/sh
+#!/bin/bash
+set -e
 
-if [ -n "$UID" ] && [ -n "$GID" ]; then
-    groupmod -g "$GID" www-data
-    usermod -u $UID -g "$GID" www-data
+# Get the current UID and GID from environment variables
+USER_ID=${UID:-1000}
+GROUP_ID=${GID:-1000}
+
+# Set proper ownership of the Laravel project files
+chown -R "$USER_ID":"$GROUP_ID" /var/www/html
+
+# Make sure storage and bootstrap/cache directories are writable
+if [ -d "/var/www/html/storage" ]; then
+    chmod -R 775 /var/www/html/storage
 fi
 
-chown -R www-data:www-data /var/www/html
-chmod -R 775 /var/www/html
-find /var/www/html -type f -exec chmod 664 {} \;
-find /var/www/html -type d -exec chmod 775 {} \;
-
-if [ $# -eq 0 ]; then
-    exec su-exec www-data tail -f /dev/null
-else
-    exec su-exec www-data "$@"
+if [ -d "/var/www/html/bootstrap/cache" ]; then
+    chmod -R 775 /var/www/html/bootstrap/cache
 fi
+
+# Execute the command with the www-data user
+exec gosu www-data "$@"

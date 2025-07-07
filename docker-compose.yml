@@ -29,6 +29,9 @@ services:
         build:
             context: ./docker/php-fpm
             dockerfile: Dockerfile
+            args:
+                UID: ${UID:-1000}
+                GID: ${GID:-1000}
         container_name: ${APP_NAME}-php-fpm
         environment:
             - UID=${UID:-1000}
@@ -55,6 +58,8 @@ services:
             - ./:/var/www/html
         networks:
             - app-network
+        depends_on:
+            - postgresql
 
 volumes:
     postgresql_data:

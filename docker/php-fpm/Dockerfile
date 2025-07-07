@@ -1,47 +1,46 @@
-FROM php:8.4-fpm-alpine
-
-RUN apk add --no-cache \
-    libzip-dev \
-    oniguruma-dev \
-    libpng-dev \
-    libjpeg-turbo-dev \
-    freetype-dev \
-    icu-dev \
-    postgresql-dev \
-    shadow
-
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) \
-        pdo_mysql \
-        pdo_pgsql \
-        zip \
-        gd \
-        mbstring \
-        intl \
-        bcmath \
-        exif \
-        pcntl
+FROM php:8.4-fpm
 
 ARG UID=1000
 ARG GID=1000
-RUN groupmod -g $GID www-data && \
-    usermod -u $UID -g $GID www-data
-
-RUN mkdir -p /var/www/html \
-    && chown -R www-data:www-data /var/www/html
-
-RUN echo "user = www-data" >> /usr/local/etc/php-fpm.d/www.conf \
-    && echo "group = www-data" >> /usr/local/etc/php-fpm.d/www.conf \
-    && echo "listen.owner = www-data" >> /usr/local/etc/php-fpm.d/www.conf \
-    && echo "listen.group = www-data" >> /usr/local/etc/php-fpm.d/www.conf \
-    && echo "listen.mode = 0666" >> /usr/local/etc/php-fpm.d/www.conf
-
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
 
 WORKDIR /var/www/html
 
-USER www-data
+RUN apt-get update && apt-get install -y \
+    libpng-dev \
+    libjpeg62-turbo-dev \
+    libfreetype6-dev \
+    libonig-dev \
+    libxml2-dev \
+    libzip-dev \
+    libpq-dev \
+    zip \
+    unzip \
+    curl
 
-ENTRYPOINT ["/entrypoint.sh"]
-CMD ["php-fpm"]
+# Install PHP extensions
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg
+RUN docker-php-ext-install pdo pdo_pgsql pgsql mbstring exif pcntl bcmath gd xml zip
+
+# Install Redis extension
+RUN pecl install redis && docker-php-ext-enable redis
+
+# Configure OPcache for performance
+RUN docker-php-ext-install opcache
+
+# Copy PHP configuration
+COPY php.ini /usr/local/etc/php/conf.d/custom.ini
+
+# Create system user
+RUN groupadd -g $GID laravel && \
+    useradd -u $UID -g laravel -m -s /bin/bash laravel
+
+# Copy entrypoint script
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+# Switch to non-root user
+USER laravel
+
+EXPOSE 9000
+
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
