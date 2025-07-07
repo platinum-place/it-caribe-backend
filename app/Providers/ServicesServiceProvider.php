@@ -40,9 +40,6 @@ class ServicesServiceProvider extends ServiceProvider
         ZohoOauthRefreshTokenServiceContract::class => ZohoOauthRefreshTokenService::class,
         ZohoAPIServiceContract::class => ZohoAPIServiceService::class,
         ZohoServiceContract::class => ZohoService::class,
-        ProductTypeServiceContract::class => ProductTypeService::class,
-        ProductCategoryServiceContract::class => ProductCategoryService::class,
-        ProductServiceContract::class => ProductService::class,
     ];
 
     /**

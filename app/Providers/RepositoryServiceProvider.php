@@ -34,9 +34,6 @@ class RepositoryServiceProvider extends ServiceProvider
         VehicleModelRepositoryContract::class => VehicleModelRepository::class,
         ZohoOauthAccessTokenRepositoryContract::class => ZohoOauthAccessTokenRepository::class,
         ZohoOauthRefreshTokenRepositoryContract::class => ZohoOauthRefreshTokenRepository::class,
-        ProductTypeRepositoryContract::class => ProductTypeRepository::class,
-        ProductCategoryRepositoryContract::class => ProductCategoryRepository::class,
-        ProductRepositoryContract::class => ProductRepository::class,
     ];
 
     /**
