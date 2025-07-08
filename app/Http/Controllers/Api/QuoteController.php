@@ -7,7 +7,6 @@ use App\Http\Requests\Api\Quote\EstimateVehicleRequest;
 use App\Http\Requests\Api\Quote\InspectRequest;
 use App\Http\Requests\Api\Quote\IssueVehicleRequest;
 use App\Http\Requests\Api\Quote\ValidateInspectionRequest;
-use App\Models\TmpQuote;
 use App\Services\ZohoCRMService;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
@@ -188,7 +187,7 @@ class QuoteController extends Controller
                 'Planid' => $product['id'],
                 'Plan' => 'Plan Mensual Full',
                 'Aseguradora' => $response2['data'][0]['Nombre'],
-                'Idcotizacion' => (string)$responseProduct['data'][0]['details']['id'],
+                'Idcotizacion' => (string) $responseProduct['data'][0]['details']['id'],
                 'Fecha' => now()->toDateTimeString(),
                 'CoberturasList' => null,
                 'Alerta' => $alert,

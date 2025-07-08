@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Requests\Api\Unemployment\CancelUnemploymentRequest;
 use App\Http\Requests\Api\Unemployment\EstimateUnemploymentRequest;
 use App\Http\Requests\Api\Unemployment\IssueUnemploymentRequest;
-use App\Models\TmpQuote;
 use App\Services\ZohoCRMService;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
@@ -96,7 +95,7 @@ class UnemploymentController
 
             $quotes[] = [
                 'Impuesto' => number_format($amount * 0.16, 1, '.', ''),
-                'identificador' => (string)$responseQuote['data'][0]['details']['id'],
+                'identificador' => (string) $responseQuote['data'][0]['details']['id'],
                 'Cliente' => $request->get('Cliente'),
                 'Direccion' => $request->get('Direccion'),
                 'Fecha' => now()->format('Y-m-d\TH:i:sP'),

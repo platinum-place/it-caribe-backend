@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Quote\CancelVehicleRequest;
 use App\Http\Requests\Api\Quote\EstimateVehicleRequest;
 use App\Http\Requests\Api\Quote\IssueVehicleRequest;
-use App\Models\TmpQuote;
 use App\Models\TmpVendorProduct;
 use App\Models\VehicleMake;
 use App\Models\VehicleModel;
@@ -143,7 +142,7 @@ class VehicleQuoteController extends Controller
                 'Planid' => TmpVendorProduct::firstWhere('id_crm', $product['id'])->id,
                 'Plan' => 'Plan Mensual Full',
                 'Aseguradora' => $response2['data'][0]['Nombre'],
-                'IdCotizacion' => (string)$responseProduct['data'][0]['details']['id'],
+                'IdCotizacion' => (string) $responseProduct['data'][0]['details']['id'],
                 'Fecha' => date('d/m/Y H:i:s A'),
                 'Error' => $alert,
                 'CoberturasList' => [

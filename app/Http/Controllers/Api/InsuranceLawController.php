@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Requests\Api\InsuranceLaw\DisableVehicleLawRequest;
 use App\Http\Requests\Api\InsuranceLaw\EstimateVehicleLawRequest;
 use App\Http\Requests\Api\InsuranceLaw\SearchDocumentRequest;
-use App\Models\TmpQuote;
 use App\Services\ZohoCRMService;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
@@ -184,7 +183,7 @@ class InsuranceLawController
                 'Planid' => $product['id'],
                 'Plan' => 'Plan Mensual Full',
                 'Aseguradora' => $response2['data'][0]['Nombre'],
-                'Idcotizacion' => (string)$responseQuote['data'][0]['details']['id'],
+                'Idcotizacion' => (string) $responseQuote['data'][0]['details']['id'],
                 'Fecha' => now()->toDateTimeString(),
                 'CoberturasList' => null,
                 'Alerta' => $alert,
