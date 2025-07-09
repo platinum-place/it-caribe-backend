@@ -14,6 +14,15 @@ return new class extends Migration
         Schema::create('quote_lines', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->softDeletes();
+            $table->string('name');
+            $table->foreignIdFor(\App\Models\Quote::class)->constrained();
+            $table->decimal('unit_price');
+            $table->integer('quantity');
+            $table->decimal('subtotal');
+            $table->decimal('tax_rate')->nullable();
+            $table->decimal('tax_amount')->default(0);
+            $table->decimal('total');
         });
     }
 

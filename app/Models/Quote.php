@@ -10,6 +10,7 @@ class Quote extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'id', 'name',
+        'quote_type_id', 'quote_status_id', 'customer_id',
+        'attachments', 'start_date', 'end_date',
     ];
 }
