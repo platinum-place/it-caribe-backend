@@ -14,6 +14,17 @@ return new class extends Migration
         Schema::create('quote_vehicles', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->softDeletes();
+            $table->foreignIdFor(\App\Models\Quote::class)->constrained();
+            $table->foreignIdFor(\App\Models\Vehicle::class)->constrained();
+            $table->foreignIdFor(\App\Models\VehicleMake::class)->constrained();
+            $table->foreignIdFor(\App\Models\VehicleModel::class)->constrained();
+            $table->foreignIdFor(\App\Models\VehicleType::class)->constrained();
+            $table->foreignIdFor(\App\Models\VehicleUse::class)->constrained();
+            $table->foreignIdFor(\App\Models\VehicleActivity::class)->constrained();
+            $table->foreignIdFor(\App\Models\VehicleAccessory::class)->constrained();
+            $table->foreignIdFor(\App\Models\VehicleRoute::class)->constrained();
+            $table->decimal('vehicle_amount');
         });
     }
 

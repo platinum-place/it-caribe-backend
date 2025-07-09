@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\QuoteStatus::class)->constrained();
             $table->foreignIdFor(\App\Models\Customer::class)->nullable()->constrained();
             $table->json('attachments')->nullable();
+            $table->decimal('total_amount')->nullable();
         });
     }
 
