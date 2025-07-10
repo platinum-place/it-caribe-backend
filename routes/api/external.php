@@ -44,8 +44,8 @@ Route::middleware([
     Route::get('/SegurosLeyApi/Buscar/PorNoDocumento/{identification}', [\App\Http\Controllers\Api\InsuranceLawController::class, 'searchDocument']);
     Route::get('/SegurosLeyApi/Anular/{id}', [\App\Http\Controllers\Api\InsuranceLawController::class, 'disableVehicleLaw']);
 
-    Route::post('/vehiculos/Marca', [\App\Http\Controllers\Api\VehicleController::class, 'list']);
-    Route::post('/vehiculos/Modelos/{brandId}', [\App\Http\Controllers\Api\VehicleController::class, 'getModel']);
+    Route::post('/vehiculos/Marca', [\App\Http\Controllers\Api\VehicleController::class, 'makeList']);
+    Route::post('/vehiculos/Modelos/{makeId}', [\App\Http\Controllers\Api\VehicleController::class, 'modelList']);
     Route::post('/vehiculos/TipoVehiculo', [\App\Http\Controllers\Api\VehicleController::class, 'typeList']);
     Route::post('/vehiculos/Accesorios', [\App\Http\Controllers\Api\VehicleController::class, 'accessoriesList']);
     Route::post('/vehiculos/Actividades', [\App\Http\Controllers\Api\VehicleController::class, 'activitiesList']);

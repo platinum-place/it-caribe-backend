@@ -4,10 +4,13 @@ use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductTypeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VehicleAccessoryController;
 use App\Http\Controllers\VehicleActivityController;
+use App\Http\Controllers\VehicleColorController;
 use App\Http\Controllers\VehicleMakeController;
 use App\Http\Controllers\VehicleModelController;
 use App\Http\Controllers\VehicleTypeController;
+use App\Http\Controllers\VehicleUseController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\ZohoOauthAccessTokenController;
 use App\Http\Controllers\ZohoOauthRefreshTokenController;
@@ -20,6 +23,15 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::put('vehicle-activities/{id}/restore', [VehicleActivityController::class, 'restore'])->name('vehicle-activities.restore');
     Route::apiResource('vehicle-activities', VehicleActivityController::class);
+
+    Route::put('vehicle-colors/{id}/restore', [VehicleColorController::class, 'restore'])->name('vehicle-colors.restore');
+    Route::apiResource('vehicle-colors', VehicleColorController::class);
+
+    Route::put('vehicle-accessories/{id}/restore', [VehicleAccessoryController::class, 'restore'])->name('vehicle-accessories.restore');
+    Route::apiResource('vehicle-accessories', VehicleAccessoryController::class);
+
+    Route::put('vehicle-uses/{id}/restore', [VehicleUseController::class, 'restore'])->name('vehicle-uses.restore');
+    Route::apiResource('vehicle-uses', VehicleUseController::class);
 
     //
     //    Route::put('vendors/{id}/restore', [VendorController::class, 'restore'])->name('vendors.restore');

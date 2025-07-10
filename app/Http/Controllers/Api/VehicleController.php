@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\VehicleAccessory;
 use App\Models\VehicleActivity;
+use App\Models\VehicleColor;
 use App\Models\VehicleMake;
+use App\Models\VehicleModel;
 use App\Models\VehicleType;
 use App\Services\ZohoCRMService;
 use Illuminate\Http\Client\ConnectionException;
@@ -12,35 +15,22 @@ use Illuminate\Http\Client\RequestException;
 
 class VehicleController extends Controller
 {
-    public function __construct(protected ZohoCRMService $crm) {}
+    public function __construct(protected ZohoCRMService $crm)
+    {
+    }
 
     /**
      * @throws RequestException
      * @throws ConnectionException
      */
-    public function list()
+    public function makeList()
     {
-        //        $fields = ['id', 'Name'];
-        //        $response = $this->crm->getRecords('Marcas', $fields);
-        //
-        //        $brands = collect($response['data'])
-        //            ->map(fn ($brand) => [
-        //                'IdMarca' => (int) $brand['id'],
-        //                'Marca' => $brand['Name'],
-        //            ])
-        //            ->sortBy(fn ($brand) => reset($brand))
-        //            ->values()
-        //            ->toArray();
-
-        $brands = VehicleMake::select('id', 'name')
-            ->get()
-            ->map(fn ($brand) => [
-                'IdMarca' => (int) $brand->id,
+        $brands = VehicleMake::all()->map(function ($brand) {
+            return [
+                'IdMarca' => $brand->id,
                 'Marca' => $brand->name,
-            ])
-            ->sortBy(fn ($brand) => reset($brand))
-            ->values()
-            ->toArray();
+            ];
+        });
 
         return response()->json($brands);
     }
@@ -49,35 +39,18 @@ class VehicleController extends Controller
      * @throws RequestException
      * @throws ConnectionException
      */
-    public function getModel(?string $brandId = null)
+    public function modelList(string $makeId)
     {
-        //        $criteria = "Marca:equals:$brandId";
-        //        $response = $this->crm->searchRecords('Modelos', $criteria);
-        //
-        //        $models = collect($response['data'])
-        //            ->map(fn ($model) => [
-        //                'IdMarca' => (int) $model['Marca']['id'],
-        //                'IdModelo' => (int) $model['id'],
-        //                'Modelo' => $model['Name'],
-        //            ])
-        //            ->sortBy(fn ($model) => reset($model))
-        //            ->values()
-        //            ->toArray();
-        //
-        //        return response()->json($models);
-
-        $models = \App\Models\VehicleModel::with('make')
-            ->where('vehicle_make_id', $brandId)
-            ->select('id', 'name', 'vehicle_make_id')
+        $models = VehicleModel::where('vehicle_make_id', $makeId)
             ->get()
-            ->map(fn ($model) => [
-                'IdMarca' => (int) $model->vehicle_make_id,
-                'IdModelo' => (int) $model->id,
-                'Modelo' => $model->name,
-            ])
-            ->sortBy(fn ($model) => reset($model))
-            ->values()
-            ->toArray();
+            ->map(function ($model) {
+                return [
+                    'IdMarca' => $model->vehicle_make_id,
+                    'IdModelo' => $model->id,
+                    'Modelo' => $model->name,
+                ];
+            })
+            ->sortBy(fn($model) => reset($model));
 
         return response()->json($models);
 
@@ -85,42 +58,24 @@ class VehicleController extends Controller
 
     public function typeList()
     {
-        $types = VehicleType::select('id', 'name')
-            ->get()
-            ->map(fn ($type) => [
-                'IdTipoVehiculo' => (int) $type->id,
+        $types = VehicleType::all()->map(function ($type) {
+            return [
+                'IdTipoVehiculo' => $type->id,
                 'TipoVehiculo' => $type->name,
-            ])
-            ->values()
-            ->toArray();
+            ];
+        });
 
         return response()->json($types);
     }
 
     public function accessoriesList()
     {
-        $accessories = [
-            [
-                'IdAccesorio' => 2,
-                'Accesorio' => 'Cambio de Guia',
-            ],
-            [
-                'IdAccesorio' => 3,
-                'Accesorio' => 'LOVATO',
-            ],
-            [
-                'IdAccesorio' => 1,
-                'Accesorio' => 'OTROS EQUIPO DE GAS',
-            ],
-            [
-                'IdAccesorio' => 5,
-                'Accesorio' => 'ROMANO',
-            ],
-            [
-                'IdAccesorio' => 6,
-                'Accesorio' => 'SISTEMA DE GAS NATURAL APROBADO',
-            ],
-        ];
+        $accessories = VehicleAccessory::all()->map(function ($accessory) {
+            return [
+                'IdAccesorio' => $accessory->id,
+                'Accesorio' => $accessory->name,
+            ];
+        });
 
         return response()->json($accessories);
     }
@@ -139,56 +94,24 @@ class VehicleController extends Controller
 
     public function routeList()
     {
-        $routes = [
-            [
-                'IdCirculacion' => 1,
-                'circulacion' => 'AZUA',
-            ],
-            [
-                'IdCirculacion' => 2,
-                'circulacion' => 'BAHORUCO',
-            ],
-            [
-                'IdCirculacion' => 3,
-                'circulacion' => 'BARAHONA',
-            ],
-            [
-                'IdCirculacion' => 4,
-                'circulacion' => 'DAJABON',
-            ],
-            [
-                'IdCirculacion' => 5,
-                'circulacion' => 'DISTRITO NACIONAL',
-            ],
-            [
-                'IdCirculacion' => 0,
-                'circulacion' => 'DISTRITO NACIONAL',
-            ],
-        ];
+        $routes = VehicleActivity::all()->map(function ($route) {
+            return [
+                'IdCirculacion' => $route->id,
+                'circulacion' => $route->name,
+            ];
+        });
 
         return response()->json($routes);
     }
 
     public function colorList()
     {
-        $colors = [
-            [
-                'IdColor' => 2,
-                'Color' => 'Amarillo',
-            ],
-            [
-                'IdColor' => 3,
-                'Color' => 'Azul',
-            ],
-            [
-                'IdColor' => 4,
-                'Color' => 'Azul Agua',
-            ],
-            [
-                'IdColor' => 5,
-                'Color' => 'Azul Cielo',
-            ],
-        ];
+        $colors = VehicleColor::all()->map(function ($color) {
+            return [
+                'IdColor' => $color->id,
+                'Color' => $color->name,
+            ];
+        });
 
         return response()->json($colors);
     }
