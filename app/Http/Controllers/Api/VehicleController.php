@@ -15,9 +15,7 @@ use Illuminate\Http\Client\RequestException;
 
 class VehicleController extends Controller
 {
-    public function __construct(protected ZohoCRMService $crm)
-    {
-    }
+    public function __construct(protected ZohoCRMService $crm) {}
 
     /**
      * @throws RequestException
@@ -50,7 +48,7 @@ class VehicleController extends Controller
                     'Modelo' => $model->name,
                 ];
             })
-            ->sortBy(fn($model) => reset($model));
+            ->sortBy(fn ($model) => reset($model));
 
         return response()->json($models);
 

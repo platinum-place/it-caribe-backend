@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class QuoteVehicleLine extends Model
@@ -14,4 +15,9 @@ class QuoteVehicleLine extends Model
         'quantity', 'subtotal', 'tax_rate',
         'tax_amount', 'total', 'life_amount',
     ];
+
+    public function quote(): BelongsTo
+    {
+        return $this->belongsTo(QuoteVehicle::class);
+    }
 }
