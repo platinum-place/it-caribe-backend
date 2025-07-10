@@ -12,10 +12,6 @@ mkdir -p /var/www/html/bootstrap/cache
 chmod -R 775 /var/www/html/storage
 chmod -R 775 /var/www/html/bootstrap/cache
 
-# Create PHP error log file and set permissions
-touch /var/www/html/storage/logs/php_errors.log
-chmod 664 /var/www/html/storage/logs/php_errors.log
-
 # Set strict permissions for Laravel Passport tokens
 if [ ! -d /var/www/html/storage/oauth-private.key ]; then
     find /var/www/html/storage/ -name "oauth-private.key" -type f -exec chmod 600 {} \;
