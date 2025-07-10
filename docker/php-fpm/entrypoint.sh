@@ -5,5 +5,12 @@ set -e
 chmod -R 775 /var/www/html/storage
 chmod -R 775 /var/www/html/bootstrap/cache
 
+if [ -f /var/www/html/storage/oauth-private.key ]; then
+    chmod 600 /var/www/html/storage/oauth-private.key
+fi
+if [ -f /var/www/html/storage/oauth-public.key ]; then
+    chmod 600 /var/www/html/storage/oauth-public.key
+fi
+
 # Start PHP-FPM
 exec php-fpm
