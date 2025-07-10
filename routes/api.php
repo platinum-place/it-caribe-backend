@@ -4,6 +4,7 @@ use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductTypeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VehicleActivityController;
 use App\Http\Controllers\VehicleMakeController;
 use App\Http\Controllers\VehicleModelController;
 use App\Http\Controllers\VehicleTypeController;
@@ -16,6 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->group(function () {
     Route::put('users/{id}/restore', [UserController::class, 'restore'])->name('users.restore');
     Route::apiResource('users', UserController::class);
+
+    Route::put('vehicle-activities/{id}/restore', [VehicleActivityController::class, 'restore'])->name('vehicle-activities.restore');
+    Route::apiResource('vehicle-activities', VehicleActivityController::class);
+
     //
     //    Route::put('vendors/{id}/restore', [VendorController::class, 'restore'])->name('vendors.restore');
     //    Route::apiResource('vendors', VendorController::class);

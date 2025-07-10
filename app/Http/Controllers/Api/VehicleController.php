@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\VehicleActivity;
 use App\Models\VehicleMake;
 use App\Models\VehicleType;
 use App\Services\ZohoCRMService;
@@ -126,16 +127,12 @@ class VehicleController extends Controller
 
     public function activitiesList()
     {
-        $activities = [
-            [
-                'IdActividad' => 1,
-                'Actividad' => 'Uber',
-            ],
-            [
-                'IdActividad' => 2,
-                'Actividad' => 'Taxi',
-            ],
-        ];
+        $activities = VehicleActivity::all()->map(function ($activity) {
+            return [
+                'IdActividad' => $activity->id,
+                'Actividad' => $activity->name,
+            ];
+        });
 
         return response()->json($activities);
     }
