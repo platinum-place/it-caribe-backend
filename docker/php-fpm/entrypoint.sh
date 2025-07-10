@@ -16,17 +16,15 @@ chmod -R 775 /var/www/html/bootstrap/cache
 touch /var/www/html/storage/logs/php_errors.log
 chmod 664 /var/www/html/storage/logs/php_errors.log
 
-# Ensure Laravel Passport storage directories exist with proper permissions
+# Set strict permissions for Laravel Passport tokens
 if [ ! -d /var/www/html/storage/oauth-private.key ]; then
-  mkdir -p /var/www/html/storage/oauth-private.key
+    find /var/www/html/storage/ -name "oauth-private.key" -type f -exec chmod 600 {} \;
 fi
 
 if [ ! -d /var/www/html/storage/oauth-public.key ]; then
-  mkdir -p /var/www/html/storage/oauth-public.key
+    find /var/www/html/storage/ -name "oauth-public.key" -type f -exec chmod 600 {} \;
 fi
 
-# Set strict permissions for Laravel Passport tokens
-find /var/www/html/storage/ -name "oauth-*.key" -type f -exec chmod 600 {} \;
 
 # Fix ownership
 chown -R laravel:laravel /var/www/html/storage
