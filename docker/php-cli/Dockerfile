@@ -3,7 +3,6 @@ FROM php:8.4-cli
 ARG UID=1000
 ARG GID=1000
 
-# Instala dependencias del sistema, incluyendo libicu-dev
 RUN apt-get update && apt-get install -y \
     git \
     curl \
@@ -19,14 +18,11 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Instala extensiones de PHP, incluyendo intl
 RUN docker-php-ext-install pdo pdo_pgsql mbstring exif pcntl bcmath gd zip intl
 
-# Instala Node.js y npm
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs
 
-# Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Create system user to run Composer and Artisan Commands
