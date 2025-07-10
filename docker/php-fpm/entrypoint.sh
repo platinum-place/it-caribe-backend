@@ -17,8 +17,13 @@ touch /var/www/html/storage/logs/php_errors.log
 chmod 664 /var/www/html/storage/logs/php_errors.log
 
 # Ensure Laravel Passport storage directories exist with proper permissions
-mkdir -p /var/www/html/storage/oauth-private.key
-mkdir -p /var/www/html/storage/oauth-public.key
+if [ ! -d /var/www/html/storage/oauth-private.key ]; then
+  mkdir -p /var/www/html/storage/oauth-private.key
+fi
+
+if [ ! -d /var/www/html/storage/oauth-public.key ]; then
+  mkdir -p /var/www/html/storage/oauth-public.key
+fi
 
 # Set strict permissions for Laravel Passport tokens
 find /var/www/html/storage/ -name "oauth-*.key" -type f -exec chmod 600 {} \;
