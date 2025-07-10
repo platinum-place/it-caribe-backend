@@ -36,6 +36,13 @@ COPY php.ini /usr/local/etc/php/conf.d/custom.ini
 RUN groupadd -g $GID laravel && \
     useradd -u $UID -g laravel -m -s /bin/bash laravel
 
+# Create PHP session directory
+RUN mkdir -p /var/lib/php/sessions && \
+    chown laravel:laravel /var/lib/php/sessions
+
+# Copy PHP-FPM pool configuration
+COPY www.conf /usr/local/etc/php-fpm.d/www.conf
+
 # Copy entrypoint script
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh

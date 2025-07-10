@@ -9,22 +9,24 @@ mkdir -p /var/www/html/storage/framework/views
 mkdir -p /var/www/html/storage/framework/cache
 mkdir -p /var/www/html/bootstrap/cache
 
+# Set permissions
 chmod -R 775 /var/www/html/storage
 chmod -R 775 /var/www/html/bootstrap/cache
-
-# Set strict permissions for Laravel Passport tokens
-if [ ! -d /var/www/html/storage/oauth-private.key ]; then
-    find /var/www/html/storage/ -name "oauth-private.key" -type f -exec chmod 600 {} \;
-fi
-
-if [ ! -d /var/www/html/storage/oauth-public.key ]; then
-    find /var/www/html/storage/ -name "oauth-public.key" -type f -exec chmod 600 {} \;
-fi
-
 
 # Fix ownership
 chown -R laravel:laravel /var/www/html/storage
 chown -R laravel:laravel /var/www/html/bootstrap/cache
 
-# Switch to laravel user and start PHP-FPM
-exec su -s /bin/bash -c 'exec php-fpm' laravel
+# Handle Laravel Passport keys if they exist
+if [ -f /var/www/html/storage/oauth-private.key ]; then
+    chmod 600 /var/www/html/storage/oauth-private.key
+    chown laravel:laravel /var/www/html/storage/oauth-private.key
+fi
+
+if [ -f /var/www/html/storage/oauth-public.key ]; then
+    chmod 600 /var/www/html/storage/oauth-public.key
+    chown laravel:laravel /var/www/html/storage/oauth-public.key
+fi
+
+# Start PHP-FPM as root (it will drop privileges automatically)
+exec php-fpm
