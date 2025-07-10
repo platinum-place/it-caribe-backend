@@ -44,12 +44,6 @@ class QuoteVehicleResource extends Resource
                 Forms\Components\Select::make('vehicle_activity_id')
                     ->relationship('vehicleActivity', 'name')
                     ->required(),
-                Forms\Components\Select::make('vehicle_accessory_id')
-                    ->relationship('vehicleAccessory', 'name')
-                    ->required(),
-                Forms\Components\Select::make('vehicle_route_id')
-                    ->relationship('vehicleRoute', 'name')
-                    ->required(),
                 Forms\Components\TextInput::make('vehicle_amount')
                     ->required()
                     ->numeric(),
@@ -93,12 +87,6 @@ class QuoteVehicleResource extends Resource
                 Tables\Columns\TextColumn::make('vehicleActivity.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('vehicleAccessory.name')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('vehicleRoute.name')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('vehicle_amount')
                     ->numeric()
                     ->sortable(),
@@ -107,7 +95,6 @@ class QuoteVehicleResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
@@ -131,7 +118,6 @@ class QuoteVehicleResource extends Resource
         return [
             'index' => Pages\ListQuoteVehicles::route('/'),
             'create' => Pages\CreateQuoteVehicle::route('/create'),
-            'view' => Pages\ViewQuoteVehicle::route('/{record}'),
             'edit' => Pages\EditQuoteVehicle::route('/{record}/edit'),
         ];
     }

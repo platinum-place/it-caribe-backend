@@ -22,8 +22,6 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\VehicleType::class)->constrained();
             $table->foreignIdFor(\App\Models\VehicleUse::class)->constrained();
             $table->foreignIdFor(\App\Models\VehicleActivity::class)->constrained();
-            $table->foreignIdFor(\App\Models\VehicleAccessory::class)->constrained();
-            $table->foreignIdFor(\App\Models\VehicleRoute::class)->constrained();
             $table->decimal('vehicle_amount');
         });
     }

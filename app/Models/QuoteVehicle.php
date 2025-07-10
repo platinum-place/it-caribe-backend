@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -55,5 +56,20 @@ class QuoteVehicle extends Model
     public function lines(): HasMany
     {
         return $this->hasMany(QuoteVehicleLine::class);
+    }
+
+    public function accessories(): BelongsToMany
+    {
+        return $this->belongsToMany(VehicleAccessory::class);
+    }
+
+    public function colors(): BelongsToMany
+    {
+        return $this->belongsToMany(VehicleColor::class);
+    }
+
+    public function routes(): BelongsToMany
+    {
+        return $this->belongsToMany(VehicleRoute::class);
     }
 }

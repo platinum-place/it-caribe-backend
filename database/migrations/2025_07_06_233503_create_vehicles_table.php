@@ -21,7 +21,6 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\VehicleMake::class)->constrained();
             $table->foreignIdFor(\App\Models\VehicleModel::class)->constrained();
             $table->foreignIdFor(\App\Models\VehicleType::class)->constrained();
-            $table->foreignIdFor(\App\Models\VehicleColor::class)->constrained();
         });
     }
 

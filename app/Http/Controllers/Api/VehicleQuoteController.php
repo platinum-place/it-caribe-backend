@@ -98,6 +98,8 @@ class VehicleQuoteController extends Controller
                 $amount = round($amount, 2);
             }
 
+            $response2 = $this->crm->getRecords('Vendors', ['Nombre'], (int)$product['Vendor_Name']['id']);
+
             $customer = Customer::create([
                 'name' => $request->get('NombreCliente'),
                 'birth_date' => $request->get('FechaNacimiento'),
@@ -110,11 +112,11 @@ class VehicleQuoteController extends Controller
                 'year' => $request->get('Anio'),
                 'chassis' => $request->get('Chasis'),
                 'license_plate' => $request->get('Placa'),
-                //'vehicle_color_id' => $request->get('ColorId'),
                 'vehicle_make_id' => $request->get('Marca'),
                 'vehicle_model_id' => $request->get('Modelo'),
                 'vehicle_type_id' => $request->get('TipoVehiculo'),
             ]);
+            $vehicle->colors()->attach($request->get('ColorId'));
             $quote = Quote::create([
                 'quote_type_id' => QuoteType::AUTO->value,
                 'quote_status_id' => QuoteStatus::PENDING->value,
@@ -122,7 +124,17 @@ class VehicleQuoteController extends Controller
                 'start_date' => date('Y-m-d'),
                 'end_date' => date('Y-m-d', strtotime(date("Y-m-d") . "+ 30 days")),
             ]);
-            $quoteVehicle = new QuoteVehicle([
+            $quote->lines()->create([
+                'name' => $response2['data'][0]['Nombre'],
+                'quote_vehicle_id',
+                'unit_price' => $amount,
+                'quantity' => 1,
+                'subtotal' => $amount - ($amount * 0.16),
+                'tax_rate' => 16,
+                'tax_amount' => $amount * 0.16,
+                'total' => $amount,
+            ]);
+            $quoteVehicle = QuoteVehicle::create([
                 'quote_id' => $quote->id,
                 'vehicle_id' => $vehicle->id,
                 'vehicle_make_id' => $request->get('Marca'),
@@ -132,11 +144,11 @@ class VehicleQuoteController extends Controller
                 'vehicle_activity_id' => $request->get('Actividad'),
                 'vehicle_amount' => $request->get('MontoAsegurado'),
             ]);
+            $vehicle->colors()->attach($request->get('ColorId'));
             $quoteVehicle->accessories()->attach($request->get('Accesorios'));
-            $quoteVehicle->routes()->attach($request->get('Accesorios'));
-            $quoteVehicle->save();
+            $quoteVehicle->routes()->attach($request->get('CirculacionID'));
             $quoteVehicle->lines()->create([
-                'name',
+                'name' => $response2['data'][0]['Nombre'],
                 'quote_vehicle_id',
                 'unit_price' => $amount,
                 'quantity' => 1,
@@ -147,49 +159,47 @@ class VehicleQuoteController extends Controller
                 'life_amount' => 220,
             ]);
 
-//            $criteria = 'Name:equals:' . VehicleMake::firstWhere('code', $request->get('Marca'))->name;
-//            $vehicleMake = $this->crm->searchRecords('Marcas', $criteria);
-//
-//            $criteria = 'Name:equals:' . VehicleModel::firstWhere('code', $request->get('Modelo'))->name;
-//            $vehicleModel = $this->crm->searchRecords('Modelos', $criteria);
-//
-//            $data = [
-//                'Subject' => $request->get('NombreCliente'),
-//                'Valid_Till' => date('Y-m-d', strtotime(date('Y-m-d') . '+ 30 days')),
-//                'Vigencia_desde' => date('Y-m-d'),
-//                'Account_Name' => 3222373000092390001,
-//                'Contact_Name' => 3222373000203318001,
-//                'Quote_Stage' => 'Cotizando',
-//                'Nombre' => $request->get('NombreCliente'),
-//                'Fecha_de_nacimiento' => date('Y-m-d', strtotime($request->get('FechaNacimiento'))),
-//                'RNC_C_dula' => $request->get('IdCliente'),
-//                'Correo_electr_nico' => $request->get('Email'),
-//                'Tel_Celular' => $request->get('TelefMovil'),
-//                'Tel_Residencia' => $request->get('TelefResidencia'),
-//                'Tel_Trabajo' => $request->get('TelefTrabajo'),
-//                'Plan' => 'Mensual Full',
-//                'Suma_asegurada' => round($request->get('MontoAsegurado'), 2),
-//                'A_o' => $request->get('Anio'),
-//                'Marca' => $vehicleMake['data'][0]['id'],
-//                'Modelo' => $vehicleModel['data'][0]['id'],
-//                'Tipo_veh_culo' => $request->get('TipoVehiculo'),
-//                'Chasis' => $request->get('Chasis'),
-//                'Placa' => $request->get('Placa'),
-//                'Fuente' => 'API',
-//                'Quoted_Items' => [
-//                    [
-//                        'Quantity' => 1,
-//                        'Product_Name' => $product['id'],
-//                        'Total' => $amount,
-//                        'Net_Total' => $amount,
-//                        'List_Price' => $amount,
-//                    ],
-//                ],
-//            ];
-//
-//            $responseProduct = $this->crm->insertRecords('Quotes', $data);
+            $criteria = 'Name:equals:' . VehicleMake::firstWhere('code', $request->get('Marca'))->name;
+            $vehicleMake = $this->crm->searchRecords('Marcas', $criteria);
 
-            $response2 = $this->crm->getRecords('Vendors', ['Nombre'], (int)$product['Vendor_Name']['id']);
+            $criteria = 'Name:equals:' . VehicleModel::firstWhere('code', $request->get('Modelo'))->name;
+            $vehicleModel = $this->crm->searchRecords('Modelos', $criteria);
+
+            $data = [
+                'Subject' => $request->get('NombreCliente'),
+                'Valid_Till' => date('Y-m-d', strtotime(date('Y-m-d') . '+ 30 days')),
+                'Vigencia_desde' => date('Y-m-d'),
+                'Account_Name' => 3222373000092390001,
+                'Contact_Name' => 3222373000203318001,
+                'Quote_Stage' => 'Cotizando',
+                'Nombre' => $request->get('NombreCliente'),
+                'Fecha_de_nacimiento' => date('Y-m-d', strtotime($request->get('FechaNacimiento'))),
+                'RNC_C_dula' => $request->get('IdCliente'),
+                'Correo_electr_nico' => $request->get('Email'),
+                'Tel_Celular' => $request->get('TelefMovil'),
+                'Tel_Residencia' => $request->get('TelefResidencia'),
+                'Tel_Trabajo' => $request->get('TelefTrabajo'),
+                'Plan' => 'Mensual Full',
+                'Suma_asegurada' => round($request->get('MontoAsegurado'), 2),
+                'A_o' => $request->get('Anio'),
+                'Marca' => $vehicleMake['data'][0]['id'],
+                'Modelo' => $vehicleModel['data'][0]['id'],
+                'Tipo_veh_culo' => $request->get('TipoVehiculo'),
+                'Chasis' => $request->get('Chasis'),
+                'Placa' => $request->get('Placa'),
+                'Fuente' => 'API',
+                'Quoted_Items' => [
+                    [
+                        'Quantity' => 1,
+                        'Product_Name' => $product['id'],
+                        'Total' => $amount,
+                        'Net_Total' => $amount,
+                        'List_Price' => $amount,
+                    ],
+                ],
+            ];
+
+            $responseProduct = $this->crm->insertRecords('Quotes', $data);
 
             $response[] = [
                 'passcode' => null,
