@@ -17,6 +17,11 @@ chmod -R 775 /var/www/html/bootstrap/cache
 chown -R laravel:laravel /var/www/html/storage
 chown -R laravel:laravel /var/www/html/bootstrap/cache
 
+# Create and set permissions for PHP-FPM log directory
+mkdir -p /var/log/php-fpm
+chmod -R 777 /var/log/php-fpm
+chown -R laravel:laravel /var/log/php-fpm
+
 # Handle Laravel Passport keys if they exist
 if [ -f /var/www/html/storage/oauth-private.key ]; then
     chmod 600 /var/www/html/storage/oauth-private.key
@@ -28,5 +33,9 @@ if [ -f /var/www/html/storage/oauth-public.key ]; then
     chown laravel:laravel /var/www/html/storage/oauth-public.key
 fi
 
-# Start PHP-FPM as root (it will drop privileges automatically)
-exec php-fpm
+# Make sure PHP-FPM can write to its log files
+touch /proc/self/fd/2
+chmod 666 /proc/self/fd/2
+
+# Start PHP-FPM
+exec php-fpm --allow-to-run-as-root
