@@ -314,7 +314,7 @@ class CreateQuoteVehicle extends CreateRecord
 
         return DB::transaction(function () use ($id, $data) {
             $quote = Quote::create([
-                'quote_type_id' => QuoteType::AUTO->value,
+                'quote_type_id' => QuoteType::VEHICLE->value,
                 'quote_status_id' => QuoteStatus::PENDING->value,
                 'start_date' => now(),
                 'end_date' => now()->addDays(30),
