@@ -9,7 +9,8 @@ Route::middleware([
     EnsureClientIsResourceOwner::class,
     SecurityHeaders::class,
     EnsureJsonRequest::class,
-])->group(function () {
+])
+    ->group(function () {
     Route::post('/cotizador/colectiva', [\App\Http\Controllers\Api\VehicleQuoteController::class, 'estimateVehicle']);
     Route::post('/cotizador/EmitirAuto', [\App\Http\Controllers\Api\VehicleQuoteController::class, 'issueVehicle']);
     Route::get('/cotizador/CancelarAuto', [\App\Http\Controllers\Api\VehicleQuoteController::class, 'cancelVehicle']);

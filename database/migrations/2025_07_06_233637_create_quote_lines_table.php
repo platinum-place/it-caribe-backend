@@ -17,12 +17,13 @@ return new class extends Migration
             $table->softDeletes();
             $table->string('name');
             $table->foreignIdFor(\App\Models\Quote::class)->constrained();
-            $table->decimal('unit_price');
+            $table->decimal('unit_price',18,2);
             $table->integer('quantity');
-            $table->decimal('subtotal');
-            $table->decimal('tax_rate')->nullable();
-            $table->decimal('tax_amount')->default(0);
-            $table->decimal('total');
+            $table->decimal('subtotal',18,2);
+            $table->decimal('amount_taxed',18,2);
+            $table->decimal('tax_rate',18,2)->nullable();
+            $table->decimal('tax_amount',18,2)->default(0);
+            $table->decimal('total',18,2);
         });
     }
 

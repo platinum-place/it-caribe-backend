@@ -4,17 +4,17 @@ namespace App\Enums;
 
 enum QuoteStatus: int
 {
-    case PENDING = 0;
+    case PENDING = 1;
 
-    case APPROVED = 1;
+    case APPROVED = 2;
 
-    case REJECTED = 2;
+    case REJECTED = 3;
 
-    case CANCELLED = 3;
+    case CANCELLED = 4;
 
-    case EXPIRED = 4;
+    case EXPIRED = 5;
 
-    case UNDER_REVIEW = 5;
+    case UNDER_REVIEW = 6;
 
-    case COMPLETED = 6;
+    case COMPLETED = 7;
 }

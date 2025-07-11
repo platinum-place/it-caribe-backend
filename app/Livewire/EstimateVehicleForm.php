@@ -7,6 +7,7 @@ use App\Helpers\Cotizaciones;
 use App\Helpers\CotizarAuto;
 use App\Models\VehicleMake;
 use App\Models\VehicleModel;
+use App\Models\VehicleUse;
 use App\Services\ZohoCRMService;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Select;
@@ -91,11 +92,7 @@ class EstimateVehicleForm extends Component implements HasForms
 
                 Select::make('uso')
                     ->label('Uso')
-                    ->options([
-                        'Privado' => 'Privado',
-                        'Publico' => 'Público',
-                    ])
-                    ->default('Público')
+                    ->options(VehicleUse::pluck('name', 'id'))
                     ->required(),
 
                 Select::make('estado')
