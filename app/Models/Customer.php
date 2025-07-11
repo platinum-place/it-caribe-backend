@@ -10,7 +10,8 @@ class Customer extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'id', 'name', 'birth_date', 'home_phone',
-        'mobile_phone', 'work_phone', 'email',
+        'first_name', 'last_name', 'identity_number',
+        'birth_date', 'home_phone',
+        'mobile_phone', 'work_phone', 'email','address',
     ];
 }

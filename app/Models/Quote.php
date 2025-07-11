@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Quote extends Model
@@ -13,7 +14,7 @@ class Quote extends Model
 
     protected $fillable = [
         'quote_type_id', 'quote_status_id', 'customer_id',
-        'attachments', 'start_date', 'end_date',
+        'attachments', 'start_date', 'end_date', 'id_crm',
     ];
 
     protected $casts = [
@@ -40,5 +41,10 @@ class Quote extends Model
     public function lines(): HasMany
     {
         return $this->hasMany(QuoteLine::class);
+    }
+
+    public function quoteVehicle(): HasOne
+    {
+        return $this->hasOne(QuoteVehicle::class);
     }
 }

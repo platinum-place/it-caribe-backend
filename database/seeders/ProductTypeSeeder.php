@@ -11,10 +11,13 @@ class ProductTypeSeeder extends Seeder
      */
     public function run(): void
     {
-        foreach (\App\Enums\ProductType::cases() as $type) {
+        foreach (\App\Enums\ProductType::cases() as $enum) {
             \App\Models\ProductType::updateOrCreate(
-                ['id' => $type->value],
-                ['id' => $type->value],
+                ['id' => $enum->value],
+                [
+                    'id' => $enum->value,
+                    'name' => $enum->name,
+                ],
             );
         }
     }

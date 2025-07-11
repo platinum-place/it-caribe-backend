@@ -11,10 +11,13 @@ class QuoteTypeSeeder extends Seeder
      */
     public function run(): void
     {
-        foreach (\App\Enums\QuoteType::cases() as $type) {
+        foreach (\App\Enums\QuoteType::cases() as $enum) {
             \App\Models\QuoteType::updateOrCreate(
-                ['id' => $type->value],
-                ['id' => $type->value],
+                ['id' => $enum->value],
+                [
+                    'id' => $enum->value,
+                    'name' => $enum->name,
+                ],
             );
         }
     }

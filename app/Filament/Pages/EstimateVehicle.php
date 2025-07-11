@@ -19,9 +19,4 @@ class EstimateVehicle extends Page
     {
         return __('Estimate :name', ['name' => __('Vehicle')]);
     }
-
-    public static function getNavigationGroup(): string
-    {
-        return __('Estimate');
-    }
 }

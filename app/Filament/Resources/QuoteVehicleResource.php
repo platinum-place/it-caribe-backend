@@ -35,6 +35,21 @@ class QuoteVehicleResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getModelLabel(): string
+    {
+        return __('Quote vehicle');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Quote vehicles');
+    }
+
+    public static function getNavigationGroup(): string
+    {
+        return __('Estimate');
+    }
+
     public static function table(Table $table): Table
     {
         return $table
@@ -80,7 +95,11 @@ class QuoteVehicleResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ForceDeleteAction::make(),
+                Tables\Actions\RestoreAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

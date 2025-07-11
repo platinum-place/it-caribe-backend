@@ -21,6 +21,7 @@ return new class extends Migration
             $table->json('attachments')->nullable();
             $table->date('start_date');
             $table->date('end_date')->nullable();
+            $table->string('id_crm')->nullable();
         });
     }
 

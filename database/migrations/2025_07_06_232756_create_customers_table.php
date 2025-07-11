@@ -15,12 +15,15 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->softDeletes();
-            $table->string('name');
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('identity_number');
             $table->date('birth_date')->nullable();
             $table->string('home_phone')->nullable();
             $table->string('mobile_phone')->nullable();
             $table->string('work_phone')->nullable();
             $table->string('email')->nullable();
+            $table->text('address')->nullable();
         });
     }
 

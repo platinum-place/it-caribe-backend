@@ -3,18 +3,25 @@
 namespace App\Filament\Resources\QuoteVehicleResource\Pages;
 
 use App\Filament\Resources\QuoteResource;
+use App\Filament\Resources\QuoteVehicleResource;
 use App\Filament\Resources\UserResource;
+use App\Models\QuoteVehicle;
 use Filament\Actions;
+use Filament\Actions\Action;
 use Filament\Resources\Pages\ViewRecord;
 
 class ViewQuoteVehicle extends ViewRecord
 {
-    protected static string $resource = QuoteResource::class;
+    protected static string $resource = QuoteVehicleResource::class;
 
     protected function getHeaderActions(): array
     {
         return [
             Actions\EditAction::make(),
+            Actions\Action::make('download')
+                ->translateLabel()
+                ->url(route('filament.resources.estimate.download', ['id' => $this->record->quote->id_crm]))
+                ->openUrlInNewTab(),
         ];
     }
 }

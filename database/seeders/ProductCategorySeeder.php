@@ -11,10 +11,13 @@ class ProductCategorySeeder extends Seeder
      */
     public function run(): void
     {
-        foreach (\App\Enums\ProductCategory::cases() as $type) {
+        foreach (\App\Enums\ProductCategory::cases() as $enum) {
             \App\Models\ProductCategory::updateOrCreate(
-                ['id' => $type->value],
-                ['id' => $type->value],
+                ['id' => $enum->value],
+                [
+                    'id' => $enum->value,
+                    'name' => $enum->name,
+                ],
             );
         }
     }

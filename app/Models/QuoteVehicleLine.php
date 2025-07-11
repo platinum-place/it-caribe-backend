@@ -12,7 +12,7 @@ class QuoteVehicleLine extends Model
 
     protected $fillable = [
         'name', 'quote_vehicle_id', 'unit_price',
-        'quantity', 'subtotal', 'tax_rate',
+        'quantity', 'subtotal', 'tax_rate','amount_taxed',
         'tax_amount', 'total', 'life_amount',
     ];
 
