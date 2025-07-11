@@ -32,7 +32,7 @@ class Quote extends Model
         return $this->belongsTo(QuoteStatus::class, 'quote_status_id');
     }
 
-    public function customer():BelongsTo
+    public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
     }

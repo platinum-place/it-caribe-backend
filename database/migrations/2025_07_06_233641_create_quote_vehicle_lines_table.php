@@ -19,12 +19,12 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\QuoteVehicle::class)->constrained();
             $table->decimal('unit_price', 18, 2);
             $table->integer('quantity');
-            $table->decimal('subtotal',18,2);
-            $table->decimal('amount_taxed',18,2);
-            $table->decimal('tax_rate',18,2)->nullable();
-            $table->decimal('tax_amount',18,2)->default(0);
-            $table->decimal('total',18,2);
-            $table->decimal('life_amount',18,2)->default(0);
+            $table->decimal('subtotal', 18, 2);
+            $table->decimal('amount_taxed', 18, 2);
+            $table->decimal('tax_rate', 18, 2)->nullable();
+            $table->decimal('tax_amount', 18, 2)->default(0);
+            $table->decimal('total', 18, 2);
+            $table->decimal('life_amount', 18, 2)->default(0);
 
         });
     }

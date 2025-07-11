@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\QuoteResource\Pages;
-use App\Filament\Resources\QuoteResource\RelationManagers;
 use App\Models\Quote;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -97,6 +96,7 @@ class QuoteResource extends Resource
         return [
             'index' => Pages\ListQuotes::route('/'),
             'create' => Pages\CreateQuote::route('/create'),
+            'view' => Pages\ViewQuote::route('/{record}'),
             'edit' => Pages\EditQuote::route('/{record}/edit'),
         ];
     }

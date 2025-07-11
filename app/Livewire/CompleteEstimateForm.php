@@ -2,20 +2,11 @@
 
 namespace App\Livewire;
 
-use App\Enums\QuoteStatus;
-use App\Enums\QuoteType;
 use App\Filament\Pages\Estimate;
 use App\Helpers\Zoho;
-use App\Models\Customer;
-use App\Models\Quote;
-use App\Models\QuoteVehicle;
-use App\Models\Vehicle;
-use App\Models\VehicleColor;
-use App\Models\VehicleUse;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Section;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -100,11 +91,8 @@ class CompleteEstimateForm extends Component implements HasForms
                                     ->required(),
                                 TextInput::make('placa')
                                     ->label('Placa'),
-                                Select::make('color')
-                                    ->label('Color')
-                                    ->options(VehicleColor::pluck('name', 'id'))
-                                    ->multiple()
-                                    ->required(),
+                                TextInput::make('color')
+                                    ->label('Color'),
                             ]),
                     ])
                     ->visible(fn () => isset($this->estimate['marcaid'])),
@@ -179,10 +167,10 @@ class CompleteEstimateForm extends Component implements HasForms
             'A_o' => $data['ano'] ?? null,
             'Marca' => $data['marcaid'] ?? null,
             'Modelo' => $data['modeloid'] ?? null,
-            //'Uso' => $data['uso'] ?? null,
+            'Uso' => $data['uso'] ?? null,
             'Tipo_veh_culo' => $data['modelotipo'] ?? null,
             'Chasis' => $data['chasis'] ?? null,
-            //'Color' => $data['color'] ?? null,
+            'Color' => $data['color'] ?? null,
             'Placa' => $data['placa'] ?? null,
             'Condiciones' => $data['estado'] ?? null,
             'Nombre_codeudor' => $data['nombre_codeudor'] ?? null,
@@ -202,67 +190,6 @@ class CompleteEstimateForm extends Component implements HasForms
 
         $libreria = new Zoho;
         $id = $libreria->createRecords('Quotes', $registro, $planes);
-
-        dd($data);
-
-        $customer = Customer::create([
-            'name' => $request->get('NombreCliente'),
-            'birth_date' => $request->get('FechaNacimiento'),
-            'home_phone' => $request->get('TelefResidencia'),
-            'mobile_phone' => $request->get('TelefMovil'),
-            'work_phone' => $request->get('TelefTrabajo'),
-            'email' => $request->get('Email'),
-        ]);
-        $vehicle = Vehicle::create([
-            'year' => $request->get('Anio'),
-            'chassis' => $request->get('Chasis'),
-            'license_plate' => $request->get('Placa'),
-            'vehicle_make_id' => $request->get('Marca'),
-            'vehicle_model_id' => $request->get('Modelo'),
-            'vehicle_type_id' => $request->get('TipoVehiculo'),
-        ]);
-        $vehicle->colors()->attach($request->get('ColorId'));
-        $quote = Quote::create([
-            'quote_type_id' => QuoteType::AUTO->value,
-            'quote_status_id' => QuoteStatus::PENDING->value,
-            'customer_id' => $customer->id,
-            'start_date' => date('Y-m-d'),
-            'end_date' => date('Y-m-d', strtotime(date("Y-m-d") . "+ 30 days")),
-        ]);
-        $quote->lines()->create([
-            'name' => $response2['data'][0]['Nombre'],
-            'quote_vehicle_id',
-            'unit_price' => $amount,
-            'quantity' => 1,
-            'subtotal' => $amount - ($amount * 0.16),
-            'tax_rate' => 16,
-            'tax_amount' => $amount * 0.16,
-            'total' => $amount,
-        ]);
-        $quoteVehicle = QuoteVehicle::create([
-            'quote_id' => $quote->id,
-            'vehicle_id' => $vehicle->id,
-            'vehicle_make_id' => $request->get('Marca'),
-            'vehicle_model_id' => $request->get('Modelo'),
-            'vehicle_type_id' => $request->get('TipoVehiculo'),
-            'vehicle_use_id' => $request->get('UsosGarantiasId'),
-            'vehicle_activity_id' => $request->get('Actividad'),
-            'vehicle_amount' => $request->get('MontoAsegurado'),
-        ]);
-        $vehicle->colors()->attach($request->get('ColorId'));
-        $quoteVehicle->accessories()->attach($request->get('Accesorios'));
-        $quoteVehicle->routes()->attach($request->get('CirculacionID'));
-        $quoteVehicle->lines()->create([
-            'name' => $response2['data'][0]['Nombre'],
-            'quote_vehicle_id',
-            'unit_price' => $amount,
-            'quantity' => 1,
-            'subtotal' => $amount - ($amount * 0.16),
-            'tax_rate' => 16,
-            'tax_amount' => $amount * 0.16,
-            'total' => $amount,
-            'life_amount' => 220,
-        ]);
 
         $this->redirect(Estimate::getUrl(['id' => $id]));
     }

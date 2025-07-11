@@ -3,10 +3,26 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\QuoteVehicleResource\Pages;
-use App\Filament\Resources\QuoteVehicleResource\RelationManagers;
 use App\Models\QuoteVehicle;
-use Filament\Forms;
+use App\Models\VehicleMake;
+use App\Models\VehicleModel;
+use Filament\Forms\Components\Actions;
+use Filament\Forms\Components\Actions\Action;
+use Filament\Forms\Components\Card;
+use Filament\Forms\Components\CheckboxList;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\ViewField;
+use Filament\Forms\Components\Wizard;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -18,37 +34,6 @@ class QuoteVehicleResource extends Resource
     protected static ?string $model = QuoteVehicle::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
-    public static function form(Form $form): Form
-    {
-        return $form
-            ->schema([
-                Forms\Components\Select::make('quote_id')
-                    ->relationship('quote', 'id')
-                    ->required(),
-                Forms\Components\Select::make('vehicle_id')
-                    ->relationship('vehicle', 'id')
-                    ->required(),
-                Forms\Components\Select::make('vehicle_make_id')
-                    ->relationship('vehicleMake', 'name')
-                    ->required(),
-                Forms\Components\Select::make('vehicle_model_id')
-                    ->relationship('vehicleModel', 'name')
-                    ->required(),
-                Forms\Components\Select::make('vehicle_type_id')
-                    ->relationship('vehicleType', 'name')
-                    ->required(),
-                Forms\Components\Select::make('vehicle_use_id')
-                    ->relationship('vehicleUse', 'name')
-                    ->required(),
-                Forms\Components\Select::make('vehicle_activity_id')
-                    ->relationship('vehicleActivity', 'name')
-                    ->required(),
-                Forms\Components\TextInput::make('vehicle_amount')
-                    ->required()
-                    ->numeric(),
-            ]);
-    }
 
     public static function table(Table $table): Table
     {
@@ -118,6 +103,7 @@ class QuoteVehicleResource extends Resource
         return [
             'index' => Pages\ListQuoteVehicles::route('/'),
             'create' => Pages\CreateQuoteVehicle::route('/create'),
+            'view' => Pages\ViewQuoteVehicle::route('/{record}'),
             'edit' => Pages\EditQuoteVehicle::route('/{record}/edit'),
         ];
     }

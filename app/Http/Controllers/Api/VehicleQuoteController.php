@@ -2,19 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Enums\QuoteStatus;
-use App\Enums\QuoteType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Quote\CancelVehicleRequest;
 use App\Http\Requests\Api\Quote\EstimateVehicleRequest;
 use App\Http\Requests\Api\Quote\IssueVehicleRequest;
-use App\Models\Customer;
-use App\Models\Quote;
-use App\Models\QuoteLine;
-use App\Models\QuoteVehicle;
-use App\Models\QuoteVehicleLine;
 use App\Models\TmpVendorProduct;
-use App\Models\Vehicle;
 use App\Models\VehicleMake;
 use App\Models\VehicleModel;
 use App\Services\ZohoCRMService;
@@ -24,9 +16,7 @@ use Throwable;
 
 class VehicleQuoteController extends Controller
 {
-    public function __construct(protected ZohoCRMService $crm)
-    {
-    }
+    public function __construct(protected ZohoCRMService $crm) {}
 
     /**
      * @throws RequestException
@@ -58,12 +48,12 @@ class VehicleQuoteController extends Controller
             $taxAmount = 0;
 
             try {
-                $criteria = 'Plan:equals:' . $product['id'];
+                $criteria = 'Plan:equals:'.$product['id'];
                 $taxes = $this->crm->searchRecords('Tasas', $criteria);
 
                 foreach ($taxes['data'] as $tax) {
                     // if (in_array($request->get('TipoVehiculo'), $tax['Grupo_de_veh_culo'])) {
-                    if (!empty($tax['Suma_limite'])) {
+                    if (! empty($tax['Suma_limite'])) {
                         if ($request->get('MontoOriginal') >= $tax['Suma_limite']) {
                             if (empty($tax['Suma_hasta'])) {
                                 $taxAmount = $tax['Name'] / 100;
@@ -80,7 +70,7 @@ class VehicleQuoteController extends Controller
 
             }
 
-            if (!$taxAmount) {
+            if (! $taxAmount) {
                 $alert = 'No se encontraron tasas.';
             }
 
@@ -98,18 +88,17 @@ class VehicleQuoteController extends Controller
                 $amount = round($amount, 2);
             }
 
-            $response2 = $this->crm->getRecords('Vendors', ['Nombre'], (int)$product['Vendor_Name']['id']);
+            $response2 = $this->crm->getRecords('Vendors', ['Nombre'], (int) $product['Vendor_Name']['id']);
 
-
-            $criteria = 'Name:equals:' . VehicleMake::firstWhere('code', $request->get('Marca'))->name;
+            $criteria = 'Name:equals:'.VehicleMake::firstWhere('code', $request->get('Marca'))->name;
             $vehicleMake = $this->crm->searchRecords('Marcas', $criteria);
 
-            $criteria = 'Name:equals:' . VehicleModel::firstWhere('code', $request->get('Modelo'))->name;
+            $criteria = 'Name:equals:'.VehicleModel::firstWhere('code', $request->get('Modelo'))->name;
             $vehicleModel = $this->crm->searchRecords('Modelos', $criteria);
 
             $data = [
                 'Subject' => $request->get('NombreCliente'),
-                'Valid_Till' => date('Y-m-d', strtotime(date('Y-m-d') . '+ 30 days')),
+                'Valid_Till' => date('Y-m-d', strtotime(date('Y-m-d').'+ 30 days')),
                 'Vigencia_desde' => date('Y-m-d'),
                 'Account_Name' => 3222373000092390001,
                 'Contact_Name' => 3222373000203318001,
@@ -153,7 +142,7 @@ class VehicleQuoteController extends Controller
                 'Planid' => TmpVendorProduct::firstWhere('id_crm', $product['id'])->id,
                 'Plan' => 'Plan Mensual Full',
                 'Aseguradora' => $response2['data'][0]['Nombre'],
-                'IdCotizacion' => (string)$responseProduct['data'][0]['details']['id'],
+                'IdCotizacion' => (string) $responseProduct['data'][0]['details']['id'],
                 'Fecha' => date('d/m/Y H:i:s A'),
                 'Error' => $alert,
                 'CoberturasList' => [
@@ -187,7 +176,7 @@ class VehicleQuoteController extends Controller
                 'Coberturas' => $line['Product_Name']['id'],
                 'Quote_Stage' => 'Emitida',
                 'Vigencia_desde' => date('Y-m-d'),
-                'Valid_Till' => date('Y-m-d', strtotime(date('Y-m-d') . '+ 1 years')),
+                'Valid_Till' => date('Y-m-d', strtotime(date('Y-m-d').'+ 1 years')),
                 'Prima_neta' => round($line['Net_Total'] / 1.16, 2),
                 'ISC' => round($line['Net_Total'] - ($line['Net_Total'] / 1.16), 2),
                 'Prima' => round($line['Net_Total'], 2),
