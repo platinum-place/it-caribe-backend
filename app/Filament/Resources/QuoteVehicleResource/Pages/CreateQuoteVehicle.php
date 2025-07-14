@@ -46,214 +46,87 @@ class CreateQuoteVehicle extends CreateRecord
                 Wizard::make([
                     Wizard\Step::make(__('Estimate'))
                         ->schema([
-                            Select::make('vehicle_make_id')
-                                ->label('Marca')
-                                ->options(VehicleMake::pluck('name', 'id'))
-                                ->searchable()
-                                ->preload()
-                                ->required()
-                                ->live()
-                                ->placeholder('Selecciona una Marca'),
+                            QuoteVehicleResource\Components\Forms\EstimateVehicleForm::make(),
+                            QuoteVehicleResource\Components\Actions\EstimateVehicleFormAction::make(),
 
-                            Select::make('vehicle_model_id')
-                                ->label('Modelo')
-                                ->options(function (Get $get) {
-                                    $makeId = $get('vehicle_make_id');
-                                    if (!$makeId) {
-                                        return [];
-                                    }
 
-                                    return VehicleModel::with('type')
-                                        ->where('vehicle_make_id', $makeId)
-                                        ->get()
-                                        ->mapWithKeys(function ($model) {
-                                            $label = $model->name . ($model->type ? ' (' . $model->type->name . ')' : '');
-
-                                            return [$model->id => $label];
-                                        });
-                                })
-                                ->searchable()
-                                ->required()
-                                ->placeholder('Selecciona un modelo')
-                                ->disabled(fn(Get $get) => !$get('vehicle_make_id')),
-
-                            TextInput::make('year')
-                                ->label('Año')
-                                ->numeric()
-                                ->required()
-                                ->minValue(1900)
-                                ->maxValue(date('Y', strtotime('+1 year'))),
-
-                            TextInput::make('vehicle_amount')
-                                ->label('Suma Asegurada')
-                                ->numeric()
-                                ->required()
-                                ->prefix('$'),
-
-                            Select::make('plan')
-                                ->label('Plan')
-                                ->options([
-                                    'Full' => 'Full',
-                                    'Ley' => 'Ley',
-                                    'Econo' => 'Econo',
-                                    'Premier' => '0 KM',
-                                    'Eléctrico/Híbrido' => 'Eléctrico/Híbrido',
-                                    'Empleado' => 'Empleado',
-                                ])
-                                ->default('Mensual full')
-                                ->required(),
-
-                            Select::make('vehicle_use_id')
-                                ->label('Uso')
-                                ->options(VehicleUse::pluck('name', 'id'))
-                                ->required(),
-
-                            Select::make('estado')
-                                ->label('Estado')
-                                ->options([
-                                    'Nuevo' => '0 KM',
-                                    'Usado' => 'Usado',
-                                ])
-                                ->default('Nuevo')
-                                ->required(),
-
-                            Select::make('tipo')
-                                ->label('Tipo')
-                                ->options([
-                                    'Mensual' => 'Mensual',
-                                    'Anual' => 'Anual',
-                                ])
-                                ->default('Mensual')
-                                ->required(),
-
-                            Select::make('tipo_equipo')
-                                ->label('Tipo de motor')
-                                ->options([
-                                    '4 cilindros' => '4 cilindros',
-                                    '6 cilindros' => '6 cilindros',
-                                ]),
-
-                            Actions::make([
-                                Action::make('generateEstimate')
-                                    ->label('Generar Cotización')
-                                    ->action(function (Set $set, Get $get) {
-                                        $libreria = new Cotizaciones;
-
-                                        $cotizacion = new Cotizacion;
-
-                                        $cotizacion->suma = $get('vehicle_amount');
-
-                                        $cotizacion->plan = $get('plan');
-                                        $cotizacion->ano = $get('year');
-                                        $cotizacion->uso = VehicleUse::find($get('vehicle_use_id'))->description;
-                                        $cotizacion->estado = $get('estado');
-                                        $cotizacion->tipo_pago = $get('tipo');
-                                        $cotizacion->tipo_equipo = $get('tipo_equipo');
-
-                                        $model = VehicleModel::find($get('vehicle_model_id'));
-
-                                        $criteria = 'Name:equals:' . VehicleMake::find($get('vehicle_make_id'))->name;
-                                        $vehicleMake = app(ZohoCRMService::class)->searchRecords('Marcas', $criteria);
-
-                                        $criteria = 'Name:equals:' . $model->name;
-                                        $vehicleModel = app(ZohoCRMService::class)->searchRecords('Modelos', $criteria);
-
-                                        $cotizacion->marcaid = $vehicleMake['data'][0]['id'];
-                                        $cotizacion->modeloid = $vehicleModel['data'][0]['id'];
-                                        $cotizacion->modelotipo = $model->type->name;
-
-                                        $cotizar = new CotizarAuto($cotizacion, $libreria);
-
-                                        $cotizar->cotizar_planes();
-
-                                        $results = $cotizacion->planes;
-
-                                        $set('planes', $results);
-                                        $set('vehicle_type_id', $model->vehicle_type_id);
-                                        $set('cotizacion', json_decode(json_encode($cotizacion), true));
-                                    })
-                                    ->color('primary')
-                                    ->icon('heroicon-o-calculator'),
-                            ])
-                            ->columnSpanFull(),
-
-                            Repeater::make('planes')
-                                ->hiddenLabel()
-                                ->schema([
-                                    TextInput::make('aseguradora')
-                                        ->label('Aseguradora')
-                                        ->disabled()
-                                        ->dehydrated(false),
-
-                                    TextInput::make('total')
-                                        ->label('Total')
-                                        ->disabled()
-                                        ->dehydrated(false),
-
-                                    TextInput::make('comentario')
-                                        ->label('Comentario')
-                                        ->disabled()
-                                        ->dehydrated(false),
-                                ])
-                                ->columns(3)
-                                ->deletable(false)
-                                ->reorderable(false)
-                                ->addable(false)
-                                ->columnSpanFull(),
-
-                            Hidden::make('cotizacion'),
-                            Hidden::make('vehicle_type_id'),
+//                                Repeater::make('planes')
+//                                    ->hiddenLabel()
+//                                    ->schema([
+//                                        TextInput::make('aseguradora')
+//                                            ->label('Aseguradora')
+//                                            ->disabled()
+//                                            ->dehydrated(false),
+//
+//                                        TextInput::make('total')
+//                                            ->label('Total')
+//                                            ->disabled()
+//                                            ->dehydrated(false),
+//
+//                                        TextInput::make('comentario')
+//                                            ->label('Comentario')
+//                                            ->disabled()
+//                                            ->dehydrated(false),
+//                                    ])
+//                                    ->columns(3)
+//                                    ->deletable(false)
+//                                    ->reorderable(false)
+//                                    ->addable(false)
+//                                    ->columnSpanFull(),
+//
+//                                Hidden::make('cotizacion'),
+//                                Hidden::make('vehicle_type_id'),
                         ])
                         ->columns(),
-                    Wizard\Step::make('Datos del cliente')
-                        ->schema([
-                            TextInput::make('first_name')
-                                ->label('Nombre')
-                                ->required(),
-                            TextInput::make('last_name')
-                                ->label('Apellido')
-                                ->required(),
-                            TextInput::make('identity_number')
-                                ->label('RNC/Cédula')
-                                ->required(),
-                            DatePicker::make('birth_date')
-                                ->required()
-                                ->label('Fecha de Nacimiento'),
-                            TextInput::make('correo')
-                                ->label('Correo Electrónico')
-                                ->email(),
-                            TextInput::make('mobile_phone')
-                                ->label('Tel. Celular')
-                                ->tel()
-                                ->mask('999-999-9999'),
-                            TextInput::make('home_phone')
-                                ->label('Tel. Residencial')
-                                ->tel()
-                                ->mask('999-999-9999'),
-                            TextInput::make('work_phone')
-                                ->label('Tel. Trabajo')
-                                ->tel()
-                                ->mask('999-999-9999'),
-                            TextInput::make('address')
-                                ->label('Dirección')
-                                ->columnSpanFull(),
-                        ])
-                        ->columns(),
-                    Wizard\Step::make('Datos del vehículo')
-                        ->schema([
-                            TextInput::make('chassis')
-                                ->label('Chasis')
-                                ->required(),
-                            TextInput::make('license_plate')
-                                ->label('Placa'),
-                            TextInput::make('color')
-                                ->label('Color'),
-                            Select::make('vehicle_activity_id')
-                                ->label('Actividad del Vehículo')
-                                ->options(VehicleActivity::pluck('name', 'id'))
-                                ->required(),
-                        ])
-                        ->columns(),
+//                    Wizard\Step::make('Datos del cliente')
+//                        ->schema([
+//                            TextInput::make('first_name')
+//                                ->label('Nombre')
+//                                ->required(),
+//                            TextInput::make('last_name')
+//                                ->label('Apellido')
+//                                ->required(),
+//                            TextInput::make('identity_number')
+//                                ->label('RNC/Cédula')
+//                                ->required(),
+//                            DatePicker::make('birth_date')
+//                                ->required()
+//                                ->label('Fecha de Nacimiento'),
+//                            TextInput::make('correo')
+//                                ->label('Correo Electrónico')
+//                                ->email(),
+//                            TextInput::make('mobile_phone')
+//                                ->label('Tel. Celular')
+//                                ->tel()
+//                                ->mask('999-999-9999'),
+//                            TextInput::make('home_phone')
+//                                ->label('Tel. Residencial')
+//                                ->tel()
+//                                ->mask('999-999-9999'),
+//                            TextInput::make('work_phone')
+//                                ->label('Tel. Trabajo')
+//                                ->tel()
+//                                ->mask('999-999-9999'),
+//                            TextInput::make('address')
+//                                ->label('Dirección')
+//                                ->columnSpanFull(),
+//                        ])
+//                        ->columns(),
+//                    Wizard\Step::make('Datos del vehículo')
+//                        ->schema([
+//                            TextInput::make('chassis')
+//                                ->label('Chasis')
+//                                ->required(),
+//                            TextInput::make('license_plate')
+//                                ->label('Placa'),
+//                            TextInput::make('color')
+//                                ->label('Color'),
+//                            Select::make('vehicle_activity_id')
+//                                ->label('Actividad del Vehículo')
+//                                ->options(VehicleActivity::pluck('name', 'id'))
+//                                ->required(),
+//                        ])
+//                        ->columns(),
                 ])
                     ->columnSpanFull(),
             ]);
@@ -261,6 +134,8 @@ class CreateQuoteVehicle extends CreateRecord
 
     protected function handleRecordCreation(array $data): Model
     {
+        dd($data);
+
         $registro = [
             'Subject' => $data['first_name'] . ' ' . $data['last_name'],
             'Valid_Till' => date('Y-m-d', strtotime('+30 days')),
