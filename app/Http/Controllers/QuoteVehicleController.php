@@ -68,8 +68,6 @@ class QuoteVehicleController extends Controller
             'name' => "Cotización No. " . $cotizacion->getFieldValue('Quote_Number'),
         ]);
 
-        $pdf->setPaper('A4');
-
         return $pdf->stream('Cotización No' . $cotizacion->getFieldValue('Quote_Number') . '.pdf');
     }
 }
