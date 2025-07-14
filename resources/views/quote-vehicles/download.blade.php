@@ -222,5 +222,44 @@
     </tr>
 </table>
 
+<table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+    <tr>
+        <td style="padding: 10px;">
+
+            <p>
+                a) Las aseguradoras, al efectuar su proceso de evaluación de riesgo, se reservan el derecho de
+                aceptación del mismo. En caso de que la aseguradora seleccionada decline el riesgo, el cliente
+                será notificado y deberá escoger otra aseguradora que haya presentado cotización.
+            </p>
+
+            <p>
+                b) Las aseguradoras se reservan el derecho para realizar variación de prima y coberturas en esta cotización de seguros
+                suscrita con el cliente.
+            </p>
+
+            <p>
+                c) <b>Exclusión por mora:</b><br>
+                El cliente que presente un atraso de más de 120 días será excluido de la póliza de vehículos.
+                Tras el pago, deberá pasar por una sucursal de Banco Caribe para realizar la re-inspección del
+                vehículo. De no hacerlo, continuará sin cobertura de póliza.
+            </p>
+
+            <p>
+                <b>Vigencia:</b> Por el período del préstamo.
+            </p>
+
+            <p>
+                He leído y estoy de acuerdo en seleccionar la aseguradora: ________________________________
+            </p>
+
+            <p>
+                Al firmar acepta todas las condiciones detalladas en esta cotización de la aseguradora
+                seleccionada.
+            </p>
+
+        </td>
+    </tr>
+</table>
+
 </body>
 </html>
