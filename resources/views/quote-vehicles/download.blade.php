@@ -105,245 +105,119 @@
     </tbody>
 </table>
 
+@php
+    $lineItemsData = [];
+    $tipoVehiculo = $cotizacion->getFieldValue("Tipo_veh_culo");
+    $isVehiculoPesado = preg_match('/\bpesado\b/i', $tipoVehiculo) || $tipoVehiculo === "Camión";
+
+    foreach ($cotizacion->getLineItems() as $lineItem) {
+        if ($lineItem->getNetTotal() > 0) {
+            $product = $libreria->getRecord("Products", $lineItem->getProduct()->getEntityId());
+            $vendor = $libreria->getRecord("Vendors", $product->getFieldValue('Vendor_Name')->getEntityId());
+
+            $lineItemsData[] = [
+                'lineItem' => $lineItem,
+                'product' => $product,
+                'vendor' => $vendor,
+                'vendorName' => $vendor->getFieldValue('Nombre'),
+                'netTotal' => $lineItem->getNetTotal(),
+                'monthlyTotal' => $lineItem->getNetTotal(),
+            ];
+        }
+    }
+
+    $coverageRows = [
+        ['label' => 'Coberturas', 'field' => 'vendorName', 'type' => 'text'],
+        ['label' => 'Lesiones y/o muerte 1 persona', 'field' => 'Lesiones_muerte_1_pers', 'type' => 'number'],
+        ['label' => 'Lesiones y/o muerte mas de 1 persona', 'field' => 'Lesiones_muerte_m_s_1_pers', 'type' => 'number'],
+        ['label' => 'Daños a la propiedad ajena', 'field' => 'Da_os_propiedad_ajena', 'type' => 'number'],
+        ['label' => 'Incendio y/o robo', 'field' => 'Incendio_y_robo', 'type' => 'percentage'],
+        ['label' => 'Colisión y/o vuelco', 'field' => 'Colisi_n_y_vuelco', 'type' => 'percentage'],
+        ['label' => 'Cobertura comprensiva', 'field' => 'Riesgos_comprensivos', 'type' => 'percentage'],
+        ['label' => 'Rotura de cristales', 'field' => 'Rotura_de_cristales_deducible', 'type' => 'text'],
+        ['label' => 'Fianza judicial', 'field' => 'Fianza_judicial', 'type' => 'number'],
+        ['label' => 'Lesiones y/o muerte 1 pasajero', 'field' => 'Lesiones_muerte_1_pas', 'type' => 'number'],
+        ['label' => 'Lesiones y/o muerte mas de 1 pasajero', 'field' => 'Lesiones_muerte_m_s_1_pas', 'type' => 'number'],
+        ['label' => 'Riesgo conductor', 'field' => 'Riesgos_conductor', 'type' => 'number'],
+        ['label' => 'Asistencia en viajes', 'field' => 'Asistencia_vial', 'type' => 'assistance'],
+        ['label' => 'Centro del automovilista (CA)', 'field' => 'En_caso_de_accidente', 'type' => 'included'],
+        ['label' => 'Plan renta', 'field' => 'Renta_veh_culo', 'type' => 'assistance'],
+        ['label' => 'Vida (Cubre el saldo insoluto hasta)', 'field' => 'Vida', 'type' => 'number'],
+        ['label' => 'Últimos gastos', 'field' => 'ltimos_gastos', 'type' => 'number'],
+        ['label' => 'Deducible', 'field' => 'Deducible', 'type' => 'text'],
+        ['label' => 'Cruz Roja Dominicana (CRD)', 'field' => 'Cruz_roja', 'type' => 'included'],
+        ['label' => 'Cobertura Extra', 'field' => 'Cobertura_extra', 'type' => 'optional_number'],
+        ['label' => 'Cobertura Pink', 'field' => 'Cobertura_pink', 'type' => 'optional_number'],
+        ['label' => 'Gastos Medicos', 'field' => 'Gastos_m_dicos', 'type' => 'optional_number'],
+    ];
+@endphp
+
 <table style="width: 100%; border: 1px solid #000; border-collapse: collapse;">
-    <tr>
-        <td style="font-weight: bold;">Coberturas</td>
-        @foreach ($cotizacion->getLineItems() as $lineItem)
-            @if ($lineItem->getNetTotal() > 0)
-                @php
-                    $product = $libreria->getRecord("Products", $lineItem->getProduct()->getEntityId());
-                    $vendor = $libreria->getRecord("Vendors", $product->getFieldValue('Vendor_Name')->getEntityId());
-                @endphp
+    @foreach ($coverageRows as $row)
+        <tr>
+            <td style="font-weight: bold;">{{ $row['label'] }}</td>
+            @foreach ($lineItemsData as $data)
                 <td>
-                    {{ $vendor->getFieldValue('Nombre') }}
-                </td>
-            @endif
-        @endforeach
-    </tr>
-    <tr>
-        <td style="font-weight: bold;">Lesiones y/o muerte 1 persona</td>
-        @foreach ($cotizacion->getLineItems() as $lineItem)
-            @if ($lineItem->getNetTotal() > 0)
-                @php
-                    $product = $libreria->getRecord("Products", $lineItem->getProduct()->getEntityId());
-                @endphp
-                <td>
-                    {{ number_format($product->getFieldValue('Lesiones_muerte_1_pers')) }}
-                </td>
-            @endif
-        @endforeach
-    </tr>
-    <tr>
-        <td style="font-weight: bold;">Lesiones y/o muerte mas de 1 persona</td>
-        @foreach ($cotizacion->getLineItems() as $lineItem)
-            @if ($lineItem->getNetTotal() > 0)
-                @php
-                    $product = $libreria->getRecord("Products", $lineItem->getProduct()->getEntityId());
-                @endphp
-                <td>
-                    {{ number_format($product->getFieldValue('Lesiones_muerte_m_s_1_pers')) }}
-                </td>
-            @endif
-        @endforeach
-    </tr>
-    <tr>
-        <td style="font-weight: bold;">Daños a la propiedad ajena</td>
-        @foreach ($cotizacion->getLineItems() as $lineItem)
-            @if ($lineItem->getNetTotal() > 0)
-                @php
-                    $product = $libreria->getRecord("Products", $lineItem->getProduct()->getEntityId());
-                @endphp
-                <td>
-                    {{ number_format($product->getFieldValue('Da_os_propiedad_ajena')) }}
-                </td>
-            @endif
-        @endforeach
-    </tr>
-    <tr>
-        <td style="font-weight: bold;">Incendio y/o robo</td>
-        @foreach ($cotizacion->getLineItems() as $lineItem)
-            @if ($lineItem->getNetTotal() > 0)
-                @php
-                    $product = $libreria->getRecord("Products", $lineItem->getProduct()->getEntityId());
-                @endphp
-                <td>
-                    {{ $product->getFieldValue('Incendio_y_robo') }}%
-                </td>
-            @endif
-        @endforeach
-    </tr>
-    <tr>
-        <td style="font-weight: bold;">Colisión y/o vuelco</td>
-        @foreach ($cotizacion->getLineItems() as $lineItem)
-            @if ($lineItem->getNetTotal() > 0)
-                @php
-                    $product = $libreria->getRecord("Products", $lineItem->getProduct()->getEntityId());
-                @endphp
-                <td>
-                    {{ $product->getFieldValue('Colisi_n_y_vuelco') }}%
-                </td>
-            @endif
-        @endforeach
-    </tr>
-    <tr>
-        <td style="font-weight: bold;">Cobertura comprensiva</td>
-        @foreach ($cotizacion->getLineItems() as $lineItem)
-            @if ($lineItem->getNetTotal() > 0)
-                @php
-                    $product = $libreria->getRecord("Products", $lineItem->getProduct()->getEntityId());
-                @endphp
-                <td>
-                    {{ $product->getFieldValue('Riesgos_comprensivos') }}%
-                </td>
-            @endif
-        @endforeach
-    </tr>
-    <tr>
-        <td style="font-weight: bold;">Rotura de cristales</td>
-        @foreach ($cotizacion->getLineItems() as $lineItem)
-            @if ($lineItem->getNetTotal() > 0)
-                @php
-                    $product = $libreria->getRecord("Products", $lineItem->getProduct()->getEntityId());
-                @endphp
-                <td>
-                    {{ $product->getFieldValue('Rotura_de_cristales_deducible') }}
-                </td>
-            @endif
-        @endforeach
-    </tr>
-    <tr>
-        <td style="font-weight: bold;">Fianza judicial</td>
-        @foreach ($cotizacion->getLineItems() as $lineItem)
-            @if ($lineItem->getNetTotal() > 0)
-                @php
-                    $product = $libreria->getRecord("Products", $lineItem->getProduct()->getEntityId());
-                @endphp
-                <td>
-                    {{ number_format($product->getFieldValue('Fianza_judicial')) }}
-                </td>
-            @endif
-        @endforeach
-    </tr>
-    <tr>
-        <td style="font-weight: bold;">Lesiones y/o muerte 1 pasajero</td>
-        @foreach ($cotizacion->getLineItems() as $lineItem)
-            @if ($lineItem->getNetTotal() > 0)
-                @php
-                    $product = $libreria->getRecord("Products", $lineItem->getProduct()->getEntityId());
-                @endphp
-                <td>
-                    {{ number_format($product->getFieldValue('Lesiones_muerte_1_pas')) }}
-                </td>
-            @endif
-        @endforeach
-    </tr>
-    <tr>
-        <td style="font-weight: bold;">Lesiones y/o muerte mas de 1 pasajero</td>
-        @foreach ($cotizacion->getLineItems() as $lineItem)
-            @if ($lineItem->getNetTotal() > 0)
-                @php
-                    $product = $libreria->getRecord("Products", $lineItem->getProduct()->getEntityId());
-                @endphp
-                <td>
-                    {{ number_format($product->getFieldValue('Lesiones_muerte_m_s_1_pas')) }}
-                </td>
-            @endif
-        @endforeach
-    </tr>
-    <tr>
-        <td style="font-weight: bold;">Riesgo conductor</td>
-        @foreach ($cotizacion->getLineItems() as $lineItem)
-            @if ($lineItem->getNetTotal() > 0)
-                @php
-                    $product = $libreria->getRecord("Products", $lineItem->getProduct()->getEntityId());
-                @endphp
-                <td>
-                    {{ number_format($product->getFieldValue('Riesgos_conductor')) }}
-                </td>
-            @endif
-        @endforeach
-    </tr>
-    <tr>
-        <td style="font-weight: bold;">Asistencia en viajes</td>
-        @foreach ($cotizacion->getLineItems() as $lineItem)
-            @if ($lineItem->getNetTotal() > 0)
-                @php
-                    $product = $libreria->getRecord("Products", $lineItem->getProduct()->getEntityId());
-                @endphp
-                <td>
-                    @php
-                        if ($product->getFieldValue('Asistencia_vial') == 1) {
-                            $tipoVehiculo = $cotizacion->getFieldValue("Tipo_veh_culo");
+                    @switch($row['type'])
+                        @case('text')
+                            @if ($row['field'] === 'vendorName')
+                                {{ $data['vendorName'] }}
+                            @else
+                                {{ $data['product']->getFieldValue($row['field']) }}
+                            @endif
+                            @break
 
-                            if ($tipoVehiculo) {
-                                if (
-                                    preg_match('/\bpesado\b/i', $tipoVehiculo) ||
-                                    $tipoVehiculo === "Camión"
-                                ) {
-                                    echo 'No incluida';
-                                } else {
-                                    echo 'Incluida';
-                                }
-                            } else {
-                                echo 'No incluida';
-                            }
-                        } else {
-                            echo 'No incluida';
-                        }
-                    @endphp
-                </td>
-            @endif
-        @endforeach
-    </tr>
-    <tr>
-        <td style="font-weight: bold;">Centro del automovilista (CA)</td>
-        @foreach ($cotizacion->getLineItems() as $lineItem)
-            @if ($lineItem->getNetTotal() > 0)
-                @php
-                    $product = $libreria->getRecord("Products", $lineItem->getProduct()->getEntityId());
-                @endphp
-                <td>
-                    @php
-                        if (!empty($product->getFieldValue('En_caso_de_accidente'))) {
-                             echo 'Incluida';
-                        } else {
-                            echo 'No incluida';
-                        }
-                    @endphp
-                </td>
-            @endif
-        @endforeach
-    </tr>
-    <tr>
-        <td style="font-weight: bold;">Plan renta</td>
-        @foreach ($cotizacion->getLineItems() as $lineItem)
-            @if ($lineItem->getNetTotal() > 0)
-                @php
-                    $product = $libreria->getRecord("Products", $lineItem->getProduct()->getEntityId());
-                @endphp
-                <td>
-                    @php
-                        if ($product->getFieldValue('Renta_veh_culo') == 1) {
-                            $tipoVehiculo = $cotizacion->getFieldValue("Tipo_veh_culo");
+                        @case('number')
+                            {{ number_format($data['product']->getFieldValue($row['field'])) }}
+                            @break
 
-                            if ($tipoVehiculo) {
-                                if (
-                                    preg_match('/\bpesado\b/i', $tipoVehiculo) ||
-                                    $tipoVehiculo === "Camión"
-                                ) {
-                                    echo 'No incluida';
-                                } else {
-                                    echo 'Incluida';
-                                }
-                            } else {
-                                echo 'No incluida';
-                            }
-                        } else {
-                            echo 'No incluida';
-                        }
-                    @endphp
+                        @case('percentage')
+                            {{ $data['product']->getFieldValue($row['field']) }}%
+                            @break
+
+                        @case('assistance')
+                            @if ($data['product']->getFieldValue($row['field']) == 1)
+                                {{ $isVehiculoPesado ? 'No incluida' : 'Incluida' }}
+                            @else
+                                No incluida
+                            @endif
+                            @break
+
+                        @case('included')
+                            {{ !empty($data['product']->getFieldValue($row['field'])) ? 'Incluida' : 'No incluida' }}
+                            @break
+
+                        @case('optional_number')
+                            @if (!empty($data['product']->getFieldValue($row['field'])))
+                                {{ number_format($data['product']->getFieldValue($row['field'])) }}
+                            @else
+                                No incluida
+                            @endif
+                            @break
+                    @endswitch
                 </td>
-            @endif
+            @endforeach
+        </tr>
+    @endforeach
+
+    <tr>
+        <td style="font-weight: bold;">PRIMAS PROPUESTAS</td>
+        @foreach ($lineItemsData as $data)
+            <td>&nbsp;</td>
+        @endforeach
+    </tr>
+
+    <tr>
+        <td style="font-weight: bold;">&nbsp;</td>
+        @foreach ($lineItemsData as $data)
+            <td style="font-weight: bold;">{{ $data['vendorName'] }}</td>
+        @endforeach
+    </tr>
+
+    <tr>
+        <td style="font-weight: bold;">Prima {{ $cotizacion->getFieldValue('Tipo_de_pago') }}</td>
+        @foreach ($lineItemsData as $data)
+            <td>{{ number_format($data['monthlyTotal'], 2) }}</td>
         @endforeach
     </tr>
 </table>
