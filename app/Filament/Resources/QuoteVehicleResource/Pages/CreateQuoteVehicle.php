@@ -251,6 +251,7 @@ class CreateQuoteVehicle extends CreateRecord
                             Select::make('vehicle_activity_id')
                                 ->label('Actividad del Vehículo')
                                 ->options(VehicleActivity::pluck('name', 'id'))
+                                ->default(1)
                                 ->required(),
                         ])
                         ->columns(),
