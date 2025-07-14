@@ -45,6 +45,19 @@
 </head>
 <body>
 
+@php
+    $logoPath = public_path('img/logo.png');
+    $logoBase64 = '';
+    if (file_exists($logoPath)) {
+        $logoData = base64_encode(file_get_contents($logoPath));
+        $logoMime = mime_content_type($logoPath);
+        $logoBase64 = 'data:' . $logoMime . ';base64,' . $logoData;
+    }
+@endphp
+@if($logoBase64)
+    <img src="{{ $logoBase64 }}" width="70" height="70" alt="">
+@endif
+
 <h3 style="text-align:center;">COTIZACIÓN DE SEGUROS</h3>
 
 <table>
@@ -67,7 +80,7 @@
     </tr>
     <tr>
         <td style="text-align:left; font-weight: bold;">Dirección:</td>
-        <td style="text-align:left;"><p>{{ $cotizacion->getFieldValue('Direcci_n') }}</p></td>
+        <td style="text-align:left;"><p style="font-size: 8px">{{ $cotizacion->getFieldValue('Direcci_n') }}</p></td>
         <td style="text-align:center; font-weight: bold;">Uso:</td>
         <td style="text-align:center;">{{ $cotizacion->getFieldValue('Uso') }}</td>
         <td style="text-align:right; font-weight: bold;">Teléfono:</td>
@@ -107,26 +120,45 @@
             @endif
         @endforeach
     </tr>
-{{--    <tr>--}}
-{{--        <td style="font-weight: bold;">Prima Neta</td>--}}
-{{--        @foreach ($cotizacion->getLineItems() as $lineItem)--}}
-{{--            @if ($lineItem->getNetTotal() > 0)--}}
-{{--                <td>--}}
-{{--                    RD$ {{ number_format($lineItem->getNetTotal() / 1.16, 2) }}--}}
-{{--                </td>--}}
-{{--            @endif--}}
-{{--        @endforeach--}}
-{{--    </tr>--}}
-{{--    <tr>--}}
-{{--        <td style="font-weight: bold;">Prima Total</td>--}}
-{{--        @foreach ($cotizacion->getLineItems() as $lineItem)--}}
-{{--            @if ($lineItem->getNetTotal() > 0)--}}
-{{--                <td>--}}
-{{--                    RD$ {{ number_format($lineItem->getNetTotal(), 2) }}--}}
-{{--                </td>--}}
-{{--            @endif--}}
-{{--        @endforeach--}}
-{{--    </tr>--}}
+    <tr>
+        <td style="font-weight: bold;">Lesiones y/o muerte 1 persona</td>
+        @foreach ($cotizacion->getLineItems() as $lineItem)
+            @if ($lineItem->getNetTotal() > 0)
+                @php
+                    $product = $libreria->getRecord("Products", $lineItem->getProduct()->getEntityId());
+                @endphp
+                <td>
+                    {{ number_format($product->getFieldValue('Lesiones_muerte_1_pers')) }}
+                </td>
+            @endif
+        @endforeach
+    </tr>
+    <tr>
+        <td style="font-weight: bold;">Lesiones y/o muerte mas de 1 persona</td>
+        @foreach ($cotizacion->getLineItems() as $lineItem)
+            @if ($lineItem->getNetTotal() > 0)
+                @php
+                    $product = $libreria->getRecord("Products", $lineItem->getProduct()->getEntityId());
+                @endphp
+                <td>
+                    {{ number_format($product->getFieldValue('Lesiones_muerte_m_s_1_pers')) }}
+                </td>
+            @endif
+        @endforeach
+    </tr>
+    <tr>
+        <td style="font-weight: bold;">Daños a la propiedad ajena</td>
+        @foreach ($cotizacion->getLineItems() as $lineItem)
+            @if ($lineItem->getNetTotal() > 0)
+                @php
+                    $product = $libreria->getRecord("Products", $lineItem->getProduct()->getEntityId());
+                @endphp
+                <td>
+                    {{ number_format($product->getFieldValue('Da_os_propiedad_ajena')) }}
+                </td>
+            @endif
+        @endforeach
+    </tr>
 </table>
 </body>
 </html>
