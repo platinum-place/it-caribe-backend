@@ -20,7 +20,7 @@ class ViewQuoteVehicle extends ViewRecord
             Actions\EditAction::make(),
             Actions\Action::make('download')
                 ->translateLabel()
-                ->url(route('filament.resources.estimate.download', ['id' => $this->record->quote->id_crm]))
+                ->url(route('filament.quote-vehicles.download', ['quote_vehicle' => $this->record]))
                 ->openUrlInNewTab(),
         ];
     }
