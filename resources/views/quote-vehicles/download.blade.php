@@ -159,6 +159,19 @@
             @endif
         @endforeach
     </tr>
+    <tr>
+        <td style="font-weight: bold;">Incendio y/o robo</td>
+        @foreach ($cotizacion->getLineItems() as $lineItem)
+            @if ($lineItem->getNetTotal() > 0)
+                @php
+                    $product = $libreria->getRecord("Products", $lineItem->getProduct()->getEntityId());
+                @endphp
+                <td>
+                    {{ $product->getFieldValue('Incendio_y_robo') }}%
+                </td>
+            @endif
+        @endforeach
+    </tr>
 </table>
 </body>
 </html>
