@@ -295,6 +295,57 @@
             @endif
         @endforeach
     </tr>
+    <tr>
+        <td style="font-weight: bold;">Centro del automovilista (CA)</td>
+        @foreach ($cotizacion->getLineItems() as $lineItem)
+            @if ($lineItem->getNetTotal() > 0)
+                @php
+                    $product = $libreria->getRecord("Products", $lineItem->getProduct()->getEntityId());
+                @endphp
+                <td>
+                    @php
+                        if (!empty($product->getFieldValue('En_caso_de_accidente'))) {
+                             echo 'Incluida';
+                        } else {
+                            echo 'No incluida';
+                        }
+                    @endphp
+                </td>
+            @endif
+        @endforeach
+    </tr>
+    <tr>
+        <td style="font-weight: bold;">Plan renta</td>
+        @foreach ($cotizacion->getLineItems() as $lineItem)
+            @if ($lineItem->getNetTotal() > 0)
+                @php
+                    $product = $libreria->getRecord("Products", $lineItem->getProduct()->getEntityId());
+                @endphp
+                <td>
+                    @php
+                        if ($product->getFieldValue('Renta_veh_culo') == 1) {
+                            $tipoVehiculo = $cotizacion->getFieldValue("Tipo_veh_culo");
+
+                            if ($tipoVehiculo) {
+                                if (
+                                    preg_match('/\bpesado\b/i', $tipoVehiculo) ||
+                                    $tipoVehiculo === "Camión"
+                                ) {
+                                    echo 'No incluida';
+                                } else {
+                                    echo 'Incluida';
+                                }
+                            } else {
+                                echo 'No incluida';
+                            }
+                        } else {
+                            echo 'No incluida';
+                        }
+                    @endphp
+                </td>
+            @endif
+        @endforeach
+    </tr>
 </table>
 
 </body>
