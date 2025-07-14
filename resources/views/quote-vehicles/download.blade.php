@@ -172,6 +172,130 @@
             @endif
         @endforeach
     </tr>
+    <tr>
+        <td style="font-weight: bold;">Colisión y/o vuelco</td>
+        @foreach ($cotizacion->getLineItems() as $lineItem)
+            @if ($lineItem->getNetTotal() > 0)
+                @php
+                    $product = $libreria->getRecord("Products", $lineItem->getProduct()->getEntityId());
+                @endphp
+                <td>
+                    {{ $product->getFieldValue('Colisi_n_y_vuelco') }}%
+                </td>
+            @endif
+        @endforeach
+    </tr>
+    <tr>
+        <td style="font-weight: bold;">Cobertura comprensiva</td>
+        @foreach ($cotizacion->getLineItems() as $lineItem)
+            @if ($lineItem->getNetTotal() > 0)
+                @php
+                    $product = $libreria->getRecord("Products", $lineItem->getProduct()->getEntityId());
+                @endphp
+                <td>
+                    {{ $product->getFieldValue('Riesgos_comprensivos') }}%
+                </td>
+            @endif
+        @endforeach
+    </tr>
+    <tr>
+        <td style="font-weight: bold;">Rotura de cristales</td>
+        @foreach ($cotizacion->getLineItems() as $lineItem)
+            @if ($lineItem->getNetTotal() > 0)
+                @php
+                    $product = $libreria->getRecord("Products", $lineItem->getProduct()->getEntityId());
+                @endphp
+                <td>
+                    {{ $product->getFieldValue('Rotura_de_cristales_deducible') }}
+                </td>
+            @endif
+        @endforeach
+    </tr>
+    <tr>
+        <td style="font-weight: bold;">Fianza judicial</td>
+        @foreach ($cotizacion->getLineItems() as $lineItem)
+            @if ($lineItem->getNetTotal() > 0)
+                @php
+                    $product = $libreria->getRecord("Products", $lineItem->getProduct()->getEntityId());
+                @endphp
+                <td>
+                    {{ number_format($product->getFieldValue('Fianza_judicial')) }}
+                </td>
+            @endif
+        @endforeach
+    </tr>
+    <tr>
+        <td style="font-weight: bold;">Lesiones y/o muerte 1 pasajero</td>
+        @foreach ($cotizacion->getLineItems() as $lineItem)
+            @if ($lineItem->getNetTotal() > 0)
+                @php
+                    $product = $libreria->getRecord("Products", $lineItem->getProduct()->getEntityId());
+                @endphp
+                <td>
+                    {{ number_format($product->getFieldValue('Lesiones_muerte_1_pas')) }}
+                </td>
+            @endif
+        @endforeach
+    </tr>
+    <tr>
+        <td style="font-weight: bold;">Lesiones y/o muerte mas de 1 pasajero</td>
+        @foreach ($cotizacion->getLineItems() as $lineItem)
+            @if ($lineItem->getNetTotal() > 0)
+                @php
+                    $product = $libreria->getRecord("Products", $lineItem->getProduct()->getEntityId());
+                @endphp
+                <td>
+                    {{ number_format($product->getFieldValue('Lesiones_muerte_m_s_1_pas')) }}
+                </td>
+            @endif
+        @endforeach
+    </tr>
+    <tr>
+        <td style="font-weight: bold;">Riesgo conductor</td>
+        @foreach ($cotizacion->getLineItems() as $lineItem)
+            @if ($lineItem->getNetTotal() > 0)
+                @php
+                    $product = $libreria->getRecord("Products", $lineItem->getProduct()->getEntityId());
+                @endphp
+                <td>
+                    {{ number_format($product->getFieldValue('Riesgos_conductor')) }}
+                </td>
+            @endif
+        @endforeach
+    </tr>
+    <tr>
+        <td style="font-weight: bold;">Asistencia en viajes</td>
+        @foreach ($cotizacion->getLineItems() as $lineItem)
+            @if ($lineItem->getNetTotal() > 0)
+                @php
+                    $product = $libreria->getRecord("Products", $lineItem->getProduct()->getEntityId());
+                @endphp
+                <td>
+                    @php
+                        if ($product->getFieldValue('Asistencia_vial') == 1) {
+                            $tipoVehiculo = $cotizacion->getFieldValue("Tipo_veh_culo");
+
+                            if ($tipoVehiculo) {
+                                if (
+                                    preg_match('/\bpesado\b/i', $tipoVehiculo) ||
+                                    $tipoVehiculo === "Camión"
+                                ) {
+                                    echo 'No incluida';
+                                } else {
+                                    echo 'Incluida';
+                                }
+                            } else {
+                                echo 'No incluida';
+                            }
+                        } else {
+                            echo 'No incluida';
+                        }
+                    @endphp
+                </td>
+            @endif
+        @endforeach
+    </tr>
 </table>
+
 </body>
 </html>
