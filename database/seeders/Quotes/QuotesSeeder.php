@@ -2,9 +2,6 @@
 
 namespace Database\Seeders\Quotes;
 
-use Database\Seeders\AdminUserSeeder;
-use Database\Seeders\RoleSeeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class QuotesSeeder extends Seeder

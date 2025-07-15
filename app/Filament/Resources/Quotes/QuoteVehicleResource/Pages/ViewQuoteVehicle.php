@@ -2,10 +2,8 @@
 
 namespace App\Filament\Resources\Quotes\QuoteVehicleResource\Pages;
 
-use App\Filament\Resources\QuoteResource;
 use App\Filament\Resources\Quotes\QuoteVehicleResource;
 use Filament\Actions;
-use Filament\Actions\Action;
 use Filament\Resources\Pages\ViewRecord;
 
 class ViewQuoteVehicle extends ViewRecord

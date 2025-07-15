@@ -246,9 +246,9 @@ class CotizarAuto extends Cotizar
             $this->cotizacion->planes[] = [
                 'aseguradora' => $cobertura->getFieldValue('Product_Name'),
                 'planid' => $cobertura->getEntityId(),
-                'prima' => round($prima - ($prima * 0.16),2),
-                'neta' => round($prima * 0.16,2),
-                'total' => round($prima,2),
+                'prima' => round($prima - ($prima * 0.16), 2),
+                'neta' => round($prima * 0.16, 2),
+                'total' => round($prima, 2),
                 'suma' => $this->cotizacion->suma,
                 'plan' => $cobertura->getFieldValue('Plan'),
                 'comentario' => $comentario,

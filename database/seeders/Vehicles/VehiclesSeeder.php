@@ -2,9 +2,6 @@
 
 namespace Database\Seeders\Vehicles;
 
-use Database\Seeders\Quotes\QuoteStatusSeeder;
-use Database\Seeders\Quotes\QuoteTypeSeeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class VehiclesSeeder extends Seeder

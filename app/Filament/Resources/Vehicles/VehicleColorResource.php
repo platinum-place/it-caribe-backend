@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\Vehicles;
 
 use App\Filament\Resources\Vehicles\VehicleColorResource\Pages;
-use App\Filament\Resources\Vehicles\VehicleColorResource\RelationManagers;
 use App\Models\Vehicles\VehicleColor;
 use Filament\Forms;
 use Filament\Forms\Form;

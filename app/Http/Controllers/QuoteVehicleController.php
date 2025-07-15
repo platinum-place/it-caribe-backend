@@ -55,19 +55,19 @@ class QuoteVehicleController extends Controller
         // obtener datos de la cotizacion
         $cotizacion = $libreria->getRecord('Quotes', $quoteVehicle->quote->id_crm);
 
-//        return view('quote-vehicles.download', [
-//            'quoteVehicle' => $quoteVehicle,
-//            'cotizacion' => $cotizacion,
-//            'libreria' => $libreria,
-//        ]);
+        //        return view('quote-vehicles.download', [
+        //            'quoteVehicle' => $quoteVehicle,
+        //            'cotizacion' => $cotizacion,
+        //            'libreria' => $libreria,
+        //        ]);
 
         $pdf = Pdf::loadView('quote-vehicles.download', [
             'quoteVehicle' => $quoteVehicle,
             'cotizacion' => $cotizacion,
             'libreria' => $libreria,
-            'name' => "Cotización No. " . $cotizacion->getFieldValue('Quote_Number'),
+            'name' => 'Cotización No. '.$cotizacion->getFieldValue('Quote_Number'),
         ]);
 
-        return $pdf->stream('Cotización No' . $cotizacion->getFieldValue('Quote_Number') . '.pdf');
+        return $pdf->stream('Cotización No'.$cotizacion->getFieldValue('Quote_Number').'.pdf');
     }
 }

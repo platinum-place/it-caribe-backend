@@ -27,7 +27,7 @@ class MakeAndModelForm
                     ->label('Modelo')
                     ->options(function (Get $get) {
                         $makeId = $get('vehicle_make_id');
-                        if (!$makeId) {
+                        if (! $makeId) {
                             return [];
                         }
 
@@ -35,7 +35,7 @@ class MakeAndModelForm
                             ->where('vehicle_make_id', $makeId)
                             ->get()
                             ->mapWithKeys(function ($model) {
-                                $label = $model->name . ($model->type ? ' (' . $model->type->name . ')' : '');
+                                $label = $model->name.($model->type ? ' ('.$model->type->name.')' : '');
 
                                 return [$model->id => $label];
                             });
@@ -43,7 +43,7 @@ class MakeAndModelForm
                     ->searchable()
                     ->required()
                     ->placeholder('Selecciona un modelo')
-                    ->disabled(fn(Get $get) => !$get('vehicle_make_id')),
+                    ->disabled(fn (Get $get) => ! $get('vehicle_make_id')),
             ]);
     }
 }

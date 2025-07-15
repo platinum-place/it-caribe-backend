@@ -4,7 +4,6 @@ namespace App\Filament\Resources\Quotes\QuoteVehicleResource\Pages;
 
 use App\Enums\Quotes\QuoteStatus;
 use App\Enums\Quotes\QuoteType;
-use App\Filament\Resources\Components\Forms\Vehicles\MakeAndModelForm;
 use App\Filament\Resources\Quotes\QuoteVehicleResource;
 use App\Helpers\Cotizacion;
 use App\Helpers\Cotizaciones;
@@ -65,10 +64,10 @@ class CreateQuoteVehicle extends CreateRecord
 
                                         $model = VehicleModel::find($get('vehicle_model_id'));
 
-                                        $criteria = 'Name:equals:' . VehicleMake::find($get('vehicle_make_id'))->name;
+                                        $criteria = 'Name:equals:'.VehicleMake::find($get('vehicle_make_id'))->name;
                                         $vehicleMake = app(ZohoCRMService::class)->searchRecords('Marcas', $criteria);
 
-                                        $criteria = 'Name:equals:' . $model->name;
+                                        $criteria = 'Name:equals:'.$model->name;
                                         $vehicleModel = app(ZohoCRMService::class)->searchRecords('Modelos', $criteria);
 
                                         $cotizacion->marcaid = $vehicleMake['data'][0]['id'];
@@ -175,7 +174,7 @@ class CreateQuoteVehicle extends CreateRecord
     protected function handleRecordCreation(array $data): Model
     {
         $registro = [
-            'Subject' => $data['first_name'] . ' ' . $data['last_name'],
+            'Subject' => $data['first_name'].' '.$data['last_name'],
             'Valid_Till' => date('Y-m-d', strtotime('+30 days')),
             'Vigencia_desde' => date('Y-m-d'),
             'Account_Name' => 3222373000092390001,
@@ -218,7 +217,7 @@ class CreateQuoteVehicle extends CreateRecord
             // Más datos de cotización
             'Condiciones' => $data['cotizacion']['estado'] ?? null,
             'Tipo_equipo' => $data['cotizacion']['tipo_equipo'] ?? null,
-            'Salvamento' => (bool)($data['cotizacion']['salvamento'] ?? false),
+            'Salvamento' => (bool) ($data['cotizacion']['salvamento'] ?? false),
             'Tipo_de_pago' => $data['cotizacion']['tipo_pago'] ?? null,
         ];
 
@@ -232,7 +231,7 @@ class CreateQuoteVehicle extends CreateRecord
                 'start_date' => now(),
                 'end_date' => now()->addDays(30),
                 'id_crm' => $id,
-                'customer_id' => Customer::create($data)->id
+                'customer_id' => Customer::create($data)->id,
             ]);
 
             $data['vehicle_id'] = Vehicle::create($data)->id;

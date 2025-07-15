@@ -13,7 +13,7 @@ class QuoteLine extends Model
     protected $fillable = [
         'name', 'quote_id', 'unit_price',
         'quantity', 'subtotal', 'tax_rate',
-        'tax_amount', 'total','amount_taxed'
+        'tax_amount', 'total', 'amount_taxed',
     ];
 
     public function quote(): BelongsTo

@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\Vehicles;
 
 use App\Filament\Resources\Vehicles\VehicleTypeResource\Pages;
-use App\Filament\Resources\Vehicles\VehicleTypeResource\RelationManagers;
 use App\Models\Vehicles\VehicleType;
 use Filament\Forms;
 use Filament\Forms\Form;

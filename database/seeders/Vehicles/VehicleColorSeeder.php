@@ -2,9 +2,7 @@
 
 namespace Database\Seeders\Vehicles;
 
-use App\Models\Vehicles\VehicleActivity;
 use App\Models\Vehicles\VehicleColor;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class VehicleColorSeeder extends Seeder
