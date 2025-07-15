@@ -108,6 +108,7 @@ class QuoteVehicleResource extends Resource
             'create' => QuoteVehicleResource\Pages\CreateQuoteVehicle::route('/create'),
             'view' => QuoteVehicleResource\Pages\ViewQuoteVehicle::route('/{record}'),
             'edit' => QuoteVehicleResource\Pages\EditQuoteVehicle::route('/{record}/edit'),
+            'emit' => QuoteVehicleResource\Pages\EmitQuoteVehicle::route('/{record}/emit'),
         ];
     }
 

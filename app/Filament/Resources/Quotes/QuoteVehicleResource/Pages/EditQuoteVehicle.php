@@ -4,9 +4,9 @@ namespace App\Filament\Resources\Quotes\QuoteVehicleResource\Pages;
 
 use App\Filament\Resources\Quotes\QuoteVehicleResource;
 use Filament\Actions;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Form;
 use Filament\Resources\Pages\EditRecord;
-use Filament\Forms\Components\FileUpload;
 
 class EditQuoteVehicle extends EditRecord
 {
@@ -28,7 +28,7 @@ class EditQuoteVehicle extends EditRecord
                 FileUpload::make('attachments')
                     ->translateLabel()
                     ->disk('local')
-                    ->directory(fn() => 'quote-vehicles' . '/' . $this->record->id)
+                    ->directory(fn () => 'quote-vehicles'.'/'.$this->record->id)
                     ->visibility('private')
                     ->multiple()
                     ->maxParallelUploads(1)
@@ -55,7 +55,7 @@ class EditQuoteVehicle extends EditRecord
         $attachments = $this->data['attachments'] ?? [];
 
         $this->record->quote->update([
-            'attachments' => $attachments
+            'attachments' => $attachments,
         ]);
     }
 }

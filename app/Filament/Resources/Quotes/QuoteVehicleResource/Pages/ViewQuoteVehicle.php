@@ -18,6 +18,9 @@ class ViewQuoteVehicle extends ViewRecord
                 ->translateLabel()
                 ->url(route('filament.quote-vehicles.download', ['quote_vehicle' => $this->record]))
                 ->openUrlInNewTab(),
+            Actions\Action::make('emit')
+                ->translateLabel()
+                ->url(route('filament.admin.resources.quotes.quote-vehicles.emit', ['record' => $this->record])),
         ];
     }
 }
