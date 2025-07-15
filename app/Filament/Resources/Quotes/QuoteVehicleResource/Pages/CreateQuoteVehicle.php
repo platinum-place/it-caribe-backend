@@ -229,7 +229,7 @@ class CreateQuoteVehicle extends CreateRecord
 
         $crm = $libreria->getRecord('Quotes', $id);
 
-        return DB::transaction(function () use ($id,$crm, $data) {
+        return DB::transaction(function () use ($id, $crm, $data) {
             $customer = Customer::create([
                 'first_name' => $data['first_name'],
                 'last_name' => $data['last_name'],
@@ -259,7 +259,7 @@ class CreateQuoteVehicle extends CreateRecord
             ]);
             $quoteVehicle = QuoteVehicle::create([
                 'quote_id' => $quote->id,
-                'vehicle_id' => $data['vehicle_id'],
+                'vehicle_id' => $vehicle->id,
                 'vehicle_make_id' => $data['vehicle_make_id'],
                 'vehicle_year' => $data['vehicle_year'],
                 'vehicle_model_id' => $data['vehicle_model_id'],
@@ -269,7 +269,7 @@ class CreateQuoteVehicle extends CreateRecord
                 'vehicle_amount' => $data['vehicle_amount'],
             ]);
 
-            foreach ($crm->getLineItems() as $lineItem){
+            foreach ($crm->getLineItems() as $lineItem) {
                 $quoteLine = QuoteLine::create([
                     'name' => $lineItem->getProduct()->getLookupLabel(),
                     'unit_price' => $lineItem->getNetTotal(),
@@ -278,9 +278,9 @@ class CreateQuoteVehicle extends CreateRecord
                     'amount_taxed' => $lineItem->getNetTotal() / 1.16,
                     'tax_rate' => 16,
                     'tax_amount' => ($lineItem->getNetTotal() - $lineItem->getNetTotal()) / 1.16,
-                    'total' =>$lineItem->getNetTotal(),
+                    'total' => $lineItem->getNetTotal(),
                     'quote_id' => $quote->id,
-                   'id_crm' => ['data'][0]['id'],
+                    'id_crm' => $lineItem->getProduct()->getEntityId(),
                     'quote_line_status_id' => QuoteLineStatus::NOT_ACCEPTED->value,
                 ]);
                 $quoteVehicleLine = QuoteVehicleLine::create([

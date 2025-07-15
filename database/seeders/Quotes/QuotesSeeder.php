@@ -14,6 +14,7 @@ class QuotesSeeder extends Seeder
         $this->call([
             QuoteTypeSeeder::class,
             QuoteStatusSeeder::class,
+            QuoteLineStatusSeeder::class,
         ]);
     }
 }
