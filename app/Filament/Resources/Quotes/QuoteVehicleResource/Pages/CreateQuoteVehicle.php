@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Quotes\QuoteVehicleResource\Pages;
 
+use App\Enums\Quotes\QuoteLineStatus;
 use App\Enums\Quotes\QuoteStatus;
 use App\Enums\Quotes\QuoteType;
 use App\Filament\Resources\Quotes\QuoteVehicleResource;
@@ -11,6 +12,9 @@ use App\Helpers\CotizarAuto;
 use App\Helpers\Zoho;
 use App\Models\Customer;
 use App\Models\Quotes\Quote;
+use App\Models\Quotes\QuoteLine;
+use App\Models\Quotes\QuoteVehicle;
+use App\Models\Quotes\QuoteVehicleLine;
 use App\Models\Vehicles\Vehicle;
 use App\Models\Vehicles\VehicleActivity;
 use App\Models\Vehicles\VehicleMake;
@@ -56,7 +60,7 @@ class CreateQuoteVehicle extends CreateRecord
                                         $cotizacion->suma = $get('vehicle_amount');
 
                                         $cotizacion->plan = $get('plan');
-                                        $cotizacion->ano = $get('year');
+                                        $cotizacion->ano = $get('vehicle_year');
                                         $cotizacion->uso = VehicleUse::find($get('vehicle_use_id'))->description;
                                         $cotizacion->estado = $get('estado');
                                         $cotizacion->tipo_pago = $get('tipo');
@@ -64,10 +68,10 @@ class CreateQuoteVehicle extends CreateRecord
 
                                         $model = VehicleModel::find($get('vehicle_model_id'));
 
-                                        $criteria = 'Name:equals:'.VehicleMake::find($get('vehicle_make_id'))->name;
+                                        $criteria = 'Name:equals:' . VehicleMake::find($get('vehicle_make_id'))->name;
                                         $vehicleMake = app(ZohoCRMService::class)->searchRecords('Marcas', $criteria);
 
-                                        $criteria = 'Name:equals:'.$model->name;
+                                        $criteria = 'Name:equals:' . $model->name;
                                         $vehicleModel = app(ZohoCRMService::class)->searchRecords('Modelos', $criteria);
 
                                         $cotizacion->marcaid = $vehicleMake['data'][0]['id'];
@@ -162,8 +166,7 @@ class CreateQuoteVehicle extends CreateRecord
                                 ->label('Color'),
                             Select::make('vehicle_activity_id')
                                 ->label('Actividad del Vehículo')
-                                ->options(VehicleActivity::pluck('name', 'id'))
-                                ->required(),
+                                ->options(VehicleActivity::pluck('name', 'id')),
                         ])
                         ->columns(),
                 ])
@@ -174,7 +177,7 @@ class CreateQuoteVehicle extends CreateRecord
     protected function handleRecordCreation(array $data): Model
     {
         $registro = [
-            'Subject' => $data['first_name'].' '.$data['last_name'],
+            'Subject' => $data['first_name'] . ' ' . $data['last_name'],
             'Valid_Till' => date('Y-m-d', strtotime('+30 days')),
             'Vigencia_desde' => date('Y-m-d'),
             'Account_Name' => 3222373000092390001,
@@ -217,51 +220,75 @@ class CreateQuoteVehicle extends CreateRecord
             // Más datos de cotización
             'Condiciones' => $data['cotizacion']['estado'] ?? null,
             'Tipo_equipo' => $data['cotizacion']['tipo_equipo'] ?? null,
-            'Salvamento' => (bool) ($data['cotizacion']['salvamento'] ?? false),
+            'Salvamento' => (bool)($data['cotizacion']['salvamento'] ?? false),
             'Tipo_de_pago' => $data['cotizacion']['tipo_pago'] ?? null,
         ];
 
         $libreria = new Zoho;
         $id = $libreria->createRecords('Quotes', $registro, $data['cotizacion']['planes']);
 
-        return DB::transaction(function () use ($id, $data) {
+        $crm = $libreria->getRecord('Quotes', $id);
+
+        return DB::transaction(function () use ($id,$crm, $data) {
+            $customer = Customer::create([
+                'first_name' => $data['first_name'],
+                'last_name' => $data['last_name'],
+                'identity_number' => $data['identity_number'],
+                'birth_date' => $data['birth_date'] ?? null,
+                'home_phone' => $data['home_phone'] ?? null,
+                'mobile_phone' => $data['mobile_phone'] ?? null,
+                'work_phone' => $data['work_phone'] ?? null,
+                'email' => $data['email'] ?? null,
+                'address' => $data['address'] ?? null,
+            ]);
+            $vehicle = Vehicle::create([
+                'vehicle_year' => $data['vehicle_year'],
+                'chassis' => $data['chassis'],
+                'license_plate' => $data['license_plate'],
+                'vehicle_make_id' => $data['vehicle_make_id'],
+                'vehicle_model_id' => $data['vehicle_model_id'],
+                'vehicle_type_id' => $data['vehicle_type_id'],
+            ]);
             $quote = Quote::create([
                 'quote_type_id' => QuoteType::VEHICLE->value,
                 'quote_status_id' => QuoteStatus::PENDING->value,
                 'start_date' => now(),
                 'end_date' => now()->addDays(30),
                 'id_crm' => $id,
-                'customer_id' => Customer::create($data)->id,
+                'customer_id' => $customer->id,
+            ]);
+            $quoteVehicle = QuoteVehicle::create([
+                'quote_id' => $quote->id,
+                'vehicle_id' => $data['vehicle_id'],
+                'vehicle_make_id' => $data['vehicle_make_id'],
+                'vehicle_year' => $data['vehicle_year'],
+                'vehicle_model_id' => $data['vehicle_model_id'],
+                'vehicle_type_id' => $data['vehicle_type_id'],
+                'vehicle_use_id' => $data['vehicle_use_id'],
+                'vehicle_activity_id' => $data['vehicle_activity_id'],
+                'vehicle_amount' => $data['vehicle_amount'],
             ]);
 
-            $data['vehicle_id'] = Vehicle::create($data)->id;
-            $quoteVehicle = $quote->quoteVehicle()->create($data);
-
-            foreach ($data['cotizacion']['planes'] as $plan) {
-                $quote->lines()->create([
-                    'name' => $plan['aseguradora'],
-                    'unit_price' => $plan['prima'],
+            foreach ($crm->getLineItems() as $lineItem){
+                $quoteLine = QuoteLine::create([
+                    'name' => $lineItem->getProduct()->getLookupLabel(),
+                    'unit_price' => $lineItem->getNetTotal(),
                     'quantity' => 1,
-                    'subtotal' => $plan['prima'],
-                    'amount_taxed' => $plan['prima'],
+                    'subtotal' => $lineItem->getNetTotal(),
+                    'amount_taxed' => $lineItem->getNetTotal() / 1.16,
                     'tax_rate' => 16,
-                    'tax_amount' => $plan['neta'],
-                    'total' => $plan['total'],
+                    'tax_amount' => ($lineItem->getNetTotal() - $lineItem->getNetTotal()) / 1.16,
+                    'total' =>$lineItem->getNetTotal(),
+                    'quote_id' => $quote->id,
+                   'id_crm' => ['data'][0]['id'],
+                    'quote_line_status_id' => QuoteLineStatus::NOT_ACCEPTED->value,
                 ]);
-
-                $quoteVehicle->lines()->create([
-                    'name' => $plan['aseguradora'],
-                    'unit_price' => $plan['prima'],
-                    'quantity' => 1,
-                    'subtotal' => $plan['prima'],
-                    'amount_taxed' => $plan['prima'],
-                    'tax_rate' => 16,
-                    'tax_amount' => $plan['neta'],
-                    'total' => $plan['total'],
+                $quoteVehicleLine = QuoteVehicleLine::create([
+                    'quote_vehicle_id' => $quoteVehicle->id,
+                    'quote_line_id' => $quoteLine->id,
                     'life_amount' => 220,
                 ]);
             }
-
             return $quoteVehicle;
         });
     }
