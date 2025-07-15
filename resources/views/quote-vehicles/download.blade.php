@@ -96,7 +96,7 @@
     </tr>
     <tr>
         <td style="text-align:left; font-weight: bold;">Año:</td>
-        <td style="text-align:left;">{{ $cotizacion->getFieldValue('A_o') }}</td>
+        <td style="text-align:left;">{{ $quoteVehicle->vehicle_year }}</td>
         <td style="text-align:center; font-weight: bold;">Chasis:</td>
         <td style="text-align:center;">{{ $cotizacion->getFieldValue('Chasis') }}</td>
         <td style="text-align:right; font-weight: bold;">Valor asegurado:</td>
