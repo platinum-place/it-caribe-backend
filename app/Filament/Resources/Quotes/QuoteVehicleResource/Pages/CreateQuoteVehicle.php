@@ -13,12 +13,14 @@ use App\Helpers\Zoho;
 use App\Models\Customer;
 use App\Models\Quotes\Quote;
 use App\Models\Vehicles\Vehicle;
+use App\Models\Vehicles\VehicleActivity;
 use App\Models\Vehicles\VehicleMake;
 use App\Models\Vehicles\VehicleModel;
 use App\Models\Vehicles\VehicleUse;
 use App\Services\ZohoCRMService;
 use Filament\Forms\Components\Actions;
 use Filament\Forms\Components\Actions\Action;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
@@ -116,55 +118,55 @@ class CreateQuoteVehicle extends CreateRecord
                             Hidden::make('vehicle_type_id'),
                         ])
                         ->columns(),
-//                    Wizard\Step::make('Datos del cliente')
-//                        ->schema([
-//                            TextInput::make('first_name')
-//                                ->label('Nombre')
-//                                ->required(),
-//                            TextInput::make('last_name')
-//                                ->label('Apellido')
-//                                ->required(),
-//                            TextInput::make('identity_number')
-//                                ->label('RNC/Cédula')
-//                                ->required(),
-//                            DatePicker::make('birth_date')
-//                                ->required()
-//                                ->label('Fecha de Nacimiento'),
-//                            TextInput::make('correo')
-//                                ->label('Correo Electrónico')
-//                                ->email(),
-//                            TextInput::make('mobile_phone')
-//                                ->label('Tel. Celular')
-//                                ->tel()
-//                                ->mask('999-999-9999'),
-//                            TextInput::make('home_phone')
-//                                ->label('Tel. Residencial')
-//                                ->tel()
-//                                ->mask('999-999-9999'),
-//                            TextInput::make('work_phone')
-//                                ->label('Tel. Trabajo')
-//                                ->tel()
-//                                ->mask('999-999-9999'),
-//                            TextInput::make('address')
-//                                ->label('Dirección')
-//                                ->columnSpanFull(),
-//                        ])
-//                        ->columns(),
-//                    Wizard\Step::make('Datos del vehículo')
-//                        ->schema([
-//                            TextInput::make('chassis')
-//                                ->label('Chasis')
-//                                ->required(),
-//                            TextInput::make('license_plate')
-//                                ->label('Placa'),
-//                            TextInput::make('color')
-//                                ->label('Color'),
-//                            Select::make('vehicle_activity_id')
-//                                ->label('Actividad del Vehículo')
-//                                ->options(VehicleActivity::pluck('name', 'id'))
-//                                ->required(),
-//                        ])
-//                        ->columns(),
+                    Wizard\Step::make('Datos del cliente')
+                        ->schema([
+                            TextInput::make('first_name')
+                                ->label('Nombre')
+                                ->required(),
+                            TextInput::make('last_name')
+                                ->label('Apellido')
+                                ->required(),
+                            TextInput::make('identity_number')
+                                ->label('RNC/Cédula')
+                                ->required(),
+                            DatePicker::make('birth_date')
+                                ->required()
+                                ->label('Fecha de Nacimiento'),
+                            TextInput::make('correo')
+                                ->label('Correo Electrónico')
+                                ->email(),
+                            TextInput::make('mobile_phone')
+                                ->label('Tel. Celular')
+                                ->tel()
+                                ->mask('999-999-9999'),
+                            TextInput::make('home_phone')
+                                ->label('Tel. Residencial')
+                                ->tel()
+                                ->mask('999-999-9999'),
+                            TextInput::make('work_phone')
+                                ->label('Tel. Trabajo')
+                                ->tel()
+                                ->mask('999-999-9999'),
+                            TextInput::make('address')
+                                ->label('Dirección')
+                                ->columnSpanFull(),
+                        ])
+                        ->columns(),
+                    Wizard\Step::make('Datos del vehículo')
+                        ->schema([
+                            TextInput::make('chassis')
+                                ->label('Chasis')
+                                ->required(),
+                            TextInput::make('license_plate')
+                                ->label('Placa'),
+                            TextInput::make('color')
+                                ->label('Color'),
+                            Select::make('vehicle_activity_id')
+                                ->label('Actividad del Vehículo')
+                                ->options(VehicleActivity::pluck('name', 'id'))
+                                ->required(),
+                        ])
+                        ->columns(),
                 ])
                     ->columnSpanFull(),
             ]);
