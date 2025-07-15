@@ -16,7 +16,7 @@ class EstimateVehicleForm
             ->schema([
                 MakeAndModelForm::make(),
 
-                TextInput::make('year')
+                TextInput::make('vehicle_year')
                     ->label('Año')
                     ->numeric()
                     ->required()

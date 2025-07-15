@@ -11,13 +11,16 @@ class QuoteVehicleLine extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'name', 'quote_vehicle_id', 'unit_price',
-        'quantity', 'subtotal', 'tax_rate', 'amount_taxed',
-        'tax_amount', 'total', 'life_amount',
+        'quote_vehicle_id', 'quote_line_id', 'life_amount',
     ];
 
-    public function quote(): BelongsTo
+    public function quoteVehicle(): BelongsTo
     {
         return $this->belongsTo(QuoteVehicle::class);
+    }
+
+    public function quoteLine(): BelongsTo
+    {
+        return $this->belongsTo(QuoteLine::class);
     }
 }

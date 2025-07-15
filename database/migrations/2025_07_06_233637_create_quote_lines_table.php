@@ -17,6 +17,7 @@ return new class extends Migration
             $table->softDeletes();
             $table->string('name');
             $table->foreignIdFor(\App\Models\Quotes\Quote::class)->constrained();
+            $table->foreignIdFor(\App\Models\Quotes\QuoteLineStatus::class)->constrained();
             $table->decimal('unit_price', 18, 2);
             $table->integer('quantity');
             $table->decimal('subtotal', 18, 2);

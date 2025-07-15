@@ -13,11 +13,16 @@ class QuoteLine extends Model
     protected $fillable = [
         'name', 'quote_id', 'unit_price',
         'quantity', 'subtotal', 'tax_rate',
-        'tax_amount', 'total', 'amount_taxed',
+        'tax_amount', 'total', 'amount_taxed', 'quote_line_status_id',
     ];
 
     public function quote(): BelongsTo
     {
         return $this->belongsTo(Quote::class);
+    }
+
+    public function status(): BelongsTo
+    {
+        return $this->belongsTo(QuoteLineStatus::class);
     }
 }

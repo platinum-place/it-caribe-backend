@@ -11,7 +11,7 @@ class Vehicle extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'year', 'chassis', 'license_plate',
+        'vehicle_year', 'chassis', 'license_plate',
         'vehicle_make_id', 'vehicle_model_id', 'vehicle_type_id',
     ];
 

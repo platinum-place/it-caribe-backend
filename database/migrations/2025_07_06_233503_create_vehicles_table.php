@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->softDeletes();
-            $table->year('year');
+            $table->year('vehicle_year');
             $table->string('chassis', 50);
             $table->string('license_plate', 20)->nullable();
             $table->foreignIdFor(\App\Models\Vehicles\VehicleMake::class)->constrained();
