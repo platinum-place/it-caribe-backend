@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('quote_vehicle_vehicle_route', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignIdFor(\App\Models\QuoteVehicle::class)->constrained();
-            $table->foreignIdFor(\App\Models\VehicleRoute::class)->constrained();
+            $table->foreignIdFor(\App\Models\Quotes\QuoteVehicle::class)->constrained();
+            $table->foreignIdFor(\App\Models\Vehicles\VehicleRoute::class)->constrained();
         });
     }
 

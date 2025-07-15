@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Zoho;
-use App\Models\QuoteVehicle;
+use App\Models\Quotes\QuoteVehicle;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 

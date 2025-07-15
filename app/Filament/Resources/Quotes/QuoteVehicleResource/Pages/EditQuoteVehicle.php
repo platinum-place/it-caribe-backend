@@ -1,0 +1,21 @@
+<?php
+
+namespace App\Filament\Resources\Quotes\QuoteVehicleResource\Pages;
+
+use App\Filament\Resources\Quotes\QuoteVehicleResource;
+use Filament\Actions;
+use Filament\Resources\Pages\EditRecord;
+
+class EditQuoteVehicle extends EditRecord
+{
+    protected static string $resource = QuoteVehicleResource::class;
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            Actions\DeleteAction::make(),
+            Actions\ForceDeleteAction::make(),
+            Actions\RestoreAction::make(),
+        ];
+    }
+}

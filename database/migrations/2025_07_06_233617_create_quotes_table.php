@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->softDeletes();
-            $table->foreignIdFor(\App\Models\QuoteType::class)->constrained();
-            $table->foreignIdFor(\App\Models\QuoteStatus::class)->constrained();
+            $table->foreignIdFor(\App\Models\Quotes\QuoteType::class)->constrained();
+            $table->foreignIdFor(\App\Models\Quotes\QuoteStatus::class)->constrained();
             $table->foreignIdFor(\App\Models\Customer::class)->nullable()->constrained();
             $table->json('attachments')->nullable();
             $table->date('start_date');

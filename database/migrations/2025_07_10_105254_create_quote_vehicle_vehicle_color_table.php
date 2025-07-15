@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('quote_vehicle_vehicle_color', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignIdFor(\App\Models\QuoteVehicle::class)->constrained();
-            $table->foreignIdFor(\App\Models\VehicleColor::class)->constrained();
+            $table->foreignIdFor(\App\Models\Quotes\QuoteVehicle::class)->constrained();
+            $table->foreignIdFor(\App\Models\Vehicles\VehicleColor::class)->constrained();
         });
     }
 

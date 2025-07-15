@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Database\Seeders\Quotes\QuotesSeeder;
+use Database\Seeders\Vehicles\VehiclesSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -16,10 +18,8 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             // PermissionSeeder::class,
             AdminUserSeeder::class,
-            ProductCategorySeeder::class,
-            ProductTypeSeeder::class,
-            QuoteStatusSeeder::class,
-            QuoteTypeSeeder::class,
+            QuotesSeeder::class,
+            VehiclesSeeder::class,
         ]);
     }
 }
