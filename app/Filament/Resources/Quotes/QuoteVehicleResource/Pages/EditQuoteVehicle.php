@@ -28,7 +28,7 @@ class EditQuoteVehicle extends EditRecord
                 FileUpload::make('attachments')
                     ->translateLabel()
                     ->disk('local')
-                    ->directory(fn () => 'quote-vehicles'.'/'.$this->record->id)
+                    ->directory(fn () => 'quotes'.'/'.$this->record->id)
                     ->visibility('private')
                     ->multiple()
                     ->maxParallelUploads(1)

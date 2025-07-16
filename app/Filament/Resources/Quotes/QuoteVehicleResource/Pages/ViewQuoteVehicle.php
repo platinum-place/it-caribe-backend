@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Quotes\QuoteVehicleResource\Pages;
 
+use App\Enums\Quotes\QuoteStatus;
 use App\Filament\Resources\Quotes\QuoteVehicleResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
@@ -20,7 +21,8 @@ class ViewQuoteVehicle extends ViewRecord
                 ->openUrlInNewTab(),
             Actions\Action::make('emit')
                 ->translateLabel()
-                ->url(route('filament.admin.resources.quotes.quote-vehicles.emit', ['record' => $this->record])),
+                ->url(route('filament.admin.resources.quotes.quote-vehicles.emit', ['record' => $this->record]))
+                ->visible(fn() => $this->record->quote->quote_status_id === QuoteStatus::PENDING->value),
         ];
     }
 }

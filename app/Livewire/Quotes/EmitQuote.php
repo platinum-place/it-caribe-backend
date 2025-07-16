@@ -2,10 +2,16 @@
 
 namespace App\Livewire\Quotes;
 
+use App\Enums\Quotes\QuoteLineStatus;
+use App\Enums\Quotes\QuoteStatus;
+use App\Filament\Pages\Emit;
+use App\Filament\Resources\Quotes\QuoteVehicleResource;
+use App\Helpers\Cotizaciones;
 use App\Models\Quotes\QuoteVehicle;
 use Filament\Forms\Components\Actions;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -21,24 +27,26 @@ class EmitQuote extends Component implements HasForms
 
     public ?array $data = [];
 
-    public QuoteVehicle $quote;
+    public QuoteVehicle $record;
 
-    public function mount(QuoteVehicle $quote): void
+    public function mount(QuoteVehicle $record): void
     {
-        $this->form->fill();
+        $this->form->fill([
+            'attachments' => $record?->quote?->attachments ?? [],
+        ]);
 
-        $this->quote = $quote;
+        $this->record = $record;
     }
 
     public function form(Form $form): Form
     {
-        $lines = $this->quote->quote->lines;
+        $lines = $this->record->quote->lines;
 
-        $customer = $this->quote->quote->customer;
+        $customer = $this->record->quote->customer;
 
         return $form
             ->schema([
-                Select::make('product')
+                Select::make('line')
                     ->label('Aseguradoras')
                     ->live()
                     ->options(function () use ($lines) {
@@ -54,11 +62,11 @@ class EmitQuote extends Component implements HasForms
                         ->label(__('Download :name', ['name' => __('Documents')]))
                         ->openUrlInNewTab()
                         ->url(function ($get) use ($lines) {
-                            $id = $lines->where('id', $get('product'))->first()?->id_crm;
+                            $id = $lines->where('id', $get('line'))->first()?->id_crm;
 
                             return route('filament.zoho-crm.download-product-attachments', ['id' => $id]);
                         })
-                        ->visible(fn($get) => $get('product') !== null),
+                        ->visible(fn($get) => $get('line') !== null),
                 ])
                     ->extraAttributes(['class' => 'flex items-end']),
 
@@ -68,6 +76,21 @@ class EmitQuote extends Component implements HasForms
                     ))
                     ->required()
                     ->columnSpanFull(),
+
+                FileUpload::make('attachments')
+                    ->translateLabel()
+                    ->disk('local')
+                    ->directory(fn() => 'quotes' . '/' . $this->record->id)
+                    ->visibility('private')
+                    ->multiple()
+                    ->maxParallelUploads(1)
+                    ->preserveFilenames()
+                    ->reorderable()
+                    ->appendFiles()
+                    ->downloadable()
+                    ->moveFiles()
+                    ->acceptedFileTypes(['application/pdf', 'image/*'])
+                    ->columnSpanFull(),
             ])
             ->columns()
             ->statePath('data');
@@ -75,7 +98,27 @@ class EmitQuote extends Component implements HasForms
 
     public function create(): void
     {
-        dd($this->form->getState());
+        $data = $this->form->getState();
+
+        $quote = $this->record->quote;
+        $line = $quote->lines->where('id', $data['line'])->first();
+
+        $quote->update([
+            'attachments' => $data['attachments'] ?? [],
+            'quote_status_id' => QuoteStatus::APPROVED->value,
+        ]);
+
+        $line->update([
+            'quote_line_status_id' => QuoteLineStatus::ACCEPTED->value
+        ]);
+
+        $libreria = new Cotizaciones;
+
+        $cotizacion = $libreria->getRecord('Quotes', $quote->id_crm);
+
+        $libreria->actualizar_cotizacion($cotizacion, $line->id_crm);
+
+        $this->redirect(QuoteVehicleResource::getUrl('view', ['record' => $this->record->id]));
     }
 
     public function render()

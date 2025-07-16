@@ -22,18 +22,21 @@ class EmitQuoteVehicle extends Page
 
     public static function getNavigationLabel(): string
     {
-        return __('Emit').' '.__('Quote vehicle');
+        return __('Emit') . ' ' . __('Quote vehicle');
     }
 
     public function getHeading(): string
     {
-        return __('Emit').' '.__('Quote vehicle');
+        return __('Emit') . ' ' . __('Quote vehicle');
     }
 
     protected function getHeaderActions(): array
     {
         return [
-            Actions\ViewAction::make(),
+            Actions\Action::make('view')
+                ->translateLabel()
+                ->color('gray')
+                ->url(fn() => QuoteVehicleResource::getUrl('view', ['record' => $this->record->id])),
         ];
     }
 }

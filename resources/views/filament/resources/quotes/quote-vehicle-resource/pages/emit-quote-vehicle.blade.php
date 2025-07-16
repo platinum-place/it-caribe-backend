@@ -1,3 +1,3 @@
 <x-filament-panels::page>
-    @livewire('quotes.emit-quote', ['quote' => $this->record])
+    @livewire('quotes.emit-quote', ['record' => $this->record])
 </x-filament-panels::page>

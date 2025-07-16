@@ -256,6 +256,7 @@ class CreateQuoteVehicle extends CreateRecord
                 'end_date' => now()->addDays(30),
                 'id_crm' => $id,
                 'customer_id' => $customer->id,
+                'user_id' => auth()->id(),
             ]);
             $quoteVehicle = QuoteVehicle::create([
                 'quote_id' => $quote->id,
