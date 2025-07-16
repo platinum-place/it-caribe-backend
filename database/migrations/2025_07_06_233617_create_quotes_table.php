@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\Quotes\QuoteType::class)->constrained();
             $table->foreignIdFor(\App\Models\Quotes\QuoteStatus::class)->constrained();
             $table->foreignIdFor(\App\Models\Customer::class)->nullable()->constrained();
+            $table->foreignIdFor(\App\Models\User::class)->constrained();
             $table->json('attachments')->nullable();
             $table->date('start_date');
             $table->date('end_date')->nullable();

@@ -3,6 +3,7 @@
 namespace App\Models\Quotes;
 
 use App\Models\Customer;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -14,7 +15,7 @@ class Quote extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'quote_type_id', 'quote_status_id', 'customer_id',
+        'user_id','quote_type_id', 'quote_status_id', 'customer_id',
         'attachments', 'start_date', 'end_date', 'id_crm',
     ];
 
@@ -23,6 +24,11 @@ class Quote extends Model
         'start_date' => 'date',
         'end_date' => 'date',
     ];
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function type(): BelongsTo
     {

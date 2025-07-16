@@ -16,6 +16,7 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->string('name');
+            $table->string('description')->nullable();
             $table->foreignIdFor(\App\Models\Quotes\Quote::class)->constrained();
             $table->foreignIdFor(\App\Models\Quotes\QuoteLineStatus::class)->constrained();
             $table->string('id_crm')->nullable();

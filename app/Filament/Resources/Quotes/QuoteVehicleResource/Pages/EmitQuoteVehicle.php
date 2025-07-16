@@ -12,7 +12,7 @@ class EmitQuoteVehicle extends Page
 
     protected static string $resource = QuoteVehicleResource::class;
 
-    protected static string $view = 'filament.resources.quotes.quote-vehicle-resource.pages.emit';
+    protected static string $view = 'filament.resources.quotes.quote-vehicle-resource.pages.emit-quote-vehicle';
 
     public function mount(int|string $record): void
     {
