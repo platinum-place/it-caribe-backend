@@ -3,6 +3,8 @@
 namespace App\Livewire\Quotes;
 
 use App\Models\Quotes\QuoteVehicle;
+use Filament\Forms\Components\Actions;
+use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\MarkdownEditor;
@@ -38,6 +40,7 @@ class EmitQuote extends Component implements HasForms
             ->schema([
                 Select::make('product')
                     ->label('Aseguradoras')
+                    ->live()
                     ->options(function () use ($lines) {
                         return $lines
                             ->where('total', '>', 0)
@@ -46,13 +49,27 @@ class EmitQuote extends Component implements HasForms
                             });
                     }),
 
-                Checkbox::make('acuerdo')
-                    ->label(fn () => new \Illuminate\Support\HtmlString(
-                        'Estoy de acuerdo que quiero emitir la cotización, a nombre de <b>'. $customer->fullName.'</b>, RNC/Cédula <b>'. $customer->identity_number.'</b>'
+                Actions::make([
+                    Action::make('documents')
+                        ->label(__('Download :name', ['name' => __('Documents')]))
+                        ->openUrlInNewTab()
+                        ->url(function ($get) use ($lines) {
+                            $id = $lines->where('id', $get('product'))->first()?->id_crm;
+
+                            return route('filament.zoho-crm.download-product-attachments', ['id' => $id]);
+                        })
+                        ->visible(fn($get) => $get('product') !== null),
+                ])
+                    ->extraAttributes(['class' => 'flex items-end']),
+
+                Checkbox::make('agreement')
+                    ->label(fn() => new \Illuminate\Support\HtmlString(
+                        'Estoy de acuerdo que quiero emitir la cotización, a nombre de <b>' . $customer->fullName . '</b>, RNC/Cédula <b>' . $customer->identity_number . '</b>'
                     ))
-                    ->live()
-                    ->required(),
+                    ->required()
+                    ->columnSpanFull(),
             ])
+            ->columns()
             ->statePath('data');
     }
 

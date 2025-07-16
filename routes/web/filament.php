@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\EmitEstimateController;
 use App\Http\Controllers\Api\EstimateController;
 use App\Http\Controllers\QuoteVehicleController;
+use App\Http\Controllers\ZohoCRMController;
 use Filament\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
 
@@ -26,4 +27,7 @@ Route::middleware(Authenticate::class)
     ->group(function () {
         Route::get('quote-vehicles/{quote_vehicle}', [QuoteVehicleController::class, 'download'])
             ->name('quote-vehicles.download');
+
+        Route::get('zoho-crm/download-product-attachments/{id}', [ZohoCRMController::class, 'downloadProductAttachments'])
+            ->name('zoho-crm.download-product-attachments');
     });
