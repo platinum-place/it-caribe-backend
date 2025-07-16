@@ -113,9 +113,7 @@ class EmitQuote extends Component implements HasForms
         ]);
 
         $libreria = new Cotizaciones;
-
         $cotizacion = $libreria->getRecord('Quotes', $quote->id_crm);
-
         $libreria->actualizar_cotizacion($cotizacion, $line->id_crm);
 
         $this->redirect(QuoteVehicleResource::getUrl('view', ['record' => $this->record->id]));
