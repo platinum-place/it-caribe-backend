@@ -76,4 +76,32 @@ class ZohoAPIService
             ->throw()
             ->json();
     }
+
+    /**
+     * @throws RequestException
+     * @throws ConnectionException
+     */
+    public function getListOfAttachments(string $module, string $token, string $id, array $fields): ?array
+    {
+        $url = sprintf('%s/%s/%s/Attachments', config('zoho.domains.api') . '/' . config('zoho.crm.uri'), $module, $id);
+
+        return Http::withToken($token, 'Zoho-oauthtoken')
+            ->get($url, ['fields' => implode(',', $fields)])
+            ->throw()
+            ->json();
+    }
+
+    /**
+     * @throws RequestException
+     * @throws ConnectionException
+     */
+    public function downloadAnAttachment(string $module, string $token, string $recordId, string $attachmentId): string
+    {
+        $url = sprintf('%s/%s/%s/Attachments/%s', config('zoho.domains.api') . '/' . config('zoho.crm.uri'), $module, $recordId, $attachmentId);
+
+        return Http::withToken($token, 'Zoho-oauthtoken')
+            ->get($url)
+            ->throw()
+            ->body();
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Services\Api\Zoho;
 use Exception;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
+use Illuminate\Support\Facades\Http;
 
 class ZohoCRMService
 {
@@ -40,6 +41,42 @@ class ZohoCRMService
         $token = $this->oauth->getAccessToken();
 
         $response = $this->api->getRecords($module, $token, $fields, $id);
+
+        if (empty($response) || empty($response['data'])) {
+            throw new Exception(__('Records not found in Zoho'));
+        }
+
+        return $response;
+    }
+
+    /**
+     * @throws RequestException
+     * @throws ConnectionException
+     * @throws Exception
+     */
+    public function getListOfAttachments(string $module, string $id, array $fields): ?array
+    {
+        $token = $this->oauth->getAccessToken();
+
+        $response = $this->api->getListOfAttachments($module, $token, $id, $fields);
+
+        if (empty($response) || empty($response['data'])) {
+            throw new Exception(__('Records not found in Zoho'));
+        }
+
+        return $response;
+    }
+
+    /**
+     * @throws RequestException
+     * @throws ConnectionException
+     * @throws Exception
+     */
+    public function downloadAnAttachment(string $module, string $recordId, string $attachmentId): string
+    {
+        $token = $this->oauth->getAccessToken();
+
+        $response = $this->api->downloadAnAttachment($module, $token, $recordId, $attachmentId);
 
         if (empty($response)) {
             throw new Exception(__('Records not found in Zoho'));

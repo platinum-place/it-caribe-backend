@@ -3,23 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Zoho;
-use App\Services\ZohoCRMService;
+use App\Services\Api\Zoho\ZohoCRMService;
 use Illuminate\Http\Request;
 use Zoho\API\CRM;
+use Symfony\Component\Mime\MimeTypes;
 
 class ZohoCRMController extends Controller
 {
     public function downloadProductAttachments(Request $request, string $id)
     {
-        $libreria = new Zoho;
-        $attachments = $libreria->getAttachments('Products', $id);
-        $file = $libreria->downloadAttachment('Products', $id, $attachments[0]->getId(), storage_path('app/private'));
+        $attachmentsResponse = app(ZohoCRMService::class)->getListOfAttachments('Products', $id, ['id']);
 
-        return response()->streamDownload(function () use ($file) {
-            echo $file;
-        }, 'Condicionado.pdf', [
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'attachment; filename="Condicionado.pdf"',
-        ]);
+        $attachmentId = $attachmentsResponse['data'][0]['id'];
+
+        $response = app(ZohoCRMService::class)->downloadAnAttachment('Products', $id, $attachmentId);
+
+        $filaPath = "zoho/products/$id/" . now()->timestamp . '.pdf';
+
+        \Storage::put($filaPath, $response);
+
+        return \Storage::download($filaPath);
     }
 }

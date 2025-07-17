@@ -43,11 +43,11 @@ class EstimateQuoteVehicle
         $selectedRate = null;
         $criteria = "Plan:equals:$productId";
         $rates = $this->zohoApi->searchRecords('Tasas', $criteria);
-        foreach ($rates as $rate) {
-            if ($rate['A_o'] === $vehicleYear) {
-                $selectedRate = $rate['Name'];
-                break;
-            }
+        foreach ($rates['data'] as $rate) {
+//            if ($rate['A_o'] === $vehicleYear) {
+//                $selectedRate = $rate['Name'];
+//                break;
+//            }
         }
 
         return $selectedRate;
