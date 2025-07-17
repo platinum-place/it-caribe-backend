@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\Zoho;
 use App\Services\Api\Zoho\ZohoCRMService;
 use Illuminate\Http\Request;
-use Zoho\API\CRM;
-use Symfony\Component\Mime\MimeTypes;
 
 class ZohoCRMController extends Controller
 {
@@ -18,7 +15,7 @@ class ZohoCRMController extends Controller
 
         $response = app(ZohoCRMService::class)->downloadAnAttachment('Products', $id, $attachmentId);
 
-        $filaPath = "zoho/products/$id/" . now()->timestamp . '.pdf';
+        $filaPath = "zoho/products/$id/".now()->timestamp.'.pdf';
 
         \Storage::put($filaPath, $response);
 

@@ -21,9 +21,6 @@ use App\Models\Vehicles\VehicleColor;
 use App\Models\Vehicles\VehicleMake;
 use App\Models\Vehicles\VehicleModel;
 use App\Models\Vehicles\VehicleUse;
-use App\Models\ZohoOauthRefreshToken;
-use App\Services\Api\Zoho\ZohoAuthTokenService;
-use App\Services\Api\Zoho\ZohoOAuthTokenService;
 use App\Services\Quotes\EstimateQuoteVehicle;
 use App\Services\ZohoCRMService;
 use Filament\Forms\Components\Actions;
@@ -62,13 +59,12 @@ class CreateQuoteVehicle extends CreateRecord
                                         $set('vehicle_type_id', null);
                                         $set('cotizacion', null);
 
-//                                        $estimate = app(EstimateQuoteVehicle::class)->estimate(
-//                                            $get('vehicle_amount'),
-//                                            $get('vehicle_year')
-//                                        );
-//
-//                                        dd($estimate);
+                                        $estimate = app(EstimateQuoteVehicle::class)->estimate(
+                                            $get('vehicle_amount'),
+                                            $get('vehicle_year')
+                                        );
 
+                                        dd($estimate);
 
                                         $libreria = new Cotizaciones;
 
@@ -85,10 +81,10 @@ class CreateQuoteVehicle extends CreateRecord
 
                                         $model = VehicleModel::find($get('vehicle_model_id'));
 
-                                        $criteria = 'Name:equals:' . VehicleMake::find($get('vehicle_make_id'))->name;
+                                        $criteria = 'Name:equals:'.VehicleMake::find($get('vehicle_make_id'))->name;
                                         $vehicleMake = app(ZohoCRMService::class)->searchRecords('Marcas', $criteria);
 
-                                        $criteria = 'Name:equals:' . $model->name;
+                                        $criteria = 'Name:equals:'.$model->name;
                                         $vehicleModel = app(ZohoCRMService::class)->searchRecords('Modelos', $criteria);
 
                                         $cotizacion->marcaid = $vehicleMake['data'][0]['id'];
@@ -135,7 +131,6 @@ class CreateQuoteVehicle extends CreateRecord
                                 ->columnSpanFull(),
 
                             Hidden::make('cotizacion'),
-                            Hidden::make('vehicle_type_id'),
                         ])
                         ->columns(),
                     Wizard\Step::make('Datos del cliente')
@@ -196,7 +191,7 @@ class CreateQuoteVehicle extends CreateRecord
     protected function handleRecordCreation(array $data): Model
     {
         $registro = [
-            'Subject' => $data['first_name'] . ' ' . $data['last_name'],
+            'Subject' => $data['first_name'].' '.$data['last_name'],
             'Valid_Till' => date('Y-m-d', strtotime('+30 days')),
             'Vigencia_desde' => date('Y-m-d'),
             'Account_Name' => 3222373000092390001,
@@ -239,7 +234,7 @@ class CreateQuoteVehicle extends CreateRecord
             // Más datos de cotización
             'Condiciones' => $data['cotizacion']['estado'] ?? null,
             'Tipo_equipo' => $data['cotizacion']['tipo_equipo'] ?? null,
-            'Salvamento' => (bool)($data['cotizacion']['salvamento'] ?? false),
+            'Salvamento' => (bool) ($data['cotizacion']['salvamento'] ?? false),
             'Tipo_de_pago' => $data['cotizacion']['tipo_pago'] ?? null,
         ];
 

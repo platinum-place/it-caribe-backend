@@ -4,22 +4,16 @@ namespace App\Livewire\Quotes;
 
 use App\Enums\Quotes\QuoteLineStatus;
 use App\Enums\Quotes\QuoteStatus;
-use App\Filament\Pages\Emit;
 use App\Filament\Resources\Quotes\QuoteVehicleResource;
 use App\Helpers\Cotizaciones;
 use App\Models\Quotes\QuoteVehicle;
-use Filament\Forms\Components\Actions;
-use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\MarkdownEditor;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
-use Illuminate\Contracts\View\View;
 use Livewire\Component;
-use Filament\Forms\Components\Select;
 
 class EmitQuote extends Component implements HasForms
 {
@@ -48,31 +42,17 @@ class EmitQuote extends Component implements HasForms
             ->schema([
                 Select::make('line')
                     ->label('Aseguradoras')
-                    ->live()
                     ->options(function () use ($lines) {
                         return $lines
                             ->where('total', '>', 0)
                             ->mapWithKeys(function ($line) {
-                                return [$line->id => $line->name . ' (RD$' . number_format($line->total, 2) . ')'];
+                                return [$line->id => $line->name.' (RD$'.number_format($line->total, 2).')'];
                             });
                     }),
 
-                Actions::make([
-                    Action::make('documents')
-                        ->label(__('Download :name', ['name' => __('Documents')]))
-                        ->openUrlInNewTab()
-                        ->url(function ($get) use ($lines) {
-                            $id = $lines->where('id', $get('line'))->first()?->id_crm;
-
-                            return route('filament.zoho-crm.download-product-attachments', ['id' => $id]);
-                        })
-                        ->visible(fn($get) => $get('line') !== null),
-                ])
-                    ->extraAttributes(['class' => 'flex items-end']),
-
                 Checkbox::make('agreement')
-                    ->label(fn() => new \Illuminate\Support\HtmlString(
-                        'Estoy de acuerdo que quiero emitir la cotización, a nombre de <b>' . $customer->fullName . '</b>, RNC/Cédula <b>' . $customer->identity_number . '</b>'
+                    ->label(fn () => new \Illuminate\Support\HtmlString(
+                        'Estoy de acuerdo que quiero emitir la cotización, a nombre de <b>'.$customer->fullName.'</b>, RNC/Cédula <b>'.$customer->identity_number.'</b>'
                     ))
                     ->required()
                     ->columnSpanFull(),
@@ -80,7 +60,7 @@ class EmitQuote extends Component implements HasForms
                 FileUpload::make('attachments')
                     ->translateLabel()
                     ->disk('local')
-                    ->directory(fn() => 'quotes' . '/' . $this->record->id)
+                    ->directory(fn () => 'quotes'.'/'.$this->record->id)
                     ->visibility('private')
                     ->multiple()
                     ->maxParallelUploads(1)
@@ -110,7 +90,7 @@ class EmitQuote extends Component implements HasForms
         ]);
 
         $line->update([
-            'quote_line_status_id' => QuoteLineStatus::ACCEPTED->value
+            'quote_line_status_id' => QuoteLineStatus::ACCEPTED->value,
         ]);
 
         $libreria = new Cotizaciones;

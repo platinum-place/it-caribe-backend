@@ -58,10 +58,10 @@ class QuoteVehicleController extends Controller
             'quoteVehicle' => $quoteVehicle,
             'cotizacion' => $cotizacion,
             'libreria' => $libreria,
-            'name' => 'Cotización No. ' . $cotizacion->getFieldValue('Quote_Number'),
+            'name' => 'Cotización No. '.$cotizacion->getFieldValue('Quote_Number'),
         ]);
 
-        return $pdf->stream('Cotización No' . $cotizacion->getFieldValue('Quote_Number') . '.pdf');
+        return $pdf->stream('Cotización No'.$cotizacion->getFieldValue('Quote_Number').'.pdf');
     }
 
     public function downloadCertificate(QuoteVehicle $quoteVehicle)

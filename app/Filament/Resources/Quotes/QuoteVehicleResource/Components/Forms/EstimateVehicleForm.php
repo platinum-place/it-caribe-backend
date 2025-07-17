@@ -10,7 +10,7 @@ use Filament\Forms\Components\TextInput;
 
 class EstimateVehicleForm
 {
-    public static function make()
+    public static function make(): Grid
     {
         return Grid::make()
             ->schema([

@@ -2,16 +2,13 @@
 
 namespace App\Services\Quotes;
 
-use App\Enums\Quotes\QuoteLineStatus;
 use App\Services\Api\Zoho\ZohoCRMService;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
 
 class EstimateQuoteVehicle
 {
-    public function __construct(protected ZohoCRMService $zohoApi)
-    {
-    }
+    public function __construct(protected ZohoCRMService $zohoApi) {}
 
     /**
      * @throws RequestException
@@ -19,7 +16,7 @@ class EstimateQuoteVehicle
      */
     public function estimate(float $vehicleAmount, int $vehicleYear)
     {
-        $criteria = '((Corredor:equals:' . 3222373000092390001 . ') and (Product_Category:equals:Auto))';
+        $criteria = '((Corredor:equals:'. 3222373000092390001 .') and (Product_Category:equals:Auto))';
         $productsResponse = $this->zohoApi->searchRecords('Products', $criteria);
 
         $result = [];
@@ -42,6 +39,7 @@ class EstimateQuoteVehicle
                 'total' => $amount,
                 'id_crm' => $product['id'],
                 'life_amount' => 220,
+                'insurance_rate' => $rate,
             ];
         }
 

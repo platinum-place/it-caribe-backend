@@ -12,8 +12,7 @@ class ZohoOAuthTokenService
 {
     public function __construct(
         protected ZohoAPIService $api
-    ) {
-    }
+    ) {}
 
     /**
      * @throws RequestException
@@ -41,7 +40,7 @@ class ZohoOAuthTokenService
     {
         $refreshToken = ZohoOauthRefreshToken::latest('id')->value('refresh_token');
 
-        if (!$refreshToken) {
+        if (! $refreshToken) {
             throw new Exception(__('Not Found'));
         }
 

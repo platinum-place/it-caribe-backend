@@ -15,9 +15,9 @@ class Quote extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'user_id','quote_type_id', 'quote_status_id', 'customer_id',
+        'user_id', 'quote_type_id', 'quote_status_id', 'customer_id',
         'attachments', 'start_date', 'end_date', 'id_crm',
-        'responsible_id'
+        'responsible_id',
     ];
 
     protected $casts = [
@@ -33,7 +33,7 @@ class Quote extends Model
 
     public function responsible(): BelongsTo
     {
-        return $this->belongsTo(User::class,'responsible_id');
+        return $this->belongsTo(User::class, 'responsible_id');
     }
 
     public function type(): BelongsTo

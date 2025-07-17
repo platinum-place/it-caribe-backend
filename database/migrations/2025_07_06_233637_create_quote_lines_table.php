@@ -27,6 +27,7 @@ return new class extends Migration
             $table->decimal('tax_rate', 18, 2)->nullable();
             $table->decimal('tax_amount', 18, 2)->default(0);
             $table->decimal('total', 18, 2);
+            $table->decimal('insurance_rate', 18, 2)->nullable();
         });
     }
 

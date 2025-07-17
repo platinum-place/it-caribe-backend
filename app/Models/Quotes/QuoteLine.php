@@ -11,8 +11,8 @@ class QuoteLine extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'name','description', 'quote_id', 'unit_price', 'id_crm',
-        'quantity', 'subtotal', 'tax_rate',
+        'name', 'description', 'quote_id', 'unit_price', 'id_crm',
+        'quantity', 'subtotal', 'tax_rate', 'insurance_rate',
         'tax_amount', 'total', 'amount_taxed', 'quote_line_status_id',
     ];
 

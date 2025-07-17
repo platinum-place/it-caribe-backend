@@ -5,13 +5,10 @@ namespace App\Services\Api\Zoho;
 use Exception;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
-use Illuminate\Support\Facades\Http;
 
 class ZohoCRMService
 {
-    public function __construct(protected ZohoOAuthTokenService $oauth, protected ZohoAPIService $api)
-    {
-    }
+    public function __construct(protected ZohoOAuthTokenService $oauth, protected ZohoAPIService $api) {}
 
     /**
      * @throws RequestException

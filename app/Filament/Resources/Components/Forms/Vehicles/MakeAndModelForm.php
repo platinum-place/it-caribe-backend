@@ -5,12 +5,14 @@ namespace App\Filament\Resources\Components\Forms\Vehicles;
 use App\Models\Vehicles\VehicleMake;
 use App\Models\Vehicles\VehicleModel;
 use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Get;
+use Filament\Forms\Set;
 
 class MakeAndModelForm
 {
-    public static function make()
+    public static function make(): Grid
     {
         return Grid::make()
             ->schema([
@@ -35,15 +37,35 @@ class MakeAndModelForm
                             ->where('vehicle_make_id', $makeId)
                             ->get()
                             ->mapWithKeys(function ($model) {
-                                $label = $model->name.($model->type ? ' ('.$model->type->name.')' : '');
-
-                                return [$model->id => $label];
+                                return [
+                                    $model->id => $model->name.(
+                                        $model->type ?
+                                            ' ('.$model->type->name.')' :
+                                            ''
+                                    ),
+                                ];
                             });
                     })
                     ->searchable()
                     ->required()
                     ->placeholder('Selecciona un modelo')
-                    ->disabled(fn (Get $get) => ! $get('vehicle_make_id')),
+                    ->disabled(fn (Get $get) => ! $get('vehicle_make_id'))
+                    ->live()
+                    ->afterStateUpdated(function (Get $get, Set $set, ?string $state) {
+                        if (! $state) {
+                            $set('vehicle_type_id', null);
+
+                            return;
+                        }
+
+                        $set(
+                            'vehicle_type_id',
+                            VehicleModel::where('id', $state)
+                                ->value('vehicle_type_id')
+                        );
+                    }),
+
+                Hidden::make('vehicle_type_id'),
             ]);
     }
 }
