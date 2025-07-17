@@ -162,16 +162,16 @@
     ];
 @endphp
 
-<table style="width: 100%; border: 1px solid #000; border-collapse: collapse;">
+    <table style="width: 100%; border: none; border-collapse: collapse;">
     @foreach ($coverageRows as $row)
         <tr @isset($row['style'] ) style="{{ $row['style'] }}" @endisset>
-            <td style="font-weight: bold;">{{ $row['label'] }}</td>
+            <td style="border: none; font-weight: bold;">{{ $row['label'] }}</td>
             @foreach ($lineItemsData as $data)
-                <td>
+                <td style="border: none;">
                     @switch($row['type'])
                         @case('text')
                             @if ($row['field'] === 'vendorName')
-                                {{ $data['vendorName'] }}
+                                {{ ucwords(strtolower($data['vendorName'])) }}
                             @else
                                 {{ $data['product']->getFieldValue($row['field']) }}
                             @endif

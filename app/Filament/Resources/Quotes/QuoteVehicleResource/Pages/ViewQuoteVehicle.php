@@ -23,7 +23,7 @@ class ViewQuoteVehicle extends ViewRecord
                 ->visible(fn() => $this->record->quote->quote_status_id !== QuoteStatus::APPROVED->value),
             Actions\Action::make('download')
                 ->label(__('Download :name', ['name' => __('Issuance')]))
-                ->url(route('filament.quote-vehicles.downloadCompleted', ['quote_vehicle' => $this->record]))
+                ->url(route('filament.quote-vehicles.downloadCertificate', ['quote_vehicle' => $this->record]))
                 ->openUrlInNewTab()
                 ->visible(fn() => $this->record->quote->quote_status_id === QuoteStatus::APPROVED->value),
             Actions\Action::make('emit')

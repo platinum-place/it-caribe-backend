@@ -51,17 +51,6 @@ class QuoteVehicleController extends Controller
 
     public function download(QuoteVehicle $quoteVehicle)
     {
-//        $libreria = new Zoho;
-//        // obtener datos de la cotizacion
-//        $cotizacion = $libreria->getRecord('Quotes', $quoteVehicle->quote->id_crm);
-//
-//        $pdf = Pdf::loadView('legacy.cotizaciones.cotizacion', [
-//            'cotizacion' => $cotizacion,
-//            'libreria' => $libreria,
-//        ]);
-//
-//        return $pdf->stream('Cotización No' . $cotizacion->getFieldValue('Quote_Number') . '.pdf');
-
         $libreria = new Zoho;
         $cotizacion = $libreria->getRecord('Quotes', $quoteVehicle->quote->id_crm);
 
@@ -77,31 +66,12 @@ class QuoteVehicleController extends Controller
 
     public function downloadCertificate(QuoteVehicle $quoteVehicle)
     {
-//        $libreria = new Zoho;
-//        // obtener datos de la cotizacion
-//        $cotizacion = $libreria->getRecord('Quotes', $quoteVehicle->quote->id_crm);
-//        // informacion sobre las coberturas, la aseguradora,las coberturas
-//        $plan = $libreria->getRecord('Products', $cotizacion->getFieldValue('Coberturas')
-//            ->getEntityId());
-//        $aseguradora = $libreria->getRecord('Vendors', $plan->getFieldValue('Vendor_Name')
-//            ->getEntityId());
-//
-//        $pdf = Pdf::loadView('legacy.cotizaciones.emision', [
-//            'cotizacion' => $cotizacion,
-//            'plan' => $plan,
-//            'libreria' => $libreria,
-//            'aseguradora' => $aseguradora,
-//        ]);
-//
-//        return $pdf->stream('Emisión No' . $cotizacion->getFieldValue('Quote_Number') . '.pdf');
-
-
         $libreria = new Zoho;
         $cotizacion = $libreria->getRecord('Quotes', $quoteVehicle->quote->id_crm);
         $plan = $libreria->getRecord('Products', $cotizacion->getFieldValue('Coberturas')->getEntityId());
         $aseguradora = $libreria->getRecord('Vendors', $plan->getFieldValue('Vendor_Name')->getEntityId());
 
-        $pdf = Pdf::loadView('quote-vehicles.download-completed', [
+        $pdf = Pdf::loadView('quote-vehicles.download-certificate', [
             'quoteVehicle' => $quoteVehicle,
             'cotizacion' => $cotizacion,
             'plan' => $plan,
