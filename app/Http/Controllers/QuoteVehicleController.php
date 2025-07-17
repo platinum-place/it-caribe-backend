@@ -75,7 +75,7 @@ class QuoteVehicleController extends Controller
         return $pdf->stream('Cotización No' . $cotizacion->getFieldValue('Quote_Number') . '.pdf');
     }
 
-    public function downloadCompleted(QuoteVehicle $quoteVehicle)
+    public function downloadCertificate(QuoteVehicle $quoteVehicle)
     {
 //        $libreria = new Zoho;
 //        // obtener datos de la cotizacion

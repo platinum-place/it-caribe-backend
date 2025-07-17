@@ -211,5 +211,20 @@
     @endforeach
 </table>
 
+<div style="height: 100px;"></div>
+
+<table style="width: 100%; border: none; border-collapse: collapse;">
+    <tr>
+        <td style="width: 50%; border: none; padding: 10px; vertical-align: top;">
+            ________________________________ <br>
+            Firma Autorizada
+        </td>
+        <td style="width: 50%; border: none; padding: 10px; vertical-align: top;">
+            ________________________________ <br>
+            Nombre o Firma del asegurado
+        </td>
+    </tr>
+</table>
+
 </body>
 </html>
