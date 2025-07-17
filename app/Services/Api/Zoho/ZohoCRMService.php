@@ -1,0 +1,50 @@
+<?php
+
+namespace App\Services\Api\Zoho;
+
+use Exception;
+use Illuminate\Http\Client\ConnectionException;
+use Illuminate\Http\Client\RequestException;
+
+class ZohoCRMService
+{
+    public function __construct(protected ZohoOAuthTokenService $oauth, protected ZohoAPIService $api)
+    {
+    }
+
+    /**
+     * @throws RequestException
+     * @throws ConnectionException
+     * @throws Exception
+     */
+    public function searchRecords(string $module, string $criteria, ?int $page = 1, ?int $perPage = 200): ?array
+    {
+        $token = $this->oauth->getAccessToken();
+
+        $response = $this->api->searchRecords($module, $token, $criteria, $page, $perPage);
+
+        if (empty($response) || empty($response['data'])) {
+            throw new Exception(__('Records not found in Zoho'));
+        }
+
+        return $response;
+    }
+
+    /**
+     * @throws RequestException
+     * @throws ConnectionException
+     * @throws Exception
+     */
+    public function getRecords(string $module, array $fields, ?string $id = ''): ?array
+    {
+        $token = $this->oauth->getAccessToken();
+
+        $response = $this->api->getRecords($module, $token, $fields, $id);
+
+        if (empty($response)) {
+            throw new Exception(__('Records not found in Zoho'));
+        }
+
+        return $response;
+    }
+}

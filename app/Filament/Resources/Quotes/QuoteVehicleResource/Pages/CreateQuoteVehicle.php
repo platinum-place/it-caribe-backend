@@ -17,9 +17,14 @@ use App\Models\Quotes\QuoteVehicle;
 use App\Models\Quotes\QuoteVehicleLine;
 use App\Models\Vehicles\Vehicle;
 use App\Models\Vehicles\VehicleActivity;
+use App\Models\Vehicles\VehicleColor;
 use App\Models\Vehicles\VehicleMake;
 use App\Models\Vehicles\VehicleModel;
 use App\Models\Vehicles\VehicleUse;
+use App\Models\ZohoOauthRefreshToken;
+use App\Services\Api\Zoho\ZohoAuthTokenService;
+use App\Services\Api\Zoho\ZohoOAuthTokenService;
+use App\Services\Quotes\EstimateQuoteVehicle;
 use App\Services\ZohoCRMService;
 use Filament\Forms\Components\Actions;
 use Filament\Forms\Components\Actions\Action;
@@ -53,6 +58,14 @@ class CreateQuoteVehicle extends CreateRecord
                                 Action::make('generateEstimate')
                                     ->label('Generar Cotización')
                                     ->action(function (Set $set, Get $get) {
+                                        $response = app(EstimateQuoteVehicle::class)->estimate(
+                                            $get('vehicle_amount'),
+                                            $get('vehicle_year')
+                                        );
+
+                                        dd($response);
+
+
                                         $libreria = new Cotizaciones;
 
                                         $cotizacion = new Cotizacion;
@@ -68,10 +81,10 @@ class CreateQuoteVehicle extends CreateRecord
 
                                         $model = VehicleModel::find($get('vehicle_model_id'));
 
-                                        $criteria = 'Name:equals:'.VehicleMake::find($get('vehicle_make_id'))->name;
+                                        $criteria = 'Name:equals:' . VehicleMake::find($get('vehicle_make_id'))->name;
                                         $vehicleMake = app(ZohoCRMService::class)->searchRecords('Marcas', $criteria);
 
-                                        $criteria = 'Name:equals:'.$model->name;
+                                        $criteria = 'Name:equals:' . $model->name;
                                         $vehicleModel = app(ZohoCRMService::class)->searchRecords('Modelos', $criteria);
 
                                         $cotizacion->marcaid = $vehicleMake['data'][0]['id'];
@@ -162,8 +175,10 @@ class CreateQuoteVehicle extends CreateRecord
                                 ->required(),
                             TextInput::make('license_plate')
                                 ->label('Placa'),
-                            TextInput::make('color')
-                                ->label('Color'),
+                            Select::make('vehicle_colors')
+                                ->label('Color')
+                                ->options(VehicleColor::pluck('name', 'id'))
+                                ->multiple(),
                             Select::make('vehicle_activity_id')
                                 ->label('Actividad del Vehículo')
                                 ->options(VehicleActivity::pluck('name', 'id')),
@@ -177,7 +192,7 @@ class CreateQuoteVehicle extends CreateRecord
     protected function handleRecordCreation(array $data): Model
     {
         $registro = [
-            'Subject' => $data['first_name'].' '.$data['last_name'],
+            'Subject' => $data['first_name'] . ' ' . $data['last_name'],
             'Valid_Till' => date('Y-m-d', strtotime('+30 days')),
             'Vigencia_desde' => date('Y-m-d'),
             'Account_Name' => 3222373000092390001,
@@ -220,7 +235,7 @@ class CreateQuoteVehicle extends CreateRecord
             // Más datos de cotización
             'Condiciones' => $data['cotizacion']['estado'] ?? null,
             'Tipo_equipo' => $data['cotizacion']['tipo_equipo'] ?? null,
-            'Salvamento' => (bool) ($data['cotizacion']['salvamento'] ?? false),
+            'Salvamento' => (bool)($data['cotizacion']['salvamento'] ?? false),
             'Tipo_de_pago' => $data['cotizacion']['tipo_pago'] ?? null,
         ];
 
@@ -249,6 +264,7 @@ class CreateQuoteVehicle extends CreateRecord
                 'vehicle_model_id' => $data['vehicle_model_id'],
                 'vehicle_type_id' => $data['vehicle_type_id'],
             ]);
+            $vehicle->colors()->attach($data['vehicle_colors']);
             $quote = Quote::create([
                 'quote_type_id' => QuoteType::VEHICLE->value,
                 'quote_status_id' => QuoteStatus::PENDING->value,
