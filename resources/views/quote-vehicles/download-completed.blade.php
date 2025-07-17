@@ -55,52 +55,62 @@
     }
 @endphp
 @if($logoBase64)
-    <img src="{{ $logoBase64 }}" width="70" height="90" alt="">
+    <img src="{{ $logoBase64 }}" width="90" height="70" alt="">
 @endif
 
-<h3 style="text-align:center;">COTIZACIÓN DE SEGUROS</h3>
+<h3 style="text-align:center;">EMISIÓN DE SEGUROS</h3>
+
+<h4 style="text-align:right;">Póliza No.: {{ $plan->getFieldValue("P_liza") }}</h4>
 
 <table>
     <tbody>
     <tr>
         <td style="text-align:left; font-weight: bold;">Ramo/Producto:</td>
         <td style="text-align:left;">{{ $cotizacion->getFieldValue('Plan') }}</td>
-        <td style="text-align:center; font-weight: bold;">Correo:</td>
-        <td style="text-align:center;">{{ $cotizacion->getFieldValue('Correo_electr_nico') }}</td>
-        <td style="text-align:right; font-weight: bold;">Fecha:</td>
-        <td style="text-align:right;">{{ date('d/m/Y', strtotime($cotizacion->getCreatedTime())) }}</td>
+        <td style="text-align:left; font-weight: bold;">Correo:</td>
+        <td style="text-align:left;">{{ $cotizacion->getFieldValue('Correo_electr_nico') }}</td>
+        <td style="text-align:left; font-weight: bold;">Fecha:</td>
+        <td style="text-align:left;">{{ date('d/m/Y', strtotime($cotizacion->getCreatedTime())) }}</td>
     </tr>
     <tr>
         <td style="text-align:left; font-weight: bold;">Cliente:</td>
         <td style="text-align:left;">{{ $cotizacion->getFieldValue("Nombre") . " " . $cotizacion->getFieldValue("Apellido") }}</td>
-        <td style="text-align:center; font-weight: bold;">Equipamientos:</td>
-        <td style="text-align:center;">{{ 'NINGUNO' }}</td>
-        <td style="text-align:right; font-weight: bold;">Cédula/Pasaporte:</td>
-        <td style="text-align:right;">{{ $cotizacion->getFieldValue('RNC_C_dula') }}</td>
+        <td style="text-align:left; font-weight: bold;">Equipamientos:</td>
+        <td style="text-align:left;">{{ 'NINGUNO' }}</td>
+        <td style="text-align:left; font-weight: bold;">Cédula/Pasaporte:</td>
+        <td style="text-align:left;">{{ $cotizacion->getFieldValue('RNC_C_dula') }}</td>
     </tr>
     <tr>
         <td style="text-align:left; font-weight: bold;">Dirección:</td>
         <td style="text-align:left;"><p style="font-size: 8px">{{ $cotizacion->getFieldValue('Direcci_n') }}</p></td>
-        <td style="text-align:center; font-weight: bold;">Uso:</td>
-        <td style="text-align:center;">{{ $cotizacion->getFieldValue('Uso') }}</td>
-        <td style="text-align:right; font-weight: bold;">Teléfono:</td>
-        <td style="text-align:right;">{{ $cotizacion->getFieldValue('Tel_Residencia') }}</td>
+        <td style="text-align:left; font-weight: bold;">Uso:</td>
+        <td style="text-align:left;">{{ $cotizacion->getFieldValue('Uso') }}</td>
+        <td style="text-align:left; font-weight: bold;">Teléfono:</td>
+        <td style="text-align:left;">{{ $cotizacion->getFieldValue('Tel_Residencia') }}</td>
     </tr>
     <tr>
         <td style="text-align:left; font-weight: bold;">Tipo de vehículo:</td>
         <td style="text-align:left;">{{ $cotizacion->getFieldValue('Tipo_veh_culo') }}</td>
-        <td style="text-align:center; font-weight: bold;">Marca:</td>
-        <td style="text-align:center;">{{ $cotizacion->getFieldValue('Marca')->getLookupLabel() }}</td>
-        <td style="text-align:right; font-weight: bold;">Modelo:</td>
-        <td style="text-align:right;">{{ $cotizacion->getFieldValue('Modelo')->getLookupLabel() }}</td>
+        <td style="text-align:left; font-weight: bold;">Marca:</td>
+        <td style="text-align:left;">{{ $cotizacion->getFieldValue('Marca')->getLookupLabel() }}</td>
+        <td style="text-align:left; font-weight: bold;">Modelo:</td>
+        <td style="text-align:left;">{{ $cotizacion->getFieldValue('Modelo')->getLookupLabel() }}</td>
     </tr>
     <tr>
         <td style="text-align:left; font-weight: bold;">Año:</td>
         <td style="text-align:left;">{{ $quoteVehicle->vehicle_year }}</td>
-        <td style="text-align:center; font-weight: bold;">Chasis:</td>
-        <td style="text-align:center;">{{ $cotizacion->getFieldValue('Chasis') }}</td>
-        <td style="text-align:right; font-weight: bold;">Valor asegurado:</td>
-        <td style="text-align:right;">{{ number_format($cotizacion->getFieldValue("Suma_asegurada"), 2) }}</td>
+        <td style="text-align:left; font-weight: bold;">Chasis:</td>
+        <td style="text-align:left;">{{ $cotizacion->getFieldValue('Chasis') }}</td>
+        <td style="text-align:left; font-weight: bold;">Valor asegurado:</td>
+        <td style="text-align:left;">{{ number_format($cotizacion->getFieldValue("Suma_asegurada"), 2) }}</td>
+    </tr>
+    <tr>
+        <td style="text-align:left; font-weight: bold;">Prima Anual:</td>
+        <td style="text-align:left;">{{ number_format($cotizacion->getFieldValue('Prima') * 12, 2) }}</td>
+        <td style="text-align:left; font-weight: bold;">&nbsp;</td>
+        <td style="text-align:left;">&nbsp;</td>
+        <td style="text-align:left; font-weight: bold;">Prima Mensual:</td>
+        <td style="text-align:left;">{{ number_format($cotizacion->getFieldValue('Prima'), 2) }}</td>
     </tr>
     </tbody>
 </table>
@@ -111,7 +121,7 @@
     $isVehiculoPesado = preg_match('/\bpesado\b/i', $tipoVehiculo) || $tipoVehiculo === "Camión";
 
     foreach ($cotizacion->getLineItems() as $lineItem) {
-        if ($lineItem->getNetTotal() > 0) {
+        if ($lineItem->getProduct()->getEntityId() == $plan->getEntityId()) {
             $product = $libreria->getRecord("Products", $lineItem->getProduct()->getEntityId());
             $vendor = $libreria->getRecord("Vendors", $product->getFieldValue('Vendor_Name')->getEntityId());
 
@@ -199,27 +209,6 @@
             @endforeach
         </tr>
     @endforeach
-
-    <tr>
-        <td style="font-weight: bold;">PRIMAS PROPUESTAS</td>
-        @foreach ($lineItemsData as $data)
-            <td>&nbsp;</td>
-        @endforeach
-    </tr>
-
-    <tr>
-        <td style="font-weight: bold;">&nbsp;</td>
-        @foreach ($lineItemsData as $data)
-            <td style="font-weight: bold;">{{ $data['vendorName'] }}</td>
-        @endforeach
-    </tr>
-
-    <tr>
-        <td style="font-weight: bold;">Prima {{ $cotizacion->getFieldValue('Tipo_de_pago') }}</td>
-        @foreach ($lineItemsData as $data)
-            <td>{{ number_format($data['monthlyTotal'], 2) }}</td>
-        @endforeach
-    </tr>
 </table>
 
 <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
@@ -233,7 +222,8 @@
             </p>
 
             <p>
-                b) Las aseguradoras se reservan el derecho para realizar variación de prima y coberturas en esta cotización de seguros
+                b) Las aseguradoras se reservan el derecho para realizar variación de prima y coberturas en esta
+                cotización de seguros
                 suscrita con el cliente.
             </p>
 
@@ -245,18 +235,21 @@
             </p>
 
             <p>
-                <b>Vigencia:</b> Por el período del préstamo.
+                <b>Al firmar acepta todas las condiciones detalladas en esta cotización de la aseguradora seleccionada</b>
             </p>
 
-            <p>
-                He leído y estoy de acuerdo en seleccionar la aseguradora: ________________________________
-            </p>
-
-            <p>
-                Al firmar acepta todas las condiciones detalladas en esta cotización de la aseguradora
-                seleccionada.
-            </p>
-
+            <table style="width: 100%; border: none; border-collapse: collapse;">
+                <tr>
+                    <td style="width: 50%; border: none; padding: 10px; vertical-align: top;">
+                        ________________________________ <br>
+                        Firma Autorizada
+                    </td>
+                    <td style="width: 50%; border: none; padding: 10px; vertical-align: top;">
+                        ________________________________ <br>
+                        Nombre o Firma del asegurado
+                    </td>
+                </tr>
+            </table>
         </td>
     </tr>
 </table>
