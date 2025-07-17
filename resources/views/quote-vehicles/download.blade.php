@@ -82,9 +82,9 @@
         <td style="text-align:left; font-weight: bold;">Dirección:</td>
         <td style="text-align:left;"><p style="font-size: 8px">{{ $cotizacion->getFieldValue('Direcci_n') }}</p></td>
         <td style="text-align:left; font-weight: bold;">Uso:</td>
-        <td style="text-align:left;">{{ $cotizacion->getFieldValue('Uso') }}</td>
+        <td style="text-align:left;">{{ $quoteVehicle->vehicleUse->name }}</td>
         <td style="text-align:left; font-weight: bold;">Teléfono:</td>
-        <td style="text-align:left;">{{ $cotizacion->getFieldValue('Tel_Residencia') }}</td>
+        <td style="text-align:left;">{{ $quoteVehicle->quote->customer->home_phone }}</td>
     </tr>
     <tr>
         <td style="text-align:left; font-weight: bold;">Tipo de vehículo:</td>

@@ -55,7 +55,7 @@
     }
 @endphp
 @if($logoBase64)
-    <img src="{{ $logoBase64 }}" width="90" height="70" alt="">
+    <img src="{{ $logoBase64 }}" width="150" height="50" alt="">
 @endif
 
 <h3 style="text-align:center;">EMISIÓN DE SEGUROS</h3>
@@ -84,9 +84,9 @@
         <td style="text-align:left; font-weight: bold;">Dirección:</td>
         <td style="text-align:left;"><p style="font-size: 8px">{{ $cotizacion->getFieldValue('Direcci_n') }}</p></td>
         <td style="text-align:left; font-weight: bold;">Uso:</td>
-        <td style="text-align:left;">{{ $cotizacion->getFieldValue('Uso') }}</td>
+        <td style="text-align:left;">{{ $quoteVehicle->vehicleUse->name }}</td>
         <td style="text-align:left; font-weight: bold;">Teléfono:</td>
-        <td style="text-align:left;">{{ $cotizacion->getFieldValue('Tel_Residencia') }}</td>
+        <td style="text-align:left;">{{ $quoteVehicle->quote->customer->home_phone }}</td>
     </tr>
     <tr>
         <td style="text-align:left; font-weight: bold;">Tipo de vehículo:</td>
@@ -216,26 +216,82 @@
         <td style="padding: 10px;">
 
             <p>
-                a) Las aseguradoras, al efectuar su proceso de evaluación de riesgo, se reservan el derecho de
-                aceptación del mismo. En caso de que la aseguradora seleccionada decline el riesgo, el cliente
-                será notificado y deberá escoger otra aseguradora que haya presentado cotización.
+                A) Autorizo que la prima correspondiente a los seguros aceptados por mi persona sean adicionadas a la
+                cuota del préstamo otorgado a mi favor por
+                Banco Múltiple Caribe, S. A., hasta sus intereses, entidad que ha asumido la responsabilidad de entregar
+                a la aseguradora dicha partida, de
+                conformidad a acuerdo entre ambas partes.
             </p>
 
             <p>
-                b) Las aseguradoras se reservan el derecho para realizar variación de prima y coberturas en esta
-                cotización de seguros
-                suscrita con el cliente.
+                B) Por este medio, les autorizo endosar mi póliza de Vehículo No. Auto-1451118 por el monto de RD$
+                820,000.00 a favor de Banco Múltiple Caribe, S.
+                A., hasta sus intereses.
             </p>
 
             <p>
-                c) <b>Exclusión por mora:</b><br>
-                El cliente que presente un atraso de más de 120 días será excluido de la póliza de vehículos.
-                Tras el pago, deberá pasar por una sucursal de Banco Caribe para realizar la re-inspección del
-                vehículo. De no hacerlo, continuará sin cobertura de póliza.
+                C) La cobertura otorgada bajo esta póliza queda condicionada a las cláusulas y condiciones especificadas
+                en los anexos, los cuales han sido
+                incluidos en la póliza definitiva, cuyas condiciones completas están contenidas en la copia que reposa
+                en la entidad financiera y aseguradora.
+            </p>
+
+            <ul>
+                <li>Podrán consultarla a través de la página de internet www.bancocaribe.com.do/seguroscaribe/vehiculos.</li>
+                <li>Las condiciones generales de la póliza podrán ser solicitadas en Monumental de Seguros. Puede dirigirse a su oficina principal en la Av. Max
+                    Enrique Ureña No. 459, Santo Domingo, o contactarse al 809-487-0000.</li>
+                <li>Puede contactarse con Sentinel corredores de seguros al 809-732-0202 o dirigirse a su oficina en la calle Cesar A. Canó No. 354. Las praderas.
+                    Santo Domingo.</li>
+            </ul>
+
+            <p>
+                D) La cobertura de vida cubrirá el préstamo del deudor de Banco Caribe hasta el saldo insoluto y hasta sus intereses, sin exceder los RD$300,000.00,
+                según las condiciones generales de la póliza.
             </p>
 
             <p>
-                <b>Al firmar acepta todas las condiciones detalladas en esta cotización de la aseguradora seleccionada</b>
+                E) La cobertura de últimos gastos indicada en este certificado indemnizará al beneficiario (declarado en la solicitud de vida) en el momento del
+                fallecimiento del asegurado y deudor de Banco Caribe, siempre que el valor adeudado y hasta sus intereses no excedan los RD$300,000.00, según
+                las condiciones generales de la póliza.
+            </p>
+
+            <p>
+                F) Los asegurados deberán comunicar al banco y a la aseguradora cualquier cambio de propietario del vehículo asegurado, así como también en
+                caso de que el vehículo asegurado sea sustituido por otro, de acuerdo con la política del banco.
+            </p>
+
+            <p>
+                G) En caso de ocurrir un accidente cubierto bajo las condiciones de esta póliza cuya reparación requiera la sustitución de partes, piezas y accesorios
+                del vehículo asegurado, si dichas partes, piezas y accesorios no pueden ser suministradas por falta de existencias en los distribuidores del país, La
+                Monumental de Seguros no será responsable del sobreprecio que se produzca para obtenerlas en mercados extranjeros ni de las demoras generadas
+                en el proceso de importación de las mismas. Se entiende expresamente que en ningún caso dichas demoras obligarán a la aseguradora a la
+                liquidación del vehículo asegurado si aplica.
+            </p>
+
+            <p>
+                H) En los casos de salvamento, la aseguradora se reserva el derecho de cubrir únicamente la deuda del siniestro de acuerdo con el valor del vehículo en el mercado al momento del evento.
+            </p>
+
+            <p>
+                I) El salvamento al 100% es propiedad de la compañía de seguros una vez se haya indemnizado el valor asegurado.
+            </p>
+
+            <p>
+                J) En caso de accidente, el asegurado deberá proteger el vehículo asegurado contra toda pérdida o daño adicional. Cualquier daño que ocurra,
+                directa o indirectamente, por falta de protección por parte del asegurado no será indemnizable bajo esta póliza.
+            </p>
+
+            <p>
+                <b>K) Exclusión por mora:</b>
+            </p>
+
+            <p>
+                El cliente que presente un atraso de más de 120 días será excluido de la póliza de vehículos. Efectuado el pago, el cliente deberá pasar por una
+                sucursal de Banco Caribe, donde se realizará la reinspección del vehículo. Si no procede con la misma, continuará sin cobertura de póliza.
+            </p>
+
+            <p>
+                L) Vigencia: La póliza estará válida hasta la cancelación del préstamo.
             </p>
 
             <table style="width: 100%; border: none; border-collapse: collapse;">
