@@ -19,12 +19,12 @@
 
         table {
             width: 100%;
-
+            border-collapse: collapse;
             margin-bottom: 20px;
         }
 
         th, td {
-            border: 1px solid #000;
+            border: none;
             padding: 6px;
             width: 16.66%;
         }
@@ -153,12 +153,12 @@
     ];
 @endphp
 
-<table style="width: 100%; border: 1px solid #000;">
+<table style="width: 100%; border: none; border-collapse: collapse;">
     @foreach ($coverageRows as $row)
         <tr @isset($row['style'] ) style="{{ $row['style'] }}" @endisset>
             <td style="border: none; font-weight: bold;">{{ $row['label'] }}</td>
             @foreach ($lineItemsData as $data)
-                <td>
+                                    <td style="border: none;">
                     @switch($row['type'])
                         @case('text')
                             @if ($row['field'] === 'vendorName')

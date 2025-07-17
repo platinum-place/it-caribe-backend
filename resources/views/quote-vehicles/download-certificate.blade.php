@@ -24,7 +24,7 @@
         }
 
         th, td {
-            border: 1px solid #000;
+            border: none;
             padding: 6px;
             width: 16.66%;
         }
@@ -62,7 +62,7 @@
 
 <h4 style="text-align:right;">Póliza No.: {{ $plan->getFieldValue("P_liza") }}</h4>
 
-<table>
+    <table style="border: none; border-collapse: collapse;">
     <tbody>
     <tr>
         <td style="text-align:left; font-weight: bold;">Ramo/Producto:</td>
