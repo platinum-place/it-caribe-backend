@@ -213,9 +213,9 @@
 
 <div style="page-break-before: always;"></div>
 
-<table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+<table style="width: 100%; border-collapse: collapse; font-size: 12px; border: none;">
     <tr>
-        <td style="padding: 10px;">
+        <td style="padding: 10px; border: none;">
             <p>
                 A) Autorizo que la prima correspondiente a los seguros aceptados por mi persona sean adicionadas a la
                 cuota del préstamo otorgado a mi favor por
@@ -473,6 +473,25 @@
                 de nuestras oficinas-Contrato registrado en Pro consumidor bajo
                 resolución No. 275
             </p>
+        </td>
+    </tr>
+</table>
+
+<div style="height: 100px;"></div>
+
+<table style="width: 100%; border: none; border-collapse: collapse;">
+    <tr>
+        <td style="width: 50%; border: none; padding: 10px; vertical-align: top;">
+            ________________________________ <br>
+            Firma y sello autorizado
+        </td>
+        <td style="width: 50%; border: none; padding: 10px; vertical-align: top;">
+            ________________________________ <br>
+            Fecha
+        </td>
+        <td style="width: 50%; border: none; padding: 10px; vertical-align: top;">
+            ________________________________ <br>
+            Nombre o Firma del asegurado
         </td>
     </tr>
 </table>
