@@ -34,22 +34,7 @@ class CreateQuoteVehicle extends CreateRecord
                 Wizard::make([
                     QuoteVehicleResource\Components\Forms\EstimateWizardForm::make(),
                     QuoteVehicleResource\Components\Forms\CustomerWizardForm::make(),
-                    Wizard\Step::make('Datos del vehículo')
-                        ->schema([
-                            TextInput::make('chassis')
-                                ->label('Chasis')
-                                ->required(),
-                            TextInput::make('license_plate')
-                                ->label('Placa'),
-                            Select::make('vehicle_colors')
-                                ->label('Color')
-                                ->options(VehicleColor::pluck('name', 'id'))
-                                ->multiple(),
-                            Select::make('vehicle_activity_id')
-                                ->label('Actividad del Vehículo')
-                                ->options(VehicleActivity::pluck('name', 'id')),
-                        ])
-                        ->columns(),
+                    QuoteVehicleResource\Components\Forms\VehicleWizardForm::make(),
                 ])
                     ->columnSpanFull(),
             ]);

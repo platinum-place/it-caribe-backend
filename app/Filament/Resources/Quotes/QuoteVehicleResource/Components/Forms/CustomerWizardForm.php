@@ -10,7 +10,7 @@ class CustomerWizardForm
 {
     public static function make(): Wizard\Step
     {
-        return Wizard\Step::make('Datos del cliente')
+        return Wizard\Step::make(__('Customer'))
             ->schema([
                 TextInput::make('first_name')
                     ->translateLabel()

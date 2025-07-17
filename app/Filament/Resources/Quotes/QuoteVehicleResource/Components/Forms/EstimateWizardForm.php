@@ -35,12 +35,12 @@ class EstimateWizardForm
                             $set('vehicle_type_id', null);
                             $set('cotizacion', null);
 
-                            $estimate = app(EstimateQuoteVehicle::class)->estimate(
-                                $get('vehicle_amount'),
-                                $get('vehicle_year')
-                            );
-
-                            dd($estimate);
+//                            $estimate = app(EstimateQuoteVehicle::class)->estimate(
+//                                $get('vehicle_amount'),
+//                                $get('vehicle_year')
+//                            );
+//
+//                            dd($estimate);
 
                             $libreria = new Cotizaciones;
 
