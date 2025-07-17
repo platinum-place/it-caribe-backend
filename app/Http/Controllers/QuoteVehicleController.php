@@ -52,7 +52,6 @@ class QuoteVehicleController extends Controller
     public function download(QuoteVehicle $quoteVehicle)
     {
         $libreria = new Zoho;
-        // obtener datos de la cotizacion
         $cotizacion = $libreria->getRecord('Quotes', $quoteVehicle->quote->id_crm);
 
         $pdf = Pdf::loadView('quote-vehicles.download', [
@@ -68,13 +67,16 @@ class QuoteVehicleController extends Controller
     public function downloadCompleted(QuoteVehicle $quoteVehicle)
     {
         $libreria = new Zoho;
-        // obtener datos de la cotizacion
         $cotizacion = $libreria->getRecord('Quotes', $quoteVehicle->quote->id_crm);
+        $plan = $libreria->getRecord('Products', $cotizacion->getFieldValue('Coberturas')->getEntityId());
+        $aseguradora = $libreria->getRecord('Vendors', $plan->getFieldValue('Vendor_Name')->getEntityId());
 
         $pdf = Pdf::loadView('quote-vehicles.download-completed', [
             'quoteVehicle' => $quoteVehicle,
             'cotizacion' => $cotizacion,
+            'plan' => $plan,
             'libreria' => $libreria,
+            'aseguradora' => $aseguradora,
             'name' => 'Cotización No. '.$cotizacion->getFieldValue('Quote_Number'),
         ]);
 

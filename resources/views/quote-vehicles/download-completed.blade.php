@@ -46,7 +46,7 @@
 <body>
 
 @php
-    $logoPath = public_path('img/logo.png');
+    $logoPath =  public_path("img/aseguradoras/" . $plan->getFieldValue("Vendor_Name")->getLookupLabel() . ".png");
     $logoBase64 = '';
     if (file_exists($logoPath)) {
         $logoData = base64_encode(file_get_contents($logoPath));
@@ -55,7 +55,7 @@
     }
 @endphp
 @if($logoBase64)
-    <img src="{{ $logoBase64 }}" width="70" height="70" alt="">
+    <img src="{{ $logoBase64 }}" width="70" height="90" alt="">
 @endif
 
 <h3 style="text-align:center;">COTIZACIÓN DE SEGUROS</h3>

@@ -17,6 +17,7 @@ class Quote extends Model
     protected $fillable = [
         'user_id','quote_type_id', 'quote_status_id', 'customer_id',
         'attachments', 'start_date', 'end_date', 'id_crm',
+        'responsible_id'
     ];
 
     protected $casts = [
@@ -28,6 +29,11 @@ class Quote extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function responsible(): BelongsTo
+    {
+        return $this->belongsTo(User::class,'responsible_id');
     }
 
     public function type(): BelongsTo

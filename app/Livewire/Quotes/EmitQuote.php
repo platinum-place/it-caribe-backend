@@ -106,6 +106,7 @@ class EmitQuote extends Component implements HasForms
         $quote->update([
             'attachments' => $data['attachments'] ?? [],
             'quote_status_id' => QuoteStatus::APPROVED->value,
+            'responsible_id' => auth()->id(),
         ]);
 
         $line->update([
