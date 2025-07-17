@@ -127,7 +127,7 @@
     }
 
     $coverageRows = [
-        ['label' => 'Coberturas', 'field' => 'vendorName', 'type' => 'text'],
+        ['label' => 'Coberturas', 'field' => 'vendorName', 'type' => 'text','style'=>'font-weight: bold;"'],
         ['label' => 'Lesiones y/o muerte 1 persona', 'field' => 'Lesiones_muerte_1_pers', 'type' => 'number'],
         ['label' => 'Lesiones y/o muerte mas de 1 persona', 'field' => 'Lesiones_muerte_m_s_1_pers', 'type' => 'number'],
         ['label' => 'Daños a la propiedad ajena', 'field' => 'Da_os_propiedad_ajena', 'type' => 'number'],
@@ -144,7 +144,7 @@
         ['label' => 'Plan renta', 'field' => 'Renta_veh_culo', 'type' => 'assistance'],
         ['label' => 'Vida (Cubre el saldo insoluto hasta)', 'field' => 'Vida', 'type' => 'number'],
         ['label' => 'Últimos gastos', 'field' => 'ltimos_gastos', 'type' => 'number'],
-        ['label' => 'Deducible', 'field' => 'Deducible', 'type' => 'text'],
+        ['label' => 'Deducible', 'field' => 'Deducible', 'type' => 'text', 'style'=>'font-weight: bold;"'],
         ['label' => 'Cruz Roja Dominicana (CRD)', 'field' => 'Cruz_roja', 'type' => 'included'],
         ['label' => 'Cobertura Extra', 'field' => 'Cobertura_extra', 'type' => 'optional_number'],
         ['label' => 'Cobertura Pink', 'field' => 'Cobertura_pink', 'type' => 'optional_number'],
@@ -154,7 +154,7 @@
 
 <table style="width: 100%; border: 1px solid #000; border-collapse: collapse;">
     @foreach ($coverageRows as $row)
-        <tr>
+        <tr @isset($row['style'] ) style="{{ $row['style'] }}" @endisset>
             <td style="font-weight: bold;">{{ $row['label'] }}</td>
             @foreach ($lineItemsData as $data)
                 <td>
@@ -257,6 +257,21 @@
                 seleccionada.
             </p>
 
+        </td>
+    </tr>
+</table>
+
+<div style="height: 100px;"></div>
+
+<table style="width: 100%; border: none; border-collapse: collapse;">
+    <tr>
+        <td style="width: 50%; border: none; padding: 10px; vertical-align: top;">
+            ________________________________ <br>
+            Firma Autorizada
+        </td>
+        <td style="width: 50%; border: none; padding: 10px; vertical-align: top;">
+            ________________________________ <br>
+            Nombre o Firma del asegurado
         </td>
     </tr>
 </table>

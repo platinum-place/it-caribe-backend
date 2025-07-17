@@ -19,6 +19,9 @@ class VehicleUseSeeder extends Seeder
             [
                 'name' => 'Privado',
             ],
+            [
+                'name' => 'Comercial',
+            ],
         ];
 
         foreach ($data as $item) {
