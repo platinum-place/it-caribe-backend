@@ -349,15 +349,130 @@
             </p>
 
             <p>
-                2. Robo y hurto de herramientas y/o cualquier propiedad que se transporten en el vehículo asegurado.
+                2. Robo y hurto de herramientas y/o cualquier propiedad que se
+                transporten en el vehículo asegurado.
+            </p>
+
+            <p>
+                3. Daños incurridos a consecuencia de la negligencia o descuido del
+                asegurado en el mantenimiento del vehículo asegurado.
+            </p>
+
+            <p>
+                4. Daños ocasionados, si el vehículo está siendo utilizado para fines que
+                no sea el uso privado.
+            </p>
+
+            <p>
+                5. Daños ocasionados, si el vehículo está siendo utilizado para proactivas
+                de aprendizaje o de entrenamiento o fuese utilizado para transporte de
+                explosivos o materiales inflamables.
+            </p>
+
+            <p>
+                6. Daños ocurridos mientras el vehículo de motor fuese conducido por
+                personas sin licencia de conducir o que no estén capacitadas y
+                autorizadas legalmente para dirigir este tipo de vehículos; o que se
+                encuentre bajo influencia de bebidas embriagantes o drogas toxicas o
+                heroicas.
+            </p>
+
+            <p>
+                7. Asegurados extranjeros. En caso de adquirir su residencia en la Rep.
+                Dom. estos deben estar sometidos a las leyes de la Rep. Dom.
+            </p>
+
+            <p>
+                8. Daños causados por sistemas de gas o combustibles alternos,
+                instalados en el vehículo asegurado, a menos que haya sido señalado
+                por escrito por el asegurado y se haga constar en la póliza mediante
+                endoso.
+            </p>
+
+            <h4>III. PUNTOS IMPORTANTE DE SU POLIZA:</h4>
+
+            <p>
+                • La prima es revisable y está sujeta a cambios sin previo aviso por la
+                compañía.
+            </p>
+
+            <p>
+                • Valor Asegurado: El valor asegurado del vehículo debe ser igual a su
+                valor real. Si el valor asegurado es inferior al valor real en el mercado, el
+                asegurado se convierte en su propio asegurador de la parte no cubierta.
+                La compañía aseguradora solo será responsable por aquella parte de la
+                perdida en la proporción en la que tenga el valor real con la suma
+                asegurada.
+            </p>
+
+            <p>
+                • Pago de una reclamación: La compañía puede optar libremente a
+                efectuar el pago de una reclamación por uno de los siguientes modos:
             </p>
         </td>
         <td style="width: 50%; padding: 10px; vertical-align: top; border: none;">
-            <h4>III.-OTRO TEXTO</h4>
-            <p>3. Daños incurridos a consecuencia de la negligencia o descuido del asegurado en el mantenimiento del
-                vehículo asegurado.</p>
+            <p>
+                • Pagando en efectivo el valor de la pérdida.
+            </p>
 
-            <p>4. Daños ocasionados, si el vehículo está siendo utilizado para fines que no sea el uso privado.</p>
+            <p>
+                • Realizando por su cuenta las reparaciones necesarias.
+            </p>
+
+            <p>
+                • Cancelación de la póliza: Este contrato puede ser cancelado en cualquier
+                momento por la compañía aseguradora sujeto a que se le avise al
+                asegurado 10 días antes de la fecha en que será efectiva.
+            </p>
+
+            <p style="font-weight: bold;">
+                • Deducible: Para los daños propios, la compañía aseguradora
+                indemnizara al asegurado descontando el deducible aplicable a
+                cada cobertura.
+            </p>
+
+            <p>
+                • Gastos incurridos por el asegurado: Excepto gastos médicos de primeros
+                auxilios o de protección a un vehículo afectado por un accidente cubierto,
+                el asegurado no puede incurrir en gastos de reparación u otros con
+                previa autorización del asegurador.
+            </p>
+
+            <p>
+                • Valor Máximo del vehículo asegurado: Es el valor convenido entre el
+                asegurador y la compañía aseguradora y que figura en las declaraciones
+                de esta póliza. Como consecuencia de la depreciación del vehículo, este
+                valor se reducirá en un 1.75% mensual para todos los tipos de vehículos.
+            </p>
+
+            <p>
+                • Nulidad de Cobertura: El presente seguro quedara nulo en sí mismo por
+                cualquier declaración falsa e inexacta, o, por ocultación de hechos o
+                circunstancias, o por fraude al hacerse una reclamación.
+            </p>
+
+            <p>
+                El solicitante autoriza expresa e irrevocablemente a Monumental a
+                suministrar a centros de información crediticia la información patrimonial
+                y extramatrimonial necesarios a los fines de evaluación de crédito, por
+                parte de otras instituciones suscriptores de dicho centros de información,
+                reconociendo y garantizando que la revelación de dichas informaciones
+                por parte de Monumental y por sus respectivos empleados, funcionarios y
+                accionistas, no conllevará violación de secreto profesional a los efectos
+                del Articulo 377 de Código Penal, ni bajo ningún otro texto legal, al tiempo
+                de renuncia expresa y formalmente al ejercicio de cualesquiera acciones
+                o demandas a los fines de la reclamación de daños y perjuicios por dicha
+                causa, o por el suministro de información inexacta y prometiendo la
+                sumisión de sus representantes, accionistas y demás causas habitantes
+                a lo pactado en este Articulo en virtud de las disposiciones del Articulo
+                1120 del código civil.
+            </p>
+
+            <p>
+                Para conocer las condiciones generales de su póliza, contacte con una
+                de nuestras oficinas-Contrato registrado en Pro consumidor bajo
+                resolución No. 275
+            </p>
         </td>
     </tr>
 </table>
