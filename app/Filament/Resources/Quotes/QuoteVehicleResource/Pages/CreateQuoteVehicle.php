@@ -58,6 +58,10 @@ class CreateQuoteVehicle extends CreateRecord
                                 Action::make('generateEstimate')
                                     ->label('Generar Cotización')
                                     ->action(function (Set $set, Get $get) {
+                                        $set('planes', null);
+                                        $set('vehicle_type_id', null);
+                                        $set('cotizacion', null);
+
 //                                        $estimate = app(EstimateQuoteVehicle::class)->estimate(
 //                                            $get('vehicle_amount'),
 //                                            $get('vehicle_year')
