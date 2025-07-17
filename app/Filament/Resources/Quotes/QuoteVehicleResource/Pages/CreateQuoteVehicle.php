@@ -6,9 +6,6 @@ use App\Enums\Quotes\QuoteLineStatus;
 use App\Enums\Quotes\QuoteStatus;
 use App\Enums\Quotes\QuoteType;
 use App\Filament\Resources\Quotes\QuoteVehicleResource;
-use App\Helpers\Cotizacion;
-use App\Helpers\Cotizaciones;
-use App\Helpers\CotizarAuto;
 use App\Helpers\Zoho;
 use App\Models\Customer;
 use App\Models\Quotes\Quote;
@@ -18,22 +15,10 @@ use App\Models\Quotes\QuoteVehicleLine;
 use App\Models\Vehicles\Vehicle;
 use App\Models\Vehicles\VehicleActivity;
 use App\Models\Vehicles\VehicleColor;
-use App\Models\Vehicles\VehicleMake;
-use App\Models\Vehicles\VehicleModel;
-use App\Models\Vehicles\VehicleUse;
-use App\Services\Quotes\EstimateQuoteVehicle;
-use App\Services\ZohoCRMService;
-use Filament\Forms\Components\Actions;
-use Filament\Forms\Components\Actions\Action;
-use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\Hidden;
-use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Wizard;
 use Filament\Forms\Form;
-use Filament\Forms\Get;
-use Filament\Forms\Set;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -47,126 +32,8 @@ class CreateQuoteVehicle extends CreateRecord
         return $form
             ->schema([
                 Wizard::make([
-                    Wizard\Step::make(__('Estimate'))
-                        ->schema([
-                            QuoteVehicleResource\Components\Forms\EstimateVehicleForm::make(),
-
-                            Actions::make([
-                                Action::make('generateEstimate')
-                                    ->label('Generar Cotización')
-                                    ->action(function (Set $set, Get $get) {
-                                        $set('planes', null);
-                                        $set('vehicle_type_id', null);
-                                        $set('cotizacion', null);
-
-                                        $estimate = app(EstimateQuoteVehicle::class)->estimate(
-                                            $get('vehicle_amount'),
-                                            $get('vehicle_year')
-                                        );
-
-                                        dd($estimate);
-
-                                        $libreria = new Cotizaciones;
-
-                                        $cotizacion = new Cotizacion;
-
-                                        $cotizacion->suma = $get('vehicle_amount');
-
-                                        $cotizacion->plan = $get('plan');
-                                        $cotizacion->ano = $get('vehicle_year');
-                                        $cotizacion->uso = VehicleUse::find($get('vehicle_use_id'))->description;
-                                        $cotizacion->estado = $get('estado');
-                                        $cotizacion->tipo_pago = $get('tipo');
-                                        $cotizacion->tipo_equipo = $get('tipo_equipo');
-
-                                        $model = VehicleModel::find($get('vehicle_model_id'));
-
-                                        $criteria = 'Name:equals:'.VehicleMake::find($get('vehicle_make_id'))->name;
-                                        $vehicleMake = app(ZohoCRMService::class)->searchRecords('Marcas', $criteria);
-
-                                        $criteria = 'Name:equals:'.$model->name;
-                                        $vehicleModel = app(ZohoCRMService::class)->searchRecords('Modelos', $criteria);
-
-                                        $cotizacion->marcaid = $vehicleMake['data'][0]['id'];
-                                        $cotizacion->modeloid = $vehicleModel['data'][0]['id'];
-                                        $cotizacion->modelotipo = $model->type->name;
-
-                                        $cotizar = new CotizarAuto($cotizacion, $libreria);
-
-                                        $cotizar->cotizar_planes();
-
-                                        $results = $cotizacion->planes;
-
-                                        $set('planes', $results);
-                                        $set('vehicle_type_id', $model->vehicle_type_id);
-                                        $set('cotizacion', json_decode(json_encode($cotizacion), true));
-                                    })
-                                    ->color('primary')
-                                    ->icon('heroicon-o-calculator'),
-                            ])
-                                ->columnSpanFull(),
-
-                            Repeater::make('planes')
-                                ->hiddenLabel()
-                                ->schema([
-                                    TextInput::make('aseguradora')
-                                        ->label('Aseguradora')
-                                        ->disabled()
-                                        ->dehydrated(false),
-
-                                    TextInput::make('total')
-                                        ->label('Total')
-                                        ->disabled()
-                                        ->dehydrated(false),
-
-                                    TextInput::make('comentario')
-                                        ->label('Comentario')
-                                        ->disabled()
-                                        ->dehydrated(false),
-                                ])
-                                ->columns(3)
-                                ->deletable(false)
-                                ->reorderable(false)
-                                ->addable(false)
-                                ->columnSpanFull(),
-
-                            Hidden::make('cotizacion'),
-                        ])
-                        ->columns(),
-                    Wizard\Step::make('Datos del cliente')
-                        ->schema([
-                            TextInput::make('first_name')
-                                ->label('Nombre')
-                                ->required(),
-                            TextInput::make('last_name')
-                                ->label('Apellido')
-                                ->required(),
-                            TextInput::make('identity_number')
-                                ->label('RNC/Cédula')
-                                ->required(),
-                            DatePicker::make('birth_date')
-                                ->required()
-                                ->label('Fecha de Nacimiento'),
-                            TextInput::make('correo')
-                                ->label('Correo Electrónico')
-                                ->email(),
-                            TextInput::make('mobile_phone')
-                                ->label('Tel. Celular')
-                                ->tel()
-                                ->mask('999-999-9999'),
-                            TextInput::make('home_phone')
-                                ->label('Tel. Residencial')
-                                ->tel()
-                                ->mask('999-999-9999'),
-                            TextInput::make('work_phone')
-                                ->label('Tel. Trabajo')
-                                ->tel()
-                                ->mask('999-999-9999'),
-                            TextInput::make('address')
-                                ->label('Dirección')
-                                ->columnSpanFull(),
-                        ])
-                        ->columns(),
+                    QuoteVehicleResource\Components\Forms\EstimateWizardForm::make(),
+                    QuoteVehicleResource\Components\Forms\CustomerWizardForm::make(),
                     Wizard\Step::make('Datos del vehículo')
                         ->schema([
                             TextInput::make('chassis')

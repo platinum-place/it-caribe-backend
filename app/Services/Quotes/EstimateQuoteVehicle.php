@@ -26,14 +26,13 @@ class EstimateQuoteVehicle
 
             $amount = $vehicleAmount * ($rate / 100);
             $taxes = $amount / 1.16;
-            $amountTaxed = $amount - $taxes;
 
             $result[] = [
                 'name' => $product['Vendor_Name']['name'],
                 'unit_price' => $amount,
                 'quantity' => 1,
                 'subtotal' => $amount,
-                'amount_taxed' => $amountTaxed,
+                'amount_taxed' => $amount - $taxes,
                 'tax_rate' => 16,
                 'tax_amount' => $taxes,
                 'total' => $amount,

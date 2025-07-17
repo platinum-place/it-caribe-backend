@@ -1,4 +1,13 @@
 {
+    "Generate estimate": "Generar Cotización",
+    "First Name": "Nombre",
+    "Last Name": "Apellido",
+    "Identity Number": "RNC/Cédula",
+    "Birth Date": "Fecha de Nacimiento",
+    "Mobile Phone": "Tel. Celular",
+    "Home Phone": "Tel. Residencial",
+    "Work Phone": "Tel. Trabajo",
+    "Address": "Dirección",
     "Issuance": "Emisión",
     "Documents": "Documentos",
     "Download :name": "Descargar :name",
