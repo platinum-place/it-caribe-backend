@@ -73,6 +73,7 @@ class EstimateVehicleForm
                     ->label('Año')
                     ->numeric()
                     ->required()
+                    ->live()
                     ->minValue(1900)
                     ->maxValue(date('Y', strtotime('+1 year'))),
 
@@ -80,6 +81,7 @@ class EstimateVehicleForm
                     ->label('Suma Asegurada')
                     ->numeric()
                     ->required()
+                    ->live()
                     ->prefix('$'),
 
                 Select::make('plan')
@@ -93,11 +95,13 @@ class EstimateVehicleForm
                         'Empleado' => 'Empleado',
                     ])
                     ->default('Mensual full')
+                    ->live()
                     ->required(),
 
                 Select::make('vehicle_use_id')
                     ->label('Uso')
                     ->options(VehicleUse::pluck('name', 'id'))
+                    ->live()
                     ->required(),
 
                 Select::make('estado')
@@ -107,6 +111,7 @@ class EstimateVehicleForm
                         'Usado' => 'Usado',
                     ])
                     ->default('Nuevo')
+                    ->live()
                     ->required(),
 
                 Select::make('tipo')
@@ -116,10 +121,12 @@ class EstimateVehicleForm
                         'Anual' => 'Anual',
                     ])
                     ->default('Mensual')
+                    ->live()
                     ->required(),
 
                 Select::make('tipo_equipo')
                     ->label('Tipo de motor')
+                    ->live()
                     ->options([
                         '4 cilindros' => '4 cilindros',
                         '6 cilindros' => '6 cilindros',
