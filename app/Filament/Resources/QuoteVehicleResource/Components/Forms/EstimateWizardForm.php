@@ -40,9 +40,7 @@ class EstimateWizardForm
                                 $get('vehicle_year')
                             );
 
-                            dd($estimate);
-
-                            $set('estimate', $results);
+                            $set('estimate', $estimate);
 
                             //                            $libreria = new Cotizaciones;
                             //
@@ -93,11 +91,43 @@ class EstimateWizardForm
                             ->dehydrated(false),
 
                         TextInput::make('amount_taxed')
-                            ->label('Total')
+                            ->numeric()
+                            ->label('Sin impuesto')
                             ->disabled()
                             ->dehydrated(false),
+
+                        TextInput::make('tax_amount')
+                            ->numeric()
+                            ->label('Impuesto')
+                            ->disabled()
+                            ->dehydrated(false),
+
+                        TextInput::make('total')
+                            ->numeric()
+                            ->label('Total anual')
+                            ->disabled()
+                            ->dehydrated(false),
+
+                        TextInput::make('total_monthly')
+                            ->numeric()
+                            ->label('Total mensual')
+                            ->disabled()
+                            ->dehydrated(false),
+
+                        TextInput::make('insurance_rate')
+                            ->numeric()
+                            ->label('Tasa')
+                            ->disabled()
+                            ->dehydrated(false),
+
+                        TextInput::make('error')
+                            ->numeric()
+                            ->label('Comentario')
+                            ->disabled()
+                            ->dehydrated(false)
+                            ->columnSpanFull(),
                     ])
-                    ->columns(3)
+                    ->columns(5)
                     ->deletable(false)
                     ->reorderable(false)
                     ->addable(false)

@@ -8,7 +8,9 @@ use Illuminate\Http\Client\RequestException;
 
 class EstimateQuoteVehicle
 {
-    public function __construct(protected ZohoCRMService $zohoApi) {}
+    public function __construct(protected ZohoCRMService $zohoApi)
+    {
+    }
 
     /**
      * @throws RequestException
@@ -16,7 +18,7 @@ class EstimateQuoteVehicle
      */
     public function estimate(float $vehicleAmount, int $vehicleYear)
     {
-        $criteria = '((Corredor:equals:'. 3222373000092390001 .') and (Product_Category:equals:Auto))';
+        $criteria = '((Corredor:equals:' . 3222373000092390001 . ') and (Product_Category:equals:Auto))';
         $productsResponse = $this->zohoApi->searchRecords('Products', $criteria);
 
         $result = [];
@@ -25,17 +27,20 @@ class EstimateQuoteVehicle
             $rate = $this->getRate($product['id'], $vehicleYear);
 
             $amount = $vehicleAmount * ($rate / 100);
-            $taxes = $amount / 1.16;
+            $taxesAmount = $amount / 1.16;
+            $amountTaxed = $amount - $taxesAmount;
+            $totalMonthly = $amount / 12;
 
             $result[] = [
                 'name' => $product['Vendor_Name']['name'],
                 'unit_price' => $amount,
                 'quantity' => 1,
                 'subtotal' => $amount,
-                'amount_taxed' => $amount - $taxes,
+                'amount_taxed' => $amountTaxed,
                 'tax_rate' => 16,
-                'tax_amount' => $taxes,
+                'tax_amount' => $taxesAmount,
                 'total' => $amount,
+                'total_monthly' => $totalMonthly,
                 'id_crm' => $product['id'],
                 'life_amount' => 220,
                 'insurance_rate' => $rate,
