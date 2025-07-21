@@ -17,8 +17,8 @@ return new class extends Migration
             $table->softDeletes();
             $table->string('name');
             $table->string('description')->nullable();
-            $table->foreignIdFor(\App\Models\Quotes\Quote::class)->constrained();
-            $table->foreignIdFor(\App\Models\Quotes\QuoteLineStatus::class)->constrained();
+            $table->foreignIdFor(\App\Models\Quote::class)->constrained();
+            $table->foreignIdFor(\App\Models\QuoteLineStatus::class)->constrained();
             $table->string('id_crm')->nullable();
             $table->decimal('unit_price', 18, 2);
             $table->integer('quantity');

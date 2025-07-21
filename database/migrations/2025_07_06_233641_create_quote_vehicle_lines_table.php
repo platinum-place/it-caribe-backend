@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->softDeletes();
-            $table->foreignIdFor(\App\Models\Quotes\QuoteVehicle::class)->constrained();
-            $table->foreignIdFor(\App\Models\Quotes\QuoteLine::class)->constrained();
+            $table->foreignIdFor(\App\Models\QuoteVehicle::class)->constrained();
+            $table->foreignIdFor(\App\Models\QuoteLine::class)->constrained();
             $table->decimal('life_amount', 18, 2)->default(0);
         });
     }

@@ -16,8 +16,8 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->string('name');
-            $table->foreignIdFor(\App\Models\Vehicles\VehicleMake::class)->constrained();
-            $table->foreignIdFor(\App\Models\Vehicles\VehicleType::class)->constrained();
+            $table->foreignIdFor(\App\Models\VehicleMake::class)->constrained();
+            $table->foreignIdFor(\App\Models\VehicleType::class)->constrained();
         });
     }
 

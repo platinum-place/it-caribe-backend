@@ -2,7 +2,7 @@
 
 namespace App\Imports;
 
-use App\Models\Vehicles\VehicleMake;
+use App\Models\VehicleMake;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
