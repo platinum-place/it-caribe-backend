@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\Vehicles\VehicleColorResource\Pages;
 use App\Models\VehicleColor;
 use Filament\Forms;
 use Filament\Forms\Form;

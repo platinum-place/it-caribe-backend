@@ -39,6 +39,7 @@ class EstimateQuoteVehicle
                 'id_crm' => $product['id'],
                 'life_amount' => 220,
                 'insurance_rate' => $rate,
+                'error' => null,
             ];
         }
 
