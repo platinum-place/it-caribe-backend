@@ -3,47 +3,82 @@ FROM php:8.4-fpm
 ARG UID=1000
 ARG GID=1000
 
-WORKDIR /var/www/html
-
 RUN apt-get update && apt-get install -y \
+    git \
+    curl \
     libpng-dev \
-    libjpeg62-turbo-dev \
-    libfreetype6-dev \
     libonig-dev \
     libxml2-dev \
-    libzip-dev \
     libpq-dev \
-    libicu-dev \
+    libzip-dev \
     zip \
     unzip \
-    curl
+    libicu-dev \
+    acl \
+    sudo \
+    gnupg \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-# Install PHP extensions
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg
-RUN docker-php-ext-configure intl
-RUN docker-php-ext-install pdo pdo_pgsql pgsql mbstring exif pcntl bcmath gd xml zip intl
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
+    && apt-get install -y nodejs \
+    && npm install -g npm@latest
 
-# Install Redis extension
-RUN pecl install redis && docker-php-ext-enable redis
+RUN git config --global --add safe.directory /app
 
-# Configure OPcache for performance
-RUN docker-php-ext-install opcache
+RUN docker-php-ext-install \
+    pdo \
+    pdo_pgsql \
+    pgsql \
+    mbstring \
+    exif \
+    pcntl \
+    bcmath \
+    gd \
+    zip \
+    opcache \
+    intl
 
-# Copy PHP configuration
-COPY php.ini /usr/local/etc/php/conf.d/custom.ini
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Configure PHP-FPM
-RUN mkdir -p /usr/local/etc/php-fpm.d
-COPY www.conf /usr/local/etc/php-fpm.d/www.conf
+WORKDIR /app
 
-# Create system user
-RUN groupadd -g $GID laravel && \
-    useradd -u $UID -g laravel -m -s /bin/bash laravel
+RUN usermod -u ${UID} www-data && groupmod -g ${GID} www-data
 
-# Copy entrypoint script
-COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN echo "www-data ALL=(ALL) NOPASSWD: /bin/chown, /bin/chmod, /usr/bin/find" >> /etc/sudoers
+
+RUN mkdir -p /app/storage/logs \
+    && mkdir -p /app/storage/framework/cache \
+    && mkdir -p /app/storage/framework/sessions \
+    && mkdir -p /app/storage/framework/views \
+    && mkdir -p /app/bootstrap/cache
+
+RUN chown -R ${UID}:${GID} /app \
+    && chmod -R 775 /app \
+    && find /app -type d -exec chmod g+s {} \;
+
+RUN sed -i "s/user = www-data/user = www-data/g" /usr/local/etc/php-fpm.d/www.conf \
+    && sed -i "s/group = www-data/group = www-data/g" /usr/local/etc/php-fpm.d/www.conf
+
+USER root
+COPY --chown=${UID}:${GID} . .
+COPY entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/entrypoint.sh
+
+RUN chown -R ${UID}:${GID} /app \
+    && chmod -R 775 /app/storage \
+    && chmod -R 775 /app/bootstrap/cache \
+    && find /app/storage -name "oauth-*.key" -exec chmod 600 {} \; 2>/dev/null || true \
+    && touch /app/storage/logs/laravel.log \
+    && chown ${UID}:${GID} /app/storage/logs/laravel.log \
+    && chmod 664 /app/storage/logs/laravel.log
+
+USER www-data
+
+RUN echo '#!/bin/bash\nphp artisan "$@"\nsudo chown -R 'www-data':'www-data' /app\n' > /app/artisan-wrapper.sh \
+    && chmod +x /app/artisan-wrapper.sh
 
 EXPOSE 9000
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+CMD ["php-fpm"]

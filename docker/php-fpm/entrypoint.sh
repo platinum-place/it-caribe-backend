@@ -1,41 +1,31 @@
 #!/bin/bash
-set -e
 
-# Ensure Laravel directories exist and have correct permissions
-mkdir -p /var/www/html/storage/logs
-mkdir -p /var/www/html/storage/app
-mkdir -p /var/www/html/storage/framework/sessions
-mkdir -p /var/www/html/storage/framework/views
-mkdir -p /var/www/html/storage/framework/cache
-mkdir -p /var/www/html/bootstrap/cache
+UID=${UID:-1000}
+GID=${GID:-1000}
 
-# Set permissions
-chmod -R 775 /var/www/html/storage
-chmod -R 775 /var/www/html/bootstrap/cache
+git config --global --add safe.directory /app
 
-# Fix ownership
-chown -R laravel:laravel /var/www/html/storage
-chown -R laravel:laravel /var/www/html/bootstrap/cache
+mkdir -p /app/storage/logs
+mkdir -p /app/storage/framework/cache
+mkdir -p /app/storage/framework/sessions
+mkdir -p /app/storage/framework/views
+mkdir -p /app/bootstrap/cache
 
-# Create and set permissions for PHP-FPM log directory
-mkdir -p /var/log/php-fpm
-chmod -R 777 /var/log/php-fpm
-chown -R laravel:laravel /var/log/php-fpm
+touch /app/storage/logs/laravel.log
 
-# Handle Laravel Passport keys if they exist
-if [ -f /var/www/html/storage/oauth-private.key ]; then
-    chmod 600 /var/www/html/storage/oauth-private.key
-    chown laravel:laravel /var/www/html/storage/oauth-private.key
-fi
+umask 0002
 
-if [ -f /var/www/html/storage/oauth-public.key ]; then
-    chmod 600 /var/www/html/storage/oauth-public.key
-    chown laravel:laravel /var/www/html/storage/oauth-public.key
-fi
+sudo chown -R www-data:www-data /app
+sudo chmod -R 775 /app/storage
+sudo chmod -R 775 /app/bootstrap/cache
+sudo chmod 664 /app/storage/logs/laravel.log
 
-# Make sure PHP-FPM can write to its log files
-touch /proc/self/fd/2
-chmod 666 /proc/self/fd/2
+sudo find /app -type d -exec chmod g+s {} \;
 
-# Start PHP-FPM
-exec php-fpm --allow-to-run-as-root
+sudo find /app/storage -name "oauth-*.key" -exec chmod 600 {} \; 2>/dev/null || true
+sudo find /app/storage -name "oauth-*.key" -exec chown www-data:www-data {} \; 2>/dev/null || true
+
+export UID
+export GID
+
+exec "$@"

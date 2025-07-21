@@ -14,14 +14,13 @@ services:
             - app-network
 
     nginx:
-        build:
-            context: ./docker/nginx
-            dockerfile: Dockerfile
-        container_name: ${APP_NAME}-nginx
+        image: docker.io/bitnami/nginx:1.29
         ports:
             - '80:8080'
+        container_name: ${APP_NAME}-nginx
         volumes:
-            - ./:/var/www/html
+            - ./:/app
+            - ./docker/nginx/laravel.conf:/opt/bitnami/nginx/conf/server_blocks/laravel.conf:ro
         networks:
             - app-network
 
@@ -33,29 +32,29 @@ services:
                 UID: ${UID:-1000}
                 GID: ${GID:-1000}
         container_name: ${APP_NAME}-php-fpm
+        ports:
+            - '9000:9000'
         environment:
             - UID=${UID:-1000}
             - GID=${GID:-1000}
         volumes:
-            - ./:/var/www/html
+            - ./:/app
         networks:
             - app-network
 
-    php-cli:
-        tty: true
-        stdin_open: true
+    worker:
         build:
-            context: ./docker/php-cli
+            context: ./docker/worker
             dockerfile: Dockerfile
             args:
                 UID: ${UID:-1000}
                 GID: ${GID:-1000}
-        container_name: ${APP_NAME}-php-cli
+        container_name: ${APP_NAME}-worker
         environment:
-            - UID=${UID:-1000}
-            - GID=${GID:-1000}
+            UID: ${UID:-1000}
+            GID: ${GID:-1000}
         volumes:
-            - ./:/var/www/html
+            - ./:/app
         networks:
             - app-network
         depends_on:
