@@ -89,7 +89,7 @@ class CreateQuoteVehicle extends CreateRecord
 //        $libreria = new Zoho;
 //        $id = $libreria->createRecords('Quotes', $registro, $data['cotizacion']['planes']);
 
-        return DB::transaction(function () use ($id, $data) {
+        return DB::transaction(function () use ($data) {
             $customer = Customer::create([
                 'first_name' => $data['first_name'],
                 'last_name' => $data['last_name'],
@@ -115,7 +115,6 @@ class CreateQuoteVehicle extends CreateRecord
                 'quote_status_id' => QuoteStatus::PENDING->value,
                 'start_date' => now(),
                 'end_date' => now()->addDays(30),
-                'id_crm' => $id,
                 'customer_id' => $customer->id,
                 'user_id' => auth()->id(),
             ]);

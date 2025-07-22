@@ -42,6 +42,7 @@ class CustomerWizardForm
                 TextInput::make('address')
                     ->translateLabel()
                     ->columnSpanFull(),
-            ]);
+            ])
+            ->columns();
     }
 }
