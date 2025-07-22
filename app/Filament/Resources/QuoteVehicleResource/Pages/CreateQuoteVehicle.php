@@ -38,60 +38,58 @@ class CreateQuoteVehicle extends CreateRecord
 
     protected function handleRecordCreation(array $data): Model
     {
-        $registro = [
-            'Subject' => $data['first_name'].' '.$data['last_name'],
-            'Valid_Till' => date('Y-m-d', strtotime('+30 days')),
-            'Vigencia_desde' => date('Y-m-d'),
-            'Account_Name' => 3222373000092390001,
-            'Contact_Name' => 3222373000203318001,
+//        $registro = [
+//            'Subject' => $data['first_name'] . ' ' . $data['last_name'],
+//            'Valid_Till' => date('Y-m-d', strtotime('+30 days')),
+//            'Vigencia_desde' => date('Y-m-d'),
+//            'Account_Name' => 3222373000092390001,
+//            'Contact_Name' => 3222373000203318001,
+//
+//            // Desde cotizacion
+//            'Construcci_n' => $data['cotizacion']['construccion'] ?? null,
+//            'Riesgo' => $data['cotizacion']['riesgo'] ?? null,
+//            'Quote_Stage' => 'Cotizando',
+//
+//            // Datos personales desde $data
+//            'Nombre' => $data['first_name'] ?? null,
+//            'Apellido' => $data['last_name'] ?? null,
+//            'Fecha_de_nacimiento' => $data['birth_date'] ?? null,
+//            'RNC_C_dula' => $data['identity_number'] ?? null,
+//            'Correo_electr_nico' => $data['correo'] ?? null,
+//            'Direcci_n' => $data['address'] ?? $data['cotizacion']['direccion'] ?? null,
+//            'Tel_Celular' => $data['mobile_phone'] ?? null,
+//            'Tel_Residencia' => $data['home_phone'] ?? null,
+//            'Tel_Trabajo' => $data['work_phone'] ?? null,
+//
+//            // Vehículo desde cotizacion
+//            'Plan' => $data['cotizacion']['plan'] ?? null,
+//            'Tipo' => $data['tipo'] ?? $data['cotizacion']['tipo_pago'] ?? null,
+//            'Suma_asegurada' => $data['cotizacion']['suma'] ?? null,
+//            'Plazo' => $data['cotizacion']['plazo'] ?? null,
+//            'Cuota' => $data['cotizacion']['cuota'] ?? null,
+//            'Prestamo' => $data['cotizacion']['prestamo'] ?? null,
+//            'A_o' => $data['cotizacion']['year'] ?? null,
+//            'Marca' => $data['cotizacion']['marcaid'] ?? null,
+//            'Modelo' => $data['cotizacion']['modeloid'] ?? null,
+//            'Uso' => $data['cotizacion']['uso'] ?? null,
+//            'Tipo_veh_culo' => $data['cotizacion']['modelotipo'] ?? null,
+//
+//            // Vehículo desde $data directamente
+//            'Chasis' => $data['chassis'] ?? null,
+//            'Color' => $data['color'] ?? null,
+//            'Placa' => $data['license_plate'] ?? null,
+//
+//            // Más datos de cotización
+//            'Condiciones' => $data['cotizacion']['estado'] ?? null,
+//            'Tipo_equipo' => $data['cotizacion']['tipo_equipo'] ?? null,
+//            'Salvamento' => (bool)($data['cotizacion']['salvamento'] ?? false),
+//            'Tipo_de_pago' => $data['cotizacion']['tipo_pago'] ?? null,
+//        ];
+//
+//        $libreria = new Zoho;
+//        $id = $libreria->createRecords('Quotes', $registro, $data['cotizacion']['planes']);
 
-            // Desde cotizacion
-            'Construcci_n' => $data['cotizacion']['construccion'] ?? null,
-            'Riesgo' => $data['cotizacion']['riesgo'] ?? null,
-            'Quote_Stage' => 'Cotizando',
-
-            // Datos personales desde $data
-            'Nombre' => $data['first_name'] ?? null,
-            'Apellido' => $data['last_name'] ?? null,
-            'Fecha_de_nacimiento' => $data['birth_date'] ?? null,
-            'RNC_C_dula' => $data['identity_number'] ?? null,
-            'Correo_electr_nico' => $data['correo'] ?? null,
-            'Direcci_n' => $data['address'] ?? $data['cotizacion']['direccion'] ?? null,
-            'Tel_Celular' => $data['mobile_phone'] ?? null,
-            'Tel_Residencia' => $data['home_phone'] ?? null,
-            'Tel_Trabajo' => $data['work_phone'] ?? null,
-
-            // Vehículo desde cotizacion
-            'Plan' => $data['cotizacion']['plan'] ?? null,
-            'Tipo' => $data['tipo'] ?? $data['cotizacion']['tipo_pago'] ?? null,
-            'Suma_asegurada' => $data['cotizacion']['suma'] ?? null,
-            'Plazo' => $data['cotizacion']['plazo'] ?? null,
-            'Cuota' => $data['cotizacion']['cuota'] ?? null,
-            'Prestamo' => $data['cotizacion']['prestamo'] ?? null,
-            'A_o' => $data['cotizacion']['year'] ?? null,
-            'Marca' => $data['cotizacion']['marcaid'] ?? null,
-            'Modelo' => $data['cotizacion']['modeloid'] ?? null,
-            'Uso' => $data['cotizacion']['uso'] ?? null,
-            'Tipo_veh_culo' => $data['cotizacion']['modelotipo'] ?? null,
-
-            // Vehículo desde $data directamente
-            'Chasis' => $data['chassis'] ?? null,
-            'Color' => $data['color'] ?? null,
-            'Placa' => $data['license_plate'] ?? null,
-
-            // Más datos de cotización
-            'Condiciones' => $data['cotizacion']['estado'] ?? null,
-            'Tipo_equipo' => $data['cotizacion']['tipo_equipo'] ?? null,
-            'Salvamento' => (bool) ($data['cotizacion']['salvamento'] ?? false),
-            'Tipo_de_pago' => $data['cotizacion']['tipo_pago'] ?? null,
-        ];
-
-        $libreria = new Zoho;
-        $id = $libreria->createRecords('Quotes', $registro, $data['cotizacion']['planes']);
-
-        $crm = $libreria->getRecord('Quotes', $id);
-
-        return DB::transaction(function () use ($id, $crm, $data) {
+        return DB::transaction(function () use ($id, $data) {
             $customer = Customer::create([
                 'first_name' => $data['first_name'],
                 'last_name' => $data['last_name'],
@@ -133,7 +131,9 @@ class CreateQuoteVehicle extends CreateRecord
                 'vehicle_amount' => $data['vehicle_amount'],
             ]);
 
-            foreach ($crm->getLineItems() as $lineItem) {
+            foreach ($data['estimate'] as $estimate) {
+                dd($estimate);
+
                 $quoteLine = QuoteLine::create([
                     'name' => $lineItem->getProduct()->getLookupLabel(),
                     'unit_price' => $lineItem->getNetTotal(),

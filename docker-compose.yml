@@ -42,14 +42,14 @@ services:
         networks:
             - app-network
 
-    worker:
+    supervisord:
         build:
-            context: ./docker/worker
+            context: ./docker/supervisord
             dockerfile: Dockerfile
             args:
                 UID: ${UID:-1000}
                 GID: ${GID:-1000}
-        container_name: ${APP_NAME}-worker
+        container_name: ${APP_NAME}-supervisord
         environment:
             UID: ${UID:-1000}
             GID: ${GID:-1000}

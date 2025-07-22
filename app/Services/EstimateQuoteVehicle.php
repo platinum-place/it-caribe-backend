@@ -27,8 +27,8 @@ class EstimateQuoteVehicle
             $rate = $this->getRate($product['id'], $vehicleYear);
 
             $amount = $vehicleAmount * ($rate / 100);
-            $taxesAmount = $amount / 1.16;
-            $amountTaxed = $amount - $taxesAmount;
+            $amountTaxed = $amount / 1.16;
+            $taxesAmount = $amount - $amountTaxed;
             $totalMonthly = $amount / 12;
 
             $result[] = [
@@ -59,10 +59,14 @@ class EstimateQuoteVehicle
     {
         $selectedRate = null;
 
-        $criteria = "((Plan:equals:$productId) and (A_o:equals:$vehicleYear))";
+        $criteria = "(Plan:equals:$productId)";
         $rates = $this->zohoApi->searchRecords('Tasas', $criteria);
 
         foreach ($rates['data'] as $rate) {
+            if ($rate['A_o'] !== $vehicleYear) {
+                continue;
+            }
+
             $selectedRate = $rate['Name'];
             break;
         }
