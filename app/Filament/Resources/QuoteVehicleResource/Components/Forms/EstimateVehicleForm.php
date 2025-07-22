@@ -60,11 +60,7 @@ class EstimateVehicleForm
                             return;
                         }
 
-                        $set(
-                            'vehicle_type_id',
-                            VehicleModel::where('id', $state)
-                                ->value('vehicle_type_id')
-                        );
+                        $set('vehicle_type_id', VehicleModel::firstWhere('id', $state)->value('vehicle_type_id'));
                     }),
 
                 Hidden::make('vehicle_type_id'),

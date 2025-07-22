@@ -38,58 +38,53 @@ class CreateQuoteVehicle extends CreateRecord
 
     protected function handleRecordCreation(array $data): Model
     {
-//        $registro = [
-//            'Subject' => $data['first_name'] . ' ' . $data['last_name'],
-//            'Valid_Till' => date('Y-m-d', strtotime('+30 days')),
-//            'Vigencia_desde' => date('Y-m-d'),
-//            'Account_Name' => 3222373000092390001,
-//            'Contact_Name' => 3222373000203318001,
-//
-//            // Desde cotizacion
-//            'Construcci_n' => $data['cotizacion']['construccion'] ?? null,
-//            'Riesgo' => $data['cotizacion']['riesgo'] ?? null,
-//            'Quote_Stage' => 'Cotizando',
-//
-//            // Datos personales desde $data
-//            'Nombre' => $data['first_name'] ?? null,
-//            'Apellido' => $data['last_name'] ?? null,
-//            'Fecha_de_nacimiento' => $data['birth_date'] ?? null,
-//            'RNC_C_dula' => $data['identity_number'] ?? null,
-//            'Correo_electr_nico' => $data['correo'] ?? null,
-//            'Direcci_n' => $data['address'] ?? $data['cotizacion']['direccion'] ?? null,
-//            'Tel_Celular' => $data['mobile_phone'] ?? null,
-//            'Tel_Residencia' => $data['home_phone'] ?? null,
-//            'Tel_Trabajo' => $data['work_phone'] ?? null,
-//
-//            // Vehículo desde cotizacion
-//            'Plan' => $data['cotizacion']['plan'] ?? null,
-//            'Tipo' => $data['tipo'] ?? $data['cotizacion']['tipo_pago'] ?? null,
-//            'Suma_asegurada' => $data['cotizacion']['suma'] ?? null,
-//            'Plazo' => $data['cotizacion']['plazo'] ?? null,
-//            'Cuota' => $data['cotizacion']['cuota'] ?? null,
-//            'Prestamo' => $data['cotizacion']['prestamo'] ?? null,
-//            'A_o' => $data['cotizacion']['year'] ?? null,
+        $registro = [
+            'Subject' => $data['first_name'] . ' ' . $data['last_name'],
+            'Valid_Till' => date('Y-m-d', strtotime('+30 days')),
+            'Vigencia_desde' => date('Y-m-d'),
+            'Account_Name' => 3222373000092390001,
+            'Contact_Name' => 3222373000203318001,
+
+            // Desde cotizacion
+            'Quote_Stage' => 'Cotizando',
+
+            // Datos personales desde $data
+            'Nombre' => $data['first_name'] ?? null,
+            'Apellido' => $data['last_name'] ?? null,
+            'Fecha_de_nacimiento' => $data['birth_date'] ?? null,
+            'RNC_C_dula' => $data['identity_number'] ?? null,
+            'Correo_electr_nico' => $data['correo'] ?? null,
+            'Direcci_n' => $data['address'],
+            'Tel_Celular' => $data['mobile_phone'] ?? null,
+            'Tel_Residencia' => $data['home_phone'] ?? null,
+            'Tel_Trabajo' => $data['work_phone'] ?? null,
+
+            // Vehículo desde cotizacion
+            'Plan' => 'Auto',
+            'Suma_asegurada' => $data['vehicle_amount'],
+            'A_o' => $data['vehicle_year'],
 //            'Marca' => $data['cotizacion']['marcaid'] ?? null,
 //            'Modelo' => $data['cotizacion']['modeloid'] ?? null,
 //            'Uso' => $data['cotizacion']['uso'] ?? null,
 //            'Tipo_veh_culo' => $data['cotizacion']['modelotipo'] ?? null,
-//
-//            // Vehículo desde $data directamente
-//            'Chasis' => $data['chassis'] ?? null,
-//            'Color' => $data['color'] ?? null,
-//            'Placa' => $data['license_plate'] ?? null,
-//
-//            // Más datos de cotización
-//            'Condiciones' => $data['cotizacion']['estado'] ?? null,
-//            'Tipo_equipo' => $data['cotizacion']['tipo_equipo'] ?? null,
-//            'Salvamento' => (bool)($data['cotizacion']['salvamento'] ?? false),
-//            'Tipo_de_pago' => $data['cotizacion']['tipo_pago'] ?? null,
-//        ];
-//
-//        $libreria = new Zoho;
-//        $id = $libreria->createRecords('Quotes', $registro, $data['cotizacion']['planes']);
 
-        return DB::transaction(function () use ($data) {
+            // Vehículo desde $data directamente
+            'Chasis' => $data['chassis'] ?? null,
+            'Color' => $data['color'] ?? null,
+            'Placa' => $data['license_plate'] ?? null,
+        ];
+
+        $libreria = new Zoho;
+        $planes = [];
+        foreach ($data['estimate'] as $estimate) {
+            $planes[] = [
+                'total' => $estimate['total_monthly'],
+                'planid' => $estimate['id_crm'],
+            ];
+        }
+        $id = $libreria->createRecords('Quotes', $registro, $planes);
+
+        return DB::transaction(function () use ($id, $data) {
             $customer = Customer::create([
                 'first_name' => $data['first_name'],
                 'last_name' => $data['last_name'],
@@ -114,6 +109,7 @@ class CreateQuoteVehicle extends CreateRecord
                 'quote_type_id' => QuoteType::VEHICLE->value,
                 'quote_status_id' => QuoteStatus::PENDING->value,
                 'start_date' => now(),
+                'id_crm' => $id,
                 'end_date' => now()->addDays(30),
                 'customer_id' => $customer->id,
                 'user_id' => auth()->id(),
@@ -131,25 +127,23 @@ class CreateQuoteVehicle extends CreateRecord
             ]);
 
             foreach ($data['estimate'] as $estimate) {
-                dd($estimate);
-
                 $quoteLine = QuoteLine::create([
-                    'name' => $lineItem->getProduct()->getLookupLabel(),
-                    'unit_price' => $lineItem->getNetTotal(),
-                    'quantity' => 1,
-                    'subtotal' => $lineItem->getNetTotal(),
-                    'amount_taxed' => $lineItem->getNetTotal() / 1.16,
-                    'tax_rate' => 16,
-                    'tax_amount' => ($lineItem->getNetTotal() - $lineItem->getNetTotal()) / 1.16,
-                    'total' => $lineItem->getNetTotal(),
+                    'name' => $estimate['name'],
+                    'unit_price' => $estimate['unit_price'],
+                    'quantity' => $estimate['quantity'],
+                    'subtotal' => $estimate['subtotal'],
+                    'amount_taxed' => $estimate['amount_taxed'],
+                    'tax_rate' => $estimate['tax_rate'],
+                    'tax_amount' => $estimate['tax_amount'],
+                    'total' => $estimate['total'],
                     'quote_id' => $quote->id,
-                    'id_crm' => $lineItem->getProduct()->getEntityId(),
+                    'id_crm' => $estimate['id_crm'],
                     'quote_line_status_id' => QuoteLineStatus::NOT_ACCEPTED->value,
                 ]);
                 $quoteVehicleLine = QuoteVehicleLine::create([
                     'quote_vehicle_id' => $quoteVehicle->id,
                     'quote_line_id' => $quoteLine->id,
-                    'life_amount' => 220,
+                    'life_amount' => $estimate['life_amount'],
                 ]);
             }
 
