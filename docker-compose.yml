@@ -37,9 +37,6 @@ services:
         networks:
             - app-network
         container_name: ${APP_NAME}-php-fpm
-        environment:
-            - UID=${UID:-1000}
-            - GID=${GID:-1000}
 
     php-cli:
         tty: true # Enables debugging capabilities when attached to this container.
@@ -54,27 +51,19 @@ services:
         networks:
             - app-network
         container_name: ${APP_NAME}-php-cli
-        environment:
-            - UID=${UID:-1000}
-            - GID=${GID:-1000}
 
-#    supervisord:
-#        build:
-#            context: ./docker/supervisord
-#            dockerfile: Dockerfile
-#            args:
-#                UID: ${UID:-1000}
-#                GID: ${GID:-1000}
-#        container_name: ${APP_NAME}-supervisord
-#        environment:
-#            UID: ${UID:-1000}
-#            GID: ${GID:-1000}
-#        volumes:
-#            - ./:/app
-#        networks:
-#            - app-network
-#        depends_on:
-#            - postgresql
+    supervisord:
+        build:
+            context: ./docker/supervisord
+            dockerfile: Dockerfile
+            args:
+                UID: ${UID:-1000}
+                GID: ${GID:-1000}
+        container_name: ${APP_NAME}-supervisord
+        volumes:
+            - ./:/app
+        networks:
+            - app-network
 
 volumes:
     postgresql_data:

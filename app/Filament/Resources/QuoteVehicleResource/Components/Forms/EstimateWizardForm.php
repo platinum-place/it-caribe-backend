@@ -35,20 +35,23 @@ class EstimateWizardForm
                         ->action(function (Set $set, Get $get) {
                             $vehicleType = VehicleType::find($get('vehicle_type_id'));
 
-                            $estimate = app(EstimateQuoteVehicle::class)->estimate(
+                            $estimates = app(EstimateQuoteVehicle::class)->estimate(
                                 $get('vehicle_amount'),
                                 $get('vehicle_year'),
                                 $vehicleType,
                             );
 
-                            $set('estimate', $estimate);
+                            $set('estimates_table', $estimates);
+                            $set('estimates', $estimates);
                         })
                         ->color('primary')
                         ->icon('heroicon-o-calculator'),
                 ])
                     ->columnSpanFull(),
 
-                Repeater::make('estimate')
+                Hidden::make('estimates'),
+
+                Repeater::make('estimates_table')
                     ->hiddenLabel()
                     ->schema([
                         TextInput::make('name')

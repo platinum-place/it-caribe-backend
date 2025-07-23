@@ -44,39 +44,12 @@ class CreateQuoteVehicle extends CreateRecord
             'Vigencia_desde' => date('Y-m-d'),
             'Account_Name' => 3222373000092390001,
             'Contact_Name' => 3222373000203318001,
-
-            // Desde cotizacion
             'Quote_Stage' => 'Cotizando',
-
-            // Datos personales desde $data
-            'Nombre' => $data['first_name'] ?? null,
-            'Apellido' => $data['last_name'] ?? null,
-            'Fecha_de_nacimiento' => $data['birth_date'] ?? null,
-            'RNC_C_dula' => $data['identity_number'] ?? null,
-            'Correo_electr_nico' => $data['correo'] ?? null,
-            'Direcci_n' => $data['address'],
-            'Tel_Celular' => $data['mobile_phone'] ?? null,
-            'Tel_Residencia' => $data['home_phone'] ?? null,
-            'Tel_Trabajo' => $data['work_phone'] ?? null,
-
-            // Vehículo desde cotizacion
-            'Plan' => 'Auto',
-            'Suma_asegurada' => $data['vehicle_amount'],
-            'A_o' => $data['vehicle_year'],
-//            'Marca' => $data['cotizacion']['marcaid'] ?? null,
-//            'Modelo' => $data['cotizacion']['modeloid'] ?? null,
-//            'Uso' => $data['cotizacion']['uso'] ?? null,
-//            'Tipo_veh_culo' => $data['cotizacion']['modelotipo'] ?? null,
-
-            // Vehículo desde $data directamente
-            'Chasis' => $data['chassis'] ?? null,
-            'Color' => $data['color'] ?? null,
-            'Placa' => $data['license_plate'] ?? null,
         ];
 
         $libreria = new Zoho;
         $planes = [];
-        foreach ($data['estimate'] as $estimate) {
+        foreach ($data['estimates'] as $estimate) {
             $planes[] = [
                 'total' => $estimate['total_monthly'],
                 'planid' => $estimate['id_crm'],
@@ -126,7 +99,7 @@ class CreateQuoteVehicle extends CreateRecord
                 'vehicle_amount' => $data['vehicle_amount'],
             ]);
 
-            foreach ($data['estimate'] as $estimate) {
+            foreach ($data['estimates'] as $estimate) {
                 $quoteLine = QuoteLine::create([
                     'name' => $estimate['name'],
                     'unit_price' => $estimate['unit_price'],

@@ -55,7 +55,7 @@
     }
 @endphp
 @if($logoBase64)
-    <img src="{{ $logoBase64 }}" width="150" height="50" alt="">
+    <img src="{{ $logoBase64 }}" width="130" height="70" alt="">
 @endif
 
 <h3 style="text-align:center;">EMISIÓN DE SEGUROS</h3>
@@ -120,18 +120,17 @@
     $tipoVehiculo = $cotizacion->getFieldValue("Tipo_veh_culo");
     $isVehiculoPesado = preg_match('/\bpesado\b/i', $tipoVehiculo) || $tipoVehiculo === "Camión";
 
-    foreach ($cotizacion->getLineItems() as $lineItem) {
-        if ($lineItem->getProduct()->getEntityId() == $plan->getEntityId()) {
-            $product = $libreria->getRecord("Products", $lineItem->getProduct()->getEntityId());
+    foreach ($quoteVehicle->quote->lines as $line) {
+        if ($line->id_crm === $plan->getEntityId()) {
+            $product = $libreria->getRecord("Products", $line->id_crm);
             $vendor = $libreria->getRecord("Vendors", $product->getFieldValue('Vendor_Name')->getEntityId());
 
             $lineItemsData[] = [
-                'lineItem' => $lineItem,
                 'product' => $product,
                 'vendor' => $vendor,
                 'vendorName' => $vendor->getFieldValue('Nombre'),
-                'netTotal' => $lineItem->getNetTotal(),
-                'monthlyTotal' => $lineItem->getNetTotal(),
+                'netTotal' => $line->total,
+                'monthlyTotal' => $line->total / 12,
             ];
         }
     }

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Enums\QuoteLineStatus;
 
 class Quote extends Model
 {
@@ -52,6 +53,11 @@ class Quote extends Model
     public function lines(): HasMany
     {
         return $this->hasMany(QuoteLine::class);
+    }
+
+    public function selectedLine(): HasOne
+    {
+        return $this->hasOne(QuoteLine::class)->where('quote_line_status_id', QuoteLineStatus::ACCEPTED->value);
     }
 
     public function quoteVehicle(): HasOne

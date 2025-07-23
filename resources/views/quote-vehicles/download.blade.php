@@ -91,9 +91,9 @@
         <td style="border: none; text-align:left; font-weight: bold;">Tipo de vehículo:</td>
         <td style="border: none; text-align:left;">{{ $cotizacion->getFieldValue('Tipo_veh_culo') }}</td>
         <td style="border: none; text-align:left; font-weight: bold;">Marca:</td>
-        <td style="border: none; text-align:left;">{{ $cotizacion->getFieldValue('Marca')->getLookupLabel() }}</td>
+        <td style="border: none; text-align:left;">{{ $quoteVehicle->vehicleMake->name }}</td>
         <td style="border: none; text-align:left; font-weight: bold;">Modelo:</td>
-        <td style="border: none; text-align:left;">{{ $cotizacion->getFieldValue('Modelo')->getLookupLabel() }}</td>
+        <td style="border: none; text-align:left;">{{ $quoteVehicle->vehicleModel->name }}</td>
     </tr>
     <tr>
         <td style="border: none; text-align:left; font-weight: bold;">Año:</td>
@@ -106,23 +106,24 @@
     </tbody>
 </table>
 
+<div style="height: 20px;"></div>
+
 @php
     $lineItemsData = [];
     $tipoVehiculo = $cotizacion->getFieldValue("Tipo_veh_culo");
     $isVehiculoPesado = preg_match('/\bpesado\b/i', $tipoVehiculo) || $tipoVehiculo === "Camión";
 
-    foreach ($cotizacion->getLineItems() as $lineItem) {
-        if ($lineItem->getNetTotal() > 0) {
-            $product = $libreria->getRecord("Products", $lineItem->getProduct()->getEntityId());
+    foreach ($quoteVehicle->quote->lines as $line) {
+        if ($line->total > 0) {
+            $product = $libreria->getRecord("Products", $line->id_crm);
             $vendor = $libreria->getRecord("Vendors", $product->getFieldValue('Vendor_Name')->getEntityId());
 
             $lineItemsData[] = [
-                'lineItem' => $lineItem,
                 'product' => $product,
                 'vendor' => $vendor,
                 'vendorName' => $vendor->getFieldValue('Nombre'),
-                'netTotal' => $lineItem->getNetTotal(),
-                'monthlyTotal' => $lineItem->getNetTotal(),
+                'netTotal' => $line->total,
+                'monthlyTotal' => $line->total / 12,
             ];
         }
     }
@@ -158,7 +159,7 @@
         <tr @isset($row['style'] ) style="{{ $row['style'] }}" @endisset>
             <td style="border: none; font-weight: bold;">{{ $row['label'] }}</td>
             @foreach ($lineItemsData as $data)
-                                    <td style="border: none;">
+                <td style="border: none;">
                     @switch($row['type'])
                         @case('text')
                             @if ($row['field'] === 'vendorName')
@@ -211,17 +212,26 @@
     <tr>
         <td style="border: none; font-weight: bold;">&nbsp;</td>
         @foreach ($lineItemsData as $data)
-            <td style="font-weight: bold;">{{ $data['vendorName'] }}</td>
+            <td style="font-weight: bold;">{{ ucwords(strtolower($data['vendorName'])) }}</td>
         @endforeach
     </tr>
 
     <tr>
-        <td style="border: none; font-weight: bold;">Prima {{ $cotizacion->getFieldValue('Tipo_de_pago') }}</td>
+        <td style="border: none; font-weight: bold;">Prima Anual</td>
+        @foreach ($lineItemsData as $data)
+            <td>{{ number_format($data['monthlyTotal'], 2) }}</td>
+        @endforeach
+    </tr>
+
+    <tr>
+        <td style="border: none; font-weight: bold;">Prima Mensual</td>
         @foreach ($lineItemsData as $data)
             <td>{{ number_format($data['monthlyTotal'], 2) }}</td>
         @endforeach
     </tr>
 </table>
+
+<div style="height: 20px;"></div>
 
 <table style="width: 100%; font-size: 12px;">
     <tr>
@@ -263,7 +273,7 @@
     </tr>
 </table>
 
-<div style="height: 100px;"></div>
+<div style="height: 70px;"></div>
 
 <table style="width: 100%; border: none;">
     <tr>

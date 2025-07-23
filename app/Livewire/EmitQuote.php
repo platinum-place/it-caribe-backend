@@ -46,13 +46,13 @@ class EmitQuote extends Component implements HasForms
                         return $lines
                             ->where('total', '>', 0)
                             ->mapWithKeys(function ($line) {
-                                return [$line->id => $line->name.' (RD$'.number_format($line->total, 2).')'];
+                                return [$line->id => $line->name . ' (RD$' . number_format($line->total, 2) . ')'];
                             });
                     }),
 
                 Checkbox::make('agreement')
-                    ->label(fn () => new \Illuminate\Support\HtmlString(
-                        'Estoy de acuerdo que quiero emitir la cotización, a nombre de <b>'.$customer->fullName.'</b>, RNC/Cédula <b>'.$customer->identity_number.'</b>'
+                    ->label(fn() => new \Illuminate\Support\HtmlString(
+                        'Estoy de acuerdo que quiero emitir la cotización, a nombre de <b>' . $customer->fullName . '</b>, RNC/Cédula <b>' . $customer->identity_number . '</b>'
                     ))
                     ->required()
                     ->columnSpanFull(),
@@ -60,7 +60,7 @@ class EmitQuote extends Component implements HasForms
                 FileUpload::make('attachments')
                     ->translateLabel()
                     ->disk('local')
-                    ->directory(fn () => 'quotes'.'/'.$this->record->id)
+                    ->directory(fn() => 'quotes' . '/' . $this->record->id)
                     ->visibility('private')
                     ->multiple()
                     ->maxParallelUploads(1)
@@ -87,6 +87,7 @@ class EmitQuote extends Component implements HasForms
             'attachments' => $data['attachments'] ?? [],
             'quote_status_id' => QuoteStatus::APPROVED->value,
             'responsible_id' => auth()->id(),
+            'end_date' => now()->addDays(30),
         ]);
 
         $line->update([

@@ -19,7 +19,7 @@ class EstimateQuoteVehicle
      * @throws ConnectionException
      * @throws Exception
      */
-    public function estimate(float $vehicleAmount, int $vehicleYear, VehicleType $vehicleType)
+    public function estimate(float $vehicleAmount, int $vehicleYear, VehicleType $vehicleType): array
     {
         $criteria = '((Corredor:equals:' . 3222373000092390001 . ') and (Product_Category:equals:Auto))';
         $productsResponse = $this->zohoApi->searchRecords('Products', $criteria);
@@ -59,7 +59,7 @@ class EstimateQuoteVehicle
      * @throws ConnectionException
      * @throws Exception
      */
-    protected function getRate(string $productId, float $vehicleAmount, int $vehicleYear, VehicleType $vehicleType)
+    protected function getRate(string $productId, float $vehicleAmount, int $vehicleYear, VehicleType $vehicleType): ?string
     {
         $selectedRate = null;
 
@@ -67,10 +67,6 @@ class EstimateQuoteVehicle
         $rates = $this->zohoApi->searchRecords('Tasas', $criteria);
 
         foreach ($rates['data'] as $rate) {
-            if (!empty($rate['A_o']) && $rate['A_o'] !== $vehicleYear) {
-                continue;
-            }
-
             if (!empty($rate['Grupo_de_veh_culo']) and !in_array($vehicleType->name, $rate['Grupo_de_veh_culo'], true)) {
                 continue;
             }
@@ -80,6 +76,10 @@ class EstimateQuoteVehicle
             }
 
             if (!empty($rate['Suma_limite']) && $vehicleAmount < $rate['Suma_limite']) {
+                continue;
+            }
+
+            if (!empty($rate['A_o']) && $rate['A_o'] !== $vehicleYear) {
                 continue;
             }
 
