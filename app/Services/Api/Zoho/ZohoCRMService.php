@@ -8,9 +8,7 @@ use Illuminate\Http\Client\RequestException;
 
 class ZohoCRMService
 {
-    public function __construct(protected ZohoOAuthTokenService $oauth, protected ZohoAPIService $api)
-    {
-    }
+    public function __construct(protected ZohoOAuthTokenService $oauth, protected ZohoAPIService $api) {}
 
     /**
      * @throws RequestException

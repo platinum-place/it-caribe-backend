@@ -5,7 +5,6 @@ namespace App\Livewire;
 use App\Enums\QuoteLineStatus;
 use App\Enums\QuoteStatus;
 use App\Filament\Resources\QuoteVehicleResource;
-use App\Helpers\Cotizaciones;
 use App\Models\QuoteVehicle;
 use App\Services\Api\Zoho\ZohoCRMService;
 use Filament\Forms\Components\Checkbox;
@@ -47,13 +46,13 @@ class EmitQuote extends Component implements HasForms
                         return $lines
                             ->where('total', '>', 0)
                             ->mapWithKeys(function ($line) {
-                                return [$line->id => $line->name . ' (RD$' . number_format($line->total, 2) . ')'];
+                                return [$line->id => $line->name.' (RD$'.number_format($line->total, 2).')'];
                             });
                     }),
 
                 Checkbox::make('agreement')
-                    ->label(fn() => new \Illuminate\Support\HtmlString(
-                        'Estoy de acuerdo que quiero emitir la cotización, a nombre de <b>' . $customer->fullName . '</b>, RNC/Cédula <b>' . $customer->identity_number . '</b>'
+                    ->label(fn () => new \Illuminate\Support\HtmlString(
+                        'Estoy de acuerdo que quiero emitir la cotización, a nombre de <b>'.$customer->fullName.'</b>, RNC/Cédula <b>'.$customer->identity_number.'</b>'
                     ))
                     ->required()
                     ->columnSpanFull(),
@@ -61,7 +60,7 @@ class EmitQuote extends Component implements HasForms
                 FileUpload::make('attachments')
                     ->translateLabel()
                     ->disk('local')
-                    ->directory(fn() => 'quotes' . '/' . $this->record->id)
+                    ->directory(fn () => 'quotes'.'/'.$this->record->id)
                     ->visibility('private')
                     ->multiple()
                     ->maxParallelUploads(1)
