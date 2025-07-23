@@ -28,9 +28,9 @@ class CreateQuoteVehicle extends CreateRecord
         return $form
             ->schema([
                 Wizard::make([
-                    \App\Filament\Resources\QuoteVehicleResource\Components\Forms\EstimateWizardForm::make(),
-                    \App\Filament\Resources\QuoteVehicleResource\Components\Forms\CustomerWizardForm::make(),
-                    \App\Filament\Resources\QuoteVehicleResource\Components\Forms\VehicleWizardForm::make(),
+                    QuoteVehicleResource\Components\Wizard\EstimateWizardStep::make(),
+                    QuoteVehicleResource\Components\Wizard\CustomerWizardStep::make(),
+                    QuoteVehicleResource\Components\Wizard\VehicleWizardStep::make(),
                 ])
                     ->columnSpanFull(),
             ]);
@@ -39,7 +39,7 @@ class CreateQuoteVehicle extends CreateRecord
     protected function handleRecordCreation(array $data): Model
     {
         $registro = [
-            'Subject' => $data['first_name'] . ' ' . $data['last_name'],
+            'Subject' => $data['first_name'].' '.$data['last_name'],
             'Valid_Till' => date('Y-m-d', strtotime('+30 days')),
             'Vigencia_desde' => date('Y-m-d'),
             'Account_Name' => 3222373000092390001,

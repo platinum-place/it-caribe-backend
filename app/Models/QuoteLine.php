@@ -12,7 +12,7 @@ class QuoteLine extends Model
 
     protected $fillable = [
         'name', 'description', 'quote_id', 'unit_price', 'id_crm',
-        'quantity', 'subtotal', 'tax_rate', 'insurance_rate',
+        'quantity', 'subtotal', 'tax_rate',
         'tax_amount', 'total', 'amount_taxed', 'quote_line_status_id',
     ];
 

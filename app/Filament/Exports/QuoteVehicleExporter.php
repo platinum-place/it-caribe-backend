@@ -3,9 +3,9 @@
 namespace App\Filament\Exports;
 
 use App\Models\QuoteVehicle;
+use Filament\Actions\Exports\ExportColumn;
 use Filament\Actions\Exports\Exporter;
 use Filament\Actions\Exports\Models\Export;
-use Filament\Actions\Exports\ExportColumn;
 
 class QuoteVehicleExporter extends Exporter
 {
@@ -32,7 +32,7 @@ class QuoteVehicleExporter extends Exporter
                 ->label('PRIMA COBRADA CLIENTE (INCLUYE VIDA + MARKUP)'),
             ExportColumn::make('start_date')
                 ->label('PRIMA VEHICULO (SIN VIDA Y MARKUP)'),
-            ExportColumn::make('selectedLine.life_amount')
+            ExportColumn::make('quote.selectedLine.total')
                 ->label('PRIMA VIDA'),
             ExportColumn::make('start_date')
                 ->label('MARKUP VEHICULO'),

@@ -11,14 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('quote_vehicle_lines', function (Blueprint $table) {
+        Schema::create('quote_life_lines', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->softDeletes();
-            $table->foreignIdFor(\App\Models\QuoteVehicle::class)->constrained();
+            $table->foreignIdFor(\App\Models\QuoteLife::class)->constrained();
             $table->foreignIdFor(\App\Models\QuoteLine::class)->constrained();
-            $table->decimal('life_amount', 18, 2)->default(0);
-            $table->float('vehicle_rate')->default(0);
+            $table->decimal('debtor_amount', 18, 2)->default(0);
+            $table->decimal('co_debtor_amount', 18, 2)->default(0);
+            $table->float('debtor_rate')->default(0);
+            $table->float('co_debtor_rate')->default(0);
         });
     }
 
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('quote_vehicle_lines');
+        Schema::dropIfExists('quote_life_lines');
     }
 };

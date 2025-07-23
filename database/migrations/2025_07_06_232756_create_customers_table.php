@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('work_phone')->nullable();
             $table->string('email')->nullable();
             $table->text('address')->nullable();
+            $table->integer('age')->nullable();
         });
     }
 

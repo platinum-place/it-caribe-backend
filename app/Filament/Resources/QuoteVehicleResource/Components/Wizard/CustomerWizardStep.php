@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Filament\Resources\QuoteVehicleResource\Components\Forms;
+namespace App\Filament\Resources\QuoteVehicleResource\Components\Wizard;
 
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Wizard;
 
-class CustomerWizardForm
+class CustomerWizardStep
 {
     public static function make(): Wizard\Step
     {

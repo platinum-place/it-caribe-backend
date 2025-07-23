@@ -1,16 +1,11 @@
 <?php
 
-namespace App\Filament\Resources\QuoteVehicleResource\Components\Forms;
+namespace App\Filament\Resources\QuoteLifeResource\Components\Wizard;
 
-use App\Helpers\Cotizacion;
-use App\Helpers\Cotizaciones;
-use App\Helpers\CotizarAuto;
-use App\Models\VehicleMake;
-use App\Models\VehicleModel;
+use App\Filament\Resources\QuoteLifeResource\Components\Forms\EstimateLifeForm;
 use App\Models\VehicleType;
-use App\Models\VehicleUse;
+use App\Services\EstimateQuoteLife;
 use App\Services\EstimateQuoteVehicle;
-use App\Services\ZohoCRMService;
 use Filament\Forms\Components\Actions;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Hidden;
@@ -21,24 +16,23 @@ use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Support\RawJs;
 
-class EstimateWizardForm
+class EstimateWizardStep
 {
     public static function make(): Wizard\Step
     {
         return Wizard\Step::make(__('Estimate'))
             ->schema([
-                EstimateVehicleForm::make(),
+                EstimateLifeForm::make(),
 
                 Actions::make([
                     Action::make('generateEstimate')
                         ->translateLabel()
                         ->action(function (Set $set, Get $get) {
-                            $vehicleType = VehicleType::find($get('vehicle_type_id'));
-
-                            $estimates = app(EstimateQuoteVehicle::class)->estimate(
-                                $get('vehicle_amount'),
-                                $get('vehicle_year'),
-                                $vehicleType,
+                            $estimates = app(EstimateQuoteLife::class)->estimate(
+                                $get('customer_age'),
+                                $get('deadline'),
+                                $get('insured_amount'),
+                                $get('co_debtor_age'),
                             );
 
                             $set('estimates_table', $estimates);
@@ -59,23 +53,36 @@ class EstimateWizardForm
                             ->disabled()
                             ->dehydrated(false),
 
-                        TextInput::make('insurance_rate')
-                            ->label('Tasa')
+                        TextInput::make('debtor_amount')
+                            ->label('Prima deudor')
+                            ->disabled()
+                            ->dehydrated(false)
+                            ->mask(RawJs::make('$money($input)'))
+                            ->stripCharacters(',')
+                            ->numeric(),
+
+                        TextInput::make('co_debtor_amount')
+                            ->label('Prima codeudor')
+                            ->disabled()
+                            ->dehydrated(false)
+                            ->mask(RawJs::make('$money($input)'))
+                            ->stripCharacters(',')
+                            ->numeric(),
+
+                        TextInput::make('debtor_rate')
+                            ->label('Tasa deudor')
+                            ->disabled()
+                            ->dehydrated(false)
+                            ->numeric(),
+
+                        TextInput::make('co_debtor_rate')
+                            ->label('Tasa codeudor')
                             ->disabled()
                             ->dehydrated(false)
                             ->numeric(),
 
                         TextInput::make('total')
-                            ->label('Total anual')
-                            ->disabled()
-                            ->dehydrated(false)
-                            ->prefix('RD$')
-                            ->mask(RawJs::make('$money($input)'))
-                            ->stripCharacters(',')
-                            ->numeric(),
-
-                        TextInput::make('total_monthly')
-                            ->label('Total mensual')
+                            ->label('Total')
                             ->disabled()
                             ->dehydrated(false)
                             ->prefix('RD$')

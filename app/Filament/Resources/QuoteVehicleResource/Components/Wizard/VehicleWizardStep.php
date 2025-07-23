@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\QuoteVehicleResource\Components\Forms;
+namespace App\Filament\Resources\QuoteVehicleResource\Components\Wizard;
 
 use App\Models\VehicleActivity;
 use App\Models\VehicleColor;
@@ -8,7 +8,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Wizard;
 
-class VehicleWizardForm
+class VehicleWizardStep
 {
     public static function make(): Wizard\Step
     {

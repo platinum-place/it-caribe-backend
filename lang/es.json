@@ -1,4 +1,6 @@
 {
+    "Quote lives": "Cotizaciones Plan Vida/Consumo",
+    "Quote life": "Cotización Plan Vida/Consumo",
     "Customer": "Cliente",
     "Generate estimate": "Generar Cotización",
     "First name": "Nombre",
@@ -13,8 +15,8 @@
     "Documents": "Documentos",
     "Download :name": "Descargar :name",
     "Attachments": "Adjuntos",
-    "Quote vehicles": "Cotizaciones de vehículo",
-    "Quote vehicle": "Cotización de vehículo",
+    "Quote vehicles": "Cotizaciones Plan Auto",
+    "Quote vehicle": "Cotización Plan Auto",
     "Vendor": "Aseguradora",
     "Vendors": "Aseguradoras",
     "Vehicle Make": "Marca de Vehículo",
