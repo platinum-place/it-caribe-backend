@@ -22,6 +22,12 @@ class VehicleUseSeeder extends Seeder
             [
                 'name' => 'Comercial',
             ],
+            [
+                'name' => 'Préstamo  de consumo con garantía de vehículo ',
+            ],
+            [
+                'name' => 'Préstamo de vehículo',
+            ],
         ];
 
         foreach ($data as $item) {

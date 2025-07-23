@@ -19,6 +19,9 @@ class QuoteCreditTypeSeeder extends Seeder
             [
                 'name' => 'Préstamo Personal',
             ],
+            [
+                'name' => 'Préstamo de consumo personal (sin garantía)',
+            ],
         ];
 
         foreach ($data as $item) {
