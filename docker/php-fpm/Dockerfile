@@ -1,73 +1,27 @@
-FROM php:8.4-fpm-alpine
+FROM bitnami/php-fpm:8.4
 
 ARG UID=1000
 ARG GID=1000
 
-RUN apk add --no-cache \
-    git \
-    curl \
-    libpng-dev \
-    oniguruma-dev \
-    libxml2-dev \
-    postgresql-dev \
-    libzip-dev \
-    zip \
-    unzip \
-    icu-dev \
-    acl \
-    sudo \
-    nodejs \
-    npm \
-    shadow \
-    freetype-dev \
-    libjpeg-turbo-dev \
-    && rm -rf /var/cache/apk/*
+USER root
 
-RUN git config --global --add safe.directory /app
+RUN install_packages libpq-dev \
+    && echo "extension=pdo_pgsql" > /opt/bitnami/php/etc/conf.d/pdo_pgsql.ini
 
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) \
-        pdo_pgsql \
-        pgsql \
-        mbstring \
-        exif \
-        pcntl \
-        bcmath \
-        gd \
-        zip \
-        opcache \
-        intl
+RUN groupadd -g $GID appgroup
 
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+RUN useradd -u $UID -g $GID -m -s /bin/bash laravel
+
+RUN usermod -u $UID -g $GID laravel
+
+RUN mkdir -p /app && chown -R $UID:$GID /app
+
+RUN chown -R $UID:$GID /opt/bitnami/php/logs \
+    && chown -R $UID:$GID /opt/bitnami/php/tmp \
+    && chown -R $UID:$GID /opt/bitnami/php/var
+
+RUN mkdir -p /app && chown -R $UID:$GID /app
 
 WORKDIR /app
 
-RUN usermod -u ${UID} www-data && groupmod -g ${GID} www-data \
-    && echo "www-data ALL=(ALL) NOPASSWD: /bin/chown, /bin/chmod, /usr/bin/find" >> /etc/sudoers
-
-USER root
-COPY --chown=${UID}:${GID} . .
-COPY entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/entrypoint.sh
-
-RUN mkdir -p \
-        storage/logs \
-        storage/framework/cache \
-        storage/framework/sessions \
-        storage/framework/views \
-        bootstrap/cache \
-    && chown -R ${UID}:${GID} /app \
-    && chmod -R 775 storage bootstrap/cache \
-    && touch storage/logs/laravel.log \
-    && chmod 664 storage/logs/laravel.log
-
-RUN sed -i 's/user = www-data/user = www-data/g' /usr/local/etc/php-fpm.d/www.conf \
-    && sed -i 's/group = www-data/group = www-data/g' /usr/local/etc/php-fpm.d/www.conf \
-    && find storage -name "oauth-*.key" -exec chmod 600 {} \; 2>/dev/null || true
-
-USER www-data
-
-EXPOSE 9000
-
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
-CMD ["php-fpm"]
+USER $UID
