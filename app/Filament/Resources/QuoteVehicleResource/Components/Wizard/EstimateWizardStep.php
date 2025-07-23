@@ -45,6 +45,7 @@ class EstimateWizardStep
 
                 Repeater::make('estimates_table')
                     ->hiddenLabel()
+                    ->hidden(fn (Get $get) => $get('estimates') === null)
                     ->schema([
                         TextInput::make('name')
                             ->label('Aseguradora')

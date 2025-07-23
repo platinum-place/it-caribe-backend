@@ -47,16 +47,33 @@ class EstimateWizardStep
 
                 Repeater::make('estimates_table')
                     ->hiddenLabel()
+                    ->hidden(fn(Get $get) => $get('estimates') === null)
                     ->schema([
                         TextInput::make('name')
                             ->label('Aseguradora')
                             ->disabled()
                             ->dehydrated(false),
 
+                        TextInput::make('debtor_rate')
+                            ->label('Tasa deudor')
+                            ->disabled()
+                            ->mask(RawJs::make('$money($input)'))
+                            ->stripCharacters(',')
+                            ->numeric(),
+
+                        TextInput::make('co_debtor_rate')
+                            ->label('Tasa codeudor')
+                            ->disabled()
+                            ->dehydrated(false)
+                            ->mask(RawJs::make('$money($input)'))
+                            ->stripCharacters(',')
+                            ->numeric(),
+
                         TextInput::make('debtor_amount')
                             ->label('Prima deudor')
                             ->disabled()
                             ->dehydrated(false)
+                            ->prefix('RD$')
                             ->mask(RawJs::make('$money($input)'))
                             ->stripCharacters(',')
                             ->numeric(),
@@ -65,20 +82,9 @@ class EstimateWizardStep
                             ->label('Prima codeudor')
                             ->disabled()
                             ->dehydrated(false)
+                            ->prefix('RD$')
                             ->mask(RawJs::make('$money($input)'))
                             ->stripCharacters(',')
-                            ->numeric(),
-
-                        TextInput::make('debtor_rate')
-                            ->label('Tasa deudor')
-                            ->disabled()
-                            ->dehydrated(false)
-                            ->numeric(),
-
-                        TextInput::make('co_debtor_rate')
-                            ->label('Tasa codeudor')
-                            ->disabled()
-                            ->dehydrated(false)
                             ->numeric(),
 
                         TextInput::make('total')
@@ -96,7 +102,7 @@ class EstimateWizardStep
                             ->dehydrated(false)
                             ->columnSpanFull(),
                     ])
-                    ->columns(4)
+                    ->columns(3)
                     ->deletable(false)
                     ->reorderable(false)
                     ->addable(false)

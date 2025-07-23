@@ -39,7 +39,7 @@ class EstimateLifeForm
                     ->maxDate(now())
                     ->live(debounce: 500)
                     ->afterStateUpdated(function (Get $get, Set $set, $state) {
-                        $set('customer_age', Carbon::parse($state)->age);
+                        $set('co_debtor_age', Carbon::parse($state)->age);
                     }),
 
                 Hidden::make('co_debtor_age'),
