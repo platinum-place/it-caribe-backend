@@ -13,7 +13,7 @@ class QuoteLife extends Model
 
     protected $fillable = [
         'quote_id', 'co_debtor_id', 'quote_credit_type_id',
-        'deadline', 'guarantor','insured_amount',
+        'deadline', 'guarantor', 'insured_amount',
     ];
 
     public function quote(): BelongsTo

@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Filament\Resources\QuoteVehicleResource\Components\Wizard;
+namespace App\Filament\Resources\QuoteLifeResource\Components\Wizard;
 
 use App\Filament\Resources\Components\Forms\CustomerForm;
 use Filament\Forms\Components\Wizard;
 
-class CustomerWizardStep
+class DebtorWizardStep
 {
     public static function make(): Wizard\Step
     {
-        return Wizard\Step::make(__('Customer'))
+        return Wizard\Step::make(__('Debtor'))
             ->schema([
                 CustomerForm::make(),
             ])

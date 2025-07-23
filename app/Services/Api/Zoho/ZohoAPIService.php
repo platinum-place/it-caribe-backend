@@ -104,4 +104,20 @@ class ZohoAPIService
             ->throw()
             ->body();
     }
+
+    /**
+     * @throws RequestException
+     * @throws ConnectionException
+     */
+    public function insertRecords(string $module, string $token, array $data): ?array
+    {
+        $url = sprintf('%s/%s', config('zoho.domains.api').'/'.config('zoho.crm.uri'), $module);
+
+        return Http::withToken($token, 'Zoho-oauthtoken')
+            ->post($url, [
+                'data' => $data,
+            ])
+            ->throw()
+            ->json();
+    }
 }

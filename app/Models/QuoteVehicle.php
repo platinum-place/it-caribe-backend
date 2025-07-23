@@ -15,7 +15,7 @@ class QuoteVehicle extends Model
     protected $fillable = [
         'quote_id', 'vehicle_id', 'vehicle_make_id', 'vehicle_year',
         'vehicle_model_id', 'vehicle_type_id', 'vehicle_use_id',
-        'vehicle_activity_id', 'vehicle_amount','vehicle_rate'
+        'vehicle_activity_id', 'vehicle_amount', 'vehicle_rate',
     ];
 
     public function quote(): BelongsTo

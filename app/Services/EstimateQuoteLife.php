@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Models\VehicleType;
 use App\Services\Api\Zoho\ZohoCRMService;
 use Exception;
 use Illuminate\Http\Client\ConnectionException;
@@ -14,9 +13,7 @@ class EstimateQuoteLife
 
     protected float $coDebtorRate = 0;
 
-    public function __construct(protected ZohoCRMService $zohoApi)
-    {
-    }
+    public function __construct(protected ZohoCRMService $zohoApi) {}
 
     /**
      * @throws RequestException
@@ -25,7 +22,7 @@ class EstimateQuoteLife
      */
     public function estimate(int $customerAge, int $deadline, float $insuredAmount, ?int $coDebtorAge = null): array
     {
-        $criteria = '((Corredor:equals:' . 3222373000092390001 . ') and (Product_Category:equals:Vida))';
+        $criteria = '((Corredor:equals:'. 3222373000092390001 .') and (Product_Category:equals:Vida))';
         $productsResponse = $this->zohoApi->searchRecords('Products', $criteria);
 
         $result = [];
@@ -42,7 +39,7 @@ class EstimateQuoteLife
             $amountTaxed = $amount / 1.16;
             $taxesAmount = $amount - $amountTaxed;
 
-            if (!empty($this->coDebtorRate)) {
+            if (! empty($this->coDebtorRate)) {
                 $coDebtorAmount = ($insuredAmount / 1000) * ($coDebtorRate - $debtorRate);
                 $amount += $coDebtorAmount;
             }
@@ -83,7 +80,7 @@ class EstimateQuoteLife
                 $this->debtorRate = $rate['Name'];
             }
 
-            if (!empty($coDebtorAge)) {
+            if (! empty($coDebtorAge)) {
                 if ($coDebtorAge >= $rate['Edad_min'] && $coDebtorAge <= $rate['Edad_max']) {
                     $this->coDebtorRate = $rate['Codeudor'];
                 }

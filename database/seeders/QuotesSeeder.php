@@ -15,6 +15,7 @@ class QuotesSeeder extends Seeder
             QuoteTypeSeeder::class,
             QuoteStatusSeeder::class,
             QuoteLineStatusSeeder::class,
+            QuoteCreditTypeSeeder::class,
         ]);
     }
 }

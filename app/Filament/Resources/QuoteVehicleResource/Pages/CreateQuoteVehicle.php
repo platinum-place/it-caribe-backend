@@ -13,6 +13,7 @@ use App\Models\QuoteLine;
 use App\Models\QuoteVehicle;
 use App\Models\QuoteVehicleLine;
 use App\Models\Vehicle;
+use App\Services\Api\Zoho\ZohoCRMService;
 use Filament\Forms\Components\Wizard;
 use Filament\Forms\Form;
 use Filament\Resources\Pages\CreateRecord;
@@ -38,8 +39,8 @@ class CreateQuoteVehicle extends CreateRecord
 
     protected function handleRecordCreation(array $data): Model
     {
-        $registro = [
-            'Subject' => $data['first_name'].' '.$data['last_name'],
+        $crmData = [
+            'Subject' => $data['first_name'] . ' ' . $data['last_name'],
             'Valid_Till' => date('Y-m-d', strtotime('+30 days')),
             'Vigencia_desde' => date('Y-m-d'),
             'Account_Name' => 3222373000092390001,
@@ -47,15 +48,18 @@ class CreateQuoteVehicle extends CreateRecord
             'Quote_Stage' => 'Cotizando',
         ];
 
-        $libreria = new Zoho;
-        $planes = [];
         foreach ($data['estimates'] as $estimate) {
-            $planes[] = [
-                'total' => $estimate['total_monthly'],
-                'planid' => $estimate['id_crm'],
+            $crmData['Quoted_Items'][] = [
+                'Quantity' => 1,
+                'Product_Name' => $estimate['id_crm'],
+                'Total' => round($estimate['total'], 2),
+                'Net_Total' => round($estimate['total'], 2),
+                'List_Price' => round($estimate['total'], 2),
             ];
         }
-        $id = $libreria->createRecords('Quotes', $registro, $planes);
+
+        $responseCrm = app(ZohoCRMService::class)->insertRecords('Quotes', $crmData);
+        $id = $responseCrm['data'][0]['details']['id'];
 
         return DB::transaction(function () use ($id, $data) {
             $customer = Customer::create([

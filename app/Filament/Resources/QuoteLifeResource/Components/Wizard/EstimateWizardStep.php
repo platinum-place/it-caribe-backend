@@ -3,9 +3,7 @@
 namespace App\Filament\Resources\QuoteLifeResource\Components\Wizard;
 
 use App\Filament\Resources\QuoteLifeResource\Components\Forms\EstimateLifeForm;
-use App\Models\VehicleType;
 use App\Services\EstimateQuoteLife;
-use App\Services\EstimateQuoteVehicle;
 use Filament\Forms\Components\Actions;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Hidden;
@@ -47,7 +45,7 @@ class EstimateWizardStep
 
                 Repeater::make('estimates_table')
                     ->hiddenLabel()
-                    ->hidden(fn(Get $get) => $get('estimates') === null)
+                    ->hidden(fn (Get $get) => $get('estimates') === null)
                     ->schema([
                         TextInput::make('name')
                             ->label('Aseguradora')

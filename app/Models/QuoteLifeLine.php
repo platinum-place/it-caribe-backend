@@ -12,7 +12,7 @@ class QuoteLifeLine extends Model
 
     protected $fillable = [
         'quote_life_id', 'quote_line_id', 'debtor_amount',
-        'co_debtor_amount','debtor_rate','co_debtor_rate',
+        'co_debtor_amount', 'debtor_rate', 'co_debtor_rate',
     ];
 
     public function quoteLife(): BelongsTo
