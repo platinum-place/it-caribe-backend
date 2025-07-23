@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>{{ $name }}</title>
+    <title>{{ $title }}</title>
     <style>
         @page {
             size: A3 portrait;
@@ -64,32 +64,31 @@
     <tbody>
     <tr>
         <td style="border: none; text-align:left; font-weight: bold;">Ramo/Producto:</td>
-        <td style="border: none; text-align:left;">{{ $cotizacion->getFieldValue('Plan') }}</td>
+        <td style="border: none; text-align:left;">{{ $quoteCRM['Plan'] }}</td>
         <td style="border: none; text-align:left; font-weight: bold;">Correo:</td>
-        <td style="border: none; text-align:left;">{{ $cotizacion->getFieldValue('Correo_electr_nico') }}</td>
+        <td style="border: none; text-align:left;">{{ $customer->email }}</td>
         <td style="border: none; text-align:left; font-weight: bold;">Fecha:</td>
-        <td style="border: none; text-align:left;">{{ date('d/m/Y', strtotime($cotizacion->getCreatedTime())) }}</td>
+        <td style="border: none; text-align:left;">{{ date('d/m/Y', strtotime($quote->start_date)) }}</td>
     </tr>
     <tr>
         <td style="border: none; text-align:left; font-weight: bold;">Cliente:</td>
-        <td style="border: none; text-align:left;">{{ $cotizacion->getFieldValue("Nombre") . " " . $cotizacion->getFieldValue("Apellido") }}</td>
+        <td style="border: none; text-align:left;">{{ $customer->full_name }}</td>
         <td style="border: none; text-align:left; font-weight: bold;">Equipamientos:</td>
         <td style="border: none; text-align:left;">{{ 'NINGUNO' }}</td>
         <td style="border: none; text-align:left; font-weight: bold;">Cédula/Pasaporte:</td>
-        <td style="border: none; text-align:left;">{{ $cotizacion->getFieldValue('RNC_C_dula') }}</td>
+        <td style="border: none; text-align:left;">{{ $customer->identity_number }}</td>
     </tr>
     <tr>
         <td style="border: none; text-align:left; font-weight: bold;">Dirección:</td>
-        <td style="border: none; text-align:left;"><p
-                style="font-size: 8px">{{ $cotizacion->getFieldValue('Direcci_n') }}</p></td>
+        <td style="border: none; text-align:left;"><p style="font-size: 8px">{{ $customer->address }}</p></td>
         <td style="border: none; text-align:left; font-weight: bold;">Uso:</td>
         <td style="border: none; text-align:left;">{{ $quoteVehicle->vehicleUse->name }}</td>
         <td style="border: none; text-align:left; font-weight: bold;">Teléfono:</td>
-        <td style="border: none; text-align:left;">{{ $quoteVehicle->quote->customer->home_phone }}</td>
+        <td style="border: none; text-align:left;">{{ $customer->home_phone }}</td>
     </tr>
     <tr>
         <td style="border: none; text-align:left; font-weight: bold;">Tipo de vehículo:</td>
-        <td style="border: none; text-align:left;">{{ $cotizacion->getFieldValue('Tipo_veh_culo') }}</td>
+        <td style="border: none; text-align:left;">{{ $quoteVehicle->vehicleUse->name }}</td>
         <td style="border: none; text-align:left; font-weight: bold;">Marca:</td>
         <td style="border: none; text-align:left;">{{ $quoteVehicle->vehicleMake->name }}</td>
         <td style="border: none; text-align:left; font-weight: bold;">Modelo:</td>
@@ -99,9 +98,9 @@
         <td style="border: none; text-align:left; font-weight: bold;">Año:</td>
         <td style="border: none; text-align:left;">{{ $quoteVehicle->vehicle_year }}</td>
         <td style="border: none; text-align:left; font-weight: bold;">Chasis:</td>
-        <td style="border: none; text-align:left;">{{ $cotizacion->getFieldValue('Chasis') }}</td>
+        <td style="border: none; text-align:left;">{{ $vehicle->chassis }}</td>
         <td style="border: none; text-align:left; font-weight: bold;">Valor asegurado:</td>
-        <td style="border: none; text-align:left;">{{ number_format($cotizacion->getFieldValue("Suma_asegurada"), 2) }}</td>
+        <td style="border: none; text-align:left;">{{ number_format($quoteVehicle->vehicle_amount, 2) }}</td>
     </tr>
     </tbody>
 </table>
@@ -110,18 +109,54 @@
 
 @php
     $lineItemsData = [];
-    $tipoVehiculo = $cotizacion->getFieldValue("Tipo_veh_culo");
-    $isVehiculoPesado = preg_match('/\bpesado\b/i', $tipoVehiculo) || $tipoVehiculo === "Camión";
+    $vehicleType = $quoteVehicle->vehicleType->name;
+    $isVehicleType = preg_match('/\bpesado\b/i', $vehicleType) || $vehicleType === "Camión";
+    $productFields = [
+        'Lesiones_muerte_1_pers',
+        'Lesiones_muerte_m_s_1_pers',
+        'Da_os_propiedad_ajena',
+        'Incendio_y_robo',
+        'Colisi_n_y_vuelco',
+        'Riesgos_comprensivos',
+        'Rotura_de_cristales_deducible',
+        'Fianza_judicial',
+        'Lesiones_muerte_1_pas',
+        'Lesiones_muerte_m_s_1_pas',
+        'Riesgos_conductor',
+        'Asistencia_vial',
+        'En_caso_de_accidente',
+        'Renta_veh_culo',
+        'Vida',
+        'ltimos_gastos',
+        'Deducible',
+        'Cruz_roja',
+        'Cobertura_extra',
+        'Cobertura_pink',
+        'Gastos_m_dicos',
+        'Vendor_Name',
+    ];
 
-    foreach ($quoteVehicle->quote->lines as $line) {
+    $vendorFields = [
+        'Nombre',
+    ];
+
+    foreach ($lines as $line) {
         if ($line->total > 0) {
-            $product = $libreria->getRecord("Products", $line->id_crm);
-            $vendor = $libreria->getRecord("Vendors", $product->getFieldValue('Vendor_Name')->getEntityId());
+            $product = app(\App\Services\Api\Zoho\ZohoCRMService::class)->getRecords(
+                'Products',
+                $productFields,
+                $line->id_crm
+            )['data'][0];
+
+            $vendor = app(\App\Services\Api\Zoho\ZohoCRMService::class)->getRecords(
+                'Vendors',
+                $vendorFields,
+                $product['Vendor_Name']['id']
+            )['data'][0];
 
             $lineItemsData[] = [
                 'product' => $product,
-                'vendor' => $vendor,
-                'vendorName' => $vendor->getFieldValue('Nombre'),
+                'vendorName' => $vendor['Nombre'],
                 'netTotal' => $line->total,
                 'monthlyTotal' => $line->total / 12,
             ];
@@ -165,33 +200,33 @@
                             @if ($row['field'] === 'vendorName')
                                 {{ ucwords(strtolower($data['vendorName'])) }}
                             @else
-                                {{ $data['product']->getFieldValue($row['field']) }}
+                                {{ $data['product'][$row['field']] }}
                             @endif
                             @break
 
                         @case('number')
-                            {{ number_format($data['product']->getFieldValue($row['field'])) }}
+                            {{ number_format($data['product'][$row['field']]) }}
                             @break
 
                         @case('percentage')
-                            {{ $data['product']->getFieldValue($row['field']) }}%
+                            {{ $data['product'][$row['field']] }}%
                             @break
 
                         @case('assistance')
-                            @if ($data['product']->getFieldValue($row['field']) == 1)
-                                {{ $isVehiculoPesado ? 'No incluida' : 'Incluida' }}
+                            @if ($data['product'][$row['field']] == 1)
+                                {{ $isVehicleType ? 'No incluida' : 'Incluida' }}
                             @else
                                 No incluida
                             @endif
                             @break
 
                         @case('included')
-                            {{ !empty($data['product']->getFieldValue($row['field'])) ? 'Incluida' : 'No incluida' }}
+                            {{ !empty($data['product'][$row['field']]) ? 'Incluida' : 'No incluida' }}
                             @break
 
                         @case('optional_number')
-                            @if (!empty($data['product']->getFieldValue($row['field'])))
-                                {{ number_format($data['product']->getFieldValue($row['field'])) }}
+                            @if (!empty($data['product'][$row['field']]))
+                                {{ number_format($data['product'][$row['field']]) }}
                             @else
                                 No incluida
                             @endif

@@ -7,6 +7,7 @@ use App\Enums\QuoteStatus;
 use App\Filament\Resources\QuoteVehicleResource;
 use App\Helpers\Cotizaciones;
 use App\Models\QuoteVehicle;
+use App\Services\Api\Zoho\ZohoCRMService;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
@@ -46,13 +47,13 @@ class EmitQuote extends Component implements HasForms
                         return $lines
                             ->where('total', '>', 0)
                             ->mapWithKeys(function ($line) {
-                                return [$line->id => $line->name.' (RD$'.number_format($line->total, 2).')'];
+                                return [$line->id => $line->name . ' (RD$' . number_format($line->total, 2) . ')'];
                             });
                     }),
 
                 Checkbox::make('agreement')
-                    ->label(fn () => new \Illuminate\Support\HtmlString(
-                        'Estoy de acuerdo que quiero emitir la cotización, a nombre de <b>'.$customer->fullName.'</b>, RNC/Cédula <b>'.$customer->identity_number.'</b>'
+                    ->label(fn() => new \Illuminate\Support\HtmlString(
+                        'Estoy de acuerdo que quiero emitir la cotización, a nombre de <b>' . $customer->fullName . '</b>, RNC/Cédula <b>' . $customer->identity_number . '</b>'
                     ))
                     ->required()
                     ->columnSpanFull(),
@@ -60,7 +61,7 @@ class EmitQuote extends Component implements HasForms
                 FileUpload::make('attachments')
                     ->translateLabel()
                     ->disk('local')
-                    ->directory(fn () => 'quotes'.'/'.$this->record->id)
+                    ->directory(fn() => 'quotes' . '/' . $this->record->id)
                     ->visibility('private')
                     ->multiple()
                     ->maxParallelUploads(1)
@@ -87,16 +88,20 @@ class EmitQuote extends Component implements HasForms
             'attachments' => $data['attachments'] ?? [],
             'quote_status_id' => QuoteStatus::APPROVED->value,
             'responsible_id' => auth()->id(),
-            'end_date' => now()->addDays(30),
+            'end_date' => now()->addMonths(12),
         ]);
 
         $line->update([
             'quote_line_status_id' => QuoteLineStatus::ACCEPTED->value,
         ]);
 
-        $libreria = new Cotizaciones;
-        $cotizacion = $libreria->getRecord('Quotes', $quote->id_crm);
-        $libreria->actualizar_cotizacion($cotizacion, $line->id_crm);
+        $dataCRM = [
+            'Coberturas' => $line->id_crm,
+            'Quote_Stage' => 'Emitida',
+            'Vigencia_desde' => date('Y-m-d'),
+        ];
+
+        $response = app(ZohoCRMService::class)->updateRecords('Quotes', $quote->id_crm, $dataCRM);
 
         $this->redirect(QuoteVehicleResource::getUrl('view', ['record' => $this->record->id]));
     }

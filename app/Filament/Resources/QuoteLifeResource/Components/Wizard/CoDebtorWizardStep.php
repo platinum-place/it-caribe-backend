@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\QuoteLifeResource\Components\Wizard;
 
-use App\Filament\Resources\Components\Forms\CustomerForm;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Wizard;

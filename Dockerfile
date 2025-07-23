@@ -6,9 +6,7 @@ ARG GID=1000
 USER root
 
 RUN install_packages  \
-    libpq-dev  \
-    supervisor \
-    && echo "extension=pdo_pgsql" > /opt/bitnami/php/etc/conf.d/pdo_pgsql.ini
+    supervisor
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 

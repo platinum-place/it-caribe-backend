@@ -120,4 +120,20 @@ class ZohoAPIService
             ->throw()
             ->json();
     }
+
+    /**
+     * @throws RequestException
+     * @throws ConnectionException
+     */
+    public function updateRecords(string $module, string $token, string $id, array $data): ?array
+    {
+        $url = sprintf('%s/%s/%s', config('zoho.domains.api').'/'.config('zoho.crm.uri'), $module, $id);
+
+        return Http::withToken($token, 'Zoho-oauthtoken')
+            ->put($url, [
+                'data' => $data,
+            ])
+            ->throw()
+            ->json();
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\QuoteLifeResource\Pages;
 
+use App\Enums\QuoteStatus;
 use App\Filament\Resources\QuoteLifeResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
@@ -14,6 +15,28 @@ class ViewQuoteLife extends ViewRecord
     {
         return [
             Actions\EditAction::make(),
+            Actions\Action::make('download')
+                ->translateLabel()
+                ->url(route('filament.quote-vehicles.download', ['quote_vehicle' => $this->record]))
+                ->openUrlInNewTab()
+                ->visible(fn () => $this->record->quote->quote_status_id !== QuoteStatus::APPROVED->value),
+            Actions\Action::make('download')
+                ->label(__('Download :name', ['name' => __('Issuance')]))
+                ->url(route('filament.quote-vehicles.downloadCertificate', ['quote_vehicle' => $this->record]))
+                ->openUrlInNewTab()
+                ->visible(fn () => $this->record->quote->quote_status_id === QuoteStatus::APPROVED->value),
+            Actions\Action::make('emit')
+                ->translateLabel()
+                ->url(route('filament.admin.resources.quote-vehicles.emit', ['record' => $this->record]))
+                ->visible(fn () => $this->record->quote->quote_status_id === QuoteStatus::PENDING->value),
+            Actions\Action::make('documents')
+                ->label(__('Download :name', ['name' => __('Documents')]))
+                ->url(function () {
+                    $id = $this->record?->selectedLine?->id_crm;
+
+                    return route('filament.zoho-crm.download-product-attachments', ['id' => $id]);
+                })
+                ->visible(fn () => $this->record->quote->quote_status_id === QuoteStatus::APPROVED->value),
         ];
     }
 }

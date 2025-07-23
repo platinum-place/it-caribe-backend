@@ -6,7 +6,6 @@ use App\Enums\QuoteLineStatus;
 use App\Enums\QuoteStatus;
 use App\Enums\QuoteType;
 use App\Filament\Resources\QuoteVehicleResource;
-use App\Helpers\Zoho;
 use App\Models\Customer;
 use App\Models\Quote;
 use App\Models\QuoteLine;
@@ -39,17 +38,18 @@ class CreateQuoteVehicle extends CreateRecord
 
     protected function handleRecordCreation(array $data): Model
     {
-        $crmData = [
-            'Subject' => $data['first_name'] . ' ' . $data['last_name'],
+        $dataCRM = [
+            'Subject' => $data['first_name'].' '.$data['last_name'],
             'Valid_Till' => date('Y-m-d', strtotime('+30 days')),
             'Vigencia_desde' => date('Y-m-d'),
             'Account_Name' => 3222373000092390001,
             'Contact_Name' => 3222373000203318001,
             'Quote_Stage' => 'Cotizando',
+            'Plan' => 'Auto',
         ];
 
         foreach ($data['estimates'] as $estimate) {
-            $crmData['Quoted_Items'][] = [
+            $dataCRM['Quoted_Items'][] = [
                 'Quantity' => 1,
                 'Product_Name' => $estimate['id_crm'],
                 'Total' => round($estimate['total'], 2),
@@ -58,8 +58,8 @@ class CreateQuoteVehicle extends CreateRecord
             ];
         }
 
-        $responseCrm = app(ZohoCRMService::class)->insertRecords('Quotes', $crmData);
-        $id = $responseCrm['data'][0]['details']['id'];
+        $responseCRM = app(ZohoCRMService::class)->insertRecords('Quotes', $dataCRM);
+        $id = $responseCRM['data'][0]['details']['id'];
 
         return DB::transaction(function () use ($id, $data) {
             $customer = Customer::create([

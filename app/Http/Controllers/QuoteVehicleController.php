@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Zoho;
 use App\Models\QuoteVehicle;
+use App\Services\Api\Zoho\ZohoCRMService;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
@@ -51,17 +52,22 @@ class QuoteVehicleController extends Controller
 
     public function download(QuoteVehicle $quoteVehicle)
     {
-        $libreria = new Zoho;
-        $cotizacion = $libreria->getRecord('Quotes', $quoteVehicle->quote->id_crm);
+        $quoteCRM = app(ZohoCRMService::class)->getRecords('Quotes', [
+            'Quote_Number',
+            'Plan',
+        ], $quoteVehicle->quote->id_crm)['data'][0];
 
         $pdf = Pdf::loadView('quote-vehicles.download', [
+            'quoteCRM' => $quoteCRM,
             'quoteVehicle' => $quoteVehicle,
-            'cotizacion' => $cotizacion,
-            'libreria' => $libreria,
-            'name' => 'Cotización No. '.$cotizacion->getFieldValue('Quote_Number'),
+            'quote' => $quoteVehicle->quote,
+            'lines' => $quoteVehicle->quote->lines,
+            'customer' => $quoteVehicle->quote->customer,
+            'vehicle' => $quoteVehicle->vehicle,
+            'title' => 'Cotización No. '.$quoteCRM['Quote_Number'],
         ]);
 
-        return $pdf->stream('Cotización No'.$cotizacion->getFieldValue('Quote_Number').'.pdf');
+        return $pdf->stream('Cotización No'.$quoteCRM['Quote_Number'].'.pdf');
     }
 
     public function downloadCertificate(QuoteVehicle $quoteVehicle)

@@ -5,11 +5,12 @@ namespace App\Services\Api\Zoho;
 use Exception;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
-use Illuminate\Support\Facades\Http;
 
 class ZohoCRMService
 {
-    public function __construct(protected ZohoOAuthTokenService $oauth, protected ZohoAPIService $api) {}
+    public function __construct(protected ZohoOAuthTokenService $oauth, protected ZohoAPIService $api)
+    {
+    }
 
     /**
      * @throws RequestException
@@ -95,7 +96,25 @@ class ZohoCRMService
         $response = $this->api->insertRecords($module, $token, [$data]);
 
         if (empty($response)) {
-            throw new Exception(__('Records not found in Zoho'));
+            throw new Exception(__('Server Error'));
+        }
+
+        return $response;
+    }
+
+    /**
+     * @throws RequestException
+     * @throws ConnectionException
+     * @throws Exception
+     */
+    public function updateRecords(string $module, string $id, array $data): ?array
+    {
+        $token = $this->oauth->getAccessToken();
+
+        $response = $this->api->updateRecords($module, $token, $id, [$data]);
+
+        if (empty($response)) {
+            throw new Exception(__('Server Error'));
         }
 
         return $response;

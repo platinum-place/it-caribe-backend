@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\QuoteVehicleResource\Pages;
 
-use App\Enums\QuoteLineStatus;
 use App\Enums\QuoteStatus;
 use App\Filament\Resources\QuoteVehicleResource;
 use Filament\Actions;
@@ -33,10 +32,7 @@ class ViewQuoteVehicle extends ViewRecord
             Actions\Action::make('documents')
                 ->label(__('Download :name', ['name' => __('Documents')]))
                 ->url(function () {
-                    $id = $this->record->quote->lines
-                        ->where('quote_line_status_id', QuoteLineStatus::ACCEPTED->value)
-                        ->first()
-                        ?->id_crm;
+                    $id = $this->record?->quote?->selectedLine?->id_crm;
 
                     return route('filament.zoho-crm.download-product-attachments', ['id' => $id]);
                 })

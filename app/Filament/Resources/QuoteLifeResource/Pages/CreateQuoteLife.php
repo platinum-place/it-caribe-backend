@@ -6,15 +6,11 @@ use App\Enums\QuoteLineStatus;
 use App\Enums\QuoteStatus;
 use App\Enums\QuoteType;
 use App\Filament\Resources\QuoteLifeResource;
-use App\Helpers\Zoho;
 use App\Models\Customer;
 use App\Models\Quote;
 use App\Models\QuoteLife;
 use App\Models\QuoteLifeLine;
 use App\Models\QuoteLine;
-use App\Models\QuoteVehicle;
-use App\Models\QuoteVehicleLine;
-use App\Models\Vehicle;
 use App\Services\Api\Zoho\ZohoCRMService;
 use Filament\Forms\Components\Wizard;
 use Filament\Forms\Form;
@@ -34,7 +30,7 @@ class CreateQuoteLife extends CreateRecord
                     QuoteLifeResource\Components\Wizard\EstimateWizardStep::make(),
                     QuoteLifeResource\Components\Wizard\DebtorWizardStep::make(),
                     QuoteLifeResource\Components\Wizard\CoDebtorWizardStep::make()
-                        ->hidden(fn($get) => !$get('co_debtor_birth_date')),
+                        ->hidden(fn ($get) => ! $get('co_debtor_birth_date')),
                 ])
                     ->columnSpanFull(),
             ]);
@@ -42,17 +38,18 @@ class CreateQuoteLife extends CreateRecord
 
     protected function handleRecordCreation(array $data): Model
     {
-        $crmData = [
-            'Subject' => $data['first_name'] . ' ' . $data['last_name'],
+        $dataCRM = [
+            'Subject' => $data['first_name'].' '.$data['last_name'],
             'Valid_Till' => date('Y-m-d', strtotime('+30 days')),
             'Vigencia_desde' => date('Y-m-d'),
             'Account_Name' => 3222373000092390001,
             'Contact_Name' => 3222373000203318001,
             'Quote_Stage' => 'Cotizando',
+            'Plan' => 'Vida/Consumo',
         ];
 
         foreach ($data['estimates'] as $estimate) {
-            $crmData['Quoted_Items'][] = [
+            $dataCRM['Quoted_Items'][] = [
                 'Quantity' => 1,
                 'Product_Name' => $estimate['id_crm'],
                 'Total' => round($estimate['total'], 2),
@@ -61,8 +58,8 @@ class CreateQuoteLife extends CreateRecord
             ];
         }
 
-        $responseCrm = app(ZohoCRMService::class)->insertRecords('Quotes', $crmData);
-        $id = $responseCrm['data'][0]['details']['id'];
+        $responseCRM = app(ZohoCRMService::class)->insertRecords('Quotes', $dataCRM);
+        $id = $responseCRM['data'][0]['details']['id'];
 
         return DB::transaction(function () use ($id, $data) {
             $customer = Customer::create([
@@ -76,7 +73,7 @@ class CreateQuoteLife extends CreateRecord
                 'email' => $data['email'] ?? null,
                 'address' => $data['address'] ?? null,
             ]);
-            if (!empty($data['co_debtor_first_name'])) {
+            if (! empty($data['co_debtor_first_name'])) {
                 $coDebtor = Customer::create([
                     'first_name' => $data['co_debtor_first_name'],
                     'last_name' => $data['co_debtor_last_name'],
@@ -100,7 +97,7 @@ class CreateQuoteLife extends CreateRecord
             ]);
             $quoteLife = QuoteLife::create([
                 'quote_id' => $quote->id,
-                'co_debtor_id' => !empty($data['co_debtor_first_name']) ? $coDebtor?->id : null,
+                'co_debtor_id' => ! empty($data['co_debtor_first_name']) ? $coDebtor?->id : null,
                 'quote_credit_type_id' => $data['quote_credit_type_id'],
                 'deadline' => $data['deadline'],
                 'guarantor' => $data['guarantor'],
