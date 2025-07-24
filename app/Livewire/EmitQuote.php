@@ -26,7 +26,9 @@ class EmitQuote extends Component implements HasForms
 
     public string $resource;
 
-    public function mount(QuoteVehicle|QuoteLife|QuoteFire $record, string $resource): void
+    public string $returnUrl = '/';
+
+    public function mount(QuoteVehicle|QuoteLife|QuoteFire $record, string $returnUrl): void
     {
         $this->form->fill([
             'attachments' => $record?->quote?->attachments ?? [],
@@ -34,7 +36,7 @@ class EmitQuote extends Component implements HasForms
 
         $this->record = $record;
 
-        $this->resource = $resource;
+        $this->returnUrl = $returnUrl;
     }
 
     public function form(Form $form): Form
@@ -109,7 +111,7 @@ class EmitQuote extends Component implements HasForms
 
         $response = app(ZohoCRMService::class)->updateRecords('Quotes', $quote->id_crm, $dataCRM);
 
-        $this->redirect($this->resource::getUrl('view', ['record' => $this->record->id]));
+        $this->redirect($this->returnUrl);
     }
 
     public function render()

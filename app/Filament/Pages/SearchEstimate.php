@@ -4,7 +4,7 @@ namespace App\Filament\Pages;
 
 use Filament\Pages\Page;
 
-class SearchEstimate extends Page
+class SearchEstimate /** extends Page */
 {
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 

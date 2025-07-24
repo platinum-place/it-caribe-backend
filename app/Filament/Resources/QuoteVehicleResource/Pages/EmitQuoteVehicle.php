@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\QuoteVehicleResource\Pages;
 
+use App\Filament\Resources\QuoteLifeResource;
 use App\Filament\Resources\QuoteVehicleResource;
 use Filament\Actions;
 use Filament\Resources\Pages\Concerns\InteractsWithRecord;
@@ -15,9 +16,13 @@ class EmitQuoteVehicle extends Page
 
     protected static string $view = 'filament.resources.quote-vehicle-resource.pages.emit-quote-vehicle';
 
+    public string $returnUrl;
+
     public function mount(int|string $record): void
     {
         $this->record = $this->resolveRecord($record);
+
+        $this->returnUrl = QuoteVehicleResource::getUrl('view', ['record' => $this->record->id]);
     }
 
     public static function getNavigationLabel(): string
