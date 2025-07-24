@@ -303,7 +303,7 @@
             </p>
 
             <p>
-                E. Propiedades en proximidades mayores o iguales a 500 metros de playas o ríos deben ser inspeccionadas por la aseguradora antes de formalizar la facilidad.
+                E. Propiedades en proximidades menores o iguales a 500 metros de playas o ríos deben ser inspeccionadas por la aseguradora antes de formalizar la facilidad.
             </p>
 
             <p>
