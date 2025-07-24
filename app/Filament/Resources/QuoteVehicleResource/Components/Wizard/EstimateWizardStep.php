@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\QuoteVehicleResource\Components\Wizard;
 
 use App\Filament\Resources\QuoteVehicleResource\Components\Forms\EstimateVehicleForm;
-use App\Services\EstimateQuoteVehicle;
+use App\Services\EstimateQuoteVehicleService;
 use Filament\Forms\Components\Actions;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Hidden;
@@ -26,7 +26,7 @@ class EstimateWizardStep
                     Action::make('generateEstimate')
                         ->translateLabel()
                         ->action(function (Set $set, Get $get) {
-                            $estimates = app(EstimateQuoteVehicle::class)->estimate(
+                            $estimates = app(EstimateQuoteVehicleService::class)->estimate(
                                 $get('vehicle_amount'),
                                 $get('vehicle_year'),
                                 $get('vehicle_type_id'),

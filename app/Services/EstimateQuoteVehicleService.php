@@ -8,7 +8,7 @@ use Exception;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
 
-class EstimateQuoteVehicle
+class EstimateQuoteVehicleService
 {
     public function __construct(protected ZohoCRMService $zohoApi) {}
 

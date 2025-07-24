@@ -7,7 +7,7 @@ use Exception;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
 
-class EstimateQuoteLife
+class EstimateQuoteLifeService
 {
     protected float $debtorRate = 0;
 
@@ -35,14 +35,13 @@ class EstimateQuoteLife
             $debtorAmount = ($insuredAmount / 1000) * $debtorRate;
             $coDebtorAmount = 0;
 
-            $amount = $debtorAmount;
-            $amountTaxed = $amount / 1.16;
-            $taxesAmount = $amount - $amountTaxed;
-
             if (! empty($this->coDebtorRate)) {
                 $coDebtorAmount = ($insuredAmount / 1000) * ($coDebtorRate - $debtorRate);
-                $amount += $coDebtorAmount;
             }
+
+            $amount = $debtorAmount + $coDebtorAmount;
+            $amountTaxed = $amount / 1.16;
+            $taxesAmount = $amount - $amountTaxed;
 
             $result[] = [
                 'name' => $product['Vendor_Name']['name'],

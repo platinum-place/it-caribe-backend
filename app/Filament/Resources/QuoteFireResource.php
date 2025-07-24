@@ -3,10 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\QuoteFireResource\Pages;
-use App\Filament\Resources\QuoteFireResource\RelationManagers;
 use App\Models\QuoteFire;
-use Filament\Forms;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;

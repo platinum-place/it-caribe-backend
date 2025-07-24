@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\QuoteLifeResource\Components\Wizard;
 
 use App\Filament\Resources\QuoteLifeResource\Components\Forms\EstimateLifeForm;
-use App\Services\EstimateQuoteLife;
+use App\Services\EstimateQuoteLifeService;
 use Filament\Forms\Components\Actions;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Hidden;
@@ -26,7 +26,7 @@ class EstimateWizardStep
                     Action::make('generateEstimate')
                         ->translateLabel()
                         ->action(function (Set $set, Get $get) {
-                            $estimates = app(EstimateQuoteLife::class)->estimate(
+                            $estimates = app(EstimateQuoteLifeService::class)->estimate(
                                 $get('customer_age'),
                                 $get('deadline'),
                                 $get('insured_amount'),

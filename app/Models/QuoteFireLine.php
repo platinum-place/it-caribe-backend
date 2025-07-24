@@ -12,7 +12,7 @@ class QuoteFireLine extends Model
 
     protected $fillable = [
         'quote_fire_id', 'quote_line_id', 'debtor_amount', 'fire_rate',
-        'co_debtor_amount', 'debtor_rate', 'co_debtor_rate', 'fire_amount',
+        'co_debtor_amount', 'debtor_rate', 'co_debtor_rate', 'fire_amount', 'life_amount',
     ];
 
     public function quoteFire(): BelongsTo

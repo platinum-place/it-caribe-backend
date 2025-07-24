@@ -20,29 +20,46 @@ class EstimateQuoteFireService
      * @throws ConnectionException
      * @throws Exception
      */
-    public function estimate(int $customerAge, int $deadline, float $insuredAmount, ?int $coDebtorAge = null): array
+    public function estimate(int $customerAge, int $deadline, float $propertyValue, ?float $loanValue = 0, ?int $coDebtorAge = null): array
     {
-        $criteria = '((Corredor:equals:'. 3222373000092390001 .') and (Product_Category:equals:Vida))';
+        $criteria = '((Corredor:equals:'. 3222373000092390001 .') and (Product_Category:equals:Incendio))';
         $productsResponse = $this->zohoApi->searchRecords('Products', $criteria);
 
         $result = [];
 
         foreach ($productsResponse['data'] as $product) {
-            $this->getRate($product['id'], $customerAge, $coDebtorAge);
+            /**
+             * Estimate fire
+             */
+            $fireRate = $this->getFireRate($product['id']);
+            $fireAmount = ($loanValue / 1000) * ($fireRate / 100);
 
-            $debtorRate = $this->debtorRate / 100;
-            $coDebtorRate = $this->coDebtorRate / 100;
-            $debtorAmount = ($insuredAmount / 1000) * $debtorRate;
+            /**
+             * Estimate life
+             */
+            $lifeAmount = 0;
+            $debtorRate = 0;
+            $coDebtorRate = 0;
+            $debtorAmount = 0;
             $coDebtorAmount = 0;
+            if ($loanValue) {
+                $this->getDebtorRate($product['id'], $customerAge, $coDebtorAge);
 
-            $amount = $debtorAmount;
+                $debtorRate = $this->debtorRate / 100;
+                $coDebtorRate = $this->coDebtorRate / 100;
+                $debtorAmount = ($propertyValue / 1000) * $debtorRate;
+            }
+            if (! empty($this->coDebtorRate)) {
+                $coDebtorAmount = ($propertyValue / 1000) * ($coDebtorRate - $debtorRate);
+            }
+            $lifeAmount = $debtorAmount + $coDebtorAmount;
+
+            /**
+             * Totals
+             */
+            $amount = $lifeAmount + $fireAmount;
             $amountTaxed = $amount / 1.16;
             $taxesAmount = $amount - $amountTaxed;
-
-            if (! empty($this->coDebtorRate)) {
-                $coDebtorAmount = ($insuredAmount / 1000) * ($coDebtorRate - $debtorRate);
-                $amount += $coDebtorAmount;
-            }
 
             $result[] = [
                 'name' => $product['Vendor_Name']['name'],
@@ -58,6 +75,11 @@ class EstimateQuoteFireService
                 'co_debtor_amount' => $coDebtorAmount,
                 'debtor_rate' => $debtorRate,
                 'co_debtor_rate' => $coDebtorRate,
+                'fire_rate' => $fireRate,
+                'fire_amount' => $fireAmount,
+                'life_amount' => $lifeAmount,
+                'property_value' => $propertyValue,
+                'loan_value' => $loanValue,
                 'error' => null,
             ];
         }
@@ -70,9 +92,9 @@ class EstimateQuoteFireService
      * @throws ConnectionException
      * @throws Exception
      */
-    protected function getRate(string $productId, $customerAge, ?int $coDebtorAge = null)
+    protected function getDebtorRate(string $productId, $customerAge, ?int $coDebtorAge = null)
     {
-        $criteria = "Plan:equals:$productId";
+        $criteria = "((Plan:equals:$productId) and (Tipo:equals:Vida))";
         $rates = $this->zohoApi->searchRecords('Tasas', $criteria);
 
         foreach ($rates['data'] as $rate) {
@@ -86,5 +108,25 @@ class EstimateQuoteFireService
                 }
             }
         }
+    }
+
+    /**
+     * @throws RequestException
+     * @throws ConnectionException
+     * @throws Exception
+     */
+    protected function getFireRate(string $productId)
+    {
+        $selectedRate = null;
+
+        $criteria = "((Plan:equals:$productId) and (Tipo:equals:Incendio))";
+        $rates = $this->zohoApi->searchRecords('Tasas', $criteria);
+
+        foreach ($rates['data'] as $rate) {
+            $selectedRate = $rate['Name'];
+            break;
+        }
+
+        return $selectedRate;
     }
 }

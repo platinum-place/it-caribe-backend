@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\QuoteFire::class)->constrained();
             $table->foreignIdFor(\App\Models\QuoteLine::class)->constrained();
             $table->decimal('fire_amount', 18, 2)->default(0);
+            $table->decimal('life_amount', 18, 2)->default(0);
             $table->float('fire_rate')->default(0);
             $table->decimal('debtor_amount', 18, 2)->default(0);
             $table->decimal('co_debtor_amount', 18, 2)->default(0);
