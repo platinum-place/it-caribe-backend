@@ -35,7 +35,7 @@ class EstimateFireForm
                 DatePicker::make('co_debtor_birth_date')
                     ->label('Fecha de Nacimiento Codeudor (Si aplica)')
                     ->maxDate(now())
-                    ->live(debounce: 500)
+                    ->live(debounce: 2000)
                     ->afterStateUpdated(function (Get $get, Set $set, $state) {
                         $set('co_debtor_age', Carbon::parse($state)->age);
                     }),
