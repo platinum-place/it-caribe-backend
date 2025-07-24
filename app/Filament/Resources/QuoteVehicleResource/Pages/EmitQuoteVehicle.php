@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\QuoteVehicleResource\Pages;
 
-use App\Filament\Resources\QuoteLifeResource;
 use App\Filament\Resources\QuoteVehicleResource;
 use Filament\Actions;
 use Filament\Resources\Pages\Concerns\InteractsWithRecord;

@@ -95,22 +95,27 @@
     <thead>
     <tr>
         <th style="border: none; text-align:left;">Aseguradora</th>
-        <th style="border: none; text-align:left;">Monto Original</th>
         <th style="border: none; text-align:left;">Años</th>
-        <th style="border: none; text-align:left;">Prima</th>
-        <th style="border: none; text-align:left;">Edad a terminar</th>
+        <th style="border: none; text-align:left;">Valor</th>
+        {{--        <th style="border: none; text-align:left;">Clasificación</th>--}}
+        <th style="border: none; text-align:left;">Prima Vida</th>
+        <th style="border: none; text-align:left;">Edad al Terminar</th>
+        <th style="border: none; text-align:left;">Prima Incendio</th>
+        <th style="border: none; text-align:left;">Prima Total</th>
         <th style="border: none; text-align:left;">Prima Anual</th>
     </tr>
     </thead>
     <tbody>
     @foreach($lines as $line)
         <tr>
-            <td style="border: none; font-weight: bold; text-align:left;">{{ ucwords(strtolower($line->quoteLine->name)) }}</td>
-            <td style="border: none; font-weight: bold; text-align:left;">{{ number_format($quoteLife->insured_amount, 2) }}</td>
-            <td style="border: none; font-weight: bold; text-align:left;">{{ $quoteLife->deadline }}</td>
-            <td style="border: none; font-weight: bold; text-align:left;">{{ number_format($line->quoteLine->total, 2) }}</td>
-            <td style="border: none; font-weight: bold; text-align:left;">{{ $customer->age + $quoteLife->deadline }}</td>
-            <td style="border: none; font-weight: bold; text-align:left;">{{ number_format($line->quoteLine->total * 12, 2) }}</td>
+            <td style="border: none; text-align:left;">{{ ucwords(strtolower($line->quoteLine->name)) }}</td>
+            <td style="border: none; text-align:left;">{{ $quoteFire->deadline }}</td>
+            <td style="border: none; text-align:left;">{{ number_format($quoteFire->property_value, 2) }}</td>
+            <td style="border: none; text-align:left;">{{ number_format($line->life_amount, 2) }}</td>
+            <td style="border: none; text-align:left;">{{ $customer->age + $quoteFire->deadline }}</td>
+            <td style="border: none; text-align:left;">{{ number_format($line->fire_amount, 2) }}</td>
+            <td style="border: none; text-align:left;">{{ number_format($line->quoteLine->total, 2) }}</td>
+            <td style="border: none; text-align:left;">{{ number_format($line->quoteLine->total * 12, 2) }}</td>
         </tr>
     @endforeach
     </tbody>
@@ -118,32 +123,32 @@
 
 <div style="height: 20px;"></div>
 
-<table style="width: 100%; font-size: 12px;">
-    <tr>
-        <td style="padding: 10px;">
+{{--<table style="width: 100%; font-size: 12px;">--}}
+{{--    <tr>--}}
+{{--        <td style="padding: 10px;">--}}
 
-            <p>
-                a) Las aseguradoras al efectuar su proceso de evaluación de riesgo, se reservan el derecho de aceptación del
-                mismo. En caso de que la aseguradora seleccionada decline el riesgo, el cliente será notificado.
-            </p>
+{{--            <p>--}}
+{{--                a) Las aseguradoras al efectuar su proceso de evaluación de riesgo, se reservan el derecho de aceptación del--}}
+{{--                mismo. En caso de que la aseguradora seleccionada decline el riesgo, el cliente será notificado.--}}
+{{--            </p>--}}
 
-            <p>
-                b) La aseguradora se reserva el derecho para realizar variación de prima y coberturas en esta cotización de seguros
-                suscrita con el cliente.
-            </p>
+{{--            <p>--}}
+{{--                b) La aseguradora se reserva el derecho para realizar variación de prima y coberturas en esta cotización de seguros--}}
+{{--                suscrita con el cliente.--}}
+{{--            </p>--}}
 
-            <p>
-                <b>Vigencia:</b> Por el período del préstamo.
-            </p>
+{{--            <p>--}}
+{{--                <b>Vigencia:</b> Por el período del préstamo.--}}
+{{--            </p>--}}
 
-            <p>
-                He leído y estoy de acuerdo en seleccionar la aseguradora: ________________________________
-            </p>
-        </td>
-    </tr>
-</table>
+{{--            <p>--}}
+{{--                He leído y estoy de acuerdo en seleccionar la aseguradora: ________________________________--}}
+{{--            </p>--}}
+{{--        </td>--}}
+{{--    </tr>--}}
+{{--</table>--}}
 
-<div style="height: 70px;"></div>
+{{--<div style="height: 70px;"></div>--}}
 
 <table style="width: 100%; border: none;">
     <tr>

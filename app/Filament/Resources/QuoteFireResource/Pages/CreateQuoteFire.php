@@ -100,7 +100,7 @@ class CreateQuoteFire extends CreateRecord
                 'quote_id' => $quote->id,
                 'co_debtor_id' => ! empty($data['co_debtor_first_name']) ? $coDebtor?->id : null,
                 'quote_credit_type_id' => $data['quote_credit_type_id'],
-                'deadline' => $data['deadline'],
+                'deadline' => $data['deadline'] / 12,
                 'guarantor' => $data['guarantor'],
                 'quote_fire_risk_type_id' => $data['quote_fire_risk_type_id'],
                 'quote_fire_construction_type_id' => $data['quote_fire_construction_type_id'],

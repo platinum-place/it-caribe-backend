@@ -64,7 +64,7 @@ class EstimateFireForm extends Component implements HasForms
                     ->prefix('$'),
 
                 TextInput::make('plazo')
-                    ->label('Plazo en meses')
+                    ->label('Plazo (meses)')
                     ->numeric()
                     ->required()
                     ->minValue(1),

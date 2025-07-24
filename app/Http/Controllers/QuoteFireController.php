@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\QuoteFire;
-use App\Models\QuoteLife;
 use App\Services\Api\Zoho\ZohoCRMService;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
@@ -52,22 +51,22 @@ class QuoteFireController extends Controller
 
     public function download(QuoteFire $quoteFire)
     {
-        $quote = $quoteLife->quote;
+        $quote = $quoteFire->quote;
 
         $quoteCRM = app(ZohoCRMService::class)->getRecords('Quotes', [
             'Quote_Number',
             'Plan',
-        ], $quoteLife->quote->id_crm)['data'][0];
+        ], $quoteFire->quote->id_crm)['data'][0];
 
         $title = 'Cotización No. '.$quoteCRM['Quote_Number'];
 
         $pdf = Pdf::loadView('quote-fires.download', [
             'quoteCRM' => $quoteCRM,
-            'quoteLife' => $quoteLife,
+            'quoteFire' => $quoteFire,
             'quote' => $quote,
-            'lines' => $quoteLife->lines,
+            'lines' => $quoteFire->lines,
             'customer' => $quote->customer,
-            'coDebtor' => $quoteLife?->coDebtor,
+            'coDebtor' => $quoteFire?->coDebtor,
             'title' => $title,
         ]);
 

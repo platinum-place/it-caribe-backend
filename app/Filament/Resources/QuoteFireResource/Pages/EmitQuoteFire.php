@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\QuoteFireResource\Pages;
 
 use App\Filament\Resources\QuoteFireResource;
-use App\Filament\Resources\QuoteLifeResource;
 use Filament\Actions;
 use Filament\Resources\Pages\Concerns\InteractsWithRecord;
 use Filament\Resources\Pages\Page;

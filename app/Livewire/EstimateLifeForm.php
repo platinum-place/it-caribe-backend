@@ -41,7 +41,7 @@ class EstimateLifeForm extends Component implements HasForms
                     ->columns(1),
 
                 TextInput::make('plazo')
-                    ->label('Plazo en meses')
+                    ->label('Plazo (meses)')
                     ->numeric()
                     ->required()
                     ->minValue(1),

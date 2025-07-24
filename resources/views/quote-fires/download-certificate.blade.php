@@ -82,6 +82,12 @@
         <td style="border: none; text-align:left; font-weight: bold;">Teléfono:</td>
         <td style="border: none; text-align:left;">{{ $customer->home_phone }}</td>
     </tr>
+    <tr>
+        <td style="border: none; text-align:left; font-weight: bold;">Edad:</td>
+        <td style="border: none; text-align:left;">{{ $customer->age }}</td>
+        <td style="border: none; text-align:left; font-weight: bold;">Codeudor:</td>
+        <td style="border: none; text-align:left;">{{ $coDebtor?->full_name }}</td>
+    </tr>
     </tbody>
 </table>
 

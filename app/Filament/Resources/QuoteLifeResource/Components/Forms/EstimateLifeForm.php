@@ -41,7 +41,7 @@ class EstimateLifeForm
                 Hidden::make('co_debtor_age'),
 
                 TextInput::make('deadline')
-                    ->label('Plazo')
+                    ->label('Plazo (meses)')
                     ->numeric()
                     ->required()
                     ->minValue(1),
