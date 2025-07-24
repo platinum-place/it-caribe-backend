@@ -99,9 +99,9 @@
         <th style="border: none; text-align:left;">Aseguradora</th>
         <th style="border: none; text-align:left;">Monto Original</th>
         <th style="border: none; text-align:left;">Años</th>
-        <th style="border: none; text-align:left;">Prima</th>
+        <th style="border: none; text-align:right;">Prima</th>
         <th style="border: none; text-align:left;">Edad a terminar</th>
-        <th style="border: none; text-align:left;">Prima Anual</th>
+        <th style="border: none; text-align:right;">Prima Anual</th>
     </tr>
     </thead>
     <tbody>
@@ -109,9 +109,9 @@
             <td style="border: none; font-weight: bold; text-align:left;">{{ ucwords(strtolower($vendorCRM['Nombre'])) }}</td>
             <td style="border: none; font-weight: bold; text-align:left;">{{ number_format($quoteLife->insured_amount, 2) }}</td>
             <td style="border: none; font-weight: bold; text-align:left;">{{ $quoteLife->deadline }}</td>
-            <td style="border: none; font-weight: bold; text-align:left;">{{ number_format($selectedLine->quoteLine->total, 2) }}</td>
+            <td style="border: none; font-weight: bold; text-align:right;">{{ number_format($selectedLine->quoteLine->total, 2) }}</td>
             <td style="border: none; font-weight: bold; text-align:left;">{{ $customer->age + $quoteLife->deadline }}</td>
-            <td style="border: none; font-weight: bold; text-align:left;">{{ number_format($selectedLine->quoteLine->total * 12, 2) }}</td>
+            <td style="border: none; font-weight: bold; text-align:right;">{{ number_format($selectedLine->quoteLine->total * 12, 2) }}</td>
         </tr>
     </tbody>
 </table>
