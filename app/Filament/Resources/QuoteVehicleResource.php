@@ -36,6 +36,7 @@ class QuoteVehicleResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -49,15 +50,12 @@ class QuoteVehicleResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('quote.id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('vehicle.id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('vehicleMake.name')
-                    ->numeric()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('quote.customer.first_name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('quote.customer.last_name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('quote.customer.identity_number')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('vehicleModel.name')
                     ->numeric()
                     ->sortable(),
