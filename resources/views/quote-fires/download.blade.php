@@ -76,7 +76,7 @@
     </tr>
     <tr>
         <td style="border: none; text-align:left; font-weight: bold;">Dirección:</td>
-        <td style="border: none; text-align:left;"><p style="font-size: 8px">{{ $customer->address }}</p></td>
+        <td style="border: none; text-align:left;">{{ $customer->address }}</td>
         <td style="border: none; text-align:left; font-weight: bold;">Teléfono:</td>
         <td style="border: none; text-align:left;">{{ $customer->home_phone }}</td>
     </tr>
@@ -123,32 +123,32 @@
 
 <div style="height: 20px;"></div>
 
-{{--<table style="width: 100%; font-size: 12px;">--}}
-{{--    <tr>--}}
-{{--        <td style="padding: 10px;">--}}
+<table style="width: 100%; font-size: 12px;">
+    <tr>
+        <td style="padding: 10px;">
 
-{{--            <p>--}}
-{{--                a) Las aseguradoras al efectuar su proceso de evaluación de riesgo, se reservan el derecho de aceptación del--}}
-{{--                mismo. En caso de que la aseguradora seleccionada decline el riesgo, el cliente será notificado.--}}
-{{--            </p>--}}
+            <p>
+                a) Las aseguradoras al efectuar su proceso de evaluación de riesgo, se reservan el derecho de aceptación del
+                mismo. En caso de que la aseguradora seleccionada decline el riesgo, el cliente será notificado.
+            </p>
 
-{{--            <p>--}}
-{{--                b) La aseguradora se reserva el derecho para realizar variación de prima y coberturas en esta cotización de seguros--}}
-{{--                suscrita con el cliente.--}}
-{{--            </p>--}}
+            <p>
+                b) La aseguradora se reserva el derecho para realizar variación de prima y coberturas en esta cotización de seguros
+                suscrita con el cliente.
+            </p>
 
-{{--            <p>--}}
-{{--                <b>Vigencia:</b> Por el período del préstamo.--}}
-{{--            </p>--}}
+            <p>
+                <b>Vigencia:</b> Por el período del préstamo.
+            </p>
 
-{{--            <p>--}}
-{{--                He leído y estoy de acuerdo en seleccionar la aseguradora: ________________________________--}}
-{{--            </p>--}}
-{{--        </td>--}}
-{{--    </tr>--}}
-{{--</table>--}}
+            <p>
+                He leído y estoy de acuerdo en seleccionar la aseguradora: ________________________________
+            </p>
+        </td>
+    </tr>
+</table>
 
-{{--<div style="height: 70px;"></div>--}}
+<div style="height: 70px;"></div>
 
 <table style="width: 100%; border: none;">
     <tr>
