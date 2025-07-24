@@ -127,9 +127,9 @@
         {{--        <th style="border: none; text-align:left;">Clasificación</th>--}}
         <th style="border: none; text-align:left;">Prima Vida</th>
         <th style="border: none; text-align:left;">Edad al Terminar</th>
-        <th style="border: none; text-align:left;">Prima Incendio</th>
-        <th style="border: none; text-align:left;">Prima Total</th>
-        <th style="border: none; text-align:left;">Prima Anual</th>
+        <th style="border: none; text-align:right;">Prima Incendio</th>
+        <th style="border: none; text-align:right;">Prima Total</th>
+        <th style="border: none; text-align:right;">Prima Anual</th>
     </tr>
     </thead>
     <tbody>
