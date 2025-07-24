@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\EmitEstimateController;
 use App\Http\Controllers\Api\EstimateController;
+use App\Http\Controllers\QuoteLifeController;
 use App\Http\Controllers\QuoteVehicleController;
 use App\Http\Controllers\ZohoCRMController;
 use Filament\Http\Middleware\Authenticate;
@@ -29,6 +30,11 @@ Route::middleware(Authenticate::class)
             ->name('quote-vehicles.download');
         Route::get('quote-vehicles/{quote_vehicle}/certificate', [QuoteVehicleController::class, 'downloadCertificate'])
             ->name('quote-vehicles.downloadCertificate');
+
+        Route::get('quote-lives/{quote_life}', [QuoteLifeController::class, 'download'])
+            ->name('quote-lives.download');
+        Route::get('quote-lives/{quote_life}/certificate', [QuoteLifeController::class, 'downloadCertificate'])
+            ->name('quote-lives.downloadCertificate');
 
         Route::get('zoho-crm/download-product-attachments/{id}', [ZohoCRMController::class, 'downloadProductAttachments'])
             ->name('zoho-crm.download-product-attachments');

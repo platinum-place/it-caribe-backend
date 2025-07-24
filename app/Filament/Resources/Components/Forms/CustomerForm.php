@@ -2,9 +2,13 @@
 
 namespace App\Filament\Resources\Components\Forms;
 
+use Carbon\Carbon;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 
 class CustomerForm
 {
@@ -21,9 +25,17 @@ class CustomerForm
                 TextInput::make('identity_number')
                     ->translateLabel()
                     ->required(),
+
                 DatePicker::make('birth_date')
                     ->translateLabel()
-                    ->required(),
+                    ->required()
+                    ->live(debounce: 500)
+                    ->afterStateUpdated(function (Get $get, Set $set, $state) {
+                        $set('age', Carbon::parse($state)->age);
+                    }),
+
+                Hidden::make('age'),
+
                 TextInput::make('email')
                     ->translateLabel()
                     ->email(),

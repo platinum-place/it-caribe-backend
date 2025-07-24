@@ -45,7 +45,7 @@ class CreateQuoteLife extends CreateRecord
             'Account_Name' => 3222373000092390001,
             'Contact_Name' => 3222373000203318001,
             'Quote_Stage' => 'Cotizando',
-            'Plan' => 'Vida/Consumo',
+            'Plan' => 'Vida',
         ];
 
         foreach ($data['estimates'] as $estimate) {
@@ -72,6 +72,7 @@ class CreateQuoteLife extends CreateRecord
                 'work_phone' => $data['work_phone'] ?? null,
                 'email' => $data['email'] ?? null,
                 'address' => $data['address'] ?? null,
+                'age' => $data['customer_age'] ?? null,
             ]);
             if (! empty($data['co_debtor_first_name'])) {
                 $coDebtor = Customer::create([

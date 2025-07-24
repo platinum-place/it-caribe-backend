@@ -17,12 +17,12 @@ class ViewQuoteLife extends ViewRecord
             Actions\EditAction::make(),
             Actions\Action::make('download')
                 ->translateLabel()
-                ->url(route('filament.quote-vehicles.download', ['quote_vehicle' => $this->record]))
+                ->url(route('filament.quote-lives.download', ['quote_life' => $this->record]))
                 ->openUrlInNewTab()
                 ->visible(fn () => $this->record->quote->quote_status_id !== QuoteStatus::APPROVED->value),
             Actions\Action::make('download')
                 ->label(__('Download :name', ['name' => __('Issuance')]))
-                ->url(route('filament.quote-vehicles.downloadCertificate', ['quote_vehicle' => $this->record]))
+                ->url(route('filament.quote-lives.downloadCertificate', ['quote_life' => $this->record]))
                 ->openUrlInNewTab()
                 ->visible(fn () => $this->record->quote->quote_status_id === QuoteStatus::APPROVED->value),
             Actions\Action::make('emit')

@@ -72,6 +72,7 @@ class CreateQuoteVehicle extends CreateRecord
                 'work_phone' => $data['work_phone'] ?? null,
                 'email' => $data['email'] ?? null,
                 'address' => $data['address'] ?? null,
+                'age' => $data['age'] ?? null,
             ]);
             $vehicle = Vehicle::create([
                 'vehicle_year' => $data['vehicle_year'],

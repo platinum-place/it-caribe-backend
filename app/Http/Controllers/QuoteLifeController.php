@@ -2,17 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\QuoteLife;
 use App\Models\QuoteVehicle;
 use App\Services\Api\Zoho\ZohoCRMService;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
-class QuoteVehicleController extends Controller
+class QuoteLifeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
+    {
+        //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
     {
         //
     }
@@ -28,7 +37,15 @@ class QuoteVehicleController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(QuoteVehicle $quoteVehicle)
+    public function show(QuoteLife $quoteLife)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(QuoteLife $quoteLife)
     {
         //
     }
@@ -36,7 +53,7 @@ class QuoteVehicleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, QuoteVehicle $quoteVehicle)
+    public function update(Request $request, QuoteLife $quoteLife)
     {
         //
     }
@@ -44,38 +61,38 @@ class QuoteVehicleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(QuoteVehicle $quoteVehicle)
+    public function destroy(QuoteLife $quoteLife)
     {
         //
     }
 
-    public function download(QuoteVehicle $quoteVehicle)
+    public function download(QuoteLife $quoteLife)
     {
-        $quote = $quoteVehicle->quote;
+        $quote = $quoteLife->quote;
 
         $quoteCRM = app(ZohoCRMService::class)->getRecords('Quotes', [
             'Quote_Number',
             'Plan',
-        ], $quote->id_crm)['data'][0];
+        ], $quoteLife->quote->id_crm)['data'][0];
 
         $title = 'Cotización No. '.$quoteCRM['Quote_Number'];
 
-        $pdf = Pdf::loadView('quote-vehicles.download', [
+        $pdf = Pdf::loadView('quote-lives.download', [
             'quoteCRM' => $quoteCRM,
-            'quoteVehicle' => $quoteVehicle,
+            'quoteLife' => $quoteLife,
             'quote' => $quote,
-            'lines' => $quote->lines,
+            'lines' => $quoteLife->lines,
             'customer' => $quote->customer,
-            'vehicle' => $quoteVehicle->vehicle,
+            'coDebtor' => $quoteLife?->coDebtor,
             'title' => $title,
         ]);
 
         return $pdf->stream("$title.pdf");
     }
 
-    public function downloadCertificate(QuoteVehicle $quoteVehicle)
+    public function downloadCertificate(QuoteLife $quoteLife)
     {
-        $quote = $quoteVehicle->quote;
+        $quote = $quoteLife->quote;
         $selectedLine = $quote->selectedLine;
 
         $quoteCRM = app(ZohoCRMService::class)->getRecords('Quotes', [
@@ -115,11 +132,11 @@ class QuoteVehicleController extends Controller
 
         $title = 'Certificado No. '.$quoteCRM['Quote_Number'];
 
-        $pdf = Pdf::loadView('quote-vehicles.download-certificate', [
+        $pdf = Pdf::loadView('quote-lives.download-certificate', [
             'quoteCRM' => $quoteCRM,
             'productCRM' => $productCRM,
             'vendorCRM' => $vendorCRM,
-            'quoteVehicle' => $quoteVehicle,
+            'quoteVehicle' => $quoteLife,
             'quote' => $quote,
             'selectedLine' => $selectedLine,
             'customer' => $quote->customer,
