@@ -115,7 +115,7 @@ class EstimateWizardStep
                                     ->numeric(),
 
                                 TextInput::make('fire_amount')
-                                    ->label('Prima incendio')
+                                    ->label('Prima Incendio')
                                     ->disabled()
                                     ->dehydrated(false)
                                     ->prefix('RD$')

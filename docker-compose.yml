@@ -34,7 +34,7 @@ services:
                 GID: ${GID:-1000}
         volumes:
             - ./:/app
-            - ./docker/laravel.ini:/opt/bitnami/php/etc/conf.d/laravel.ini
+            - ./docker/php/laravel.ini:/opt/bitnami/php/etc/conf.d/laravel.ini
         networks:
             - app-network
         container_name: ${APP_NAME}-php-fpm
@@ -52,7 +52,7 @@ services:
                 GID: ${GID:-1000}
         volumes:
             - ./:/app
-            - ./docker/laravel.ini:/opt/bitnami/php/etc/conf.d/laravel.ini
+            - ./docker/php/laravel.ini:/opt/bitnami/php/etc/conf.d/laravel.ini
         networks:
             - app-network
         container_name: ${APP_NAME}-php-cli
@@ -68,7 +68,7 @@ services:
         container_name: ${APP_NAME}-worker
         volumes:
             - ./:/app
-            - ./docker/laravel.ini:/opt/bitnami/php/etc/conf.d/laravel.ini
+            - ./docker/php/laravel.ini:/opt/bitnami/php/etc/conf.d/laravel.ini
             - ./docker/worker/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf
         networks:
             - app-network

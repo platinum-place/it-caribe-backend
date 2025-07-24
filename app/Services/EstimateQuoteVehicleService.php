@@ -59,9 +59,9 @@ class EstimateQuoteVehicleService
      * @throws ConnectionException
      * @throws Exception
      */
-    protected function getRate(string $productId, float $vehicleAmount, int $vehicleYear, VehicleType $vehicleType): ?string
+    protected function getRate(string $productId, float $vehicleAmount, int $vehicleYear, VehicleType $vehicleType): float
     {
-        $selectedRate = null;
+        $selectedRate = 0;
 
         $criteria = "Plan:equals:$productId";
         $rates = $this->zohoApi->searchRecords('Tasas', $criteria);
@@ -84,7 +84,6 @@ class EstimateQuoteVehicleService
             }
 
             $selectedRate = $rate['Name'];
-            break;
         }
 
         return $selectedRate;

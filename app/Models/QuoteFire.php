@@ -46,12 +46,12 @@ class QuoteFire extends Model
 
     public function lines(): HasMany
     {
-        return $this->hasMany(QuoteLifeLine::class);
+        return $this->hasMany(QuoteFireLine::class);
     }
 
     public function selectedLine(): HasOne
     {
-        return $this->hasOne(QuoteLifeLine::class)
+        return $this->hasOne(QuoteFireLine::class)
             ->whereHas('quoteLine', function ($query) {
                 $query->where('quote_line_status_id', QuoteLineStatus::ACCEPTED->value);
             });

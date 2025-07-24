@@ -32,7 +32,7 @@ class EstimateQuoteFireService
              * Estimate fire
              */
             $fireRate = $this->getFireRate($product['id']);
-            $fireAmount = ($loanValue / 1000) * ($fireRate / 100);
+            $fireAmount = ($propertyValue / 1000) * ($fireRate / 100);
 
             /**
              * Estimate life
@@ -47,10 +47,10 @@ class EstimateQuoteFireService
 
                 $debtorRate = $this->debtorRate / 100;
                 $coDebtorRate = $this->coDebtorRate / 100;
-                $debtorAmount = ($propertyValue / 1000) * $debtorRate;
+                $debtorAmount = ($loanValue / 1000) * $debtorRate;
             }
             if (! empty($this->coDebtorRate)) {
-                $coDebtorAmount = ($propertyValue / 1000) * ($coDebtorRate - $debtorRate);
+                $coDebtorAmount = ($loanValue / 1000) * ($coDebtorRate - $debtorRate);
             }
             $lifeAmount = $debtorAmount + $coDebtorAmount;
 
@@ -92,7 +92,7 @@ class EstimateQuoteFireService
      * @throws ConnectionException
      * @throws Exception
      */
-    protected function getDebtorRate(string $productId, $customerAge, ?int $coDebtorAge = null)
+    protected function getDebtorRate(string $productId, $customerAge, ?int $coDebtorAge = null): void
     {
         $criteria = "((Plan:equals:$productId) and (Tipo:equals:Vida))";
         $rates = $this->zohoApi->searchRecords('Tasas', $criteria);
@@ -117,7 +117,7 @@ class EstimateQuoteFireService
      */
     protected function getFireRate(string $productId)
     {
-        $selectedRate = null;
+        $selectedRate = 0;
 
         $criteria = "((Plan:equals:$productId) and (Tipo:equals:Incendio))";
         $rates = $this->zohoApi->searchRecords('Tasas', $criteria);
