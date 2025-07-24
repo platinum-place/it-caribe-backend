@@ -238,7 +238,7 @@
     <tr>
         <td style="border: none; font-weight: bold;">Prima Anual</td>
         @foreach ($lineItemsData as $data)
-            <td>{{ number_format($data['monthlyTotal'], 2) }}</td>
+            <td>{{ number_format($data['netTotal'], 2) }}</td>
         @endforeach
     </tr>
 
