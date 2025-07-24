@@ -156,7 +156,7 @@
             <ul>
                 <li>Podrán consultarla a través de la página de internet <a href="https://www.bancocaribe.com.do/seguroscaribe/seguro-de-vida" target="_blank">www.bancocaribe.com.do/seguroscaribe/seguro-de-vida</a>.</li>
                 <li>Las condiciones de la póliza pueden ser solicitadas en {{ $vendorCRM['Nombre'] }}. Puede dirigirse a su oficina principal en la {{ $vendorCRM['Street'] }} o contactarse al {{ $vendorCRM['Phone'] }}.</li>
-                <li>Pueden contactarse con Segurnet Corredores de seguros al 809-620-2524 o dirigirse a su oficina en la calle Viriato Fiallo No. 24, D.N, Santo Domingo.</li>
+                <li>Pueden contactarse con Sentinel Corredores de Seguros al 809-732-0202 o dirigirse a su oficina en la calle César A. Canó No. 354, Las Praderas, Santo Domingo.</li>
             </ul>
 
             <p>
