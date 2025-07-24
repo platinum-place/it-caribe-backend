@@ -45,7 +45,7 @@ class CreateQuoteFire extends CreateRecord
             'Account_Name' => 3222373000092390001,
             'Contact_Name' => 3222373000203318001,
             'Quote_Stage' => 'Cotizando',
-            'Plan' => 'Vida',
+            'Plan' => 'Incendio',
         ];
 
         foreach ($data['estimates'] as $estimate) {

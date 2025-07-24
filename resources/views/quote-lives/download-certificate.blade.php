@@ -60,6 +60,8 @@
 
 <h3 style="text-align:center;">EMISIÓN DE SEGUROS</h3>
 
+<h4 style="text-align:right;">Póliza No.: {{ $productCRM['P_liza'] }}</h4>
+
 <table style="width: 100%; border: none;">
     <tbody>
     <tr>
