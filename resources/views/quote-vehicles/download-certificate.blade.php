@@ -434,7 +434,7 @@
                 </tbody>
             </table>
 
-            <p>
+            <p style="font-weight: bold;">
                 La cobertura estará vigente hasta la cancelación del préstamo sujeto a términos de la póliza.
             </p>
         </td>
