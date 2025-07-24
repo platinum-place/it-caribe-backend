@@ -107,15 +107,19 @@
     </thead>
     <tbody>
     @foreach($lines as $line)
+        @php
+            $productCRM = app(\App\Services\Api\Zoho\ZohoCRMService::class)->getRecords('Products',['Vendor_Name'],$line->quoteLine->id_crm)['data'][0];
+            $vendorCRM = app(\App\Services\Api\Zoho\ZohoCRMService::class)->getRecords('Vendors',['Nombre'],$productCRM['Vendor_Name']['id'])['data'][0];
+        @endphp
         <tr>
-            <td style="border: none; text-align:left;">{{ ucwords(strtolower($line->quoteLine->name)) }}</td>
+            <td style="border: none; text-align:left;">{{ ucwords(strtolower($vendorCRM['Nombre'])) }}</td>
             <td style="border: none; text-align:left;">{{ $quoteFire->deadline }}</td>
             <td style="border: none; text-align:left;">{{ number_format($quoteFire->property_value, 2) }}</td>
             <td style="border: none; text-align:left;">{{ number_format($line->life_amount, 2) }}</td>
             <td style="border: none; text-align:left;">{{ $customer->age + $quoteFire->deadline }}</td>
-            <td style="border: none; text-align:left;">{{ number_format($line->fire_amount, 2) }}</td>
-            <td style="border: none; text-align:left;">{{ number_format($line->quoteLine->total, 2) }}</td>
-            <td style="border: none; text-align:left;">{{ number_format($line->quoteLine->total * 12, 2) }}</td>
+            <td style="border: none; text-align:right;">{{ number_format($line->fire_amount, 2) }}</td>
+            <td style="border: none; text-align:right;">{{ number_format($line->quoteLine->total, 2) }}</td>
+            <td style="border: none; text-align:right;">{{ number_format($line->quoteLine->total * 12, 2) }}</td>
         </tr>
     @endforeach
     </tbody>

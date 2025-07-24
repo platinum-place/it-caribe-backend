@@ -134,14 +134,14 @@
     </thead>
     <tbody>
     <tr>
-        <td style="border: none; font-weight: bold; text-align:left;">{{ ucwords(strtolower($selectedLine->quoteLine->name)) }}</td>
-        <td style="border: none; font-weight: bold; text-align:left;">{{ $quoteFire->deadline }}</td>
-        <td style="border: none; font-weight: bold; text-align:left;">{{ number_format($quoteFire->property_value, 2) }}</td>
-        <td style="border: none; font-weight: bold; text-align:left;">{{ number_format($selectedLine->life_amount, 2) }}</td>
-        <td style="border: none; font-weight: bold; text-align:left;">{{ $customer->age + $quoteFire->deadline }}</td>
-        <td style="border: none; font-weight: bold; text-align:left;">{{ number_format($selectedLine->fire_amount, 2) }}</td>
-        <td style="border: none; font-weight: bold; text-align:left;">{{ number_format($selectedLine->quoteLine->total, 2) }}</td>
-        <td style="border: none; font-weight: bold; text-align:left;">{{ number_format($selectedLine->quoteLine->total * 12, 2) }}</td>
+        <td style="border: none; text-align:left;">{{ ucwords(strtolower($vendorCRM['Nombre'])) }}</td>
+        <td style="border: none; text-align:left;">{{ $quoteFire->deadline }}</td>
+        <td style="border: none; text-align:left;">{{ number_format($quoteFire->property_value, 2) }}</td>
+        <td style="border: none; text-align:left;">{{ number_format($selectedLine->life_amount, 2) }}</td>
+        <td style="border: none; text-align:left;">{{ $customer->age + $quoteFire->deadline }}</td>
+        <td style="border: none; text-align:right;">{{ number_format($selectedLine->fire_amount, 2) }}</td>
+        <td style="border: none; text-align:right;">{{ number_format($selectedLine->quoteLine->total, 2) }}</td>
+        <td style="border: none; text-align:right;">{{ number_format($selectedLine->quoteLine->total * 12, 2) }}</td>
     </tr>
     </tbody>
 </table>

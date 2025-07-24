@@ -106,7 +106,7 @@
     </thead>
     <tbody>
         <tr>
-            <td style="border: none; font-weight: bold; text-align:left;">{{ ucwords(strtolower($selectedLine->quoteLine->name)) }}</td>
+            <td style="border: none; font-weight: bold; text-align:left;">{{ ucwords(strtolower($vendorCRM['Nombre'])) }}</td>
             <td style="border: none; font-weight: bold; text-align:left;">{{ number_format($quoteLife->insured_amount, 2) }}</td>
             <td style="border: none; font-weight: bold; text-align:left;">{{ $quoteLife->deadline }}</td>
             <td style="border: none; font-weight: bold; text-align:left;">{{ number_format($selectedLine->quoteLine->total, 2) }}</td>

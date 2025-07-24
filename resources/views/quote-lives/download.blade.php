@@ -104,8 +104,12 @@
     </thead>
     <tbody>
     @foreach($lines as $line)
+        @php
+            $productCRM = app(\App\Services\Api\Zoho\ZohoCRMService::class)->getRecords('Products',['Vendor_Name'],$line->quoteLine->id_crm)['data'][0];
+            $vendorCRM = app(\App\Services\Api\Zoho\ZohoCRMService::class)->getRecords('Vendors',['Nombre'],$productCRM['Vendor_Name']['id'])['data'][0];
+        @endphp
         <tr>
-            <td style="border: none; font-weight: bold; text-align:left;">{{ ucwords(strtolower($line->quoteLine->name)) }}</td>
+            <td style="border: none; text-align:left;">{{ ucwords(strtolower($vendorCRM['Nombre'])) }}</td>
             <td style="border: none; font-weight: bold; text-align:left;">{{ number_format($quoteLife->insured_amount, 2) }}</td>
             <td style="border: none; font-weight: bold; text-align:left;">{{ $quoteLife->deadline }}</td>
             <td style="border: none; font-weight: bold; text-align:left;">{{ number_format($line->quoteLine->total, 2) }}</td>
