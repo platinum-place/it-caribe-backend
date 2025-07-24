@@ -97,13 +97,13 @@
     <tbody>
     <tr>
         <td style="border: none; text-align:left; font-weight: bold;">Valor Financiado:</td>
-        <td style="border: none; text-align:left;">${{ number_format($quoteFire->property_value, 2) }}</td>
+        <td style="border: none; text-align:left;">${{ number_format($quoteFire->loan_value, 2) }}</td>
         <td style="border: none; text-align:left; font-weight: bold;">Construcción:</td>
         <td style="border: none; text-align:left;">NO</td>
     </tr>
     <tr>
         <td style="border: none; text-align:left; font-weight: bold;">Valor Tasación:</td>
-        <td style="border: none; text-align:left;">${{ '' }}</td> {{--   TODO --}}
+        <td style="border: none; text-align:left;">${{ number_format($quoteFire->property_value, 2) }}</td>
         <td style="border: none; text-align:left; font-weight: bold;">Tipo Construcción:</td>
         <td style="border: none; text-align:left;">{{ $quoteFire->quoteFireConstructionType->name }}</td>
     </tr>
