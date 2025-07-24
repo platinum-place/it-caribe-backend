@@ -10,8 +10,6 @@ use App\Models\Customer;
 use App\Models\Quote;
 use App\Models\QuoteFire;
 use App\Models\QuoteFireLine;
-use App\Models\QuoteLife;
-use App\Models\QuoteLifeLine;
 use App\Models\QuoteLine;
 use App\Services\Api\Zoho\ZohoCRMService;
 use Filament\Forms\Components\Wizard;
@@ -32,7 +30,7 @@ class CreateQuoteFire extends CreateRecord
                     QuoteFireResource\Components\Wizard\EstimateWizardStep::make(),
                     QuoteFireResource\Components\Wizard\DebtorWizardStep::make(),
                     QuoteFireResource\Components\Wizard\CoDebtorWizardStep::make()
-                        ->hidden(fn($get) => !$get('co_debtor_birth_date')),
+                        ->hidden(fn ($get) => ! $get('co_debtor_birth_date')),
                 ])
                     ->columnSpanFull(),
             ]);

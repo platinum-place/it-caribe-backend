@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Filament\Resources\QuoteLifeResource\Pages;
+namespace App\Filament\Resources\QuoteFireResource\Pages;
 
-use App\Filament\Resources\QuoteLifeResource;
+use App\Filament\Resources\QuoteFireResource;
 use Filament\Actions;
 use Filament\Resources\Pages\Concerns\InteractsWithRecord;
 use Filament\Resources\Pages\Page;
 
-class EmitQuoteLife extends Page
+class EmitQuoteFire extends Page
 {
     use InteractsWithRecord;
 
-    protected static string $resource = QuoteLifeResource::class;
+    protected static string $resource = QuoteFireResource::class;
 
-    protected static string $view = 'filament.resources.quote-life-resource.pages.emit-quote-life';
+    protected static string $view = 'filament.resources.quote-fire-resource.pages.emit-quote-fire';
 
     public function mount(int|string $record): void
     {
@@ -22,12 +22,12 @@ class EmitQuoteLife extends Page
 
     public static function getNavigationLabel(): string
     {
-        return __('Emit').' '.__('Quote vehicle');
+        return __('Emit').' '.__('Quote fire');
     }
 
     public function getHeading(): string
     {
-        return __('Emit').' '.__('Quote vehicle');
+        return __('Emit').' '.__('Quote fire');
     }
 
     protected function getHeaderActions(): array
@@ -36,7 +36,7 @@ class EmitQuoteLife extends Page
             Actions\Action::make('view')
                 ->translateLabel()
                 ->color('gray')
-                ->url(fn () => QuoteLifeResource::getUrl('view', ['record' => $this->record->id])),
+                ->url(fn () => QuoteFireResource::getUrl('view', ['record' => $this->record->id])),
         ];
     }
 }

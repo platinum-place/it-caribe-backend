@@ -104,6 +104,7 @@ class QuoteFireResource extends Resource
             'create' => Pages\CreateQuoteFire::route('/create'),
             'view' => Pages\ViewQuoteFire::route('/{record}'),
             'edit' => Pages\EditQuoteFire::route('/{record}/edit'),
+            'emit' => Pages\EmitQuoteFire::route('/{record}/emit'),
         ];
     }
 

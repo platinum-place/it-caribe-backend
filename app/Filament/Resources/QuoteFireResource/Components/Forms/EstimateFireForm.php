@@ -23,7 +23,7 @@ class EstimateFireForm
             ->schema([
                 DatePicker::make('birth_date')
                     ->label('Fecha de Nacimiento Deudor')
-                    ->required(fn($get) => $get('life_insurance'))
+                    ->required(fn ($get) => $get('life_insurance'))
                     ->maxDate(now())
                     ->live(debounce: 500)
                     ->afterStateUpdated(function (Get $get, Set $set, $state) {
@@ -66,7 +66,7 @@ class EstimateFireForm
                 TextInput::make('loan_value')
                     ->label('Valor del Préstamo')
                     ->numeric()
-                    ->required(fn($get) => $get('life_insurance'))
+                    ->required(fn ($get) => $get('life_insurance'))
                     ->prefix('$'),
 
                 Select::make('quote_fire_risk_type_id')

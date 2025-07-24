@@ -4,7 +4,7 @@ namespace App\Livewire;
 
 use App\Enums\QuoteLineStatus;
 use App\Enums\QuoteStatus;
-use App\Filament\Resources\QuoteVehicleResource;
+use App\Models\QuoteFire;
 use App\Models\QuoteLife;
 use App\Models\QuoteVehicle;
 use App\Services\Api\Zoho\ZohoCRMService;
@@ -22,15 +22,19 @@ class EmitQuote extends Component implements HasForms
 
     public ?array $data = [];
 
-    public QuoteVehicle|QuoteLife $record;
+    public QuoteVehicle|QuoteLife|QuoteFire $record;
 
-    public function mount(QuoteVehicle|QuoteLife $record): void
+    public string $resource;
+
+    public function mount(QuoteVehicle|QuoteLife|QuoteFire $record, string $resource): void
     {
         $this->form->fill([
             'attachments' => $record?->quote?->attachments ?? [],
         ]);
 
         $this->record = $record;
+
+        $this->resource = $resource;
     }
 
     public function form(Form $form): Form
@@ -105,7 +109,7 @@ class EmitQuote extends Component implements HasForms
 
         $response = app(ZohoCRMService::class)->updateRecords('Quotes', $quote->id_crm, $dataCRM);
 
-        $this->redirect(QuoteVehicleResource::getUrl('view', ['record' => $this->record->id]));
+        $this->redirect($this->resource::getUrl('view', ['record' => $this->record->id]));
     }
 
     public function render()
