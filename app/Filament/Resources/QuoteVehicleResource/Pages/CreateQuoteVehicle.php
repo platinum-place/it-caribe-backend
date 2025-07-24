@@ -82,7 +82,6 @@ class CreateQuoteVehicle extends CreateRecord
                 'vehicle_model_id' => $data['vehicle_model_id'],
                 'vehicle_type_id' => $data['vehicle_type_id'],
             ]);
-            $vehicle->colors()->attach($data['vehicle_colors']);
             $quote = Quote::create([
                 'quote_type_id' => QuoteType::VEHICLE->value,
                 'quote_status_id' => QuoteStatus::PENDING->value,
@@ -103,6 +102,8 @@ class CreateQuoteVehicle extends CreateRecord
                 'vehicle_activity_id' => $data['vehicle_activity_id'],
                 'vehicle_amount' => $data['vehicle_amount'],
             ]);
+            $vehicle->colors()->attach($data['vehicle_colors']);
+            $quoteVehicle->vehicleColors()->attach($data['vehicle_colors']);
 
             foreach ($data['estimates'] as $estimate) {
                 $quoteLine = QuoteLine::create([

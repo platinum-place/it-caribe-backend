@@ -27,12 +27,12 @@ class ViewQuoteLife extends ViewRecord
                 ->visible(fn () => $this->record->quote->quote_status_id === QuoteStatus::APPROVED->value),
             Actions\Action::make('emit')
                 ->translateLabel()
-                ->url(route('filament.admin.resources.quote-vehicles.emit', ['record' => $this->record]))
+                ->url(route('filament.admin.resources.quote-lives.emit', ['record' => $this->record]))
                 ->visible(fn () => $this->record->quote->quote_status_id === QuoteStatus::PENDING->value),
             Actions\Action::make('documents')
                 ->label(__('Download :name', ['name' => __('Documents')]))
                 ->url(function () {
-                    $id = $this->record?->selectedLine?->id_crm;
+                    $id = $this->record?->quote?->selectedLine?->id_crm;
 
                     return route('filament.zoho-crm.download-product-attachments', ['id' => $id]);
                 })

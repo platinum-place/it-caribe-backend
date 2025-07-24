@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\QuoteVehicleResource\Pages;
 use App\Filament\Exports\QuoteVehicleExporter;
 use App\Models\QuoteVehicle;
 use Filament\Resources\Resource;
@@ -104,11 +105,11 @@ class QuoteVehicleResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => \App\Filament\Resources\QuoteVehicleResource\Pages\ListQuoteVehicles::route('/'),
-            'create' => \App\Filament\Resources\QuoteVehicleResource\Pages\CreateQuoteVehicle::route('/create'),
-            'view' => \App\Filament\Resources\QuoteVehicleResource\Pages\ViewQuoteVehicle::route('/{record}'),
-            'edit' => \App\Filament\Resources\QuoteVehicleResource\Pages\EditQuoteVehicle::route('/{record}/edit'),
-            'emit' => \App\Filament\Resources\QuoteVehicleResource\Pages\EmitQuoteVehicle::route('/{record}/emit'),
+            'index' => Pages\ListQuoteVehicles::route('/'),
+            'create' => Pages\CreateQuoteVehicle::route('/create'),
+            'view' => Pages\ViewQuoteVehicle::route('/{record}'),
+            'edit' => Pages\EditQuoteVehicle::route('/{record}/edit'),
+            'emit' => Pages\EmitQuoteVehicle::route('/{record}/emit'),
         ];
     }
 

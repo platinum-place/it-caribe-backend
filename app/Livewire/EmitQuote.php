@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Enums\QuoteLineStatus;
 use App\Enums\QuoteStatus;
 use App\Filament\Resources\QuoteVehicleResource;
+use App\Models\QuoteLife;
 use App\Models\QuoteVehicle;
 use App\Services\Api\Zoho\ZohoCRMService;
 use Filament\Forms\Components\Checkbox;
@@ -21,9 +22,9 @@ class EmitQuote extends Component implements HasForms
 
     public ?array $data = [];
 
-    public QuoteVehicle $record;
+    public QuoteVehicle|QuoteLife $record;
 
-    public function mount(QuoteVehicle $record): void
+    public function mount(QuoteVehicle|QuoteLife $record): void
     {
         $this->form->fill([
             'attachments' => $record?->quote?->attachments ?? [],
@@ -83,11 +84,13 @@ class EmitQuote extends Component implements HasForms
         $quote = $this->record->quote;
         $line = $quote->lines->where('id', $data['line'])->first();
 
+        $deadline = $this->record?->deadline;
+
         $quote->update([
             'attachments' => $data['attachments'] ?? [],
             'quote_status_id' => QuoteStatus::APPROVED->value,
             'responsible_id' => auth()->id(),
-            'end_date' => now()->addMonths(12),
+            'end_date' => now()->addMonths($deadline ?? 12),
         ]);
 
         $line->update([

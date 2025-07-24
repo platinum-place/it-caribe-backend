@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Enums\QuoteLineStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class QuoteVehicle extends Model
@@ -58,18 +60,26 @@ class QuoteVehicle extends Model
         return $this->hasMany(QuoteVehicleLine::class);
     }
 
-    public function accessories(): BelongsToMany
+    public function vehicleAccessories(): BelongsToMany
     {
         return $this->belongsToMany(VehicleAccessory::class);
     }
 
-    public function colors(): BelongsToMany
+    public function vehicleColors(): BelongsToMany
     {
         return $this->belongsToMany(VehicleColor::class);
     }
 
-    public function routes(): BelongsToMany
+    public function vehicleRoutes(): BelongsToMany
     {
         return $this->belongsToMany(VehicleRoute::class);
+    }
+
+    public function selectedLine(): HasOne
+    {
+        return $this->hasOne(QuoteLifeLine::class)
+            ->whereHas('quoteLine', function ($query) {
+                $query->where('quote_line_status_id', QuoteLineStatus::ACCEPTED->value);
+            });
     }
 }

@@ -60,207 +60,154 @@
 
 <h3 style="text-align:center;">EMISIÓN DE SEGUROS</h3>
 
-<h4 style="text-align:right;">Póliza No.: {{ $productCRM['P_liza'] }}</h4>
-
 <table style="width: 100%; border: none;">
     <tbody>
     <tr>
         <td style="border: none; text-align:left; font-weight: bold;">Ramo/Producto:</td>
         <td style="border: none; text-align:left;">{{ $quoteCRM['Plan'] }}</td>
-        <td style="border: none; text-align:left; font-weight: bold;">Correo:</td>
-        <td style="border: none; text-align:left;">{{ $customer->email }}</td>
         <td style="border: none; text-align:left; font-weight: bold;">Fecha:</td>
         <td style="border: none; text-align:left;">{{ date('d/m/Y', strtotime($quote->start_date)) }}</td>
     </tr>
     <tr>
         <td style="border: none; text-align:left; font-weight: bold;">Cliente:</td>
         <td style="border: none; text-align:left;">{{ $customer->full_name }}</td>
-        <td style="border: none; text-align:left; font-weight: bold;">Equipamientos:</td>
-        <td style="border: none; text-align:left;">{{ 'NINGUNO' }}</td>
         <td style="border: none; text-align:left; font-weight: bold;">Cédula/Pasaporte:</td>
         <td style="border: none; text-align:left;">{{ $customer->identity_number }}</td>
     </tr>
     <tr>
         <td style="border: none; text-align:left; font-weight: bold;">Dirección:</td>
         <td style="border: none; text-align:left;"><p style="font-size: 8px">{{ $customer->address }}</p></td>
-        <td style="border: none; text-align:left; font-weight: bold;">Uso:</td>
-        <td style="border: none; text-align:left;">{{ $quoteVehicle->vehicleUse->name }}</td>
         <td style="border: none; text-align:left; font-weight: bold;">Teléfono:</td>
         <td style="border: none; text-align:left;">{{ $customer->home_phone }}</td>
     </tr>
     <tr>
-        <td style="border: none; text-align:left; font-weight: bold;">Tipo de vehículo:</td>
-        <td style="border: none; text-align:left;">{{ $quoteVehicle->vehicleUse->name }}</td>
-        <td style="border: none; text-align:left; font-weight: bold;">Marca:</td>
-        <td style="border: none; text-align:left;">{{ $quoteVehicle->vehicleMake->name }}</td>
-        <td style="border: none; text-align:left; font-weight: bold;">Modelo:</td>
-        <td style="border: none; text-align:left;">{{ $quoteVehicle->vehicleModel->name }}</td>
-    </tr>
-    <tr>
-        <td style="border: none; text-align:left; font-weight: bold;">Año:</td>
-        <td style="border: none; text-align:left;">{{ $quoteVehicle->vehicle_year }}</td>
-        <td style="border: none; text-align:left; font-weight: bold;">Chasis:</td>
-        <td style="border: none; text-align:left;">{{ $vehicle->chassis }}</td>
-        <td style="border: none; text-align:left; font-weight: bold;">Valor asegurado:</td>
-        <td style="border: none; text-align:left;">{{ number_format($quoteVehicle->vehicle_amount, 2) }}</td>
+        <td style="border: none; text-align:left; font-weight: bold;">Edad:</td>
+        <td style="border: none; text-align:left;">{{ $customer->age }}</td>
+        <td style="border: none; text-align:left; font-weight: bold;">Codeudor:</td>
+        <td style="border: none; text-align:left;">{{ $coDebtor?->full_name }}</td>
     </tr>
     </tbody>
 </table>
 
-@php
-    $lineItemsData = [];
-    $vehicleType = $quoteVehicle->vehicleType->name;
-    $isVehicleType = preg_match('/\bpesado\b/i', $vehicleType) || $vehicleType === "Camión";
-    $productFields = [
-        'Lesiones_muerte_1_pers',
-        'Lesiones_muerte_m_s_1_pers',
-        'Da_os_propiedad_ajena',
-        'Incendio_y_robo',
-        'Colisi_n_y_vuelco',
-        'Riesgos_comprensivos',
-        'Rotura_de_cristales_deducible',
-        'Fianza_judicial',
-        'Lesiones_muerte_1_pas',
-        'Lesiones_muerte_m_s_1_pas',
-        'Riesgos_conductor',
-        'Asistencia_vial',
-        'En_caso_de_accidente',
-        'Renta_veh_culo',
-        'Vida',
-        'ltimos_gastos',
-        'Deducible',
-        'Cruz_roja',
-        'Cobertura_extra',
-        'Cobertura_pink',
-        'Gastos_m_dicos',
-        'Vendor_Name',
-    ];
-
-    $vendorFields = [
-        'Nombre',
-    ];
-
-    $lineItemsData[] = [
-         'product' => $productCRM,
-          'vendorName' => $vendorCRM['Nombre'],
-          'netTotal' => $selectedLine->total,
-          'monthlyTotal' => $selectedLine->total / 12,
-    ];
-
-    $coverageRows = [
-        ['label' => 'Coberturas', 'field' => 'vendorName', 'type' => 'text','style'=>'border: none; font-weight: bold'],
-        ['label' => 'Lesiones y/o muerte 1 persona', 'field' => 'Lesiones_muerte_1_pers', 'type' => 'number','style'=>'border: none;'],
-        ['label' => 'Lesiones y/o muerte mas de 1 persona', 'field' => 'Lesiones_muerte_m_s_1_pers', 'type' => 'number','style'=>'border: none;'],
-        ['label' => 'Daños a la propiedad ajena', 'field' => 'Da_os_propiedad_ajena', 'type' => 'number','style'=>'border: none;'],
-        ['label' => 'Incendio y/o robo', 'field' => 'Incendio_y_robo', 'type' => 'percentage','style'=>'border: none;'],
-        ['label' => 'Colisión y/o vuelco', 'field' => 'Colisi_n_y_vuelco', 'type' => 'percentage','style'=>'border: none;'],
-        ['label' => 'Cobertura comprensiva', 'field' => 'Riesgos_comprensivos', 'type' => 'percentage','style'=>'border: none;'],
-        ['label' => 'Rotura de cristales', 'field' => 'Rotura_de_cristales_deducible', 'type' => 'text','style'=>'border: none;'],
-        ['label' => 'Fianza judicial', 'field' => 'Fianza_judicial', 'type' => 'number','style'=>'border: none;'],
-        ['label' => 'Lesiones y/o muerte 1 pasajero', 'field' => 'Lesiones_muerte_1_pas', 'type' => 'number','style'=>'border: none;'],
-        ['label' => 'Lesiones y/o muerte mas de 1 pasajero', 'field' => 'Lesiones_muerte_m_s_1_pas', 'type' => 'number','style'=>'border: none;'],
-        ['label' => 'Riesgo conductor', 'field' => 'Riesgos_conductor', 'type' => 'number','style'=>'border: none;'],
-        ['label' => 'Asistencia en viajes', 'field' => 'Asistencia_vial', 'type' => 'assistance','style'=>'border: none;'],
-        ['label' => 'Centro del automovilista (CA)', 'field' => 'En_caso_de_accidente', 'type' => 'included','style'=>'border: none;'],
-        ['label' => 'Plan renta', 'field' => 'Renta_veh_culo', 'type' => 'assistance','style'=>'border: none;'],
-        ['label' => 'Vida (Cubre el saldo insoluto hasta)', 'field' => 'Vida', 'type' => 'number','style'=>'border: none;'],
-        ['label' => 'Últimos gastos', 'field' => 'ltimos_gastos', 'type' => 'number','style'=>'border: none;'],
-        ['label' => 'Deducible', 'field' => 'Deducible', 'type' => 'text', 'style'=>'border: none; font-weight: bold;'],
-        ['label' => 'Cruz Roja Dominicana (CRD)', 'field' => 'Cruz_roja', 'type' => 'included','style'=>'border: none;'],
-        ['label' => 'Cobertura Extra', 'field' => 'Cobertura_extra', 'type' => 'optional_number','style'=>'border: none;'],
-        ['label' => 'Cobertura Pink', 'field' => 'Cobertura_pink', 'type' => 'optional_number','style'=>'border: none;'],
-        ['label' => 'Gastos Medicos', 'field' => 'Gastos_m_dicos', 'type' => 'optional_number','style'=>'border: none;'],
-    ];
-@endphp
+<div style="height: 20px;"></div>
 
 <table style="width: 100%; border: none; border-collapse: collapse;">
-    @foreach ($coverageRows as $row)
-        <tr @isset($row['style'] ) style="{{ $row['style'] }}" @endisset>
-            <td style="border: none; font-weight: bold;">{{ $row['label'] }}</td>
-            @foreach ($lineItemsData as $data)
-                <td style="border: none;">
-                    @switch($row['type'])
-                        @case('text')
-                            @if ($row['field'] === 'vendorName')
-                                {{ ucwords(strtolower($data['vendorName'])) }}
-                            @else
-                                {{ $data['product'][$row['field']] }}
-                            @endif
-                            @break
-
-                        @case('number')
-                            {{ number_format($data['product'][$row['field']]) }}
-                            @break
-
-                        @case('percentage')
-                            {{ $data['product'][$row['field']] }}%
-                            @break
-
-                        @case('assistance')
-                            @if ($data['product'][$row['field']] == 1)
-                                {{ $isVehicleType ? 'No incluida' : 'Incluida' }}
-                            @else
-                                No incluida
-                            @endif
-                            @break
-
-                        @case('included')
-                            {{ !empty($data['product'][$row['field']]) ? 'Incluida' : 'No incluida' }}
-                            @break
-
-                        @case('optional_number')
-                            @if (!empty($data['product'][$row['field']]))
-                                {{ number_format($data['product'][$row['field']]) }}
-                            @else
-                                No incluida
-                            @endif
-                            @break
-                    @endswitch
-                </td>
-            @endforeach
+    <thead>
+    <tr>
+        <th style="border: none; text-align:left;">Aseguradora</th>
+        <th style="border: none; text-align:left;">Monto Original</th>
+        <th style="border: none; text-align:left;">Años</th>
+        <th style="border: none; text-align:left;">Prima</th>
+        <th style="border: none; text-align:left;">Edad a terminar</th>
+        <th style="border: none; text-align:left;">Prima Anual</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td style="border: none; font-weight: bold; text-align:left;">{{ ucwords(strtolower($selectedLine->quoteLine->name)) }}</td>
+            <td style="border: none; font-weight: bold; text-align:left;">{{ number_format($quoteLife->insured_amount, 2) }}</td>
+            <td style="border: none; font-weight: bold; text-align:left;">{{ $quoteLife->deadline }}</td>
+            <td style="border: none; font-weight: bold; text-align:left;">{{ number_format($selectedLine->quoteLine->total, 2) }}</td>
+            <td style="border: none; font-weight: bold; text-align:left;">{{ $customer->age + $quoteLife->deadline }}</td>
+            <td style="border: none; font-weight: bold; text-align:left;">{{ number_format($selectedLine->quoteLine->total * 12, 2) }}</td>
         </tr>
-    @endforeach
+    </tbody>
+</table>
 
-    <tr>
-        <td style="border: none; font-weight: bold;">PRIMAS PROPUESTAS</td>
-        @foreach ($lineItemsData as $data)
-            <td>&nbsp;</td>
-        @endforeach
-    </tr>
+<div style="height: 20px;"></div>
 
+<table style="width: 100%; font-size: 12px;">
     <tr>
-        <td style="border: none; font-weight: bold;">&nbsp;</td>
-        @foreach ($lineItemsData as $data)
-            <td style="font-weight: bold;">{{ ucwords(strtolower($data['vendorName'])) }}</td>
-        @endforeach
-    </tr>
+        <td style="padding: 10px;">
+            <p>
+                A. Las aseguradoras al efectuar su proceso de evaluación de riesgo, se reservan el derecho de aceptación de este.
+                En caso de que la aseguradora seleccionada decline el riesgo, el cliente será notificado y en lo inmediato deberá
+                escoger otra aseguradora que haya presentado cotización.
+            </p>
 
-    <tr>
-        <td style="border: none; font-weight: bold;">Prima Anual</td>
-        @foreach ($lineItemsData as $data)
-            <td>{{ number_format($data['monthlyTotal'], 2) }}</td>
-        @endforeach
-    </tr>
+            <p>
+                B. Autorizo que la prima correspondiente a los seguros aceptados por mi persona, sean incluidos en el monto de
+                la cuota del préstamo otorgado a mi favor por Banco Múltiple Caribe, S.A, entidad que ha asumido la
+                responsabilidad de entregar a la aseguradora dicha partida, de conformidad a acuerdo entre ambas partes.
+            </p>
 
-    <tr>
-        <td style="border: none; font-weight: bold;">Prima Mensual</td>
-        @foreach ($lineItemsData as $data)
-            <td>{{ number_format($data['monthlyTotal'], 2) }}</td>
-        @endforeach
+            <p>
+                C. Por este medio les autorizo endosar mi póliza, a favor de Banco Caribe, S.A. hasta sus intereses.
+            </p>
+
+            <p>
+                D. Clientes con más de un préstamo y con seguro de vida, deben revisar el monto asegurado acumulado para
+                evaluar si requiere otros requisitos médicos según la tabla de requisitos por aseguradoras.
+            </p>
+
+            <p>
+                E. La aseguradora se reserva el derecho para realizar variación de prima y coberturas en la cotización de
+                seguros suscrita con el cliente.
+            </p>
+
+            <p>
+                F. La cobertura otorgada bajo esta póliza queda condicionada a las cláusulas y condiciones especificadas en
+                los anexos, los cuales han sido incluidos en la póliza definitiva, cuyas condiciones completas están contenidas en
+                la copia que reposa en la entidad Financiera y Aseguradora:
+            </p>
+
+            <ul>
+                <li>Podrán consultarla a través de la página de internet <a href="https://www.bancocaribe.com.do/seguroscaribe/seguro-de-vida" target="_blank">www.bancocaribe.com.do/seguroscaribe/seguro-de-vida</a>.</li>
+                <li>Las condiciones de la póliza pueden ser solicitadas en {{ $vendorCRM['Nombre'] }}. Puede dirigirse a su oficina principal en la {{ $vendorCRM['Street'] }} o contactarse al {{ $vendorCRM['Phone'] }}.</li>
+                <li>Pueden contactarse con Segurnet Corredores de seguros al 809-620-2524 o dirigirse a su oficina en la calle Viriato Fiallo No. 24, D.N, Santo Domingo.</li>
+            </ul>
+
+            <p>
+                G. <b>Vigencia:</b> La póliza estará válida hasta la cancelación del préstamo.
+            </p>
+
+            <p><b>Exclusiones</b></p>
+
+            <p>
+                A. Asegurado que practique cualquier tipo de deporte de alto riesgo o que preste servicios de vehículos públicos
+                o aéreos. (De acuerdo a formulario).
+            </p>
+
+            <p>
+                B. La aseguradora se reserva el derecho de no pagar ninguna reclamación que surja como consecuencia de
+                suicidio o tentativa de suicidio, siempre y cuando ocurra dentro del plazo de 2 años.
+            </p>
+
+            <p>
+                C. La compañía no pagará la indemnización por fallecimiento de un asegurado que sufra cualquier lesión por
+                accidente o cualquier enfermedad provocada por participar activamente en guerra, rebelión, motín o cualquier
+                otra relacionada a estas. Tampoco indemnizará por fallecimiento por estar cometiendo algún delito como robo,
+                asalto, asesinato o por causa de intervenciones quirúrgicas ilícitas o estéticas.
+            </p>
+
+            <p>
+                D. Hospitalización o incapacidad total y permanente causada por enfermedad, lesión o condición preexistente,
+                originada antes del inicio de vigencia de la cobertura.
+            </p>
+
+            <p>
+                E. Epidemias declaradas por las autoridades competentes.
+            </p>
+
+            <p>
+                F. Fallecimiento ocasionado por cualquier enfermedad del Síndrome de Inmunodeficiencia Adquirida – SIDA,
+                virus VIH o cualquier otro desorden inmunológico.
+            </p>
+
+            <p>
+                G. Exclusiones por mora: Si la prima presenta un atraso de más de 120 días, será excluido de la póliza.
+            </p>
+        </td>
     </tr>
 </table>
 
-<div style="height: 100px;"></div>
+<div style="height: 70px;"></div>
 
-<table style="width: 100%; border: none; border-collapse: collapse;">
+<table style="width: 100%; border: none;">
     <tr>
         <td style="width: 50%; border: none; padding: 10px; vertical-align: top;">
             ________________________________ <br>
-            Firma Autorizada
-        </td>
-        <td style="width: 50%; border: none; padding: 10px; vertical-align: top;">
-            ________________________________ <br>
-            Nombre o Firma del asegurado
+            NOMBRE O FIRMA DEL CLIENTE CEDULA
         </td>
     </tr>
 </table>
