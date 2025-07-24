@@ -252,14 +252,14 @@
     </tr>
 
     <tr>
-        <td style="border: none; font-weight: bold;">Prima Anual i/ISC</td>
+        <td style="border: none; font-weight: bold;">Prima Anual I/ISC</td>
         @foreach ($lineItemsData as $data)
             <td>{{ number_format($data['netTotal'], 2) }}</td>
         @endforeach
     </tr>
 
     <tr>
-        <td style="border: none; font-weight: bold;">Prima Mensual i/ISC</td>
+        <td style="border: none; font-weight: bold;">Prima Mensual I/ISC</td>
         @foreach ($lineItemsData as $data)
             <td>{{ number_format($data['monthlyTotal'], 2) }}</td>
         @endforeach
