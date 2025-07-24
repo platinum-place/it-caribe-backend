@@ -45,7 +45,7 @@ class CreateQuoteVehicle extends CreateRecord
             'Account_Name' => 3222373000092390001,
             'Contact_Name' => 3222373000203318001,
             'Quote_Stage' => 'Cotizando',
-            'Plan' => 'Auto',
+            'Plan' => 'Automóvil',
         ];
 
         foreach ($data['estimates'] as $estimate) {
