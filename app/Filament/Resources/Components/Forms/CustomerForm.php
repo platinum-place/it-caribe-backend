@@ -28,11 +28,7 @@ class CustomerForm
 
                 DatePicker::make('birth_date')
                     ->translateLabel()
-                    ->required()
-                    ->live(debounce: 500)
-                    ->afterStateUpdated(function (Get $get, Set $set, $state) {
-                        $set('age', Carbon::parse($state)->age);
-                    }),
+                    ->required(),
 
                 Hidden::make('age'),
 
