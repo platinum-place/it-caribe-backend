@@ -332,23 +332,43 @@
         </td>
 
         <td style="width: 50%;  border: 2px solid black; padding: 10px; vertical-align: top;">
-            <h4 style="text-align:center;">
+            <h4>
+                &nbsp;
+            </h4>
+
+            <h4 style="text-align:center; font-weight: normal;">
                 Servicio al Cliente: {{ $vendorCRM['Phone'] }}
             </h4>
 
-            <h4 style="text-align:center;">
+            <h4>
+                &nbsp;
+            </h4>
+
+            <h4 style="text-align:center; font-weight: normal;">
                 {{ $vendorCRM['Street'] }}
             </h4>
 
-            <h4 style="text-align:center;">
+            <h4>
+                &nbsp;
+            </h4>
+
+            <h4 style="text-align:center; font-weight: normal;">
                 Centro Automovilista
             </h4>
 
-            <h4 style="text-align:center;">
+            <h4>
+                &nbsp;
+            </h4>
+
+            <h4 style="text-align:center; font-weight: normal;">
                 809-565-8222
             </h4>
 
-            <h4 style="text-align:center;">
+            <h4>
+                &nbsp;
+            </h4>
+
+            <h4 style="text-align:center; font-weight: normal;">
                 El marbete definitivo podrá ser retirado en la aseguradora en un plazo de 30 días.
             </h4>
         </td>
@@ -420,25 +440,45 @@
         </td>
 
         <td style="width: 50%;  border: 2px solid black; padding: 10px; vertical-align: top;">
-            <p>
+            <h4>
+                &nbsp;
+            </h4>
+
+            <h4 style="text-align:center; font-weight: normal;">
                 Servicio al Cliente: {{ $vendorCRM['Phone'] }}
-            </p>
+            </h4>
 
-            <p>
+            <h4>
+                &nbsp;
+            </h4>
+
+            <h4 style="text-align:center; font-weight: normal;">
                 {{ $vendorCRM['Street'] }}
-            </p>
+            </h4>
 
-            <p>
+            <h4>
+                &nbsp;
+            </h4>
+
+            <h4 style="text-align:center; font-weight: normal;">
                 Centro Automovilista
-            </p>
+            </h4>
 
-            <p>
+            <h4>
+                &nbsp;
+            </h4>
+
+            <h4 style="text-align:center; font-weight: normal;">
                 809-565-8222
-            </p>
+            </h4>
 
-            <p>
+            <h4>
+                &nbsp;
+            </h4>
+
+            <h4 style="text-align:center; font-weight: normal;">
                 El marbete definitivo podrá ser retirado en la aseguradora en un plazo de 30 días.
-            </p>
+            </h4>
         </td>
     </tr>
 </table>
