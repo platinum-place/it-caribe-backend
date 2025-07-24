@@ -82,7 +82,7 @@
     </tr>
     <tr>
         <td style="border: none; text-align:left; font-weight: bold;">Dirección:</td>
-        <td style="border: none; text-align:left;"><p style="font-size: 8px">{{ $customer->address }}</p></td>
+        <td style="border: none; text-align:left;">{{ $customer->address }}</td>
         <td style="border: none; text-align:left; font-weight: bold;">Uso:</td>
         <td style="border: none; text-align:left;">{{ $quoteVehicle->vehicleUse->name }}</td>
         <td style="border: none; text-align:left; font-weight: bold;">Teléfono:</td>
@@ -236,14 +236,14 @@
     </tr>
 
     <tr>
-        <td style="border: none; font-weight: bold;">Prima Anual</td>
+        <td style="border: none; font-weight: bold;">Prima Anual I/ISC</td>
         @foreach ($lineItemsData as $data)
             <td>{{ number_format($data['netTotal'], 2) }}</td>
         @endforeach
     </tr>
 
     <tr>
-        <td style="border: none; font-weight: bold;">Prima Mensual</td>
+        <td style="border: none; font-weight: bold;">Prima Mensual I/ISC</td>
         @foreach ($lineItemsData as $data)
             <td>{{ number_format($data['monthlyTotal'], 2) }}</td>
         @endforeach
