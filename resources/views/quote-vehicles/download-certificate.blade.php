@@ -267,221 +267,109 @@
 
 <div style="page-break-after: always;"></div>
 
-<table style="width: 100%; border: none; border-collapse: collapse;">
-    <tr>
-        <td style="width: 50%;  border: 2px solid black; padding: 10px; vertical-align: top;">
-            @php
-                $logoPath =  public_path("img/aseguradoras/" . $productCRM['Vendor_Name']['name'] . ".png");
-                $logoBase64 = '';
-                if (file_exists($logoPath)) {
-                    $logoData = base64_encode(file_get_contents($logoPath));
-                    $logoMime = mime_content_type($logoPath);
-                    $logoBase64 = 'data:' . $logoMime . ';base64,' . $logoData;
-                }
-            @endphp
-            @if($logoBase64)
-                <img src="{{ $logoBase64 }}" width="130" height="70" alt="">
-            @endif
+@for($i = 0; $i < 2; $i++)
+    <table style="width: 100%; border: none; border-collapse: collapse;">
+        <tr>
+            <td style="width: 50%;  border: 2px solid black; padding: 10px; vertical-align: top;">
+                @php
+                    $logoPath =  public_path("img/aseguradoras/" . $productCRM['Vendor_Name']['name'] . ".png");
+                    $logoBase64 = '';
+                    if (file_exists($logoPath)) {
+                        $logoData = base64_encode(file_get_contents($logoPath));
+                        $logoMime = mime_content_type($logoPath);
+                        $logoBase64 = 'data:' . $logoMime . ';base64,' . $logoData;
+                    }
+                @endphp
+                @if($logoBase64)
+                    <img src="{{ $logoBase64 }}" width="130" height="70" alt="">
+                @endif
 
-            <h4 style="text-align:right;">Póliza No.: {{ $productCRM['P_liza'] }}</h4>
+                <h4 style="text-align:right;">Póliza No.: {{ $productCRM['P_liza'] }}</h4>
 
-            <table style="width: 100%; border: none;">
-                <tbody>
-                <tr>
-                    <td style="border: none; text-align:left; font-weight: bold;">Asegurado:</td>
-                    <td style="border: none; text-align:left;">{{ $customer->full_name }}</td>
-                    <td style="border: none; text-align:left; font-weight: bold;">&nbsp;</td>
-                    <td style="border: none; text-align:left;">&nbsp;</td>
-                </tr>
-                <tr>
-                    <td style="border: none; text-align:left; font-weight: bold;">Desde:</td>
-                    <td style="border: none; text-align:left;">{{ date('d/m/Y', strtotime($quote->start_date)) }}</td>
-                    <td style="border: none; text-align:left; font-weight: bold;">Hasta:</td>
-                    <td style="border: none; text-align:left;">{{ date('d/m/Y', strtotime($quote->end_date)) }}</td>
-                </tr>
-                <tr>
-                    <td style="border: none; text-align:left; font-weight: bold;">Marca:</td>
-                    <td style="border: none; text-align:left;">{{ $quoteVehicle->vehicleMake->name }}</td>
-                    <td style="border: none; text-align:left; font-weight: bold;">Modelo:</td>
-                    <td style="border: none; text-align:left;">{{ $quoteVehicle->vehicleModel->name }}</td>
-                </tr>
-                <tr>
-                    <td style="border: none; text-align:left; font-weight: bold;">Marca:</td>
-                    <td style="border: none; text-align:left;">{{ $quoteVehicle->vehicleMake->name }}</td>
-                    <td style="border: none; text-align:left; font-weight: bold;">Modelo:</td>
-                    <td style="border: none; text-align:left;">{{ $quoteVehicle->vehicleModel->name }}</td>
-                </tr>
-                <tr>
-                    <td style="border: none; text-align:left; font-weight: bold;">Año:</td>
-                    <td style="border: none; text-align:left;">{{ $quoteVehicle->vehicle_year }}</td>
-                    <td style="border: none; text-align:left; font-weight: bold;">Tipo:</td>
-                    <td style="border: none; text-align:left;">{{ $quoteVehicle->vehicleType->name }}</td>
-                </tr>
-                <tr>
-                    <td style="border: none; text-align:left; font-weight: bold;">Chasis:</td>
-                    <td style="border: none; text-align:left;">{{ $vehicle->chassis }}</td>
-                    <td style="border: none; text-align:left; font-weight: bold;">Registro:</td>
-                    <td style="border: none; text-align:left;"></td>
-                </tr>
-                </tbody>
-            </table>
+                <table style="width: 100%; border: none;">
+                    <tbody>
+                    <tr>
+                        <td style="border: none; text-align:left; font-weight: bold;">Asegurado:</td>
+                        <td style="border: none; text-align:left;">{{ $customer->full_name }}</td>
+                        <td style="border: none; text-align:left; font-weight: bold;">&nbsp;</td>
+                        <td style="border: none; text-align:left;">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td style="border: none; text-align:left; font-weight: bold;">Desde:</td>
+                        <td style="border: none; text-align:left;">{{ date('d/m/Y', strtotime($quote->start_date)) }}</td>
+                        <td style="border: none; text-align:left; font-weight: bold;">Hasta:</td>
+                        <td style="border: none; text-align:left;">{{ date('d/m/Y', strtotime($quote->end_date)) }}</td>
+                    </tr>
+                    <tr>
+                        <td style="border: none; text-align:left; font-weight: bold;">Marca:</td>
+                        <td style="border: none; text-align:left;">{{ $quoteVehicle->vehicleMake->name }}</td>
+                        <td style="border: none; text-align:left; font-weight: bold;">Modelo:</td>
+                        <td style="border: none; text-align:left;">{{ $quoteVehicle->vehicleModel->name }}</td>
+                    </tr>
+                    <tr>
+                        <td style="border: none; text-align:left; font-weight: bold;">Año:</td>
+                        <td style="border: none; text-align:left;">{{ $quoteVehicle->vehicle_year }}</td>
+                        <td style="border: none; text-align:left; font-weight: bold;">Tipo:</td>
+                        <td style="border: none; text-align:left;">{{ $quoteVehicle->vehicleType->name }}</td>
+                    </tr>
+                    <tr>
+                        <td style="border: none; text-align:left; font-weight: bold;">Chasis:</td>
+                        <td style="border: none; text-align:left;">{{ $vehicle->chassis }}</td>
+                        <td style="border: none; text-align:left; font-weight: bold;">Registro:</td>
+                        <td style="border: none; text-align:left;"></td>
+                    </tr>
+                    </tbody>
+                </table>
 
-            <p>
-                La cobertura estará vigente hasta la cancelación del préstamo sujeto a términos de la póliza.
-            </p>
-        </td>
+                <p>
+                    La cobertura estará vigente hasta la cancelación del préstamo sujeto a términos de la póliza.
+                </p>
+            </td>
 
-        <td style="width: 50%;  border: 2px solid black; padding: 10px; vertical-align: top;">
-            <h4>
-                &nbsp;
-            </h4>
+            <td style="width: 50%;  border: 2px solid black; padding: 10px; vertical-align: top;">
+                <h4>
+                    &nbsp;
+                </h4>
 
-            <h4 style="text-align:center; font-weight: normal;">
-                Servicio al Cliente: {{ $vendorCRM['Phone'] }}
-            </h4>
+                <h4 style="text-align:center; font-weight: normal;">
+                    Servicio al Cliente: {{ $vendorCRM['Phone'] }}
+                </h4>
 
-            <h4>
-                &nbsp;
-            </h4>
+                <h4>
+                    &nbsp;
+                </h4>
 
-            <h4 style="text-align:center; font-weight: normal;">
-                {{ $vendorCRM['Street'] }}
-            </h4>
+                <h4 style="text-align:center; font-weight: normal;">
+                    {{ $vendorCRM['Street'] }}
+                </h4>
 
-            <h4>
-                &nbsp;
-            </h4>
+                <h4>
+                    &nbsp;
+                </h4>
 
-            <h4 style="text-align:center; font-weight: normal;">
-                Centro Automovilista
-            </h4>
+                <h4 style="text-align:center; font-weight: normal;">
+                    Centro Automovilista
+                </h4>
 
-            <h4>
-                &nbsp;
-            </h4>
+                <h4>
+                    &nbsp;
+                </h4>
 
-            <h4 style="text-align:center; font-weight: normal;">
-                809-565-8222
-            </h4>
+                <h4 style="text-align:center; font-weight: normal;">
+                    809-565-8222
+                </h4>
 
-            <h4>
-                &nbsp;
-            </h4>
+                <h4>
+                    &nbsp;
+                </h4>
 
-            <h4 style="text-align:center; font-weight: normal;">
-                El marbete definitivo podrá ser retirado en la aseguradora en un plazo de 30 días.
-            </h4>
-        </td>
-    </tr>
-</table>
-
-<table style="width: 100%; border: none; border-collapse: collapse;">
-    <tr>
-        <td style="width: 50%;  border: 2px solid black; padding: 10px; vertical-align: top;">
-            @php
-                $logoPath =  public_path("img/aseguradoras/" . $productCRM['Vendor_Name']['name'] . ".png");
-                $logoBase64 = '';
-                if (file_exists($logoPath)) {
-                    $logoData = base64_encode(file_get_contents($logoPath));
-                    $logoMime = mime_content_type($logoPath);
-                    $logoBase64 = 'data:' . $logoMime . ';base64,' . $logoData;
-                }
-            @endphp
-            @if($logoBase64)
-                <img src="{{ $logoBase64 }}" width="130" height="70" alt="">
-            @endif
-
-            <h4 style="text-align:right;">Póliza No.: {{ $productCRM['P_liza'] }}</h4>
-
-            <table style="width: 100%; border: none;">
-                <tbody>
-                <tr>
-                    <td style="border: none; text-align:left; font-weight: bold;">Asegurado:</td>
-                    <td style="border: none; text-align:left;">{{ $customer->full_name }}</td>
-                    <td style="border: none; text-align:left; font-weight: bold;">&nbsp;</td>
-                    <td style="border: none; text-align:left;">&nbsp;</td>
-                </tr>
-                <tr>
-                    <td style="border: none; text-align:left; font-weight: bold;">Desde:</td>
-                    <td style="border: none; text-align:left;">{{ date('d/m/Y', strtotime($quote->start_date)) }}</td>
-                    <td style="border: none; text-align:left; font-weight: bold;">Hasta:</td>
-                    <td style="border: none; text-align:left;">{{ date('d/m/Y', strtotime($quote->end_date)) }}</td>
-                </tr>
-                <tr>
-                    <td style="border: none; text-align:left; font-weight: bold;">Marca:</td>
-                    <td style="border: none; text-align:left;">{{ $quoteVehicle->vehicleMake->name }}</td>
-                    <td style="border: none; text-align:left; font-weight: bold;">Modelo:</td>
-                    <td style="border: none; text-align:left;">{{ $quoteVehicle->vehicleModel->name }}</td>
-                </tr>
-                <tr>
-                    <td style="border: none; text-align:left; font-weight: bold;">Marca:</td>
-                    <td style="border: none; text-align:left;">{{ $quoteVehicle->vehicleMake->name }}</td>
-                    <td style="border: none; text-align:left; font-weight: bold;">Modelo:</td>
-                    <td style="border: none; text-align:left;">{{ $quoteVehicle->vehicleModel->name }}</td>
-                </tr>
-                <tr>
-                    <td style="border: none; text-align:left; font-weight: bold;">Año:</td>
-                    <td style="border: none; text-align:left;">{{ $quoteVehicle->vehicle_year }}</td>
-                    <td style="border: none; text-align:left; font-weight: bold;">Tipo:</td>
-                    <td style="border: none; text-align:left;">{{ $quoteVehicle->vehicleType->name }}</td>
-                </tr>
-                <tr>
-                    <td style="border: none; text-align:left; font-weight: bold;">Chasis:</td>
-                    <td style="border: none; text-align:left;">{{ $vehicle->chassis }}</td>
-                    <td style="border: none; text-align:left; font-weight: bold;">Registro:</td>
-                    <td style="border: none; text-align:left;"></td>
-                </tr>
-                </tbody>
-            </table>
-
-            <p style="font-weight: bold;">
-                La cobertura estará vigente hasta la cancelación del préstamo sujeto a términos de la póliza.
-            </p>
-        </td>
-
-        <td style="width: 50%;  border: 2px solid black; padding: 10px; vertical-align: top;">
-            <h4>
-                &nbsp;
-            </h4>
-
-            <h4 style="text-align:center; font-weight: normal;">
-                Servicio al Cliente: {{ $vendorCRM['Phone'] }}
-            </h4>
-
-            <h4>
-                &nbsp;
-            </h4>
-
-            <h4 style="text-align:center; font-weight: normal;">
-                {{ $vendorCRM['Street'] }}
-            </h4>
-
-            <h4>
-                &nbsp;
-            </h4>
-
-            <h4 style="text-align:center; font-weight: normal;">
-                Centro Automovilista
-            </h4>
-
-            <h4>
-                &nbsp;
-            </h4>
-
-            <h4 style="text-align:center; font-weight: normal;">
-                809-565-8222
-            </h4>
-
-            <h4>
-                &nbsp;
-            </h4>
-
-            <h4 style="text-align:center; font-weight: normal;">
-                El marbete definitivo podrá ser retirado en la aseguradora en un plazo de 30 días.
-            </h4>
-        </td>
-    </tr>
-</table>
+                <h4 style="text-align:center; font-weight: normal;">
+                    El marbete definitivo podrá ser retirado en la aseguradora en un plazo de 30 días.
+                </h4>
+            </td>
+        </tr>
+    </table>
+@endfor
 
 </body>
 </html>
