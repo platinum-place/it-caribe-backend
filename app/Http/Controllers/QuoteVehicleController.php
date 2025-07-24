@@ -111,6 +111,8 @@ class QuoteVehicleController extends Controller
 
         $vendorCRM = app(ZohoCRMService::class)->getRecords('Vendors', [
             'Nombre',
+            'Street',
+            'Phone',
         ], $productCRM['Vendor_Name']['id'])['data'][0];
 
         $title = 'Certificado No. '.$quoteCRM['Quote_Number'];
