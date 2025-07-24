@@ -25,7 +25,7 @@ class EstimateFireForm
                     ->label('Fecha de Nacimiento Deudor')
                     ->required(fn ($get) => $get('life_insurance'))
                     ->maxDate(now())
-                    ->live(debounce: 500)
+                    ->live(debounce: 1000)
                     ->afterStateUpdated(function (Get $get, Set $set, $state) {
                         $set('customer_age', Carbon::parse($state)->age);
                     }),
