@@ -39,11 +39,12 @@ class EstimateQuoteVehicleService
                 $amount = $vehicleAmount * ($rate / 100);
                 $amountTaxed = $amount / 1.16;
                 $taxesAmount = $amount - $amountTaxed;
-                $totalMonthly = $amount / 12;
 
                 $lifeAmount = 220;
 
                 $amount += $lifeAmount;
+
+                $totalMonthly = $amount / 12;
             }
 
             $result[] = [
