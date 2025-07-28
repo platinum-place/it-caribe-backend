@@ -6,6 +6,7 @@ use App\Models\VehicleActivity;
 use App\Models\VehicleColor;
 use App\Models\VehicleLoanType;
 use App\Models\VehicleUse;
+use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Wizard;
@@ -41,6 +42,10 @@ class VehicleWizardStep
                     ->label('Tipo de préstamo')
                     ->options(VehicleLoanType::pluck('name', 'id'))
                     ->required(),
+
+                Checkbox::make('guarantor')
+                    ->label('Garante')
+                    ->inline(false),
             ])
             ->columns();
     }
