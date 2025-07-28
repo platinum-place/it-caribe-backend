@@ -42,13 +42,12 @@ class EstimateQuoteVehicleService
 
                 $lifeAmount = 220;
 
+                $totalMonthly = ($amount / 12) + $lifeAmount;
                 $amount += $lifeAmount;
-
-                $totalMonthly = $amount / 12;
             }
 
             $result[] = [
-                'name' => $product['Vendor_Name']['name'],
+                'name' => $product['Product_Name'],
                 'unit_price' => round($amount, 2),
                 'quantity' => 1,
                 'subtotal' => round($amount, 2),
