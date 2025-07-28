@@ -4,6 +4,7 @@ namespace App\Filament\Resources\QuoteResource\Components\Forms;
 
 use App\Models\VehicleMake;
 use App\Models\VehicleModel;
+use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
@@ -75,6 +76,14 @@ class EstimateVehicleForm
                     ->numeric()
                     ->required()
                     ->prefix('$'),
+
+                Checkbox::make('is_employee')
+                    ->label('Empleado')
+                    ->inline(false),
+
+                Checkbox::make('leasing')
+                    ->label('Leasing')
+                    ->inline(false),
             ]);
     }
 }

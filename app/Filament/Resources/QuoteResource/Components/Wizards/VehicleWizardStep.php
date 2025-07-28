@@ -40,12 +40,7 @@ class VehicleWizardStep
 
                 Select::make('vehicle_loan_type_id')
                     ->label('Tipo de préstamo')
-                    ->options(VehicleLoanType::pluck('name', 'id'))
-                    ->required(),
-
-                Checkbox::make('guarantor')
-                    ->label('Garante')
-                    ->inline(false),
+                    ->options(VehicleLoanType::pluck('name', 'id')),
             ])
             ->columns();
     }

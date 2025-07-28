@@ -27,6 +27,8 @@ class EstimateVehicleTable
                                 $get('vehicle_amount'),
                                 $get('vehicle_year'),
                                 $get('vehicle_type_id'),
+                                $get('is_employee'),
+                                $get('leasing'),
                             );
 
                             $set('estimates_table', $estimates);
@@ -46,13 +48,15 @@ class EstimateVehicleTable
                         TextInput::make('name')
                             ->label('Aseguradora')
                             ->disabled()
-                            ->dehydrated(false),
+                            ->dehydrated(false)
+                            ->columnSpan(2),
 
                         TextInput::make('vehicle_rate')
                             ->label('Tasa')
                             ->disabled()
                             ->dehydrated(false)
-                            ->numeric(),
+                            ->numeric()
+                            ->columnSpan(1),
 
                         TextInput::make('total')
                             ->label('Total anual')
@@ -61,7 +65,8 @@ class EstimateVehicleTable
                             ->prefix('RD$')
                             ->mask(RawJs::make('$money($input)'))
                             ->stripCharacters(',')
-                            ->numeric(),
+                            ->numeric()
+                            ->columnSpan(1),
 
                         TextInput::make('total_monthly')
                             ->label('Total mensual')
@@ -70,7 +75,8 @@ class EstimateVehicleTable
                             ->prefix('RD$')
                             ->mask(RawJs::make('$money($input)'))
                             ->stripCharacters(',')
-                            ->numeric(),
+                            ->numeric()
+                            ->columnSpan(1),
 
                         TextInput::make('error')
                             ->label('Comentario')
@@ -78,7 +84,7 @@ class EstimateVehicleTable
                             ->dehydrated(false)
                             ->columnSpanFull(),
                     ])
-                    ->columns(4)
+                    ->columns(5)
                     ->deletable(false)
                     ->reorderable(false)
                     ->addable(false)
