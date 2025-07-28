@@ -2,54 +2,44 @@
 
 namespace App\Filament\Resources\QuoteResource\Components\Wizards;
 
-use Carbon\Carbon;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Wizard;
 
-class CustomerWizardStep
+class CoDebtorWizardStep
 {
     public static function make(): Wizard\Step
     {
-        return Wizard\Step::make(__('Customer'))
+        return Wizard\Step::make(__('Co-debtor'))
             ->schema([
-                TextInput::make('first_name')
+                TextInput::make('co_debtor_first_name')
                     ->translateLabel()
                     ->required(),
-                TextInput::make('last_name')
+                TextInput::make('co_debtor_last_name')
                     ->translateLabel()
                     ->required(),
-                TextInput::make('identity_number')
+                TextInput::make('co_debtor_identity_number')
                     ->translateLabel()
                     ->required(),
-
-                DatePicker::make('birth_date')
+                DatePicker::make('co_debtor_birth_date')
                     ->translateLabel()
-                    ->required()
-                    ->live(debounce: 2000)
-                    ->afterStateUpdated(function ($get, $set, $state) {
-                        $set('age', Carbon::parse($state)->age);
-                    }),
-
-                Hidden::make('age'),
-
-                TextInput::make('email')
+                    ->required(),
+                TextInput::make('co_debtor_email')
                     ->translateLabel()
                     ->email(),
-                TextInput::make('mobile_phone')
+                TextInput::make('co_debtor_mobile_phone')
                     ->translateLabel()
                     ->tel()
                     ->mask('999-999-9999'),
-                TextInput::make('home_phone')
+                TextInput::make('co_debtor_home_phone')
                     ->translateLabel()
                     ->tel()
                     ->mask('999-999-9999'),
-                TextInput::make('work_phone')
+                TextInput::make('co_debtor_work_phone')
                     ->translateLabel()
                     ->tel()
                     ->mask('999-999-9999'),
-                TextInput::make('address')
+                TextInput::make('co_debtor_address')
                     ->translateLabel()
                     ->columnSpanFull(),
             ])

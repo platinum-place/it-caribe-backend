@@ -1,20 +1,16 @@
 <?php
 
-use App\Http\Controllers\Api\EmitEstimateController;
-use App\Http\Controllers\Api\EstimateController;
 use App\Http\Controllers\QuoteController;
 use App\Http\Controllers\QuoteFireController;
 use App\Http\Controllers\QuoteLifeController;
 use App\Http\Controllers\QuoteVehicleController;
-use App\Http\Controllers\ZohoCRMController;
 use Filament\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(Authenticate::class)
     ->prefix('filament/resources')
     ->name('filament.resources.')
-    ->group(function () {
-    });
+    ->group(function () {});
 
 Route::middleware(Authenticate::class)
     ->prefix('filament')

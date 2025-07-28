@@ -31,6 +31,11 @@ class Quote extends Model
         return $this->hasOne(QuoteVehicle::class);
     }
 
+    public function quoteLife(): HasOne
+    {
+        return $this->hasOne(QuoteLife::class);
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

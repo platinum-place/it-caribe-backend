@@ -4,9 +4,9 @@ namespace App\Filament\Resources\QuoteResource\Pages;
 
 use App\Filament\Resources\QuoteResource;
 use Filament\Actions;
-use Filament\Resources\Pages\EditRecord;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Form;
+use Filament\Resources\Pages\EditRecord;
 
 class EditQuote extends EditRecord
 {
@@ -29,7 +29,7 @@ class EditQuote extends EditRecord
                 FileUpload::make('attachments')
                     ->translateLabel()
                     ->disk('local')
-                    ->directory(fn() => 'quotes' . '/' . $this->record->id)
+                    ->directory(fn () => 'quotes'.'/'.$this->record->id)
                     ->visibility('private')
                     ->multiple()
                     ->maxParallelUploads(1)

@@ -19,18 +19,26 @@ class ViewQuote extends ViewRecord
             Actions\Action::make('download')
                 ->translateLabel()
                 ->url(function ($record) {
-                    if($this->record->quote_status_id !== QuoteStatus::APPROVED->value){
+                    if ($this->record->quote_status_id !== QuoteStatus::APPROVED->value) {
                         switch ($record->quote_type_id) {
-                            case QuoteType::VEHICLE->value;
+                            case QuoteType::VEHICLE->value:
                                 return route('filament.quote-vehicles.download', ['quote_vehicle' => $this->record->quoteVehicle]);
+                                break;
+
+                            case QuoteType::LIFE->value:
+                                return route('filament.quote-lives.download', ['quote_life' => $this->record->quoteLife]);
                                 break;
                         }
                     }
 
-                    if($this->record->quote_status_id === QuoteStatus::APPROVED->value){
+                    if ($this->record->quote_status_id === QuoteStatus::APPROVED->value) {
                         switch ($record->quote_type_id) {
-                            case QuoteType::VEHICLE->value;
+                            case QuoteType::VEHICLE->value:
                                 return route('filament.quote-vehicles.downloadCertificate', ['quote_vehicle' => $this->record->quoteVehicle]);
+                                break;
+
+                            case QuoteType::LIFE->value:
+                                return route('filament.quote-lives.downloadCertificate', ['quote_life' => $this->record->quoteLife]);
                                 break;
                         }
                     }

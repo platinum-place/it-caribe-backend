@@ -8,6 +8,8 @@ use App\Enums\QuoteType;
 use App\Filament\Resources\QuoteResource;
 use App\Models\Customer;
 use App\Models\Quote;
+use App\Models\QuoteLife;
+use App\Models\QuoteLifeLine;
 use App\Models\QuoteLine;
 use App\Models\QuoteVehicle;
 use App\Models\QuoteVehicleLine;
@@ -37,10 +39,14 @@ class CreateQuote extends CreateRecord
                                 ->required(),
                         ]),
                     QuoteResource\Components\Wizards\EstimateVehicleWizardStep::make()
-                        ->visible(fn($get): bool => $get('quote_type_id') == QuoteType::VEHICLE->value),
+                        ->visible(fn ($get): bool => $get('quote_type_id') == QuoteType::VEHICLE->value),
+                    QuoteResource\Components\Wizards\EstimateLifeWizardStep::make()
+                        ->visible(fn ($get): bool => $get('quote_type_id') == QuoteType::LIFE->value),
                     QuoteResource\Components\Wizards\CustomerWizardStep::make(),
+                    QuoteResource\Components\Wizards\CoDebtorWizardStep::make()
+                        ->hidden(fn ($get) => ! $get('co_debtor_birth_date')),
                     QuoteResource\Components\Wizards\VehicleWizardStep::make()
-                        ->visible(fn($get): bool => $get('quote_type_id') == QuoteType::VEHICLE->value),
+                        ->visible(fn ($get): bool => $get('quote_type_id') == QuoteType::VEHICLE->value),
                 ])
                     ->columnSpanFull(),
             ]);
@@ -62,17 +68,17 @@ class CreateQuote extends CreateRecord
                 'work_phone' => $data['work_phone'] ?? null,
                 'email' => $data['email'] ?? null,
                 'address' => $data['address'] ?? null,
-                'age' => $data['age'] ?? null,
+                'age' => $data['quote_type_id'] ?? null,
             ]);
             $quote = Quote::create([
-                'quote_type_id' => QuoteType::VEHICLE->value,
+                'quote_type_id' => $data['quote_type_id'],
                 'quote_status_id' => QuoteStatus::PENDING->value,
                 'start_date' => now(),
                 'end_date' => now()->addDays(30),
                 'customer_id' => $customer->id,
                 'user_id' => auth()->id(),
             ]);
-            if (isset($data['vehicle_year'])) {
+            if ($data['quote_type_id'] == QuoteType::VEHICLE->value) {
                 $vehicle = Vehicle::create([
                     'vehicle_year' => $data['vehicle_year'],
                     'chassis' => $data['chassis'],
@@ -95,6 +101,30 @@ class CreateQuote extends CreateRecord
                 $vehicle->colors()->attach($data['vehicle_colors']);
                 $quoteVehicle->vehicleColors()->attach($data['vehicle_colors']);
             }
+            if ($data['quote_type_id'] == QuoteType::LIFE->value) {
+                if (! empty($data['co_debtor_first_name'])) {
+                    $coDebtor = Customer::create([
+                        'first_name' => $data['co_debtor_first_name'],
+                        'last_name' => $data['co_debtor_last_name'],
+                        'identity_number' => $data['co_debtor_identity_number'],
+                        'birth_date' => $data['co_debtor_birth_date'] ?? null,
+                        'home_phone' => $data['co_debtor_home_phone'] ?? null,
+                        'mobile_phone' => $data['co_debtor_mobile_phone'] ?? null,
+                        'work_phone' => $data['co_debtor_work_phone'] ?? null,
+                        'email' => $data['co_debtor_email'] ?? null,
+                        'address' => $data['co_debtor_address'] ?? null,
+                    ]);
+                }
+
+                $quoteLife = QuoteLife::create([
+                    'quote_id' => $quote->id,
+                    'co_debtor_id' => ! empty($data['co_debtor_first_name']) ? $coDebtor?->id : null,
+                    'quote_credit_type_id' => $data['quote_credit_type_id'],
+                    'deadline' => $data['deadline'],
+                    'guarantor' => $data['guarantor'],
+                    'insured_amount' => $data['insured_amount'],
+                ]);
+            }
 
             foreach ($data['estimates'] as $estimate) {
                 $quoteLine = QuoteLine::create([
@@ -110,11 +140,21 @@ class CreateQuote extends CreateRecord
                     'id_crm' => $estimate['id_crm'],
                     'quote_line_status_id' => QuoteLineStatus::NOT_ACCEPTED->value,
                 ]);
-                if (isset($data['vehicle_year'])) {
+                if ($data['quote_type_id'] == QuoteType::VEHICLE->value) {
                     $quoteVehicleLine = QuoteVehicleLine::create([
                         'quote_vehicle_id' => $quoteVehicle->id,
                         'quote_line_id' => $quoteLine->id,
                         'life_amount' => $estimate['life_amount'],
+                    ]);
+                }
+                if ($data['quote_type_id'] == QuoteType::LIFE->value) {
+                    $quoteLifeLine = QuoteLifeLine::create([
+                        'quote_life_id' => $quoteLife->id,
+                        'quote_line_id' => $quoteLine->id,
+                        'debtor_amount' => $estimate['debtor_amount'],
+                        'co_debtor_amount' => $estimate['co_debtor_amount'],
+                        'debtor_rate' => $estimate['debtor_rate'],
+                        'co_debtor_rate' => $estimate['co_debtor_rate'],
                     ]);
                 }
             }
