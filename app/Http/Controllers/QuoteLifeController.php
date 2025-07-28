@@ -69,15 +69,9 @@ class QuoteLifeController extends Controller
     {
         $quote = $quoteLife->quote;
 
-        $quoteCRM = app(ZohoCRMService::class)->getRecords('Quotes', [
-            'Quote_Number',
-            'Plan',
-        ], $quoteLife->quote->id_crm)['data'][0];
-
-        $title = 'Cotización No. '.$quoteCRM['Quote_Number'];
+        $title = 'Cotización No. '.$quoteLife->id;
 
         $pdf = Pdf::loadView('quote-lives.download', [
-            'quoteCRM' => $quoteCRM,
             'quoteLife' => $quoteLife,
             'quote' => $quote,
             'lines' => $quoteLife->lines,
@@ -94,11 +88,6 @@ class QuoteLifeController extends Controller
         $quote = $quoteLife->quote;
         $selectedLine = $quoteLife->selectedLine;
 
-        $quoteCRM = app(ZohoCRMService::class)->getRecords('Quotes', [
-            'Quote_Number',
-            'Plan',
-        ], $quote->id_crm)['data'][0];
-
         $productCRM = app(ZohoCRMService::class)->getRecords('Products', [
             'Vendor_Name',
             'P_liza',
@@ -110,12 +99,11 @@ class QuoteLifeController extends Controller
             'Phone',
         ], $productCRM['Vendor_Name']['id'])['data'][0];
 
-        $title = 'Cotización No. '.$quoteCRM['Quote_Number'];
+        $title = 'Certificado No. '.$quoteLife->id;
 
         $pdf = Pdf::loadView('quote-lives.download-certificate', [
             'vendorCRM' => $vendorCRM,
             'productCRM' => $productCRM,
-            'quoteCRM' => $quoteCRM,
             'quoteLife' => $quoteLife,
             'quote' => $quote,
             'selectedLine' => $selectedLine,

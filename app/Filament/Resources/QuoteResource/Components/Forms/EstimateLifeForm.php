@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\QuoteResource\Components\Forms;
 
-use App\Models\QuoteCreditType;
 use App\Models\QuoteLifeCreditType;
 use Carbon\Carbon;
 use Filament\Forms\Components\Checkbox;

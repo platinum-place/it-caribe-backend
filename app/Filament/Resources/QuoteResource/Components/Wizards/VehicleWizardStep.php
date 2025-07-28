@@ -6,7 +6,8 @@ use App\Models\VehicleActivity;
 use App\Models\VehicleColor;
 use App\Models\VehicleLoanType;
 use App\Models\VehicleUse;
-use Filament\Forms\Components\Checkbox;
+use Carbon\Carbon;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Wizard;
@@ -41,6 +42,14 @@ class VehicleWizardStep
                 Select::make('vehicle_loan_type_id')
                     ->label('Tipo de préstamo')
                     ->options(VehicleLoanType::pluck('name', 'id')),
+
+                DatePicker::make('start_date')
+                    ->translateLabel()
+                    ->required(),
+
+                DatePicker::make('end_date')
+                    ->translateLabel()
+                    ->required(),
             ])
             ->columns();
     }

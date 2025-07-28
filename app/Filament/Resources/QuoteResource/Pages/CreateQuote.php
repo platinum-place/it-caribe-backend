@@ -90,8 +90,8 @@ class CreateQuote extends CreateRecord
             $quote = Quote::create([
                 'quote_type_id' => $data['quote_type_id'],
                 'quote_status_id' => QuoteStatus::PENDING->value,
-                'start_date' => now(),
-                'end_date' => now()->addDays(30),
+                'start_date' => $data['start_date'] ?? now(),
+                'end_date' => $data['end_date'] ?? now()->addDays(30),
                 'customer_id' => $customer->id,
                 'user_id' => auth()->id(),
             ]);

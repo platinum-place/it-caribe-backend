@@ -3,8 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\VehicleLoanType;
-use App\Models\VehicleUse;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class VehicleLoanTypeSeeder extends Seeder

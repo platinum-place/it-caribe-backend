@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\QuoteResource\Components\Forms;
 
-use App\Models\QuoteCreditType;
 use App\Models\QuoteFireConstructionType;
 use App\Models\QuoteFireCreditType;
 use App\Models\QuoteFireRiskType;

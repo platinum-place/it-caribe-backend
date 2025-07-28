@@ -53,15 +53,9 @@ class QuoteFireController extends Controller
     {
         $quote = $quoteFire->quote;
 
-        $quoteCRM = app(ZohoCRMService::class)->getRecords('Quotes', [
-            'Quote_Number',
-            'Plan',
-        ], $quoteFire->quote->id_crm)['data'][0];
-
-        $title = 'Cotización No. '.$quoteCRM['Quote_Number'];
+        $title = 'Cotización No. '.$quoteFire->id;
 
         $pdf = Pdf::loadView('quote-fires.download', [
-            'quoteCRM' => $quoteCRM,
             'quoteFire' => $quoteFire,
             'quote' => $quote,
             'lines' => $quoteFire->lines,
@@ -78,11 +72,6 @@ class QuoteFireController extends Controller
         $quote = $quoteFire->quote;
         $selectedLine = $quoteFire->selectedLine;
 
-        $quoteCRM = app(ZohoCRMService::class)->getRecords('Quotes', [
-            'Quote_Number',
-            'Plan',
-        ], $quote->id_crm)['data'][0];
-
         $productCRM = app(ZohoCRMService::class)->getRecords('Products', [
             'Vendor_Name',
             'P_liza',
@@ -94,12 +83,11 @@ class QuoteFireController extends Controller
             'Phone',
         ], $productCRM['Vendor_Name']['id'])['data'][0];
 
-        $title = 'Cotización No. '.$quoteCRM['Quote_Number'];
+        $title = 'Certificado No. '.$quoteFire->id;
 
         $pdf = Pdf::loadView('quote-fires.download-certificate', [
             'vendorCRM' => $vendorCRM,
             'productCRM' => $productCRM,
-            'quoteCRM' => $quoteCRM,
             'quoteFire' => $quoteFire,
             'quote' => $quote,
             'selectedLine' => $selectedLine,

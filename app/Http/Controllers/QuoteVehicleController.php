@@ -53,15 +53,9 @@ class QuoteVehicleController extends Controller
     {
         $quote = $quoteVehicle->quote;
 
-        $quoteCRM = app(ZohoCRMService::class)->getRecords('Quotes', [
-            'Quote_Number',
-            'Plan',
-        ], $quote->id_crm)['data'][0];
-
-        $title = 'Cotización No. '.$quoteCRM['Quote_Number'];
+        $title = 'Cotización No. '.$quoteVehicle->id;
 
         $pdf = Pdf::loadView('quote-vehicles.download', [
-            'quoteCRM' => $quoteCRM,
             'quoteVehicle' => $quoteVehicle,
             'quote' => $quote,
             'lines' => $quote->lines,
@@ -77,11 +71,6 @@ class QuoteVehicleController extends Controller
     {
         $quote = $quoteVehicle->quote;
         $selectedLine = $quote->selectedLine;
-
-        $quoteCRM = app(ZohoCRMService::class)->getRecords('Quotes', [
-            'Quote_Number',
-            'Plan',
-        ], $quote->id_crm)['data'][0];
 
         $productCRM = app(ZohoCRMService::class)->getRecords('Products', [
             'Lesiones_muerte_1_pers',
@@ -115,10 +104,9 @@ class QuoteVehicleController extends Controller
             'Phone',
         ], $productCRM['Vendor_Name']['id'])['data'][0];
 
-        $title = 'Certificado No. '.$quoteCRM['Quote_Number'];
+        $title = 'Certificado No. '.$quoteVehicle->id;
 
         $pdf = Pdf::loadView('quote-vehicles.download-certificate', [
-            'quoteCRM' => $quoteCRM,
             'productCRM' => $productCRM,
             'vendorCRM' => $vendorCRM,
             'quoteVehicle' => $quoteVehicle,
