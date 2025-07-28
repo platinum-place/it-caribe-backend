@@ -122,7 +122,7 @@ class CreateQuote extends CreateRecord
                 $quoteLife = QuoteLife::create([
                     'quote_id' => $quote->id,
                     'co_debtor_id' => ! empty($data['co_debtor_first_name']) ? $coDebtor?->id : null,
-                    'quote_credit_type_id' => $data['quote_credit_type_id'],
+                    'quote_life_credit_type_id' => $data['quote_life_credit_type_id'],
                     'deadline' => $data['deadline'],
                     'guarantor' => $data['guarantor'],
                     'insured_amount' => $data['insured_amount'],
@@ -133,7 +133,7 @@ class CreateQuote extends CreateRecord
                 $quoteFire = QuoteFire::create([
                     'quote_id' => $quote->id,
                     'co_debtor_id' => ! empty($data['co_debtor_first_name']) ? $coDebtor?->id : null,
-                    'quote_credit_type_id' => $data['quote_credit_type_id'],
+                    'quote_fire_credit_type_id' => $data['quote_fire_credit_type_id'],
                     'deadline' => $data['deadline'] / 12,
                     'guarantor' => $data['guarantor'],
                     'quote_fire_risk_type_id' => $data['quote_fire_risk_type_id'],

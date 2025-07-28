@@ -28,6 +28,14 @@ class QuoteTypeNewNamesSeeder extends Seeder
                 'id' => \App\Enums\QuoteType::VEHICLE->value,
                 'name' => 'Plan Auto',
             ],
+            [
+                'id' => \App\Enums\QuoteType::DEBT_UNEMPLOYMENT->value,
+                'name' => 'Plan Auto Ley',
+            ],
+            [
+                'id' => \App\Enums\QuoteType::VEHICLE_LAW->value,
+                'name' => 'Plan Desempleo Deuda',
+            ],
         ];
 
         foreach ($data as $item) {

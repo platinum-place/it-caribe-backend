@@ -4,6 +4,7 @@ namespace App\Filament\Resources\QuoteResource\Components\Forms;
 
 use App\Models\QuoteCreditType;
 use App\Models\QuoteFireConstructionType;
+use App\Models\QuoteFireCreditType;
 use App\Models\QuoteFireRiskType;
 use Carbon\Carbon;
 use Filament\Forms\Components\Checkbox;
@@ -52,9 +53,9 @@ class EstimateFireForm
                     ->label('Garante')
                     ->inline(false),
 
-                Select::make('quote_credit_type_id')
+                Select::make('quote_fire_credit_type_id')
                     ->label('Tipo de crédito')
-                    ->options(QuoteCreditType::pluck('name', 'id'))
+                    ->options(QuoteFireCreditType::pluck('name', 'id'))
                     ->required(),
 
                 TextInput::make('property_value')

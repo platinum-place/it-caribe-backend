@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\QuoteResource\Components\Forms;
 
 use App\Models\QuoteCreditType;
+use App\Models\QuoteLifeCreditType;
 use Carbon\Carbon;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\DatePicker;
@@ -54,9 +55,9 @@ class EstimateLifeForm
                     ->label('Garante')
                     ->inline(false),
 
-                Select::make('quote_credit_type_id')
+                Select::make('quote_life_credit_type_id')
                     ->label('Tipo de crédito')
-                    ->options(QuoteCreditType::pluck('name', 'id'))
+                    ->options(QuoteLifeCreditType::pluck('name', 'id'))
                     ->required(),
             ]);
     }

@@ -18,6 +18,8 @@ class QuotesSeeder extends Seeder
             QuoteLifeCreditTypeSeeder::class,
             QuoteFireRiskTypeSeeder::class,
             QuoteFireConstructionTypeSeeder::class,
+            QuoteTypeNewNamesSeeder::class,
+            QuoteFireCreditTypeSeeder::class,
         ]);
     }
 }
