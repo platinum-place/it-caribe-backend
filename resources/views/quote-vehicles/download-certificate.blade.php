@@ -680,7 +680,7 @@
     <tr>
         <td><strong>Estatura (pies/pulgadas):</strong></td>
         <td><strong>Peso (lbs):</strong></td>
-        <td><strong>Suma asegurada vida:</strong> Cubre saldo insoluto hasta RD$ 300,000.00</td>
+        <td><strong>Suma asegurada vida:</strong> <br> Cubre saldo insoluto hasta RD$ 300,000.00</td>
         <td><strong>Suma asegurada últimos gastos:</strong> RD$ 50,000.00</td>
     </tr>
     <tr>

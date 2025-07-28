@@ -83,17 +83,17 @@ class EstimateVehicleForm
                     ->inline(false),
 
                 Checkbox::make('leasing')
-                    ->label('Leasing')
+                    ->label('Responsabilidad Civil en Exceso')
                     ->inline(false),
 
                 Radio::make('service_type')
-                    ->label('Tipo de vehículo')
-                    ->default('classic')
+                    ->label(__('Vehicle type'))
+                    ->default('Clásico')
                     ->options([
-                        'classic' => 'Clásico',
-                        'econo' => 'Japonés',
-                        'premier' => '0 KM',
-                        'hybrid' => 'Híbrido/Eléctrico',
+                        'Clásico' => 'Clásico',
+                        'Econo' => 'Japonés',
+                        'Premier' => '0 KM',
+                        'Híbrido' => 'Híbrido/Eléctrico',
                     ])
             ]);
     }

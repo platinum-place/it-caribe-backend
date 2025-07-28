@@ -40,6 +40,8 @@ class CreateQuote extends CreateRecord
                                 ->live()
                                 ->required(),
                         ]),
+                    QuoteResource\Components\Wizards\EstimateUnemploymentWizardStep::make()
+                        ->visible(fn ($get): bool => $get('quote_type_id') == QuoteType::UNEMPLOYMENT->value),
                     QuoteResource\Components\Wizards\EstimateVehicleWizardStep::make()
                         ->visible(fn ($get): bool => $get('quote_type_id') == QuoteType::VEHICLE->value),
                     QuoteResource\Components\Wizards\EstimateLifeWizardStep::make()

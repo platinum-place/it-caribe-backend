@@ -14,10 +14,13 @@ class QuoteLifeCreditTypeSeeder extends Seeder
     {
         $data = [
             [
-                'name' => 'Línea de Crédito',
+                'name' => 'Préstamo Personal',
             ],
             [
-                'name' => 'Préstamo Personal',
+                'name' => 'Préstamo Comercial',
+            ],
+            [
+                'name' => 'Préstamo de consumo personal (sin garantía)',
             ],
         ];
 
