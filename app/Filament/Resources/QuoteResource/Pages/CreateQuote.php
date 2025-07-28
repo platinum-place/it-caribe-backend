@@ -114,6 +114,7 @@ class CreateQuote extends CreateRecord
                     'vehicle_use_id' => $data['vehicle_use_id'],
                     'vehicle_activity_id' => $data['vehicle_activity_id'],
                     'vehicle_amount' => $data['vehicle_amount'],
+                    'vehicle_loan_type_id' => $data['vehicle_loan_type_id'],
                 ]);
                 $vehicle->colors()->attach($data['vehicle_colors']);
                 $quoteVehicle->vehicleColors()->attach($data['vehicle_colors']);

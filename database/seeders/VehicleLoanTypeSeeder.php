@@ -2,10 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\VehicleLoanType;
 use App\Models\VehicleUse;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class VehicleUseSeeder extends Seeder
+class VehicleLoanTypeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,18 +16,15 @@ class VehicleUseSeeder extends Seeder
     {
         $data = [
             [
-                'name' => 'Publico',
+                'name' => 'Préstamo de consumo con garantía de vehículo',
             ],
             [
-                'name' => 'Privado',
-            ],
-            [
-                'name' => 'Comercial',
+                'name' => 'Préstamo de vehículo',
             ],
         ];
 
         foreach ($data as $item) {
-            VehicleUse::create($item);
+            VehicleLoanType::create($item);
         }
     }
 }

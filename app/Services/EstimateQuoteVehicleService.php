@@ -78,8 +78,12 @@ class EstimateQuoteVehicleService
         try {
             $rates = $this->zohoApi->searchRecords('Tasas', $criteria);
         } catch (\Throwable $e) {
-            $criteria = "Plan:equals:$productId";
-            $rates = $this->zohoApi->searchRecords('Tasas', $criteria);
+            try {
+                $criteria = "Plan:equals:$productId";
+                $rates = $this->zohoApi->searchRecords('Tasas', $criteria);
+            }catch (\Throwable $e) {
+                return 0;
+            }
         }
 
         $selectedRate = 0;

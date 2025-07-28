@@ -16,6 +16,7 @@ class VehiclesSeeder extends Seeder
             VehicleUseSeeder::class,
             VehicleAccessorySeeder::class,
             VehicleColorSeeder::class,
+            VehicleLoanTypeSeeder::class,
         ]);
     }
 }
