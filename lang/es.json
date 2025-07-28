@@ -1,4 +1,5 @@
 {
+    "Type": "Tipo",
     "Property address": "Dirección de la propiedad",
     "Quote fires": "Cotizaciones Plan Seguro Incendio y Vida Hipotecario",
     "Quote fire": "Cotización Plan Seguro Incendio y Vida Hipotecario",
@@ -40,6 +41,7 @@
     "Unemployment": "Plan Vida/Desempleo",
     "Life": "Plan Vida/Consumo",
     "Fire": "Seguro Incendio y Vida Hipotecario",
+    "Quotes": "Cotizaciones",
     "Quote": "Cotización",
     "Vehicle": "Vehículo",
     "Estimate :name": "Cotizar :name",

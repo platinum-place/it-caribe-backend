@@ -29,27 +29,35 @@ class EstimateQuoteVehicleService
         foreach ($productsResponse['data'] as $product) {
             $rate = $this->getRate($product['id'], $vehicleAmount, $vehicleYear, $vehicleType);
 
-            $amount = $vehicleAmount * ($rate / 100);
-            $amountTaxed = $amount / 1.16;
-            $taxesAmount = $amount - $amountTaxed;
-            $totalMonthly = $amount / 12;
+            $amount = 0;
+            $amountTaxed = 0;
+            $taxesAmount = 0;
+            $totalMonthly = 0;
+            $lifeAmount = 0;
 
-            $lifeAmount = 200; // This is a placeholder value, adjust as needed.
+            if ($rate > 0) {
+                $amount = $vehicleAmount * ($rate / 100);
+                $amountTaxed = $amount / 1.16;
+                $taxesAmount = $amount - $amountTaxed;
+                $totalMonthly = $amount / 12;
 
-            $amount += $lifeAmount;
+                $lifeAmount = 220;
+
+                $amount += $lifeAmount;
+            }
 
             $result[] = [
                 'name' => $product['Vendor_Name']['name'],
-                'unit_price' => $amount,
+                'unit_price' => round($amount, 2),
                 'quantity' => 1,
-                'subtotal' => $amount,
-                'amount_taxed' => $amountTaxed,
+                'subtotal' => round($amount, 2),
+                'amount_taxed' => round($amountTaxed, 2),
                 'tax_rate' => 16,
-                'tax_amount' => $taxesAmount,
-                'total' => $amount,
-                'total_monthly' => $totalMonthly,
+                'tax_amount' => round($taxesAmount, 2),
+                'total' => round($amount, 2),
+                'total_monthly' => round($totalMonthly, 2),
                 'id_crm' => $product['id'],
-                'life_amount' => 220,
+                'life_amount' => $lifeAmount,
                 'vehicle_rate' => $rate,
                 'error' => null,
             ];
@@ -65,13 +73,19 @@ class EstimateQuoteVehicleService
      */
     protected function getRate(string $productId, float $vehicleAmount, int $vehicleYear, VehicleType $vehicleType): float
     {
+
+        $criteria = "((Plan:equals:$productId) and (A_o:equals:$vehicleYear))";
+        try {
+            $rates = $this->zohoApi->searchRecords('Tasas', $criteria);
+        } catch (\Throwable $e) {
+            $criteria = "Plan:equals:$productId";
+            $rates = $this->zohoApi->searchRecords('Tasas', $criteria);
+        }
+
         $selectedRate = 0;
 
-        $criteria = "Plan:equals:$productId";
-        $rates = $this->zohoApi->searchRecords('Tasas', $criteria);
-
         foreach ($rates['data'] as $rate) {
-            if (! empty($rate['Grupo_de_veh_culo']) and ! in_array($vehicleType->name, $rate['Grupo_de_veh_culo'], true)) {
+            if (! empty($rate['Grupo_de_veh_culo']) && ! in_array($vehicleType->name, $rate['Grupo_de_veh_culo'], true)) {
                 continue;
             }
 

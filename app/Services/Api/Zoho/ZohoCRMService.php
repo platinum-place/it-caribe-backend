@@ -2,6 +2,8 @@
 
 namespace App\Services\Api\Zoho;
 
+use App\Services\ZohoAPIService;
+use App\Services\ZohoOAuthTokenService;
 use Exception;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
@@ -22,7 +24,7 @@ class ZohoCRMService
         $response = $this->api->searchRecords($module, $token, $criteria, $page, $perPage);
 
         if (empty($response) || empty($response['data'])) {
-            throw new Exception(__('Records not found in Zoho'));
+            throw new \RuntimeException(__('Records not found in Zoho'));
         }
 
         return $response;
@@ -40,7 +42,7 @@ class ZohoCRMService
         $response = $this->api->getRecords($module, $token, $fields, $id);
 
         if (empty($response) || empty($response['data'])) {
-            throw new Exception(__('Records not found in Zoho'));
+            throw new \RuntimeException(__('Records not found in Zoho'));
         }
 
         return $response;
@@ -58,7 +60,7 @@ class ZohoCRMService
         $response = $this->api->getListOfAttachments($module, $token, $id, $fields);
 
         if (empty($response) || empty($response['data'])) {
-            throw new Exception(__('Records not found in Zoho'));
+            throw new \RuntimeException(__('Records not found in Zoho'));
         }
 
         return $response;
@@ -76,7 +78,7 @@ class ZohoCRMService
         $response = $this->api->downloadAnAttachment($module, $token, $recordId, $attachmentId);
 
         if (empty($response)) {
-            throw new Exception(__('Records not found in Zoho'));
+            throw new \RuntimeException(__('Records not found in Zoho'));
         }
 
         return $response;
@@ -94,7 +96,7 @@ class ZohoCRMService
         $response = $this->api->insertRecords($module, $token, [$data]);
 
         if (empty($response)) {
-            throw new Exception(__('Server Error'));
+            throw new \RuntimeException(__('Server Error'));
         }
 
         return $response;
@@ -112,7 +114,7 @@ class ZohoCRMService
         $response = $this->api->updateRecords($module, $token, $id, [$data]);
 
         if (empty($response)) {
-            throw new Exception(__('Server Error'));
+            throw new \RuntimeException(__('Server Error'));
         }
 
         return $response;
