@@ -20,7 +20,7 @@ class EstimateQuoteFireService
      * @throws ConnectionException
      * @throws Exception
      */
-    public function estimate(int $customerAge, int $deadline, float $propertyValue, ?float $loanValue = 0, ?int $coDebtorAge = null): array
+    public function estimate(int $customerAge, int $deadline, float $appraisalValue, ?float $financedValue = 0, ?int $coDebtorAge = null): array
     {
         $criteria = '((Corredor:equals:'. 3222373000092390001 .') and (Product_Category:equals:Incendio))';
         $productsResponse = $this->zohoApi->searchRecords('Products', $criteria);
@@ -32,7 +32,7 @@ class EstimateQuoteFireService
              * Estimate fire
              */
             $fireRate = $this->getFireRate($product['id']);
-            $fireAmount = ($propertyValue / 1000) * ($fireRate / 100);
+            $fireAmount = ($appraisalValue / 1000) * ($fireRate / 100);
 
             /**
              * Estimate life
@@ -42,15 +42,15 @@ class EstimateQuoteFireService
             $coDebtorRate = 0;
             $debtorAmount = 0;
             $coDebtorAmount = 0;
-            if ($loanValue) {
+            if ($financedValue) {
                 $this->getDebtorRate($product['id'], $customerAge, $coDebtorAge);
 
                 $debtorRate = $this->debtorRate / 100;
                 $coDebtorRate = $this->coDebtorRate / 100;
-                $debtorAmount = ($loanValue / 1000) * $debtorRate;
+                $debtorAmount = ($financedValue / 1000) * $debtorRate;
             }
             if (! empty($this->coDebtorRate)) {
-                $coDebtorAmount = ($loanValue / 1000) * ($coDebtorRate - $debtorRate);
+                $coDebtorAmount = ($financedValue / 1000) * ($coDebtorRate - $debtorRate);
             }
             $lifeAmount = $debtorAmount + $coDebtorAmount;
 
@@ -78,8 +78,8 @@ class EstimateQuoteFireService
                 'fire_rate' => $fireRate,
                 'fire_amount' => $fireAmount,
                 'life_amount' => $lifeAmount,
-                'property_value' => $propertyValue,
-                'loan_value' => $loanValue,
+                'appraisal_value' => $appraisalValue,
+                'financed_value' => $financedValue,
                 'error' => null,
             ];
         }

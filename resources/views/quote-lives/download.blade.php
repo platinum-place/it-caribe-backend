@@ -113,7 +113,7 @@
             <td style="border: none; font-weight: bold; text-align:left;">{{ number_format($quoteLife->insured_amount, 2) }}</td>
             <td style="border: none; font-weight: bold; text-align:left;">{{ $quoteLife->deadline }}</td>
             <td style="border: none; font-weight: bold; text-align:left;">{{ number_format($line->quoteLine->total, 2) }}</td>
-            <td style="border: none; font-weight: bold; text-align:left;">{{ $customer->age + $quoteLife->deadline }}</td>
+            <td style="border: none; font-weight: bold; text-align:left;">{{ $customer->age + ($quoteLife->deadline / 12) }}</td>
             <td style="border: none; font-weight: bold; text-align:left;">{{ number_format($line->quoteLine->total * 12, 2) }}</td>
         </tr>
     @endforeach

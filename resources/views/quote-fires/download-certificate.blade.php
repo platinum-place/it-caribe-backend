@@ -97,13 +97,13 @@
     <tbody>
     <tr>
         <td style="border: none; text-align:left; font-weight: bold;">Valor Financiado:</td>
-        <td style="border: none; text-align:left;">${{ number_format($quoteFire->loan_value, 2) }}</td>
+        <td style="border: none; text-align:left;">${{ number_format($quoteFire->financed_value, 2) }}</td>
         <td style="border: none; text-align:left; font-weight: bold;">Construcción:</td>
         <td style="border: none; text-align:left;">NO</td>
     </tr>
     <tr>
         <td style="border: none; text-align:left; font-weight: bold;">Valor Tasación:</td>
-        <td style="border: none; text-align:left;">${{ number_format($quoteFire->property_value, 2) }}</td>
+        <td style="border: none; text-align:left;">${{ number_format($quoteFire->appraisal_value, 2) }}</td>
         <td style="border: none; text-align:left; font-weight: bold;">Tipo Construcción:</td>
         <td style="border: none; text-align:left;">{{ $quoteFire->quoteFireConstructionType->name }}</td>
     </tr>
@@ -136,9 +136,9 @@
     <tr>
         <td style="border: none; text-align:left;">{{ ucwords(strtolower($vendorCRM['Nombre'])) }}</td>
         <td style="border: none; text-align:left;">{{ $quoteFire->deadline }}</td>
-        <td style="border: none; text-align:left;">{{ number_format($quoteFire->property_value, 2) }}</td>
+        <td style="border: none; text-align:left;">{{ number_format($quoteFire->appraisal_value, 2) }}</td>
         <td style="border: none; text-align:left;">{{ number_format($selectedLine->life_amount, 2) }}</td>
-        <td style="border: none; text-align:left;">{{ $customer->age + $quoteFire->deadline }}</td>
+        <td style="border: none; text-align:left;">{{ $customer->age + ($quoteFire->deadline / 12) }}</td>
         <td style="border: none; text-align:right;">{{ number_format($selectedLine->fire_amount, 2) }}</td>
         <td style="border: none; text-align:right;">{{ number_format($selectedLine->quoteLine->total, 2) }}</td>
         <td style="border: none; text-align:right;">{{ number_format($selectedLine->quoteLine->total * 12, 2) }}</td>

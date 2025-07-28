@@ -14,7 +14,7 @@ class QuoteLife extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'quote_id', 'co_debtor_id', 'quote_credit_type_id',
+        'quote_id', 'co_debtor_id', 'quote_life_credit_type_id',
         'deadline', 'guarantor', 'insured_amount',
     ];
 
@@ -23,9 +23,9 @@ class QuoteLife extends Model
         return $this->belongsTo(Quote::class);
     }
 
-    public function quoteCreditType(): BelongsTo
+    public function quoteLifeCreditType(): BelongsTo
     {
-        return $this->belongsTo(QuoteCreditType::class);
+        return $this->belongsTo(QuoteLifeCreditType::class);
     }
 
     public function coDebtor(): BelongsTo

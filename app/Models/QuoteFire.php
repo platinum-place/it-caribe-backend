@@ -14,9 +14,9 @@ class QuoteFire extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'quote_id', 'quote_credit_type_id', 'quote_fire_risk_type_id',
+        'quote_id', 'quote_fire_credit_type_id', 'quote_fire_risk_type_id',
         'quote_fire_construction_type_id', 'co_debtor_id', 'guarantor',
-        'deadline', 'property_value', 'loan_value', 'property_address',
+        'deadline', 'appraisal_value', 'financed_value', 'property_address',
     ];
 
     public function quote(): BelongsTo
@@ -24,9 +24,9 @@ class QuoteFire extends Model
         return $this->belongsTo(Quote::class);
     }
 
-    public function quoteCreditType(): BelongsTo
+    public function quoteFireCreditType(): BelongsTo
     {
-        return $this->belongsTo(QuoteCreditType::class);
+        return $this->belongsTo(QuoteFireCreditType::class);
     }
 
     public function coDebtor(): BelongsTo
