@@ -64,7 +64,7 @@
     <tbody>
     <tr>
         <td style="border: none; text-align:left; font-weight: bold;">Ramo/Producto:</td>
-        <td style="border: none; text-align:left;">{{ $quoteCRM['Plan'] }}</td>
+        <td style="border: none; text-align:left;">Incendio</td>
         <td style="border: none; text-align:left; font-weight: bold;">Fecha:</td>
         <td style="border: none; text-align:left;">{{ date('d/m/Y', strtotime($quote->start_date)) }}</td>
     </tr>

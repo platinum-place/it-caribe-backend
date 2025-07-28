@@ -26,6 +26,11 @@ class Quote extends Model
         ];
     }
 
+    public function quoteFire(): HasOne
+    {
+        return $this->hasOne(QuoteFire::class);
+    }
+
     public function quoteVehicle(): HasOne
     {
         return $this->hasOne(QuoteVehicle::class);

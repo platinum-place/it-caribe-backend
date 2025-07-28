@@ -28,6 +28,10 @@ class ViewQuote extends ViewRecord
                             case QuoteType::LIFE->value:
                                 return route('filament.quote-lives.download', ['quote_life' => $this->record->quoteLife]);
                                 break;
+
+                            case QuoteType::FIRE->value:
+                                return route('filament.quote-fires.download', ['quote_fire' => $this->record->quoteFire]);
+                                break;
                         }
                     }
 
@@ -39,6 +43,10 @@ class ViewQuote extends ViewRecord
 
                             case QuoteType::LIFE->value:
                                 return route('filament.quote-lives.downloadCertificate', ['quote_life' => $this->record->quoteLife]);
+                                break;
+
+                            case QuoteType::FIRE->value:
+                                return route('filament.quote-fires.downloadCertificate', ['quote_fire' => $this->record->quoteFire]);
                                 break;
                         }
                     }

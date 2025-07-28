@@ -64,7 +64,7 @@
     <tbody>
     <tr>
         <td style="border: none; text-align:left; font-weight: bold;">Ramo/Producto:</td>
-        <td style="border: none; text-align:left;">{{ $quoteCRM['Plan'] }}</td>
+        <td style="border: none; text-align:left;">Automóvil</td>
         <td style="border: none; text-align:left; font-weight: bold;">Correo:</td>
         <td style="border: none; text-align:left;">{{ $customer->email }}</td>
         <td style="border: none; text-align:left; font-weight: bold;">Fecha:</td>
