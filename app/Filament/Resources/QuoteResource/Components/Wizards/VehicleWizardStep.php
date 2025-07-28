@@ -41,11 +41,13 @@ class VehicleWizardStep
 
                 Select::make('vehicle_loan_type_id')
                     ->label('Tipo de préstamo')
+                    ->required()
                     ->options(VehicleLoanType::pluck('name', 'id')),
 
                 DatePicker::make('start_date')
                     ->translateLabel()
-                    ->required(),
+                    ->required()
+                    ->default(now()),
 
                 DatePicker::make('end_date')
                     ->translateLabel()
@@ -54,6 +56,7 @@ class VehicleWizardStep
                 TextInput::make('loan_amount')
                     ->label('Valor del Préstamo')
                     ->numeric()
+                    ->required()
                     ->prefix('$'),
             ])
             ->columns();

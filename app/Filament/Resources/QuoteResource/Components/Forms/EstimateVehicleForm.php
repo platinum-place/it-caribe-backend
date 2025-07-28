@@ -7,6 +7,7 @@ use App\Models\VehicleModel;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Get;
@@ -84,6 +85,16 @@ class EstimateVehicleForm
                 Checkbox::make('leasing')
                     ->label('Leasing')
                     ->inline(false),
+
+                Radio::make('service_type')
+                    ->label('Tipo de vehículo')
+                    ->default('classic')
+                    ->options([
+                        'classic' => 'Clásico',
+                        'econo' => 'Japonés',
+                        'premier' => '0 KM',
+                        'hybrid' => 'Híbrido/Eléctrico',
+                    ])
             ]);
     }
 }

@@ -17,7 +17,7 @@ class EstimateQuoteVehicleService
      * @throws ConnectionException
      * @throws Exception
      */
-    public function estimate(float $vehicleAmount, int $vehicleYear, int $vehicleTypeId, bool $isEmployee, bool $leasing): array
+    public function estimate(float $vehicleAmount, int $vehicleYear, int $vehicleTypeId, bool $isEmployee, bool $leasing, string $serviceType): array
     {
         $vehicleType = VehicleType::find($vehicleTypeId);
 
@@ -27,6 +27,10 @@ class EstimateQuoteVehicleService
         $result = [];
 
         foreach ($productsResponse['data'] as $product) {
+            if($serviceType !== 'premier' && $product['Plan'] !== 'Premier'){
+                continue;
+            }
+
             if ($product['Plan'] === 'Empleado' && ! $isEmployee) {
                 continue;
             }
@@ -57,7 +61,7 @@ class EstimateQuoteVehicleService
             }
 
             $result[] = [
-                'name' => $product['Product_Name'],
+                'name' => $product['Vendor_Name']['Nombre'],
                 'unit_price' => round($amount, 2),
                 'quantity' => 1,
                 'subtotal' => round($amount, 2),

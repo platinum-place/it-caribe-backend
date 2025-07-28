@@ -29,6 +29,7 @@ class EstimateVehicleTable
                                 $get('vehicle_type_id'),
                                 $get('is_employee'),
                                 $get('leasing'),
+                                $get('service_type'),
                             );
 
                             $set('estimates_table', $estimates);
