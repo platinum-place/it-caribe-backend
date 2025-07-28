@@ -19,11 +19,17 @@ class Quote extends Model
         'responsible_id',
     ];
 
-    protected $casts = [
-        'attachments' => 'array',
-        'start_date' => 'date',
-        'end_date' => 'date',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'attachments' => 'array',
+        ];
+    }
+
+    public function quoteVehicle(): HasOne
+    {
+        return $this->hasOne(QuoteVehicle::class);
+    }
 
     public function user(): BelongsTo
     {
@@ -58,10 +64,5 @@ class Quote extends Model
     public function selectedLine(): HasOne
     {
         return $this->hasOne(QuoteLine::class)->where('quote_line_status_id', QuoteLineStatus::ACCEPTED->value);
-    }
-
-    public function quoteVehicle(): HasOne
-    {
-        return $this->hasOne(QuoteVehicle::class);
     }
 }

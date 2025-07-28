@@ -13,7 +13,7 @@
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
-            font-size: 12px;
+            font-size: 10px;
             width: 100%;
         }
 
@@ -268,7 +268,7 @@
 
 <div style="height: 20px;"></div>
 
-<table style="width: 100%; font-size: 12px;">
+<table style="width: 100%; font-size: 10px;">
     <tr>
         <td style="padding: 10px;">
 

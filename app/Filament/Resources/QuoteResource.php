@@ -96,6 +96,7 @@ class QuoteResource extends Resource
             'create' => Pages\CreateQuote::route('/create'),
             'view' => Pages\ViewQuote::route('/{record}'),
             'edit' => Pages\EditQuote::route('/{record}/edit'),
+            'emit' => Pages\EmitQuote::route('/{record}/emit'),
         ];
     }
 
