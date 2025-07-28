@@ -169,7 +169,7 @@
         ['label' => 'Cruz Roja Dominicana (CRD)', 'field' => 'Cruz_roja', 'type' => 'included','style'=>'border: none;'],
         ['label' => 'Cobertura Extra', 'field' => 'Cobertura_extra', 'type' => 'optional_number','style'=>'border: none;'],
         ['label' => 'Cobertura Pink', 'field' => 'Cobertura_pink', 'type' => 'optional_number','style'=>'border: none;'],
-        ['label' => 'Gastos Medicos', 'field' => 'Gastos_m_dicos', 'type' => 'optional_number','style'=>'border: none;'],
+        ['label' => 'RESP. CIVIL', 'field' => 'Resp_civil', 'type' => 'text2','style'=>'border: none;'],
     ];
 @endphp
 
@@ -213,6 +213,18 @@
                                 {{ number_format($data['product'][$row['field']]) }}
                             @else
                                 No incluida
+                            @endif
+                            @break
+
+                        @case('text2')
+                            @if (empty($data['product'][$row['field']]))
+                                No aplica
+                            @else
+                                @if ($quoteVehicle->leasing === false)
+                                    No aplica
+                                @else
+                                    {{ $data['product'][$row['field']] }}
+                                @endif
                             @endif
                             @break
                     @endswitch
