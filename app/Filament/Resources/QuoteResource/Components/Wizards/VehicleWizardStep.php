@@ -50,6 +50,11 @@ class VehicleWizardStep
                 DatePicker::make('end_date')
                     ->translateLabel()
                     ->required(),
+
+                TextInput::make('loan_amount')
+                    ->label('Valor del Préstamo')
+                    ->numeric()
+                    ->prefix('$'),
             ])
             ->columns();
     }

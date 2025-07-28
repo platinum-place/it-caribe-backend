@@ -117,6 +117,7 @@ class CreateQuote extends CreateRecord
                     'vehicle_loan_type_id' => $data['vehicle_loan_type_id'],
                     'is_employee' => $data['is_employee'],
                     'leasing' => $data['leasing'],
+                    'loan_amount' => $data['loan_amount'],
                 ]);
                 $vehicle->colors()->attach($data['vehicle_colors']);
                 $quoteVehicle->vehicleColors()->attach($data['vehicle_colors']);
@@ -141,8 +142,8 @@ class CreateQuote extends CreateRecord
                     'guarantor' => $data['guarantor'],
                     'quote_fire_risk_type_id' => $data['quote_fire_risk_type_id'],
                     'quote_fire_construction_type_id' => $data['quote_fire_construction_type_id'],
-                    'property_value' => $data['property_value'],
-                    'loan_value' => $data['loan_value'],
+                    'appraisal_value' => $data['appraisal_value'],
+                    'financed_value' => $data['financed_value'],
                     'property_address' => $data['property_address'],
                 ]);
             }

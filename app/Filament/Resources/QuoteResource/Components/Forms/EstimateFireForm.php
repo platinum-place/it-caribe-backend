@@ -57,14 +57,14 @@ class EstimateFireForm
                     ->options(QuoteFireCreditType::pluck('name', 'id'))
                     ->required(),
 
-                TextInput::make('property_value')
-                    ->label('Valor de la Propiedad')
+                TextInput::make('appraisal_value')
+                    ->label('Valor Tasación')
                     ->numeric()
                     ->required()
                     ->prefix('$'),
 
-                TextInput::make('loan_value')
-                    ->label('Valor del Préstamo')
+                TextInput::make('financed_value')
+                    ->label('Valor Financiado')
                     ->numeric()
                     ->required(fn ($get) => $get('life_insurance'))
                     ->prefix('$'),
