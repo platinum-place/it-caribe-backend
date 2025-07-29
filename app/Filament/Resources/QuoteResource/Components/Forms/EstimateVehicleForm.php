@@ -94,7 +94,7 @@ class EstimateVehicleForm
                         'Econo' => 'Japonés',
                         'Premier' => '0 KM',
                         'Híbrido' => 'Híbrido/Eléctrico',
-                    ])
+                    ]),
             ]);
     }
 }

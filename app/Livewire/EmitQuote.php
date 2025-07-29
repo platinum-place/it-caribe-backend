@@ -86,7 +86,7 @@ class EmitQuote extends Component implements HasForms
             'attachments' => $data['attachments'] ?? [],
             'quote_status_id' => QuoteStatus::APPROVED->value,
             'responsible_id' => auth()->id(),
-//            'end_date' => now()->addMonths($deadline ?? 12),
+            //            'end_date' => now()->addMonths($deadline ?? 12),
         ]);
 
         $line->update([
