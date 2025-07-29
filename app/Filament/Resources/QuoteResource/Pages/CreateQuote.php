@@ -16,6 +16,7 @@ use App\Models\QuoteLine;
 use App\Models\QuoteVehicle;
 use App\Models\QuoteVehicleLine;
 use App\Models\Vehicle;
+use Carbon\Carbon;
 use DB;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Wizard;
@@ -40,19 +41,25 @@ class CreateQuote extends CreateRecord
                                 ->live()
                                 ->required(),
                         ]),
-                    QuoteResource\Components\Wizards\EstimateUnemploymentWizardStep::make()
-                        ->visible(fn ($get): bool => $get('quote_type_id') == QuoteType::UNEMPLOYMENT->value),
                     QuoteResource\Components\Wizards\EstimateVehicleWizardStep::make()
                         ->visible(fn ($get): bool => $get('quote_type_id') == QuoteType::VEHICLE->value),
+                    QuoteResource\Components\Wizards\VehicleWizardStep::make()
+                        ->visible(fn ($get): bool => $get('quote_type_id') == QuoteType::VEHICLE->value),
+
                     QuoteResource\Components\Wizards\EstimateLifeWizardStep::make()
                         ->visible(fn ($get): bool => $get('quote_type_id') == QuoteType::LIFE->value),
+                    QuoteResource\Components\Wizards\LifeWizardStep::make()
+                        ->visible(fn ($get): bool => $get('quote_type_id') == QuoteType::LIFE->value),
+
                     QuoteResource\Components\Wizards\EstimateFireWizardStep::make()
                         ->visible(fn ($get): bool => $get('quote_type_id') == QuoteType::FIRE->value),
+
+                    QuoteResource\Components\Wizards\EstimateUnemploymentWizardStep::make()
+                        ->visible(fn ($get): bool => $get('quote_type_id') == QuoteType::UNEMPLOYMENT->value),
+
                     QuoteResource\Components\Wizards\CustomerWizardStep::make(),
                     QuoteResource\Components\Wizards\CoDebtorWizardStep::make()
                         ->hidden(fn ($get) => ! $get('co_debtor_birth_date')),
-                    QuoteResource\Components\Wizards\VehicleWizardStep::make()
-                        ->visible(fn ($get): bool => $get('quote_type_id') == QuoteType::VEHICLE->value),
                 ])
                     ->columnSpanFull(),
             ]);
@@ -74,7 +81,7 @@ class CreateQuote extends CreateRecord
                 'work_phone' => $data['work_phone'] ?? null,
                 'email' => $data['email'] ?? null,
                 'address' => $data['address'] ?? null,
-                'age' => $data['quote_type_id'] ?? null,
+                'age' => Carbon::parse($data['birth_date'])->age,
             ]);
             if (! empty($data['co_debtor_first_name'])) {
                 $coDebtor = Customer::create([
@@ -87,6 +94,7 @@ class CreateQuote extends CreateRecord
                     'work_phone' => $data['co_debtor_work_phone'] ?? null,
                     'email' => $data['co_debtor_email'] ?? null,
                     'address' => $data['co_debtor_address'] ?? null,
+                    'age' => Carbon::parse($data['co_debtor_birth_date'])->age,
                 ]);
             }
             $quote = Quote::create([

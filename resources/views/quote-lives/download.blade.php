@@ -76,7 +76,7 @@
     </tr>
     <tr>
         <td style="border: none; text-align:left; font-weight: bold;">Dirección:</td>
-        <td style="border: none; text-align:left;"><p style="font-size: 8px">{{ $customer->address }}</p></td>
+        <td style="border: none; text-align:left;">{{ $customer->address }}</td>
         <td style="border: none; text-align:left; font-weight: bold;">Teléfono:</td>
         <td style="border: none; text-align:left;">{{ $customer->home_phone }}</td>
     </tr>
@@ -95,11 +95,11 @@
     <thead>
     <tr>
         <th style="border: none; text-align:left;">Aseguradora</th>
-        <th style="border: none; text-align:left;">Monto Original</th>
-        <th style="border: none; text-align:left;">Años</th>
-        <th style="border: none; text-align:left;">Prima</th>
-        <th style="border: none; text-align:left;">Edad a terminar</th>
-        <th style="border: none; text-align:left;">Prima Anual</th>
+        <th style="border: none; text-align:right;">Monto Original</th>
+        <th style="border: none; text-align:right;">Años</th>
+        <th style="border: none; text-align:right;">Prima</th>
+        <th style="border: none; text-align:right;">Edad a terminar</th>
+        <th style="border: none; text-align:right;">Prima Anual</th>
     </tr>
     </thead>
     <tbody>
@@ -110,11 +110,11 @@
         @endphp
         <tr>
             <td style="border: none; text-align:left;">{{ ucwords(strtolower($vendorCRM['Nombre'])) }}</td>
-            <td style="border: none; font-weight: bold; text-align:left;">{{ number_format($quoteLife->insured_amount, 2) }}</td>
-            <td style="border: none; font-weight: bold; text-align:left;">{{ $quoteLife->deadline }}</td>
-            <td style="border: none; font-weight: bold; text-align:left;">{{ number_format($line->quoteLine->total, 2) }}</td>
-            <td style="border: none; font-weight: bold; text-align:left;">{{ $customer->age + ($quoteLife->deadline / 12) }}</td>
-            <td style="border: none; font-weight: bold; text-align:left;">{{ number_format($line->quoteLine->total * 12, 2) }}</td>
+            <td style="border: none; font-weight: bold; text-align:right;">{{ number_format($quoteLife->insured_amount, 2) }}</td>
+            <td style="border: none; font-weight: bold; text-align:right;">{{ round($quoteLife->deadline / 12) }}</td>
+            <td style="border: none; font-weight: bold; text-align:right;">{{ number_format($line->quoteLine->total, 2) }}</td>
+            <td style="border: none; font-weight: bold; text-align:right;">{{ round($customer->age + ($quoteLife->deadline / 12)) }}</td>
+            <td style="border: none; font-weight: bold; text-align:right;">{{ number_format($line->quoteLine->total * 12, 2) }}</td>
         </tr>
     @endforeach
     </tbody>

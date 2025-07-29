@@ -24,10 +24,10 @@ class EstimateLifeTable
                         ->translateLabel()
                         ->action(function (Set $set, Get $get) {
                             $estimates = app(EstimateQuoteLifeService::class)->estimate(
-                                $get('age'),
+                                $get('birth_date'),
                                 $get('deadline'),
                                 $get('insured_amount'),
-                                $get('co_debtor_age'),
+                                $get('co_debtor_birth_date'),
                             );
 
                             $set('estimates_table', $estimates);

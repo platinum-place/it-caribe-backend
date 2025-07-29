@@ -13,34 +13,34 @@ class CoDebtorWizardStep
         return Wizard\Step::make(__('Co-debtor'))
             ->schema([
                 TextInput::make('co_debtor_first_name')
-                    ->translateLabel()
+                    ->label(__('First name'))
                     ->required(),
                 TextInput::make('co_debtor_last_name')
-                    ->translateLabel()
+                    ->label(__('Last name'))
                     ->required(),
                 TextInput::make('co_debtor_identity_number')
-                    ->translateLabel()
+                    ->label(__('Identity number'))
                     ->required(),
                 DatePicker::make('co_debtor_birth_date')
-                    ->translateLabel()
+                    ->label(__('Birth date'))
                     ->required(),
                 TextInput::make('co_debtor_email')
-                    ->translateLabel()
+                    ->label(__('Email'))
                     ->email(),
                 TextInput::make('co_debtor_mobile_phone')
-                    ->translateLabel()
+                    ->label(__('Mobile phone'))
                     ->tel()
                     ->mask('999-999-9999'),
                 TextInput::make('co_debtor_home_phone')
-                    ->translateLabel()
+                    ->label(__('Home phone'))
                     ->tel()
                     ->mask('999-999-9999'),
                 TextInput::make('co_debtor_work_phone')
-                    ->translateLabel()
+                    ->label(__('Work phone'))
                     ->tel()
                     ->mask('999-999-9999'),
                 TextInput::make('co_debtor_address')
-                    ->translateLabel()
+                    ->label(__('Address'))
                     ->columnSpanFull(),
             ])
             ->columns();

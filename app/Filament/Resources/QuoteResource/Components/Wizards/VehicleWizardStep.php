@@ -50,6 +50,7 @@ class VehicleWizardStep
 
                 DatePicker::make('end_date')
                     ->translateLabel()
+                    ->minDate(now())
                     ->required(),
 
                 TextInput::make('loan_amount')

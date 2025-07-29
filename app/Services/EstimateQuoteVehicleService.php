@@ -62,16 +62,21 @@ class EstimateQuoteVehicleService
                 }
             }
 
+            $amount = round($amount, 2);
+            $amountTaxed = round($amountTaxed, 2);
+            $taxesAmount = round($taxesAmount, 2);
+            $totalMonthly = round($totalMonthly, 2);
+
             $result[] = [
                 'name' => $product['Product_Name'],
-                'unit_price' => round($amount, 2),
+                'unit_price' => $amount,
                 'quantity' => 1,
-                'subtotal' => round($amount, 2),
-                'amount_taxed' => round($amountTaxed, 2),
+                'subtotal' => $amount,
+                'amount_taxed' => $amountTaxed,
                 'tax_rate' => 16,
-                'tax_amount' => round($taxesAmount, 2),
-                'total' => round($amount, 2),
-                'total_monthly' => round($totalMonthly, 2),
+                'tax_amount' => $taxesAmount,
+                'total' => $amount,
+                'total_monthly' => $totalMonthly,
                 'id_crm' => $product['id'],
                 'life_amount' => $lifeAmount,
                 'vehicle_rate' => $rate,
@@ -89,7 +94,6 @@ class EstimateQuoteVehicleService
      */
     protected function getRate(string $productId, float $vehicleAmount, int $vehicleYear, VehicleType $vehicleType): float
     {
-
         $criteria = "((Plan:equals:$productId) and (A_o:equals:$vehicleYear))";
         try {
             $rates = $this->zohoApi->searchRecords('Tasas', $criteria);

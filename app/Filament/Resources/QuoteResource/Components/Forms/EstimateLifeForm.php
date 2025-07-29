@@ -2,16 +2,9 @@
 
 namespace App\Filament\Resources\QuoteResource\Components\Forms;
 
-use App\Models\QuoteLifeCreditType;
-use Carbon\Carbon;
-use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Hidden;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Get;
-use Filament\Forms\Set;
 
 class EstimateLifeForm
 {
@@ -22,21 +15,11 @@ class EstimateLifeForm
                 DatePicker::make('birth_date')
                     ->label('Fecha de Nacimiento Deudor')
                     ->required()
-                    ->maxDate(now())
-                    ->live(debounce: 2000)
-                    ->afterStateUpdated(function (Get $get, Set $set, $state) {
-                        $set('age', Carbon::parse($state)->age);
-                    }),
+                    ->maxDate(now()),
 
                 DatePicker::make('co_debtor_birth_date')
                     ->label('Fecha de Nacimiento Codeudor (Si aplica)')
-                    ->maxDate(now())
-                    ->live(debounce: 2000)
-                    ->afterStateUpdated(function (Get $get, Set $set, $state) {
-                        $set('co_debtor_age', Carbon::parse($state)->age);
-                    }),
-
-                Hidden::make('co_debtor_age'),
+                    ->maxDate(now()),
 
                 TextInput::make('deadline')
                     ->label('Plazo (meses)')
@@ -49,15 +32,6 @@ class EstimateLifeForm
                     ->numeric()
                     ->required()
                     ->prefix('$'),
-
-                Checkbox::make('guarantor')
-                    ->label('Garante')
-                    ->inline(false),
-
-                Select::make('quote_life_credit_type_id')
-                    ->label('Tipo de crédito')
-                    ->options(QuoteLifeCreditType::pluck('name', 'id'))
-                    ->required(),
             ]);
     }
 }
