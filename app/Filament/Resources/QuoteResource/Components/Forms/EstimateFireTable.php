@@ -25,17 +25,13 @@ class EstimateFireTable
                         ->translateLabel()
                         ->action(function (Set $set, Get $get) {
                             $estimates = app(EstimateQuoteFireService::class)->estimate(
+                                $get('appraisal_value'),
+                                $get('quote_fire_risk_type_id'),
+
                                 $get('birth_date'),
                                 $get('deadline'),
                                 $get('financed_value'),
                                 $get('co_debtor_birth_date'),
-
-
-//                                $get('age'),
-//                                $get('deadline'),
-//                                $get('property_value'),
-//                                $get('life_insurance') ? $get('loan_value') : null,
-//                                $get('co_debtor_age'),
                             );
 
                             $set('estimates_table', $estimates);

@@ -50,6 +50,11 @@ class EstimateFireForm
                             ->numeric()
                             ->required()
                             ->prefix('$'),
+
+                        Select::make('quote_fire_risk_type_id')
+                            ->label('Tipo de Riesgo')
+                            ->required()
+                            ->options(QuoteFireRiskType::pluck('name', 'id')),
                     ]),
 
                 Checkbox::make('life_insurance')
