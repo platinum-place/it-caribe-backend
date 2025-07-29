@@ -39,10 +39,17 @@ class EstimateQuoteUnemploymentService
 
             $rate = $this->getRate($debtorBirthDate, $product['id'], $quoteUnemploymentUseTypeId, $loanInstallment);
 
-            $amount = $loanInstallment * ($rate / 100) * $product['Indemnizaci_n'] * $deadline;
-            $amountTaxed = $amount / 1.16;
-            $taxesAmount = $amount - $amountTaxed;
+            if($product['Sin_tasas']){
+                $amountTaxed = $rate;
+                $amount = $amountTaxed * 1.16;
+                $taxesAmount = $amount - $amountTaxed;
+            }else{
+                $amount = $loanInstallment * ($rate / 100) * $product['Indemnizaci_n'] * $deadline;
+                $amountTaxed = $amount / 1.16;
+                $taxesAmount = $amount - $amountTaxed;
+            }
 
+            $rate = round($rate, 2);
             $amount = round($amount, 2);
             $amountTaxed = round($amountTaxed, 2);
             $taxesAmount = round($taxesAmount, 2);
@@ -96,7 +103,6 @@ class EstimateQuoteUnemploymentService
                 }
             }
         }
-
 
         return $selectedRate;
     }
