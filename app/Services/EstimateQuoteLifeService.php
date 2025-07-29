@@ -87,7 +87,7 @@ class EstimateQuoteLifeService
      * @throws ConnectionException
      * @throws Exception
      */
-    protected function getDebtorRate(string $productId, int $debtorAge)
+    public function getDebtorRate(string $productId, int $debtorAge)
     {
         $criteria = "((Plan:equals:$productId) and (Tipo:equals:Deudor))";
         $rates = $this->zohoApi->searchRecords('Tasas', $criteria);
@@ -103,7 +103,7 @@ class EstimateQuoteLifeService
         return $selectedRate;
     }
 
-    protected function getCodebtorRate(string $productId, int $coDebtorAge)
+    public function getCodebtorRate(string $productId, int $coDebtorAge)
     {
         $criteria = "((Plan:equals:$productId) and (Tipo:equals:Codeudor))";
         $rates = $this->zohoApi->searchRecords('Tasas', $criteria);

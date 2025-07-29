@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\QuoteFireCreditType;
 use App\Models\QuoteLifeCreditType;
 use Illuminate\Database\Seeder;
 
@@ -19,7 +20,7 @@ class QuoteFireCreditTypeSeeder extends Seeder
         ];
 
         foreach ($data as $item) {
-            QuoteLifeCreditType::create($item);
+            QuoteFireCreditType::create($item);
         }
     }
 }
