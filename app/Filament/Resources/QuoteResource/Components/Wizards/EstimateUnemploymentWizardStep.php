@@ -10,7 +10,7 @@ class EstimateUnemploymentWizardStep
 {
     public static function make(): Wizard\Step
     {
-        return Wizard\Step::make(__('Unemployment'))
+        return Wizard\Step::make(__('Quote unemployment'))
             ->schema([
                 EstimateUnemploymentForm::make(),
                 EstimateUnemploymentTable::make(),

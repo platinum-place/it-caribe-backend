@@ -24,9 +24,9 @@ class EstimateQuoteLifeService
 
         $result = [];
 
-        $debtorAge = Carbon::parse($debtorBirthDate)->age;
-
         foreach ($productsResponse['data'] as $product) {
+            $debtorAge = Carbon::parse($debtorBirthDate)->age;
+
             if ($product['Edad_tasa']) {
                 $debtorAge += $deadline / 12;
             }

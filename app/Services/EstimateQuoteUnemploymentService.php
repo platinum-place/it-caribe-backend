@@ -9,7 +9,7 @@ use Exception;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
 
-class EstimateQuoteFireService
+class EstimateQuoteUnemploymentService
 {
     public function __construct(protected ZohoCRMService $zohoApi, protected EstimateQuoteLifeService $estimateQuoteLifeService)
     {
