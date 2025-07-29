@@ -41,7 +41,7 @@ class EstimateUnemploymentForm
                     ->options(QuoteUnemploymentType::pluck('name', 'id')),
 
                 Select::make('quote_unemployment_use_type_id')
-                    ->label('Modalidad pago prima')
+                    ->label('Tipo de empleado')
                     ->required()
                     ->options(QuoteUnemploymentUseType::pluck('name', 'id')),
             ]);
