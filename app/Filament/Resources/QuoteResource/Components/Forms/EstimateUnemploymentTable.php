@@ -26,6 +26,7 @@ class EstimateUnemploymentTable
                         ->translateLabel()
                         ->action(function (Set $set, Get $get) {
                             $estimates = app(EstimateQuoteUnemploymentService::class)->estimate(
+                                $get('birth_date'),
                                 $get('loan_installment'),
                                 $get('deadline'),
                                 $get('quote_unemployment_type_id'),
@@ -58,7 +59,7 @@ class EstimateUnemploymentTable
                             ->numeric(),
 
                         TextInput::make('total')
-                            ->label('Total anual')
+                            ->label('Total')
                             ->disabled()
                             ->dehydrated(false)
                             ->prefix('RD$')

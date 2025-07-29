@@ -294,7 +294,7 @@
                     su oficina principal en la {{ $vendorCRM['Street'] }} o contactarse al {{ $vendorCRM['Phone'] }}.
                 </li>
                 <li>Pueden contactarse con Sentinel Corredores de Seguros al 809-732-0202 o dirigirse a su oficina en la
-                    calle César A. Canó No. 354, Las Praderas, Santo Domingo.
+                    calle César A. Canó No. 354, El Millón, Santo Domingo.
                 </li>
             </ul>
 

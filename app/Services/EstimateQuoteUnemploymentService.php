@@ -23,7 +23,7 @@ class EstimateQuoteUnemploymentService
      * @throws ConnectionException
      * @throws Exception
      */
-    public function estimate(float $loanInstallment, int $deadline, int $quoteUnemploymentTypeId, int $quoteUnemploymentUseTypeId): array
+    public function estimate(string $debtorBirthDate,float $loanInstallment, int $deadline, int $quoteUnemploymentTypeId, int $quoteUnemploymentUseTypeId): array
     {
         $quoteUnemploymentType = QuoteUnemploymentType::findOrFail($quoteUnemploymentTypeId)->name;
 
@@ -33,11 +33,11 @@ class EstimateQuoteUnemploymentService
         $result = [];
 
         foreach ($productsResponse['data'] as $product) {
-            if($product['Plan'] != $quoteUnemploymentType){
+            if($product['Plan'] !== $quoteUnemploymentType){
                 continue;
             }
 
-            $rate = $this->getRate($product['id'], $quoteUnemploymentUseTypeId);
+            $rate = $this->getRate( $debtorBirthDate,$product['id'], $quoteUnemploymentUseTypeId);
 
             $amount = $loanInstallment * ($rate / 100) * $product['Indemnizaci_n'] * $deadline;
             $amountTaxed = $amount / 1.16;
@@ -70,13 +70,22 @@ class EstimateQuoteUnemploymentService
      * @throws ConnectionException
      * @throws Exception
      */
-    protected function getRate(string $productId, string $quoteUnemploymentUseTypeId)
+    protected function getRate(string $debtorBirthDate,string $productId, string $quoteUnemploymentUseTypeId)
     {
+        $debtorAge = Carbon::parse($debtorBirthDate)->age;
         $quoteUnemploymentUseType = QuoteUnemploymentUseType::findOrFail($quoteUnemploymentUseTypeId)->name;
 
         $criteria = "((Plan:equals:$productId) and (Tipo:equals:$quoteUnemploymentUseType))";
         $rates = $this->zohoApi->searchRecords('Tasas', $criteria);
 
-        return $rates['data'][0]['Name'] ?? 0;
+        $selectedRate = 0;
+
+        foreach ($rates['data'] as $rate) {
+            if ($debtorAge >= $rate['Edad_min'] && $debtorAge <= $rate['Edad_max']) {
+                $selectedRate = $rate['Name'];
+            }
+        }
+
+        return $selectedRate;
     }
 }

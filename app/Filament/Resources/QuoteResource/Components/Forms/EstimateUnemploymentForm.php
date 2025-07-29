@@ -23,6 +23,11 @@ class EstimateUnemploymentForm
     {
         return Grid::make()
             ->schema([
+                DatePicker::make('birth_date')
+                    ->label('Fecha de Nacimiento Deudor')
+                    ->required()
+                    ->maxDate(now()),
+
                 TextInput::make('loan_installment')
                     ->label('Cuota préstamo')
                     ->numeric()
