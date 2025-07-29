@@ -20,6 +20,8 @@ class QuotesSeeder extends Seeder
             QuoteFireConstructionTypeSeeder::class,
             QuoteTypeNewNamesSeeder::class,
             QuoteFireCreditTypeSeeder::class,
+            QuoteUnemploymentTypeSeeder::class,
+            QuoteUnemploymentUseTypeSeeder::class,
         ]);
     }
 }

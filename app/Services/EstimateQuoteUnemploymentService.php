@@ -3,6 +3,9 @@
 namespace App\Services;
 
 use App\Enums\QuoteFireRiskType;
+use App\Models\QuoteUnemploymentType;
+use App\Models\QuoteUnemploymentUseType;
+use App\Models\VehicleType;
 use App\Services\Api\Zoho\ZohoCRMService;
 use Carbon\Carbon;
 use Exception;
@@ -11,7 +14,7 @@ use Illuminate\Http\Client\RequestException;
 
 class EstimateQuoteUnemploymentService
 {
-    public function __construct(protected ZohoCRMService $zohoApi, protected EstimateQuoteLifeService $estimateQuoteLifeService)
+    public function __construct(protected ZohoCRMService $zohoApi)
     {
     }
 
@@ -20,75 +23,29 @@ class EstimateQuoteUnemploymentService
      * @throws ConnectionException
      * @throws Exception
      */
-    public function estimate(float $appraisalValue, int $quoteFireRiskTypeId, string $debtorBirthDate, int $deadline, float $financedValue, ?string $coDebtorBirthDate = null): array
+    public function estimate(float $loanInstallment, int $deadline, int $quoteUnemploymentTypeId, int $quoteUnemploymentUseTypeId): array
     {
-        $criteria = '((Corredor:equals:' . 3222373000092390001 . ') and (Product_Category:equals:Incendio))';
+        $quoteUnemploymentType = QuoteUnemploymentType::findOrFail($quoteUnemploymentTypeId)->name;
+
+        $criteria = '((Corredor:equals:' . 3222373000092390001 . ') and (Product_Category:equals:Desempleo))';
         $productsResponse = $this->zohoApi->searchRecords('Products', $criteria);
 
         $result = [];
 
-        $debtorAge = Carbon::parse($debtorBirthDate)->age;
-
-        if ($quoteFireRiskTypeId === QuoteFireRiskType::HOUSING->value) {
-            $quoteFireRiskType = 'Vivienda';
-        } else {
-            $quoteFireRiskType = 'Comercial';
-        }
-
         foreach ($productsResponse['data'] as $product) {
-            /**
-             * Start estimate fire
-             */
-            $fireRate = $this->getFireRate($product['id'], $quoteFireRiskType);
-
-            $fireAmount = ($appraisalValue / 1000) * ($fireRate / 100);
-            /**
-             * End estimate fire
-             */
-
-            /**
-             * Start estimate life
-             */
-            if ($product['Edad_tasa']) {
-                $debtorAge += $deadline / 12;
+            if($product['Plan'] != $quoteUnemploymentType){
+                continue;
             }
 
-            $debtorRate = 0;
-            $coDebtorRate = 0;
+            $rate = $this->getRate($product['id'], $quoteUnemploymentUseTypeId);
 
-            $debtorAmount = 0;
-            $coDebtorAmount = 0;
-
-            $debtorRate = $this->estimateQuoteLifeService->getDebtorRate($product['id'], $debtorAge);
-            $debtorAmount = ($financedValue / 1000) * ($debtorRate / 100);
-
-            if (!empty($coDebtorBirthDate)) {
-                $coDebtorAge = Carbon::parse($coDebtorBirthDate)->age;
-
-                if ($product['Edad_tasa']) {
-                    $coDebtorAge += $deadline / 12;
-                }
-
-                $coDebtorRate = $this->estimateQuoteLifeService->getCodebtorRate($product['id'], $coDebtorAge);
-                $coDebtorAmount = ($financedValue / 1000) * (($coDebtorRate - $debtorRate) / 100);
-            }
-
-            $lifeAmount = $debtorAmount + $coDebtorAmount;
-            /**
-             * End estimate life
-             */
-
-            $amount = $lifeAmount + $fireAmount;
+            $amount = $loanInstallment * $rate * $product['Indemnizaci_n'] * $deadline;
             $amountTaxed = $amount / 1.16;
             $taxesAmount = $amount - $amountTaxed;
 
             $amount = round($amount, 2);
             $amountTaxed = round($amountTaxed, 2);
             $taxesAmount = round($taxesAmount, 2);
-            $debtorAmount = round($debtorAmount, 2);
-            $coDebtorAmount = round($coDebtorAmount, 2);
-            $lifeAmount = round($lifeAmount, 2);
-            $fireAmount = round($fireAmount, 2);
 
             $result[] = [
                 'name' => $product['Vendor_Name']['name'],
@@ -99,16 +56,8 @@ class EstimateQuoteUnemploymentService
                 'tax_rate' => 16,
                 'tax_amount' => $taxesAmount,
                 'total' => $amount,
+                'rate' => $rate,
                 'id_crm' => $product['id'],
-                'debtor_amount' => $debtorAmount,
-                'co_debtor_amount' => $coDebtorAmount,
-                'debtor_rate' => $debtorRate,
-                'co_debtor_rate' => $coDebtorRate,
-                'financed_value' => $financedValue,
-                'fire_rate' => $fireRate,
-                'fire_amount' => $fireAmount,
-                'life_amount' => $lifeAmount,
-                'appraisal_value' => $appraisalValue,
                 'error' => null,
             ];
         }
@@ -121,9 +70,11 @@ class EstimateQuoteUnemploymentService
      * @throws ConnectionException
      * @throws Exception
      */
-    protected function getFireRate(string $productId, string $quoteFireRiskType)
+    protected function getRate(string $productId, string $quoteUnemploymentUseTypeId)
     {
-        $criteria = "((Plan:equals:$productId) and (Tipo:equals:$quoteFireRiskType))";
+        $quoteUnemploymentUseType = QuoteUnemploymentUseType::findOrFail($quoteUnemploymentUseTypeId)->name;
+
+        $criteria = "((Plan:equals:$productId) and (Tipo:equals:$quoteUnemploymentUseType))";
         $rates = $this->zohoApi->searchRecords('Tasas', $criteria);
 
         return $rates['data'][0]['Name'] ?? 0;

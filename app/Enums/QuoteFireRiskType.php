@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum QuoteFireRiskType:int
+enum QuoteFireRiskType: int
 {
     case HOUSING = 1;
 

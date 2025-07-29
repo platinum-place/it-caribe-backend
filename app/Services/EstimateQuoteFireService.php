@@ -11,9 +11,7 @@ use Illuminate\Http\Client\RequestException;
 
 class EstimateQuoteFireService
 {
-    public function __construct(protected ZohoCRMService $zohoApi, protected EstimateQuoteLifeService $estimateQuoteLifeService)
-    {
-    }
+    public function __construct(protected ZohoCRMService $zohoApi, protected EstimateQuoteLifeService $estimateQuoteLifeService) {}
 
     /**
      * @throws RequestException
@@ -22,12 +20,10 @@ class EstimateQuoteFireService
      */
     public function estimate(float $appraisalValue, int $quoteFireRiskTypeId, string $debtorBirthDate, int $deadline, float $financedValue, ?string $coDebtorBirthDate = null): array
     {
-        $criteria = '((Corredor:equals:' . 3222373000092390001 . ') and (Product_Category:equals:Incendio))';
+        $criteria = '((Corredor:equals:'. 3222373000092390001 .') and (Product_Category:equals:Incendio))';
         $productsResponse = $this->zohoApi->searchRecords('Products', $criteria);
 
         $result = [];
-
-        $debtorAge = Carbon::parse($debtorBirthDate)->age;
 
         if ($quoteFireRiskTypeId === QuoteFireRiskType::HOUSING->value) {
             $quoteFireRiskType = 'Vivienda';
@@ -49,6 +45,8 @@ class EstimateQuoteFireService
             /**
              * Start estimate life
              */
+            $debtorAge = Carbon::parse($debtorBirthDate)->age;
+
             if ($product['Edad_tasa']) {
                 $debtorAge += $deadline / 12;
             }
@@ -62,7 +60,7 @@ class EstimateQuoteFireService
             $debtorRate = $this->estimateQuoteLifeService->getDebtorRate($product['id'], $debtorAge);
             $debtorAmount = ($financedValue / 1000) * ($debtorRate / 100);
 
-            if (!empty($coDebtorBirthDate)) {
+            if (! empty($coDebtorBirthDate)) {
                 $coDebtorAge = Carbon::parse($coDebtorBirthDate)->age;
 
                 if ($product['Edad_tasa']) {
@@ -77,7 +75,6 @@ class EstimateQuoteFireService
             /**
              * End estimate life
              */
-
             $amount = $lifeAmount + $fireAmount;
             $amountTaxed = $amount / 1.16;
             $taxesAmount = $amount - $amountTaxed;
