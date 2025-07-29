@@ -39,7 +39,7 @@ class EstimateQuoteUnemploymentService
 
             $rate = $this->getRate($product['id'], $quoteUnemploymentUseTypeId);
 
-            $amount = $loanInstallment * $rate * $product['Indemnizaci_n'] * $deadline;
+            $amount = $loanInstallment * ($rate / 100) * $product['Indemnizaci_n'] * $deadline;
             $amountTaxed = $amount / 1.16;
             $taxesAmount = $amount - $amountTaxed;
 
