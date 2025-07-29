@@ -53,6 +53,8 @@ class CreateQuote extends CreateRecord
 
                     QuoteResource\Components\Wizards\EstimateFireWizardStep::make()
                         ->visible(fn ($get): bool => $get('quote_type_id') == QuoteType::FIRE->value),
+                    QuoteResource\Components\Wizards\FireWizardStep::make()
+                        ->visible(fn ($get): bool => $get('quote_type_id') == QuoteType::FIRE->value),
 
                     QuoteResource\Components\Wizards\EstimateUnemploymentWizardStep::make()
                         ->visible(fn ($get): bool => $get('quote_type_id') == QuoteType::UNEMPLOYMENT->value),
