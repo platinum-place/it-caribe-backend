@@ -13,21 +13,26 @@ class VehicleColorSeeder extends Seeder
     public function run(): void
     {
         $data = [
-            [
-                'name' => 'Rojo',
-            ],
-            [
-                'name' => 'Amarillo',
-            ],
-            [
-                'name' => 'Azul',
-            ],
-            [
-                'name' => 'Azul Agua',
-            ],
-            [
-                'name' => 'Azul Cielo',
-            ],
+            ['name' => 'Amarillo'],
+            ['name' => 'Azul Celeste'],
+            ['name' => 'Azul Marino'],
+            ['name' => 'Beige'],
+            ['name' => 'Blanco'],
+            ['name' => 'Blanco Perlado'],
+            ['name' => 'Dorado'],
+            ['name' => 'Gris Claro'],
+            ['name' => 'Gris Oscuro'],
+            ['name' => 'Marrón'],
+            ['name' => 'Morado'],
+            ['name' => 'Naranja'],
+            ['name' => 'Negro'],
+            ['name' => 'Rojo'],
+            ['name' => 'Rojo Perlado'],
+            ['name' => 'Rojo Vino'],
+            ['name' => 'Rosado'],
+            ['name' => 'Verde Claro'],
+            ['name' => 'Verde Oliva'],
+            ['name' => 'Verde Oscuro'],
         ];
 
         foreach ($data as $item) {
