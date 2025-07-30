@@ -44,7 +44,11 @@ class EstimateQuoteUnemploymentService
                 $amount = $amountTaxed * 1.16;
                 $taxesAmount = $amount - $amountTaxed;
             }else{
-                $amount = $loanInstallment * ($rate / 100) * $product['Indemnizaci_n'] * $deadline;
+                if(!empty($product['Indemnizaci_n'])){
+                    $amount = $loanInstallment * ($rate / 100) * $product['Indemnizaci_n'] * $deadline;
+                }else{
+                    $amount = $loanInstallment * ($rate / 100) * $deadline;
+                }
                 $amountTaxed = $amount / 1.16;
                 $taxesAmount = $amount - $amountTaxed;
             }
