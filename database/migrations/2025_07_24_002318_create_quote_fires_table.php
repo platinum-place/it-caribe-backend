@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\QuoteFireCreditType::class)->constrained();
             $table->foreignIdFor(\App\Models\QuoteFireRiskType::class)->constrained();
             $table->foreignIdFor(\App\Models\QuoteFireConstructionType::class)->constrained();
-            $table->foreignIdFor(\App\Models\Customer::class, 'co_debtor_id')->nullable()->constrained();
+            $table->foreignIdFor(\App\Models\Debtor::class, 'co_debtor_id')->nullable()->constrained();
             $table->boolean('guarantor')->default(false);
             $table->integer('deadline')->default(0);
             $table->decimal('appraisal_value', 18, 2)->default(0);

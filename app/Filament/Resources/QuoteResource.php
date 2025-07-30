@@ -48,7 +48,7 @@ class QuoteResource extends Resource
                 Tables\Columns\TextColumn::make('quote_status_id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('customer.id')
+                Tables\Columns\TextColumn::make('debtor.id')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('user.name')

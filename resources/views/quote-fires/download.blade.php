@@ -70,19 +70,19 @@
     </tr>
     <tr>
         <td style="border: none; text-align:left; font-weight: bold;">Cliente:</td>
-        <td style="border: none; text-align:left;">{{ $customer->full_name }}</td>
+        <td style="border: none; text-align:left;">{{ $debtor->full_name }}</td>
         <td style="border: none; text-align:left; font-weight: bold;">Cédula/Pasaporte:</td>
-        <td style="border: none; text-align:left;">{{ $customer->identity_number }}</td>
+        <td style="border: none; text-align:left;">{{ $debtor->identity_number }}</td>
     </tr>
     <tr>
         <td style="border: none; text-align:left; font-weight: bold;">Dirección:</td>
-        <td style="border: none; text-align:left;">{{ $customer->address }}</td>
+        <td style="border: none; text-align:left;">{{ $debtor->address }}</td>
         <td style="border: none; text-align:left; font-weight: bold;">Teléfono:</td>
-        <td style="border: none; text-align:left;">{{ $customer->home_phone }}</td>
+        <td style="border: none; text-align:left;">{{ $debtor->home_phone }}</td>
     </tr>
     <tr>
         <td style="border: none; text-align:left; font-weight: bold;">Edad:</td>
-        <td style="border: none; text-align:left;">{{ $customer->age }}</td>
+        <td style="border: none; text-align:left;">{{ $debtor->age }}</td>
         <td style="border: none; text-align:left; font-weight: bold;">Codeudor:</td>
         <td style="border: none; text-align:left;">{{ $coDebtor?->full_name }}</td>
     </tr>
@@ -141,7 +141,7 @@
             <td style="border: none; text-align:left;">{{ $quoteFire->deadline }}</td>
             <td style="border: none; text-align:left;">{{ number_format($quoteFire->appraisal_value, 2) }}</td>
             <td style="border: none; text-align:left;">{{ number_format($line->life_amount, 2) }}</td>
-            <td style="border: none; text-align:left;">{{ $customer->age + ($quoteFire->deadline / 12) }}</td>
+            <td style="border: none; text-align:left;">{{ $debtor->age + ($quoteFire->deadline / 12) }}</td>
             <td style="border: none; text-align:right;">{{ number_format($line->fire_amount, 2) }}</td>
             <td style="border: none; text-align:right;">{{ number_format($line->quoteLine->total, 2) }}</td>
             <td style="border: none; text-align:right;">{{ number_format($line->quoteLine->total * 12, 2) }}</td>

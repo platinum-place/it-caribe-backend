@@ -6,7 +6,7 @@ use App\Enums\QuoteLineStatus;
 use App\Enums\QuoteStatus;
 use App\Enums\QuoteType;
 use App\Filament\Resources\QuoteResource;
-use App\Models\Customer;
+use App\Models\Debtor;
 use App\Models\Quote;
 use App\Models\QuoteFire;
 use App\Models\QuoteFireLine;
@@ -59,7 +59,7 @@ class CreateQuote extends CreateRecord
                     QuoteResource\Components\Wizards\EstimateUnemploymentWizardStep::make()
                         ->visible(fn ($get): bool => $get('quote_type_id') == QuoteType::UNEMPLOYMENT->value),
 
-                    QuoteResource\Components\Wizards\CustomerWizardStep::make(),
+                    QuoteResource\Components\Wizards\DebtorWizardStep::make(),
                     QuoteResource\Components\Wizards\CoDebtorWizardStep::make()
                         ->hidden(fn ($get) => ! $get('co_debtor_birth_date')),
                 ])
@@ -73,7 +73,7 @@ class CreateQuote extends CreateRecord
     protected function handleRecordCreation(array $data): Model
     {
         return DB::transaction(static function () use ($data) {
-            $customer = Customer::create([
+            $debtor = Debtor::create([
                 'first_name' => $data['first_name'],
                 'last_name' => $data['last_name'],
                 'identity_number' => $data['identity_number'],
@@ -86,7 +86,7 @@ class CreateQuote extends CreateRecord
                 'age' => Carbon::parse($data['birth_date'])->age,
             ]);
             if (! empty($data['co_debtor_first_name'])) {
-                $coDebtor = Customer::create([
+                $coDebtor = Debtor::create([
                     'first_name' => $data['co_debtor_first_name'],
                     'last_name' => $data['co_debtor_last_name'],
                     'identity_number' => $data['co_debtor_identity_number'],
@@ -104,7 +104,7 @@ class CreateQuote extends CreateRecord
                 'quote_status_id' => QuoteStatus::PENDING->value,
                 'start_date' => $data['start_date'] ?? now(),
                 'end_date' => $data['end_date'] ?? now()->addDays(30),
-                'customer_id' => $customer->id,
+                'debtor_id' => $debtor->id,
                 'user_id' => auth()->id(),
             ]);
             if ($data['quote_type_id'] == QuoteType::VEHICLE->value) {

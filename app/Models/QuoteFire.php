@@ -31,7 +31,7 @@ class QuoteFire extends Model
 
     public function coDebtor(): BelongsTo
     {
-        return $this->belongsTo(Customer::class, 'co_debtor_id');
+        return $this->belongsTo(Debtor::class, 'co_debtor_id');
     }
 
     public function quoteFireRiskType(): BelongsTo

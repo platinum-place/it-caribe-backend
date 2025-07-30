@@ -6,11 +6,11 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Wizard;
 
-class CustomerWizardStep
+class DebtorWizardStep
 {
     public static function make(): Wizard\Step
     {
-        return Wizard\Step::make(__('Customer'))
+        return Wizard\Step::make(__('Debtor'))
             ->schema([
                 TextInput::make('first_name')
                     ->translateLabel()

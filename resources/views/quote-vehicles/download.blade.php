@@ -66,25 +66,25 @@
         <td style="border: none; text-align:left; font-weight: bold;">Ramo/Producto:</td>
         <td style="border: none; text-align:left;">Automóvil</td>
         <td style="border: none; text-align:left; font-weight: bold;">Correo:</td>
-        <td style="border: none; text-align:left;">{{ $customer->email }}</td>
+        <td style="border: none; text-align:left;">{{ $debtor->email }}</td>
         <td style="border: none; text-align:left; font-weight: bold;">Fecha:</td>
         <td style="border: none; text-align:left;">{{ date('d/m/Y', strtotime($quote->start_date)) }}</td>
     </tr>
     <tr>
         <td style="border: none; text-align:left; font-weight: bold;">Cliente:</td>
-        <td style="border: none; text-align:left;">{{ $customer->full_name }}</td>
+        <td style="border: none; text-align:left;">{{ $debtor->full_name }}</td>
         <td style="border: none; text-align:left; font-weight: bold;">Equipamientos:</td>
         <td style="border: none; text-align:left;">{{ 'NINGUNO' }}</td>
         <td style="border: none; text-align:left; font-weight: bold;">Cédula/Pasaporte:</td>
-        <td style="border: none; text-align:left;">{{ $customer->identity_number }}</td>
+        <td style="border: none; text-align:left;">{{ $debtor->identity_number }}</td>
     </tr>
     <tr>
         <td style="border: none; text-align:left; font-weight: bold;">Dirección:</td>
-        <td style="border: none; text-align:left;">{{ $customer->address }}</td>
+        <td style="border: none; text-align:left;">{{ $debtor->address }}</td>
         <td style="border: none; text-align:left; font-weight: bold;">Uso:</td>
         <td style="border: none; text-align:left;">{{ $quoteVehicle->vehicleUse->name }}</td>
         <td style="border: none; text-align:left; font-weight: bold;">Teléfono:</td>
-        <td style="border: none; text-align:left;">{{ $customer->home_phone }}</td>
+        <td style="border: none; text-align:left;">{{ $debtor->home_phone }}</td>
     </tr>
     <tr>
         <td style="border: none; text-align:left; font-weight: bold;">Tipo de vehículo:</td>

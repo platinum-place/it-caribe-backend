@@ -14,7 +14,7 @@ class Quote extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'user_id', 'quote_type_id', 'quote_status_id', 'customer_id',
+        'user_id', 'quote_type_id', 'quote_status_id', 'debtor_id',
         'attachments', 'start_date', 'end_date', 'id_crm',
         'responsible_id',
     ];
@@ -61,9 +61,9 @@ class Quote extends Model
         return $this->belongsTo(QuoteStatus::class, 'quote_status_id');
     }
 
-    public function customer(): BelongsTo
+    public function debtor(): BelongsTo
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(Debtor::class);
     }
 
     public function lines(): HasMany

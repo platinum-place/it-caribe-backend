@@ -75,7 +75,7 @@ class QuoteLifeController extends Controller
             'quoteLife' => $quoteLife,
             'quote' => $quote,
             'lines' => $quoteLife->lines,
-            'customer' => $quote->customer,
+            'debtor' => $quote->debtor,
             'coDebtor' => $quoteLife?->coDebtor,
             'title' => $title,
         ]);
@@ -107,7 +107,7 @@ class QuoteLifeController extends Controller
             'quoteLife' => $quoteLife,
             'quote' => $quote,
             'selectedLine' => $selectedLine,
-            'customer' => $quote->customer,
+            'debtor' => $quote->debtor,
             'coDebtor' => $quoteLife?->coDebtor,
             'title' => $title,
         ]);

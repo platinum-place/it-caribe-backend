@@ -33,7 +33,7 @@ class EmitQuote extends Component implements HasForms
     {
         $lines = $this->record->lines;
 
-        $customer = $this->record->customer;
+        $debtor = $this->record->debtor;
 
         return $form
             ->schema([
@@ -49,7 +49,7 @@ class EmitQuote extends Component implements HasForms
 
                 Checkbox::make('agreement')
                     ->label(fn () => new \Illuminate\Support\HtmlString(
-                        'Estoy de acuerdo que quiero emitir la cotización, a nombre de <b>'.$customer->fullName.'</b>, RNC/Cédula <b>'.$customer->identity_number.'</b>'
+                        'Estoy de acuerdo que quiero emitir la cotización, a nombre de <b>'.$debtor->fullName.'</b>, RNC/Cédula <b>'.$debtor->identity_number.'</b>'
                     ))
                     ->required()
                     ->columnSpanFull(),

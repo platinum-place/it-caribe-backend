@@ -59,7 +59,7 @@ class QuoteVehicleController extends Controller
             'quoteVehicle' => $quoteVehicle,
             'quote' => $quote,
             'lines' => $quote->lines,
-            'customer' => $quote->customer,
+            'debtor' => $quote->debtor,
             'vehicle' => $quoteVehicle->vehicle,
             'title' => $title,
         ]);
@@ -112,7 +112,7 @@ class QuoteVehicleController extends Controller
             'quoteVehicle' => $quoteVehicle,
             'quote' => $quote,
             'selectedLine' => $selectedLine,
-            'customer' => $quote->customer,
+            'debtor' => $quote->debtor,
             'vehicle' => $quoteVehicle->vehicle,
             'title' => $title,
         ]);

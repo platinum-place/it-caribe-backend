@@ -68,25 +68,25 @@
         <td style="border: none; text-align:left; font-weight: bold;">Ramo/Producto:</td>
         <td style="border: none; text-align:left;">Automóvil</td>
         <td style="border: none; text-align:left; font-weight: bold;">Correo:</td>
-        <td style="border: none; text-align:left;">{{ $customer->email }}</td>
+        <td style="border: none; text-align:left;">{{ $debtor->email }}</td>
         <td style="border: none; text-align:left; font-weight: bold;">Fecha:</td>
         <td style="border: none; text-align:left;">{{ date('d/m/Y', strtotime($quote->start_date)) }}</td>
     </tr>
     <tr>
         <td style="border: none; text-align:left; font-weight: bold;">Cliente:</td>
-        <td style="border: none; text-align:left;">{{ $customer->full_name }}</td>
+        <td style="border: none; text-align:left;">{{ $debtor->full_name }}</td>
         <td style="border: none; text-align:left; font-weight: bold;">Equipamientos:</td>
         <td style="border: none; text-align:left;">{{ 'NINGUNO' }}</td>
         <td style="border: none; text-align:left; font-weight: bold;">Cédula/Pasaporte:</td>
-        <td style="border: none; text-align:left;">{{ $customer->identity_number }}</td>
+        <td style="border: none; text-align:left;">{{ $debtor->identity_number }}</td>
     </tr>
     <tr>
         <td style="border: none; text-align:left; font-weight: bold;">Dirección:</td>
-        <td style="border: none; text-align:left;">{{ $customer->address }}</td>
+        <td style="border: none; text-align:left;">{{ $debtor->address }}</td>
         <td style="border: none; text-align:left; font-weight: bold;">Uso:</td>
         <td style="border: none; text-align:left;">{{ $quoteVehicle->vehicleUse->name }}</td>
         <td style="border: none; text-align:left; font-weight: bold;">Teléfono:</td>
-        <td style="border: none; text-align:left;">{{ $customer->home_phone }}</td>
+        <td style="border: none; text-align:left;">{{ $debtor->home_phone }}</td>
     </tr>
     <tr>
         <td style="border: none; text-align:left; font-weight: bold;">Tipo de vehículo:</td>
@@ -542,7 +542,7 @@
                     <tbody>
                     <tr>
                         <td style="border: none; text-align:left; font-weight: bold;">Asegurado:</td>
-                        <td style="border: none; text-align:left;">{{ $customer->full_name }}</td>
+                        <td style="border: none; text-align:left;">{{ $debtor->full_name }}</td>
                         <td style="border: none; text-align:left; font-weight: bold;">&nbsp;</td>
                         <td style="border: none; text-align:left;">&nbsp;</td>
                     </tr>
@@ -662,13 +662,13 @@
         <td colspan="4" style="text-align: center;"><strong>DATOS DEL ASEGURADO/DEUDOR</strong></td>
     </tr>
     <tr>
-        <td colspan="4"><strong>Nombre del Cliente:</strong> {{ $customer->full_name }}</td>
+        <td colspan="4"><strong>Nombre del Cliente:</strong> {{ $debtor->full_name }}</td>
     </tr>
     <tr>
         <td><strong>Sexo:</strong> M ☐ F ☐</td>
         <td><strong>Estado Civil:</strong> Soltero(a) ☐ Casado(a) ☐ Divorciado(a) ☐ Unión Libre ☐</td>
-        <td><strong>Cédula/Pasaporte:</strong> {{ $customer->identity_number }}</td>
-        <td><strong>Fecha Nacimiento / Edad: {{ $customer->age }}</strong></td>
+        <td><strong>Cédula/Pasaporte:</strong> {{ $debtor->identity_number }}</td>
+        <td><strong>Fecha Nacimiento / Edad: {{ $debtor->age }}</strong></td>
     </tr>
     <tr>
         <td colspan="2"><strong>Ocupación Principal:</strong></td>
@@ -684,13 +684,13 @@
         <td><strong>Suma asegurada últimos gastos:</strong> RD$ 50,000.00</td>
     </tr>
     <tr>
-        <td colspan="4"><strong>Dirección:</strong> {{ $customer->address }}</td>
+        <td colspan="4"><strong>Dirección:</strong> {{ $debtor->address }}</td>
     </tr>
     <tr>
-        <td><strong>Celular:</strong> {{ $customer->mobile_phone }}</td>
-        <td><strong>Tel. Residencia:</strong> {{ $customer->home_phone }}</td>
-        <td><strong>Tel. Oficina:</strong> {{ $customer->work_phone }}</td>
-        <td><strong>Email:</strong> {{ $customer->email }}</td>
+        <td><strong>Celular:</strong> {{ $debtor->mobile_phone }}</td>
+        <td><strong>Tel. Residencia:</strong> {{ $debtor->home_phone }}</td>
+        <td><strong>Tel. Oficina:</strong> {{ $debtor->work_phone }}</td>
+        <td><strong>Email:</strong> {{ $debtor->email }}</td>
     </tr>
 </table>
 

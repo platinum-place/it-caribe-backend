@@ -59,7 +59,7 @@ class QuoteFireController extends Controller
             'quoteFire' => $quoteFire,
             'quote' => $quote,
             'lines' => $quoteFire->lines,
-            'customer' => $quote->customer,
+            'debtor' => $quote->debtor,
             'coDebtor' => $quoteFire?->coDebtor,
             'title' => $title,
         ]);
@@ -91,7 +91,7 @@ class QuoteFireController extends Controller
             'quoteFire' => $quoteFire,
             'quote' => $quote,
             'selectedLine' => $selectedLine,
-            'customer' => $quote->customer,
+            'debtor' => $quote->debtor,
             'coDebtor' => $quoteFire?->coDebtor,
             'title' => $title,
         ]);
