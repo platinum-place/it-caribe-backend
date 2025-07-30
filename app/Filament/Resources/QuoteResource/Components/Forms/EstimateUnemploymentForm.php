@@ -5,7 +5,7 @@ namespace App\Filament\Resources\QuoteResource\Components\Forms;
 use App\Models\QuoteFireConstructionType;
 use App\Models\QuoteFireCreditType;
 use App\Models\QuoteFireRiskType;
-use App\Models\QuoteUnemploymentType;
+use App\Models\QuoteUnemploymentDebtorType;
 use App\Models\QuoteUnemploymentUseType;
 use Carbon\Carbon;
 use Filament\Forms\Components\Checkbox;
@@ -40,10 +40,10 @@ class EstimateUnemploymentForm
                     ->required()
                     ->minValue(1),
 
-                Select::make('quote_unemployment_type_id')
+                Select::make('quote_unemployment_debtor_type_id')
                     ->label('Modalidad pago prima')
                     ->required()
-                    ->options(QuoteUnemploymentType::pluck('name', 'id')),
+                    ->options(QuoteUnemploymentDebtorType::pluck('name', 'id')),
 
                 Select::make('quote_unemployment_use_type_id')
                     ->label('Tipo de empleado')

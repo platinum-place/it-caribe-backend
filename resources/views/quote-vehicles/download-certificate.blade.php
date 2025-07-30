@@ -267,99 +267,23 @@
 <table style="width: 100%; font-size: 12px;">
     <tr>
         <td style="padding: 10px;">
-            <p>
-                A. Autorizo que la prima correspondiente a los seguros aceptados por mi persona sean adicionadas a la
-                cuota del préstamo otorgado a mi favor por Banco Múltiple Caribe, S. A., hasta sus intereses, entidad
-                que ha asumido la responsabilidad de entregar a la aseguradora dicha partida, de conformidad a acuerdo
-                entre ambas partes.
-            </p>
+            @php
+                $content = $productCRM['Condiciones_certificado'];
 
-            <p>
-                B. Por este medio, les autorizo endosar mi póliza de Vehículo No. {{ $productCRM['P_liza'] }}, por el
-                monto de RD${{ number_format($quoteVehicle->vehicle_amount, 2) }} a favor de Banco Múltiple Caribe, S.
-                A., hasta sus intereses.
-            </p>
+                // Usando eval de forma más segura (solo si confías en el contenido)
+                $content = preg_replace_callback('/\{\{\s*(.+?)\s*\}\}/', function($matches) use ($productCRM, $quoteVehicle) {
+                    $expression = trim($matches[1]);
 
-            <p>
-                C. La cobertura otorgada bajo esta póliza queda condicionada a las cláusulas y condiciones especificadas
-                en los anexos, los cuales han sido incluidos en la póliza definitiva, cuyas condiciones completas están
-                contenidas en la copia que reposa en la entidad Financiera y Aseguradora.
-            </p>
-
-            <ul>
-                <li>Podrán consultarla a través de la página de internet
-                    www.bancocaribe.com.do/seguroscaribe/vehiculos.
-                </li>
-                <li>Las condiciones de la póliza pueden ser solicitadas en {{ $vendorCRM['Nombre'] }}. Puede dirigirse a
-                    su oficina principal en la {{ $vendorCRM['Street'] }} o contactarse al {{ $vendorCRM['Phone'] }}.
-                </li>
-                <li>Pueden contactarse con Sentinel Corredores de Seguros al 809-732-0202 o dirigirse a su oficina en la
-                    calle César A. Canó No. 354, El Millón, Santo Domingo.
-                </li>
-            </ul>
-
-            <p>
-                D. La cobertura de vida cubrirá el préstamo del deudor de Banco Caribe hasta el saldo insoluto y hasta
-                sus intereses sin exceder los RD$300,000.00 y según condiciones generales de la póliza.
-            </p>
-
-            <p>
-                E. La cobertura últimos gastos indicada en este certificado indemnizará al beneficiario (declarado en la
-                solicitud de vida) al momento del fallecimiento del asegurado y deudor de Banco Caribe, siempre y cuando
-                el valor adeudado y hasta sus intereses, no excedan los RD$300,000.00 según condiciones generales de la
-                póliza.
-            </p>
-
-            <p>
-                F. Los asegurados deberán comunicar al banco y a la aseguradora, para que sea de su conocimiento
-                cualquier cambio de propietario del vehículo asegurado, así como tambien en caso de que el vehículo
-                asegurado sea sustituido por otro, de acuerdo con la política del banco.
-            </p>
-
-            <p>
-                G. En los casos Salvamento, la aseguradora se reserva el derecho de cubrir únicamente la deuda del
-                siniestro de acuerdo con el valor del vehículo en el mercado al momento del evento.
-            </p>
-
-            <p>
-                H. El salvamento al 100% es propiedad de la compañía de seguros una vez se haya indemnizado el valor
-                aseguro.
-            </p>
-
-            <p>
-                I. En caso de ocurrir un accidente cubierto bajo las condiciones de esta póliza cuya reparación origine
-                la sustitución de partes, piezas y accesorios del vehículo asegurado, si dichas partes, piezas y
-                accesorios no pueden ser suministradas por no disponer de existencia los distribuidores del
-                país, {{ $vendorCRM['Nombre'] }} no será responsable del sobreprecio que se produzca para obtenerlas en
-                mercados extranjeros, ni de las demoras generadas en el proceso de importación de las mismas, quedando
-                expresamente entendido que en ningún caso dichas demoras obligaran a la aseguradora a la liquidación del
-                vehículo asegurado en caso que aplique.
-            </p>
-
-            <p>
-                J. En caso de accidente, el asegurado deberá proteger el vehículo asegurado contra toda ulterior pérdida
-                o daño. Cualquier daño que ocurra directa o indirectamente por falta de protección por parte del
-                asegurado, no será indemnizable bajo esta póliza.
-            </p>
-
-            <p>
-                K. <b>Exclusión por mora</b>
-            </p>
-
-            <p>
-                El cliente que presente un atraso de más de 120 días será excluido de la póliza de vehículos. Efectuado
-                el pago el cliente deberá pasar por una sucursal de Banco Caribe, donde se le realizará la re-inspección
-                del vehículo, de no proceder con la misma continuará sin cobertura de póliza.
-            </p>
-
-            <p>
-                L. <b>Vigencia:</b> La póliza estará valida hasta la cancelación del préstamo.
-            </p>
-
-            <p>
-                <b>Al firmar acepta todas las condiciones detalladas en esta cotización de la aseguradora
-                    seleccionada</b>
-            </p>
+                    try {
+                        // Evalúa la expresión en un contexto controlado
+                        eval("\$result = $expression;");
+                        return $result;
+                    } catch (Exception $e) {
+                        return $matches[0]; // Devuelve el original si hay error
+                    }
+                }, $content);
+            @endphp
+            {!! $content !!}
         </td>
     </tr>
 </table>

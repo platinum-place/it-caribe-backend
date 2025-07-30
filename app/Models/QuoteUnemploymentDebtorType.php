@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class QuoteUnemploymentType extends Model
+class QuoteUnemploymentDebtorType extends Model
 {
     use SoftDeletes;
 

@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\QuoteUnemploymentType;
+use App\Models\QuoteUnemploymentDebtorType;
 use Illuminate\Database\Seeder;
 
-class QuoteUnemploymentTypeSeeder extends Seeder
+class QuoteUnemploymentDebtorTypeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,17 +14,17 @@ class QuoteUnemploymentTypeSeeder extends Seeder
     {
         $data = [
             [
-                'id' => \App\Enums\QuoteUnemploymentType::ONETIME_PAYMENT->value,
+                'id' => \App\Enums\QuoteUnemploymentDebtorType::ONETIME_PAYMENT->value,
                 'name' => 'Único Pago',
             ],
             [
-                'id' => \App\Enums\QuoteUnemploymentType::MONTHLY->value,
+                'id' => \App\Enums\QuoteUnemploymentDebtorType::MONTHLY->value,
                 'name' => 'Mensual',
             ],
         ];
 
         foreach ($data as $item) {
-            QuoteUnemploymentType::create($item);
+            QuoteUnemploymentDebtorType::create($item);
         }
     }
 }

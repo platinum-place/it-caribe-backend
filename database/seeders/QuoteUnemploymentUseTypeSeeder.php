@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\QuoteUnemploymentType;
+use App\Models\QuoteUnemploymentDebtorType;
 use App\Models\QuoteUnemploymentUseType;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;

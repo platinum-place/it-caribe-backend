@@ -96,6 +96,7 @@ class QuoteVehicleController extends Controller
             'Gastos_m_dicos',
             'Vendor_Name',
             'P_liza',
+            'Condiciones_certificado',
         ], $selectedLine->id_crm)['data'][0];
 
         $vendorCRM = app(ZohoCRMService::class)->getRecords('Vendors', [

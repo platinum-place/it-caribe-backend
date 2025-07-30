@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum QuoteUnemploymentType: int
+enum QuoteUnemploymentDebtorType: int
 {
     case ONETIME_PAYMENT = 1;
 

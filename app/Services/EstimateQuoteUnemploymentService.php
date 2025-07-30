@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Enums\QuoteFireRiskType;
-use App\Models\QuoteUnemploymentType;
+use App\Models\QuoteUnemploymentDebtorType;
 use App\Models\QuoteUnemploymentUseType;
 use App\Models\VehicleType;
 use App\Services\Api\Zoho\ZohoCRMService;
@@ -25,7 +25,7 @@ class EstimateQuoteUnemploymentService
      */
     public function estimate(string $debtorBirthDate, float $loanInstallment, int $deadline, int $quoteUnemploymentTypeId, int $quoteUnemploymentUseTypeId): array
     {
-        $quoteUnemploymentType = QuoteUnemploymentType::findOrFail($quoteUnemploymentTypeId)->name;
+        $quoteUnemploymentType = QuoteUnemploymentDebtorType::findOrFail($quoteUnemploymentTypeId)->name;
 
         $criteria = '((Corredor:equals:' . 3222373000092390001 . ') and (Product_Category:equals:Desempleo))';
         $productsResponse = $this->zohoApi->searchRecords('Products', $criteria);
