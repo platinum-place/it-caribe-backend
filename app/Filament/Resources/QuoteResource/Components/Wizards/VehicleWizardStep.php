@@ -51,8 +51,8 @@ class VehicleWizardStep
                 DatePicker::make('end_date')
                     ->translateLabel()
                     ->minDate(now())
-                    ->maxDate(now()->addDays(30))
-                    ->default(now()->addDays(30))
+//                    ->maxDate(now()->addDays(30))
+//                    ->default(now()->addDays(30))
                     ->required(),
 
                 TextInput::make('loan_amount')
