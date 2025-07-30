@@ -41,8 +41,8 @@ class EstimateQuoteUnemploymentService
 
             if ($quoteUnemploymentType == 'Mensual') {
                 if ($product['Sin_tasas']) {
-                    $amountTaxed = $rate;
-                    $amount = $amountTaxed * 1.16;
+                    $amount = $rate;
+                    $amountTaxed = $amount / 1.16;
                     $taxesAmount = $amount - $amountTaxed;
                 } else {
                     $amount = ($loanInstallment * $rate) / 1000;
