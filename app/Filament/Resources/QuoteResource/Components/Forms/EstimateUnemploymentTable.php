@@ -29,7 +29,7 @@ class EstimateUnemploymentTable
                                 $get('birth_date'),
                                 $get('loan_installment'),
                                 $get('deadline'),
-                                $get('quote_unemployment_type_id'),
+                                $get('quote_unemployment_debtor_type_id'),
                                 $get('quote_unemployment_use_type_id'),
                             );
 
