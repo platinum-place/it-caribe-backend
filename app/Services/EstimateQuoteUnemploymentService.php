@@ -45,8 +45,8 @@ class EstimateQuoteUnemploymentService
                     $amount = $amountTaxed * 1.16;
                     $taxesAmount = $amount - $amountTaxed;
                 } else {
-                    $amountTaxed = ($loanInstallment * $rate) / 1000;
-                    $amount = $amountTaxed * 1.16;
+                    $amount = ($loanInstallment * $rate) / 1000;
+                    $amountTaxed = $amount / 1.16;
                     $taxesAmount = $amount - $amountTaxed;
                 }
             } else {
