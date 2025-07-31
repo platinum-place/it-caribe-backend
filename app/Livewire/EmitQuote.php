@@ -43,7 +43,7 @@ class EmitQuote extends Component implements HasForms
                         return $lines
                             ->where('total', '>', 0)
                             ->mapWithKeys(function ($line) {
-                                return [$line->id => $line->name.' (RD$'.number_format($line->total, 2).')'];
+                                return [$line->id => $line->name.' (RD$'.number_format($line->total / 12, 2).')'];
                             });
                     }),
 

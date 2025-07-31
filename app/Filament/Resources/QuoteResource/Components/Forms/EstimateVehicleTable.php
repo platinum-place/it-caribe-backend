@@ -25,6 +25,8 @@ class EstimateVehicleTable
                         ->action(function (Set $set, Get $get) {
                             $estimates = app(EstimateQuoteVehicleService::class)->estimate(
                                 $get('vehicle_amount'),
+                                $get('vehicle_make_id'),
+                                $get('vehicle_model_id'),
                                 $get('vehicle_year'),
                                 $get('vehicle_type_id'),
                                 $get('is_employee'),
@@ -52,22 +54,22 @@ class EstimateVehicleTable
                             ->dehydrated(false)
                             ->columnSpan(2),
 
-                        TextInput::make('vehicle_rate')
-                            ->label('Tasa')
-                            ->disabled()
-                            ->dehydrated(false)
-                            ->numeric()
-                            ->columnSpan(1),
+//                        TextInput::make('vehicle_rate')
+//                            ->label('Tasa')
+//                            ->disabled()
+//                            ->dehydrated(false)
+//                            ->numeric()
+//                            ->columnSpan(1),
 
-                        TextInput::make('total')
-                            ->label('Total anual')
-                            ->disabled()
-                            ->dehydrated(false)
-                            ->prefix('RD$')
-                            ->mask(RawJs::make('$money($input)'))
-                            ->stripCharacters(',')
-                            ->numeric()
-                            ->columnSpan(1),
+//                        TextInput::make('total')
+//                            ->label('Total anual')
+//                            ->disabled()
+//                            ->dehydrated(false)
+//                            ->prefix('RD$')
+//                            ->mask(RawJs::make('$money($input)'))
+//                            ->stripCharacters(',')
+//                            ->numeric()
+//                            ->columnSpan(1),
 
                         TextInput::make('total_monthly')
                             ->label('Total mensual')
@@ -79,11 +81,11 @@ class EstimateVehicleTable
                             ->numeric()
                             ->columnSpan(1),
 
-                        TextInput::make('error')
-                            ->label('Comentario')
-                            ->disabled()
-                            ->dehydrated(false)
-                            ->columnSpanFull(),
+//                        TextInput::make('error')
+//                            ->label('Comentario')
+//                            ->disabled()
+//                            ->dehydrated(false)
+//                            ->columnSpanFull(),
                     ])
                     ->columns(5)
                     ->deletable(false)
