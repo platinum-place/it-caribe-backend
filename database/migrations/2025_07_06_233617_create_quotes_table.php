@@ -17,8 +17,13 @@ return new class extends Migration
             $table->softDeletes();
             $table->foreignIdFor(\App\Models\QuoteType::class)->constrained();
             $table->foreignIdFor(\App\Models\QuoteStatus::class)->constrained();
-            $table->foreignIdFor(\App\Models\Customer::class)->nullable()->constrained();
+            $table->foreignIdFor(\App\Models\Debtor::class)->nullable()->constrained();
+            $table->foreignIdFor(\App\Models\User::class)->constrained();
+            $table->foreignIdFor(\App\Models\User::class, 'responsible_id')->nullable()->constrained();
             $table->json('attachments')->nullable();
+            $table->date('start_date');
+            $table->date('end_date')->nullable();
+            $table->string('id_crm')->nullable();
         });
     }
 

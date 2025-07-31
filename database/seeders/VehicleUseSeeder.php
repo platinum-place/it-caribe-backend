@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\VehicleUse;
 use Illuminate\Database\Seeder;
 
 class VehicleUseSeeder extends Seeder
@@ -11,11 +12,20 @@ class VehicleUseSeeder extends Seeder
      */
     public function run(): void
     {
-        foreach (\App\Enums\VehicleUse::cases() as $type) {
-            \App\Models\VehicleUse::updateOrCreate(
-                ['id' => $type->value],
-                ['id' => $type->value],
-            );
+        $data = [
+            [
+                'name' => 'Publico',
+            ],
+            [
+                'name' => 'Privado',
+            ],
+            [
+                'name' => 'Comercial',
+            ],
+        ];
+
+        foreach ($data as $item) {
+            VehicleUse::create($item);
         }
     }
 }

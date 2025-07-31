@@ -4,15 +4,15 @@ namespace App\Enums;
 
 enum QuoteType: int
 {
-    case FIRE = 0;
+    case FIRE = 1;
 
-    case AUTO = 1;
+    case VEHICLE = 2;
 
-    case UNEMPLOYMENT = 2;
+    case UNEMPLOYMENT = 3;
 
-    case DEBT_UNEMPLOYMENT = 3;
+    case DEBT_UNEMPLOYMENT = 4;
 
-    case LIFE = 4;
+    case LIFE = 5;
 
-    case AUTO_LAW = 5;
+    case VEHICLE_LAW = 6;
 }

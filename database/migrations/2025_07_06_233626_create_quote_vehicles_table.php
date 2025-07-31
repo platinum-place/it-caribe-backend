@@ -14,6 +14,20 @@ return new class extends Migration
         Schema::create('quote_vehicles', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->softDeletes();
+            $table->foreignIdFor(\App\Models\Quote::class)->constrained();
+            $table->foreignIdFor(\App\Models\Vehicle::class)->constrained();
+            $table->foreignIdFor(\App\Models\VehicleMake::class)->constrained();
+            $table->foreignIdFor(\App\Models\VehicleModel::class)->constrained();
+            $table->foreignIdFor(\App\Models\VehicleType::class)->constrained();
+            $table->foreignIdFor(\App\Models\VehicleUse::class)->nullable()->constrained();
+            $table->foreignIdFor(\App\Models\VehicleActivity::class)->nullable()->constrained();
+            $table->foreignIdFor(\App\Models\VehicleLoanType::class)->nullable()->constrained();
+            $table->decimal('vehicle_amount', 18, 2);
+            $table->decimal('loan_amount', 18, 2);
+            $table->year('vehicle_year');
+            $table->boolean('is_employee')->default(false);
+            $table->boolean('leasing')->default(false);
         });
     }
 

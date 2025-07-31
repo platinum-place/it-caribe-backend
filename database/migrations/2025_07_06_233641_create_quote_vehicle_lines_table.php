@@ -14,6 +14,11 @@ return new class extends Migration
         Schema::create('quote_vehicle_lines', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->softDeletes();
+            $table->foreignIdFor(\App\Models\QuoteVehicle::class)->constrained();
+            $table->foreignIdFor(\App\Models\QuoteLine::class)->constrained();
+            $table->decimal('life_amount', 18, 2)->default(0);
+            $table->float('vehicle_rate')->default(0);
         });
     }
 

@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Quote\EstimateLifeRequest;
 use App\Http\Requests\Api\Quote\IssueLifeRequest;
-use App\Models\TmpQuote;
 use App\Services\ZohoCRMService;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
@@ -75,7 +74,7 @@ class LifeController extends Controller
             $response[] = [
                 'Impuesto' => number_format(0.0, 1, '.', ''),
                 'Prima' => number_format($amount, 1, '.', ''),
-                'identificador' => (string)$responseProduct['data'][0]['details']['id'],
+                'identificador' => (string) $responseProduct['data'][0]['details']['id'],
                 'Aseguradora' => $response2['data'][0]['Nombre'],
                 'MontoOrig' => number_format($request->get('MontoOriginal'), 1, '.', ''),
                 'Anios' => $request->get('PlazoAnios'),

@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Quote\EstimateFireRequest;
 use App\Http\Requests\Api\Quote\IssueLifeRequest;
-use App\Models\TmpQuote;
 use App\Services\ZohoCRMService;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
@@ -99,7 +98,7 @@ class FireController extends Controller
                 'Construccion' => 'Vivienda',
                 'TipoConstruccion' => 'Superior',
                 'Ubicacion' => $request->get('Ubicacion'),
-                'identificador' => (string)$responseQuote['data'][0]['details']['id'],
+                'identificador' => (string) $responseQuote['data'][0]['details']['id'],
                 'Aseguradora' => $response2['data'][0]['Nombre'],
                 'Error' => $alert,
                 'PrimaVida' => number_format(0.0, 1, '.', ''),

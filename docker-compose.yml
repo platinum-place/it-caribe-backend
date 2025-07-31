@@ -14,52 +14,65 @@ services:
             - app-network
 
     nginx:
-        build:
-            context: ./docker/nginx
-            dockerfile: Dockerfile
-        container_name: ${APP_NAME}-nginx
+        image: docker.io/bitnami/nginx:1.29
         ports:
             - '80:8080'
+        container_name: ${APP_NAME}-nginx
         volumes:
-            - ./:/var/www/html
+            - ./:/app
+            - ./docker/nginx/laravel.conf:/opt/bitnami/nginx/conf/server_blocks/laravel.conf:ro
         networks:
             - app-network
 
     php-fpm:
+        tty: true
         build:
-            context: ./docker/php-fpm
+            context: .
             dockerfile: Dockerfile
             args:
                 UID: ${UID:-1000}
                 GID: ${GID:-1000}
-        container_name: ${APP_NAME}-php-fpm
-        environment:
-            - UID=${UID:-1000}
-            - GID=${GID:-1000}
         volumes:
-            - ./:/var/www/html
+            - ./:/app
+            - ./docker/php/laravel.ini:/opt/bitnami/php/etc/conf.d/laravel.ini
         networks:
             - app-network
+        container_name: ${APP_NAME}-php-fpm
+        environment:
+            - OPCACHE_ENABLE=${OPCACHE_ENABLE:-1}
+            - OPCACHE_ENABLE_CLI=${OPCACHE_ENABLE_CLI:-1}
 
     php-cli:
         tty: true
-        stdin_open: true
         build:
-            context: ./docker/php-cli
+            context: .
             dockerfile: Dockerfile
             args:
                 UID: ${UID:-1000}
                 GID: ${GID:-1000}
-        container_name: ${APP_NAME}-php-cli
-        environment:
-            - UID=${UID:-1000}
-            - GID=${GID:-1000}
         volumes:
-            - ./:/var/www/html
+            - ./:/app
+            - ./docker/php/laravel.ini:/opt/bitnami/php/etc/conf.d/laravel.ini
         networks:
             - app-network
-        depends_on:
-            - postgresql
+        container_name: ${APP_NAME}-php-cli
+
+    worker:
+        tty: true
+        build:
+            context: .
+            dockerfile: Dockerfile
+            args:
+                UID: ${UID:-1000}
+                GID: ${GID:-1000}
+        container_name: ${APP_NAME}-worker
+        volumes:
+            - ./:/app
+            - ./docker/php/laravel.ini:/opt/bitnami/php/etc/conf.d/laravel.ini
+            - ./docker/worker/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf
+        networks:
+            - app-network
+        entrypoint: ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 
 volumes:
     postgresql_data:
