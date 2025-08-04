@@ -48,22 +48,25 @@ class EstimateQuoteVehicleService
             try {
                 $criteria = 'Aseguradora:equals:' . $product['Vendor_Name']['id'];
                 $restrictedVehicles = $this->zohoApi->searchRecords('Restringidos', $criteria);
+            } catch (\Throwable $e) {
+                //
+            }
 
+            if(!empty($restrictedVehicles)){
                 foreach ($restrictedVehicles['data'] as $restricted) {
                     if (\Str::contains(\Str::lower($vehicleMake->name), \Str::lower($restricted['Marca']['name']))) {
-                        if (empty($restricted['Model'])) {
+                        if (empty($restricted['Modelo'])) {
                             $shouldSkip = true;
                             break;
                         }
 
-                        if(\Str::contains(\Str::lower($vehicleModel->name), \Str::lower($restricted['Model']['name']))) {
+                        if (\Str::contains(\Str::lower($vehicleModel->name), \Str::lower($restricted['Modelo']['name']))) {
+
                             $shouldSkip = true;
                             break;
                         }
                     }
                 }
-            } catch (\Throwable $e) {
-                //
             }
 
             if ($shouldSkip) {
