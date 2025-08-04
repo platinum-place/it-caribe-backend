@@ -45,26 +45,26 @@ class EstimateQuoteVehicleService
                 }
             }
 
-            try {
-                $criteria = 'Aseguradora:equals:' . $product['Vendor_Name']['id'];
-                $restrictedVehicles = $this->zohoApi->searchRecords('Restringidos', $criteria);
+//            try {
+//                $criteria = 'Aseguradora:equals:' . $product['Vendor_Name']['id'];
+//                $restrictedVehicles = $this->zohoApi->searchRecords('Restringidos', $criteria);
+//
+//                foreach ($restrictedVehicles['data'] as $restricted) {
+//                    if (\Str::contains(\Str::lower($vehicleMake->name), \Str::lower($restricted['Marca']['name']))) {
+//                        if(empty($restricted['Model'])){
+//                            $shouldSkip = true;
+//                        }elseif(\Str::contains(\Str::lower($vehicleModel->name), \Str::lower($restricted['Model']['name']))){
+//                            $shouldSkip = true;
+//                        }
+//                    }
+//                }
+//            } catch (\Throwable $e) {
+//                //
+//            }
 
-                foreach ($restrictedVehicles['data'] as $restricted) {
-                    if (\Str::contains(\Str::lower($vehicleMake->name), \Str::lower($restricted['Marca']['name']))) {
-                        if(empty($restricted['Model'])){
-                            $shouldSkip = true;
-                        }elseif(\Str::contains(\Str::lower($vehicleModel->name), \Str::lower($restricted['Model']['name']))){
-                            $shouldSkip = true;
-                        }
-                    }
-                }
-            } catch (\Throwable $e) {
-                //
-            }
-
-            if ($shouldSkip) {
-                continue;
-            }
+//            if ($shouldSkip) {
+//                continue;
+//            }
 
             $rate = $this->getRate($product['id'], $vehicleAmount, $vehicleYear, $vehicleType);
 
