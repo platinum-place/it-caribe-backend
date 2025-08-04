@@ -13,6 +13,8 @@ use App\Models\QuoteFireLine;
 use App\Models\QuoteLife;
 use App\Models\QuoteLifeLine;
 use App\Models\QuoteLine;
+use App\Models\QuoteUnemployment;
+use App\Models\QuoteUnemploymentLine;
 use App\Models\QuoteVehicle;
 use App\Models\QuoteVehicleLine;
 use App\Models\Vehicle;
@@ -144,7 +146,6 @@ class CreateQuote extends CreateRecord
                     'insured_amount' => $data['insured_amount'],
                 ]);
             }
-
             if ($data['quote_type_id'] == QuoteType::FIRE->value) {
                 $quoteFire = QuoteFire::create([
                     'quote_id' => $quote->id,
@@ -157,6 +158,15 @@ class CreateQuote extends CreateRecord
                     'appraisal_value' => $data['appraisal_value'],
                     'financed_value' => $data['financed_value'],
                     'property_address' => $data['property_address'],
+                ]);
+            }
+            if ($data['quote_type_id'] == QuoteType::UNEMPLOYMENT->value) {
+                $quoteUnemployment = QuoteUnemployment::create([
+                    'quote_id' => $quote->id,
+                    'quote_unemployment_debtor_type_id' => $data['quote_unemployment_debtor_type_id'],
+                    'quote_unemployment_use_type_id' => $data['quote_unemployment_use_type_id'],
+                    'deadline' => $data['deadline'],
+                    'loan_installment' => $data['loan_installment'],
                 ]);
             }
 
@@ -202,6 +212,13 @@ class CreateQuote extends CreateRecord
                         'fire_rate' => $estimate['fire_rate'],
                         'fire_amount' => $estimate['fire_amount'],
                         'life_amount' => $estimate['life_amount'],
+                    ]);
+                }
+                if ($data['quote_type_id'] == QuoteType::UNEMPLOYMENT->value) {
+                    $quoteUnemploymentLine = QuoteUnemploymentLine::create([
+                        'quote_unemployment_id' => $quoteUnemployment->id,
+                        'quote_line_id' => $quoteLine->id,
+                        'rate' => $estimate['rate'],
                     ]);
                 }
             }

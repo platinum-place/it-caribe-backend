@@ -64,7 +64,7 @@
     <tbody>
     <tr>
         <td style="border: none; text-align:left; font-weight: bold;">Ramo/Producto:</td>
-        <td style="border: none; text-align:left;">Incendio</td>
+        <td style="border: none; text-align:left;">Desempleo</td>
         <td style="border: none; text-align:left; font-weight: bold;">Fecha:</td>
         <td style="border: none; text-align:left;">{{ date('d/m/Y', strtotime($quote->start_date)) }}</td>
     </tr>
@@ -81,35 +81,8 @@
         <td style="border: none; text-align:left;">{{ $debtor->home_phone }}</td>
     </tr>
     <tr>
-        <td style="border: none; text-align:left; font-weight: bold;">Edad:</td>
-        <td style="border: none; text-align:left;">{{ $debtor->age }}</td>
-        <td style="border: none; text-align:left; font-weight: bold;">Codeudor:</td>
-        <td style="border: none; text-align:left;">{{ $coDebtor?->full_name }}</td>
-    </tr>
-    </tbody>
-</table>
-
-<h3 style="text-align:center;">DETALLE FACILIDAD</h3>
-
-<table style="width: 100%; border: none;">
-    <tbody>
-    <tr>
-        <td style="border: none; text-align:left; font-weight: bold;">Valor Financiado:</td>
-        <td style="border: none; text-align:left;">${{ number_format($quoteFire->financed_value, 2) }}</td>
-        <td style="border: none; text-align:left; font-weight: bold;">Construcción:</td>
-        <td style="border: none; text-align:left;">NO</td>
-    </tr>
-    <tr>
-        <td style="border: none; text-align:left; font-weight: bold;">Valor Tasación:</td>
-        <td style="border: none; text-align:left;">${{ number_format($quoteFire->appraisal_value, 2) }}</td>
-        <td style="border: none; text-align:left; font-weight: bold;">Tipo Construcción:</td>
-        <td style="border: none; text-align:left;">{{ $quoteFire->quoteFireConstructionType->name }}</td>
-    </tr>
-    <tr>
-        <td style="border: none; text-align:left; font-weight: bold;">Ubicación:</td>
-        <td style="border: none; text-align:left;"><p style="font-size: 8px">{{ $quoteFire->property_address }}</p></td>
-        <td style="border: none; text-align:left; font-weight: bold;">Giro del Negocio:</td>
-        <td style="border: none; text-align:left;">{{ '' }}</td>  {{--   TODO --}}
+        <td style="border: none; text-align:left; font-weight: bold;">Tipo Empleado:</td>
+        <td style="border: none; text-align:left;">{{ $quoteUnemployment->quoteUnemploymentUseType->name }}</td>
     </tr>
     </tbody>
 </table>
@@ -120,14 +93,9 @@
     <thead>
     <tr>
         <th style="border: none; text-align:left;">Aseguradora</th>
-        <th style="border: none; text-align:left;">Años</th>
-        <th style="border: none; text-align:left;">Valor</th>
-        {{--        <th style="border: none; text-align:left;">Clasificación</th>--}}
-        <th style="border: none; text-align:left;">Prima Vida</th>
-        <th style="border: none; text-align:left;">Edad al Terminar</th>
-        <th style="border: none; text-align:right;">Prima Incendio</th>
-        <th style="border: none; text-align:right;">Prima Total</th>
-        <th style="border: none; text-align:right;">Prima Anual</th>
+        <th style="border: none; text-align:right;">Monto Prestamo</th>
+        <th style="border: none; text-align:right;">Plazo en Meses</th>
+        <th style="border: none; text-align:right;">Total Seguro</th>
     </tr>
     </thead>
     <tbody>
@@ -138,13 +106,9 @@
         @endphp
         <tr>
             <td style="border: none; text-align:left;">{{ ucwords(strtolower($vendorCRM['Nombre'])) }}</td>
-            <td style="border: none; text-align:left;">{{ $quoteFire->deadline }}</td>
-            <td style="border: none; text-align:left;">{{ number_format($quoteFire->appraisal_value, 2) }}</td>
-            <td style="border: none; text-align:left;">{{ number_format($line->life_amount, 2) }}</td>
-            <td style="border: none; text-align:left;">{{ $debtor->age + ($quoteFire->deadline / 12) }}</td>
-            <td style="border: none; text-align:right;">{{ number_format($line->fire_amount, 2) }}</td>
+            <td style="border: none; text-align:right;">{{ number_format($quoteUnemployment->loan_installment, 2) }}</td>
+            <td style="border: none; text-align:right;">{{ $quoteUnemployment->deadline }}</td>
             <td style="border: none; text-align:right;">{{ number_format($line->quoteLine->total, 2) }}</td>
-            <td style="border: none; text-align:right;">{{ number_format($line->quoteLine->total * 12, 2) }}</td>
         </tr>
     @endforeach
     </tbody>

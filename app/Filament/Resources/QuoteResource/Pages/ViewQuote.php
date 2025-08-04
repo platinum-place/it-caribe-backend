@@ -32,6 +32,10 @@ class ViewQuote extends ViewRecord
                             case QuoteType::FIRE->value:
                                 return route('filament.quote-fires.download', ['quote_fire' => $this->record->quoteFire]);
                                 break;
+
+                            case QuoteType::UNEMPLOYMENT->value:
+                                return route('filament.quote-unemployments.download', ['quote_unemployment' => $this->record->quoteUnemployment]);
+                                break;
                         }
                     }
 
@@ -47,6 +51,10 @@ class ViewQuote extends ViewRecord
 
                             case QuoteType::FIRE->value:
                                 return route('filament.quote-fires.downloadCertificate', ['quote_fire' => $this->record->quoteFire]);
+                                break;
+
+                            case QuoteType::UNEMPLOYMENT->value:
+                                return route('filament.quote-unemployments.downloadCertificate', ['quote_unemployment' => $this->record->quoteUnemployment]);
                                 break;
                         }
                     }
