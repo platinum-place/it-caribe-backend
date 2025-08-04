@@ -105,6 +105,8 @@ class EstimateQuoteVehicleService
             $taxesAmount = round($taxesAmount, 2);
             $totalMonthly = round($totalMonthly, 2);
 
+            $vendorCRM = $this->zohoApi->getRecords('Vendors', ['Nombre'], $product['Vendor_Name']['id'])['data'][0];
+
             $result[] = [
                 'name' => $product['Product_Name'],
                 'unit_price' => $amount,
@@ -119,6 +121,7 @@ class EstimateQuoteVehicleService
                 'life_amount' => $lifeAmount,
                 'vehicle_rate' => $rate,
                 'error' => null,
+                'vendor_name' => $vendorCRM['Nombre'],
             ];
         }
 
