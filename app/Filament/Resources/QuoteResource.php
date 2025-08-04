@@ -29,42 +29,36 @@ class QuoteResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('created_at')
+                    ->translateLabel()
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->translateLabel()
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('deleted_at')
+                    ->translateLabel()
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('quote_type_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('quote_status_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('debtor.id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('user.name')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('responsible.name')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('start_date')
-                    ->date()
+                    ->label(__('Start date'))
                     ->sortable(),
-                Tables\Columns\TextColumn::make('end_date')
-                    ->date()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('id_crm')
+                Tables\Columns\TextColumn::make('debtor.full_name')
+                    ->label(__('Debtor'))
                     ->searchable(),
+                Tables\Columns\TextColumn::make('status.name')
+                    ->label(__('Status'))
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('selectedLine.name')
+                    ->label(__('Vendor')),
+                Tables\Columns\TextColumn::make('selectedLine.total')
+                    ->label(__('Total')),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
