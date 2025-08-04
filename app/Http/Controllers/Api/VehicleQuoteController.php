@@ -28,12 +28,11 @@ class VehicleQuoteController extends Controller
      */
     public function estimateVehicle(EstimateVehicleRequest $request)
     {
-        $criteria = 'Name:equals:' . VehicleMake::firstWhere('code', $request->get('Marca'))->name;
+        $criteria = VehicleMake::where('code', $request->get('Marca'))->firstOrFail();
         $vehicleMake = $this->crm->searchRecords('Marcas', $criteria);
 
-        $criteria = 'Name:equals:' . VehicleModel::firstWhere('code', $request->get('Modelo'))->name;
+        $criteria = VehicleModel::where('code', $request->get('Modelo'))->firstOrFail();
         $vehicleModel = $this->crm->searchRecords('Modelos', $criteria);
-
 
         $estimates = app(EstimateQuoteVehicleService::class)->estimate(
             $request->get('MontoAsegurado'),
