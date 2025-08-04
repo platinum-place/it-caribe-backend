@@ -9,14 +9,17 @@ use App\Http\Requests\Api\Quote\IssueVehicleRequest;
 use App\Models\TmpVendorProduct;
 use App\Models\VehicleMake;
 use App\Models\VehicleModel;
-use App\Services\ZohoCRMService;
+use App\Services\Api\Zoho\ZohoCRMService;
+use App\Services\EstimateQuoteVehicleService;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
 use Throwable;
 
 class VehicleQuoteController extends Controller
 {
-    public function __construct(protected ZohoCRMService $crm) {}
+    public function __construct(protected ZohoCRMService $crm)
+    {
+    }
 
     /**
      * @throws RequestException
@@ -25,6 +28,24 @@ class VehicleQuoteController extends Controller
      */
     public function estimateVehicle(EstimateVehicleRequest $request)
     {
+        $criteria = 'Name:equals:' . VehicleMake::firstWhere('code', $request->get('Marca'))->name;
+        $vehicleMake = $this->crm->searchRecords('Marcas', $criteria);
+
+        $criteria = 'Name:equals:' . VehicleModel::firstWhere('code', $request->get('Modelo'))->name;
+        $vehicleModel = $this->crm->searchRecords('Modelos', $criteria);
+
+
+        $estimates = app(EstimateQuoteVehicleService::class)->estimate(
+            $request->get('MontoAsegurado'),
+            $vehicleMake->id,
+            $vehicleModel->id,
+            $request->get('Anio'),
+            $vehicleModel->vehicle_type_id,
+        );
+
+        dd($estimates);
+
+
         $criteria = '((Corredor:equals:3222373000092390001) and (Product_Category:equals:Auto))';
         $products = $this->crm->searchRecords('Products', $criteria);
 
@@ -48,12 +69,12 @@ class VehicleQuoteController extends Controller
             $taxAmount = 0;
 
             try {
-                $criteria = 'Plan:equals:'.$product['id'];
+                $criteria = 'Plan:equals:' . $product['id'];
                 $taxes = $this->crm->searchRecords('Tasas', $criteria);
 
                 foreach ($taxes['data'] as $tax) {
                     // if (in_array($request->get('TipoVehiculo'), $tax['Grupo_de_veh_culo'])) {
-                    if (! empty($tax['Suma_limite'])) {
+                    if (!empty($tax['Suma_limite'])) {
                         if ($request->get('MontoOriginal') >= $tax['Suma_limite']) {
                             if (empty($tax['Suma_hasta'])) {
                                 $taxAmount = $tax['Name'] / 100;
@@ -70,7 +91,7 @@ class VehicleQuoteController extends Controller
 
             }
 
-            if (! $taxAmount) {
+            if (!$taxAmount) {
                 $alert = 'No se encontraron tasas.';
             }
 
@@ -88,12 +109,12 @@ class VehicleQuoteController extends Controller
                 $amount = round($amount, 2);
             }
 
-            $response2 = $this->crm->getRecords('Vendors', ['Nombre'], (int) $product['Vendor_Name']['id']);
+            $response2 = $this->crm->getRecords('Vendors', ['Nombre'], (int)$product['Vendor_Name']['id']);
 
-            $criteria = 'Name:equals:'.VehicleMake::firstWhere('code', $request->get('Marca'))->name;
+            $criteria = 'Name:equals:' . VehicleMake::firstWhere('code', $request->get('Marca'))->name;
             $vehicleMake = $this->crm->searchRecords('Marcas', $criteria);
 
-            $criteria = 'Name:equals:'.VehicleModel::firstWhere('code', $request->get('Modelo'))->name;
+            $criteria = 'Name:equals:' . VehicleModel::firstWhere('code', $request->get('Modelo'))->name;
             $vehicleModel = $this->crm->searchRecords('Modelos', $criteria);
 
             $response[] = [
@@ -140,7 +161,7 @@ class VehicleQuoteController extends Controller
                 'Coberturas' => $line['Product_Name']['id'],
                 'Quote_Stage' => 'Emitida',
                 'Vigencia_desde' => date('Y-m-d'),
-                'Valid_Till' => date('Y-m-d', strtotime(date('Y-m-d').'+ 1 years')),
+                'Valid_Till' => date('Y-m-d', strtotime(date('Y-m-d') . '+ 1 years')),
                 'Prima_neta' => round($line['Net_Total'] / 1.16, 2),
                 'ISC' => round($line['Net_Total'] - ($line['Net_Total'] / 1.16), 2),
                 'Prima' => round($line['Net_Total'], 2),

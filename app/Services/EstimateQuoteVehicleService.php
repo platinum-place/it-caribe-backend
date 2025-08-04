@@ -21,7 +21,7 @@ class EstimateQuoteVehicleService
      * @throws ConnectionException
      * @throws Exception
      */
-    public function estimate(float $vehicleAmount, int $vehicleMakeId, int $vehicleModelId, int $vehicleYear, int $vehicleTypeId, bool $isEmployee, bool $leasing, string $serviceType): array
+    public function estimate(float $vehicleAmount, int $vehicleMakeId, int $vehicleModelId, int $vehicleYear, int $vehicleTypeId, ?bool $isEmployee = false, ?bool $leasing = false, ?string $serviceType = null): array
     {
         $vehicleMake = VehicleMake::find($vehicleMakeId);
         $vehicleModel = VehicleModel::find($vehicleModelId);
@@ -52,7 +52,7 @@ class EstimateQuoteVehicleService
                 //
             }
 
-            if(!empty($restrictedVehicles)){
+            if (!empty($restrictedVehicles)) {
                 foreach ($restrictedVehicles['data'] as $restricted) {
                     if (\Str::contains(\Str::lower($vehicleMake->name), \Str::lower($restricted['Marca']['name']))) {
                         if (empty($restricted['Modelo'])) {
