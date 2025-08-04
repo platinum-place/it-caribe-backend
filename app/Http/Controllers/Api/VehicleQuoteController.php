@@ -96,42 +96,6 @@ class VehicleQuoteController extends Controller
             $criteria = 'Name:equals:'.VehicleModel::firstWhere('code', $request->get('Modelo'))->name;
             $vehicleModel = $this->crm->searchRecords('Modelos', $criteria);
 
-            $data = [
-                'Subject' => $request->get('NombreCliente'),
-                'Valid_Till' => date('Y-m-d', strtotime(date('Y-m-d').'+ 30 days')),
-                'Vigencia_desde' => date('Y-m-d'),
-                'Account_Name' => 3222373000092390001,
-                'Contact_Name' => 3222373000203318001,
-                'Quote_Stage' => 'Cotizando',
-                'Nombre' => $request->get('NombreCliente'),
-                'Fecha_de_nacimiento' => date('Y-m-d', strtotime($request->get('FechaNacimiento'))),
-                'RNC_C_dula' => $request->get('IdCliente'),
-                'Correo_electr_nico' => $request->get('Email'),
-                'Tel_Celular' => $request->get('TelefMovil'),
-                'Tel_Residencia' => $request->get('TelefResidencia'),
-                'Tel_Trabajo' => $request->get('TelefTrabajo'),
-                'Plan' => 'Mensual Full',
-                'Suma_asegurada' => round($request->get('MontoAsegurado'), 2),
-                'A_o' => $request->get('Anio'),
-                'Marca' => $vehicleMake['data'][0]['id'],
-                'Modelo' => $vehicleModel['data'][0]['id'],
-                'Tipo_veh_culo' => $request->get('TipoVehiculo'),
-                'Chasis' => $request->get('Chasis'),
-                'Placa' => $request->get('Placa'),
-                'Fuente' => 'API',
-                'Quoted_Items' => [
-                    [
-                        'Quantity' => 1,
-                        'Product_Name' => $product['id'],
-                        'Total' => $amount,
-                        'Net_Total' => $amount,
-                        'List_Price' => $amount,
-                    ],
-                ],
-            ];
-
-            $responseProduct = $this->crm->insertRecords('Quotes', $data);
-
             $response[] = [
                 'passcode' => null,
                 'ofertaid' => null,
@@ -142,7 +106,7 @@ class VehicleQuoteController extends Controller
                 'Planid' => TmpVendorProduct::firstWhere('id_crm', $product['id'])->id,
                 'Plan' => 'Plan Mensual Full',
                 'Aseguradora' => $response2['data'][0]['Nombre'],
-                'IdCotizacion' => (string) $responseProduct['data'][0]['details']['id'],
+                //'IdCotizacion' => (string) $responseProduct['data'][0]['details']['id'],
                 'Fecha' => date('d/m/Y H:i:s A'),
                 'Error' => $alert,
                 'CoberturasList' => [
