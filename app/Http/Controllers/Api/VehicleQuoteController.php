@@ -52,74 +52,74 @@ class VehicleQuoteController extends Controller
                 $data['Anio'],
                 $vehicleModel->vehicle_type_id,
             );
-
-            $debtor = Debtor::create([
-                'first_name' => $data['NombreCliente'],
-//                'last_name' => $data['last_name'],
-                'identity_number' => $data['IdCliente'],
-                'birth_date' => $data['FechaNacimiento'],
-                'home_phone' => $data['TelefResidencia'],
-                'mobile_phone' => $data['TelefMovil'],
-                'work_phone' => $data['TelefTrabajo'],
-                'email' => $data['Email'],
-//                'address' => $data['address'] ,
-                'age' => Carbon::parse($data['FechaNacimiento'])->age,
-            ]);
-            $quote = Quote::create([
-                'quote_type_id' => QuoteType::VEHICLE->value,
-                'quote_status_id' => QuoteStatus::PENDING->value,
-                'start_date' => $data['start_date'] ?? now(),
-                'end_date' => $data['end_date'] ?? now()->addDays(30),
-                'debtor_id' => $debtor->id,
-//                'user_id' => auth()->id(),
-            ]);
-            $vehicle = Vehicle::create([
-                'vehicle_year' => $data['vehicle_year'],
-                'chassis' => $data['chassis'],
-                'license_plate' => $data['license_plate'],
-                'vehicle_make_id' => $data['vehicle_make_id'],
-                'vehicle_model_id' => $data['vehicle_model_id'],
-                'vehicle_type_id' => $data['vehicle_type_id'],
-            ]);
-            $quoteVehicle = QuoteVehicle::create([
-                'quote_id' => $quote->id,
-                'vehicle_id' => $vehicle->id,
-                'vehicle_make_id' => $data['vehicle_make_id'],
-                'vehicle_year' => $data['vehicle_year'],
-                'vehicle_model_id' => $data['vehicle_model_id'],
-                'vehicle_type_id' => $data['vehicle_type_id'],
-                'vehicle_use_id' => $data['vehicle_use_id'],
-                'vehicle_activity_id' => $data['vehicle_activity_id'],
-                'vehicle_amount' => $data['vehicle_amount'],
-                'vehicle_loan_type_id' => $data['vehicle_loan_type_id'],
-                'is_employee' => $data['is_employee'],
-                'leasing' => $data['leasing'],
-                'loan_amount' => $data['loan_amount'],
-            ]);
-            $vehicle->colors()->attach($data['vehicle_colors']);
-            $quoteVehicle->vehicleColors()->attach($data['vehicle_colors']);
+//
+//            $debtor = Debtor::create([
+//                'first_name' => $data['NombreCliente'],
+////                'last_name' => $data['last_name'],
+//                'identity_number' => $data['IdCliente'],
+//                'birth_date' => $data['FechaNacimiento'],
+//                'home_phone' => $data['TelefResidencia'],
+//                'mobile_phone' => $data['TelefMovil'],
+//                'work_phone' => $data['TelefTrabajo'],
+//                'email' => $data['Email'],
+////                'address' => $data['address'] ,
+//                'age' => Carbon::parse($data['FechaNacimiento'])->age,
+//            ]);
+//            $quote = Quote::create([
+//                'quote_type_id' => QuoteType::VEHICLE->value,
+//                'quote_status_id' => QuoteStatus::PENDING->value,
+//                'start_date' => $data['start_date'] ?? now(),
+//                'end_date' => $data['end_date'] ?? now()->addDays(30),
+//                'debtor_id' => $debtor->id,
+////                'user_id' => auth()->id(),
+//            ]);
+//            $vehicle = Vehicle::create([
+//                'vehicle_year' => $data['vehicle_year'],
+//                'chassis' => $data['chassis'],
+//                'license_plate' => $data['license_plate'],
+//                'vehicle_make_id' => $data['vehicle_make_id'],
+//                'vehicle_model_id' => $data['vehicle_model_id'],
+//                'vehicle_type_id' => $data['vehicle_type_id'],
+//            ]);
+//            $quoteVehicle = QuoteVehicle::create([
+//                'quote_id' => $quote->id,
+//                'vehicle_id' => $vehicle->id,
+//                'vehicle_make_id' => $data['vehicle_make_id'],
+//                'vehicle_year' => $data['vehicle_year'],
+//                'vehicle_model_id' => $data['vehicle_model_id'],
+//                'vehicle_type_id' => $data['vehicle_type_id'],
+//                'vehicle_use_id' => $data['vehicle_use_id'],
+//                'vehicle_activity_id' => $data['vehicle_activity_id'],
+//                'vehicle_amount' => $data['vehicle_amount'],
+//                'vehicle_loan_type_id' => $data['vehicle_loan_type_id'],
+//                'is_employee' => $data['is_employee'],
+//                'leasing' => $data['leasing'],
+//                'loan_amount' => $data['loan_amount'],
+//            ]);
+//            $vehicle->colors()->attach($data['vehicle_colors']);
+//            $quoteVehicle->vehicleColors()->attach($data['vehicle_colors']);
 
             $response = [];
 
             foreach ($estimates as $estimate) {
-                $quoteLine = QuoteLine::create([
-                    'name' => $estimate['name'],
-                    'unit_price' => $estimate['unit_price'],
-                    'quantity' => $estimate['quantity'],
-                    'subtotal' => $estimate['subtotal'],
-                    'amount_taxed' => $estimate['amount_taxed'],
-                    'tax_rate' => $estimate['tax_rate'],
-                    'tax_amount' => $estimate['tax_amount'],
-                    'total' => $estimate['total'],
-                    'quote_id' => $quote->id,
-                    'id_crm' => $estimate['id_crm'],
-                    'quote_line_status_id' => QuoteLineStatus::NOT_ACCEPTED->value,
-                ]);
-                $quoteVehicleLine = QuoteVehicleLine::create([
-                    'quote_vehicle_id' => $quoteVehicle->id,
-                    'quote_line_id' => $quoteLine->id,
-                    'life_amount' => $estimate['life_amount'],
-                ]);
+//                $quoteLine = QuoteLine::create([
+//                    'name' => $estimate['name'],
+//                    'unit_price' => $estimate['unit_price'],
+//                    'quantity' => $estimate['quantity'],
+//                    'subtotal' => $estimate['subtotal'],
+//                    'amount_taxed' => $estimate['amount_taxed'],
+//                    'tax_rate' => $estimate['tax_rate'],
+//                    'tax_amount' => $estimate['tax_amount'],
+//                    'total' => $estimate['total'],
+//                    'quote_id' => $quote->id,
+//                    'id_crm' => $estimate['id_crm'],
+//                    'quote_line_status_id' => QuoteLineStatus::NOT_ACCEPTED->value,
+//                ]);
+//                $quoteVehicleLine = QuoteVehicleLine::create([
+//                    'quote_vehicle_id' => $quoteVehicle->id,
+//                    'quote_line_id' => $quoteLine->id,
+//                    'life_amount' => $estimate['life_amount'],
+//                ]);
 
                 $response[] = [
                     'passcode' => null,
@@ -131,7 +131,7 @@ class VehicleQuoteController extends Controller
                     'Planid' => $estimate['id_crm'],
                     'Plan' => 'Automóvil',
                     'Aseguradora' => $estimate['vendor_name'],
-                    //'IdCotizacion' => (string) $responseProduct['data'][0]['details']['id'],
+                    'IdCotizacion' => (string) $estimate['id_crm'],
                     'Fecha' => date('d/m/Y H:i:s A'),
                     'Error' => $estimate['error'],
                     'CoberturasList' => [
