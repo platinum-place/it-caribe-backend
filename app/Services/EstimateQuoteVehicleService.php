@@ -36,15 +36,15 @@ class EstimateQuoteVehicleService
             $shouldSkip = false;
             $error = '';
 
-//            if (!empty($product['Plan'])) {
-//                if ($product['Plan'] === 'Empleado' && !$isEmployee) {
-//                    continue;
-//                }
-//
-//                if ($product['Plan'] !== 'Empleado' && $product['Plan'] !== $serviceType) {
-//                    continue;
-//                }
-//            }
+            if (!empty($product['Plan'])) {
+                if ($product['Plan'] === 'Empleado' && !$isEmployee) {
+                    continue;
+                }
+
+                if ($product['Plan'] !== 'Empleado' && $product['Plan'] !== $serviceType) {
+                    continue;
+                }
+            }
 
             try {
                 $criteria = 'Aseguradora:equals:' . $product['Vendor_Name']['id'];

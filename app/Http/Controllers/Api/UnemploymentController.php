@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Requests\Api\Unemployment\CancelUnemploymentRequest;
 use App\Http\Requests\Api\Unemployment\EstimateUnemploymentRequest;
 use App\Http\Requests\Api\Unemployment\IssueUnemploymentRequest;
-use App\Services\ZohoCRMService;
+use App\Services\Api\Zoho\ZohoCRMService;
+use App\Services\EstimateQuoteUnemploymentService;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -21,92 +22,33 @@ class UnemploymentController
      */
     public function estimateUnemployment(EstimateUnemploymentRequest $request)
     {
-        $criteria = '((Corredor:equals:3222373000092390001) and (Product_Category:equals:Desempleo))';
-        $response = $this->crm->searchRecords('Products', $criteria);
+        $data = $request->all();
+
+        $estimates = app(EstimateQuoteUnemploymentService::class)->estimate(
+            $data['TiempoLaborando'],
+            $data['MontoOriginal'],
+            $data['Plazo'],
+            1,
+            1,
+        );
 
         $quotes = [];
 
-        foreach ($response['data'] as $product) {
-            $alert = '';
-
-            //            if ($request->get('PlazoDias') > $product['Plazo_max']) {
-            //                $alert = 'El plazo es mayor al limite establecido.';
-            //            }
-            //
-            //            if ($request->get('MontoOriginal') < $product['Suma_asegurada_min'] || $request->get('MontoOriginal') > $product['Suma_asegurada_max']) {
-            //                $alert = 'El plazo es mayor al limite establecido.';
-            //            }
-
-            $unemploymentTax = 0;
-            $lifeTax = 0;
-            $amount = 0;
-
-            try {
-                $criteria = 'Plan:equals:'.$product['id'];
-                $taxes = $this->crm->searchRecords('Tasas', $criteria);
-
-                foreach ($taxes['data'] as $tax) {
-                    //                    if ($request->get('TiempoLaborando') >= $tax['Edad_min'] and $request->get('TiempoLaborando') <= $tax['Edad_max']) {
-                    $lifeTax = $tax['Name'] / 100;
-                    $unemploymentTax = $tax['Desempleo'];
-                    //                    } else {
-                    //                        $alert = 'La edad del deudor no estan dentro del limite permitido.';
-                    //                    }
-                }
-            } catch (Throwable $throwable) {
-
-            }
-
-            //            if (empty($alert)) {
-            $lifeAmount = ($request->get('MontoOriginal') / 1000) * $lifeTax;
-            $unemploymentAmount = ($request->get('MontoOriginal') / 1000) * $unemploymentTax;
-            $amount = round($lifeAmount + $unemploymentAmount, 2);
-            //            }
-
-            $data = [
-                'Subject' => $request->get('Cliente'),
-                'Valid_Till' => date('Y-m-d', strtotime(date('Y-m-d').'+ 30 days')),
-                'Vigencia_desde' => date('Y-m-d'),
-                'Account_Name' => 3222373000092390001,
-                'Contact_Name' => 3222373000203318001,
-                'Quote_Stage' => 'Cotizando',
-                'Nombre' => $request->get('Cliente'),
-                'RNC_C_dula' => $request->get('IdentCliente'),
-                'Direcci_n' => $request->get('Direccion'),
-                'Tel_Celular' => $request->get('Telefono'),
-                'Plan' => 'Vida/Desempleo',
-                'Suma_asegurada' => round($request->get('MontoOriginal'), 2),
-                'Plazo' => $request->get('Plazo') * 12,
-                'Cuota' => $request->get('Cuota'),
-                'Fuente' => 'API',
-                'Quoted_Items' => [
-                    [
-                        'Quantity' => 1,
-                        'Product_Name' => $product['id'],
-                        'Total' => $amount,
-                        'Net_Total' => $amount,
-                        'List_Price' => $amount,
-                    ],
-                ],
-            ];
-
-            $responseQuote = $this->crm->insertRecords('Quotes', $data);
-            $response2 = $this->crm->getRecords('Vendors', ['Nombre'], (int) $product['Vendor_Name']['id']);
-
+        foreach ($estimates as $estimate) {
             $quotes[] = [
-                'Impuesto' => number_format($amount * 0.16, 1, '.', ''),
-                'identificador' => (string) $responseQuote['data'][0]['details']['id'],
+                'Impuesto' => number_format($estimate['tax_amount'], 1, '.', ''),
+                'identificador' => (string) $estimate['id_crm'],
                 'Cliente' => $request->get('Cliente'),
                 'Direccion' => $request->get('Direccion'),
                 'Fecha' => now()->format('Y-m-d\TH:i:sP'),
                 'TipoEmpleado' => $request->get('idTipoEmpleado'),
                 'IdentCliente' => $request->get('IdentCliente'),
-                'Aseguradora' => $response2['data'][0]['Nombre'],
+                'Aseguradora' => $estimate['vendor_name'],
                 'MontoOriginal' => number_format($request->get('MontoOriginal'), 1, '.', ''),
                 'Cuota' => number_format($request->get('Cuota'), 1, '.', ''),
-                'PlazoMeses' => $request->get('Plazo') * 12,
-                'Prima' => number_format($amount, 1, '.', ''),
-                'Error' => $alert,
+                'PlazoMeses' => $request->get('Plazo'),
+                'Prima' => number_format($estimate['total'], 1, '.', ''),
+                'Error' => null,
             ];
         }
 
