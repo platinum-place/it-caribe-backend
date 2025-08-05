@@ -92,7 +92,12 @@ class EstimateQuoteUnemploymentService
      */
     protected function getRate(string $debtorBirthDate, string $productId, string $quoteUnemploymentUseTypeId, float $loanInstallment)
     {
-        $debtorAge = Carbon::parse($debtorBirthDate)->age;
+        try {
+            $debtorAge = Carbon::parse($debtorBirthDate)->age;
+        }catch (\Throwable $exception){
+            $debtorAge = $debtorBirthDate;
+        }
+
         $quoteUnemploymentUseType = QuoteUnemploymentUseType::findOrFail($quoteUnemploymentUseTypeId)->name;
 
         $selectedRate = 0;
