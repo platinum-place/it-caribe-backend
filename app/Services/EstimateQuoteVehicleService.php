@@ -34,6 +34,7 @@ class EstimateQuoteVehicleService
 
         foreach ($productsResponse['data'] as $product) {
             $shouldSkip = false;
+            $error = '';
 
             if (!empty($product['Plan'])) {
                 if ($product['Plan'] === 'Empleado' && !$isEmployee) {
@@ -56,12 +57,13 @@ class EstimateQuoteVehicleService
                 foreach ($restrictedVehicles['data'] as $restricted) {
                     if (\Str::contains(\Str::lower($vehicleMake->name), \Str::lower($restricted['Marca']['name']))) {
                         if (empty($restricted['Modelo'])) {
+                            $error = 'Marca restringido';
                             $shouldSkip = true;
                             break;
                         }
 
                         if (\Str::contains(\Str::lower($vehicleModel->name), \Str::lower($restricted['Modelo']['name']))) {
-
+                            $error = 'Modelo restringido';
                             $shouldSkip = true;
                             break;
                         }
@@ -96,8 +98,6 @@ class EstimateQuoteVehicleService
                     $totalMonthly += $product['Leasing_mensual'];
                     $amount = $totalMonthly * 12;
                 }
-            } else {
-                continue;
             }
 
             $amount = round($amount, 2);
@@ -120,7 +120,7 @@ class EstimateQuoteVehicleService
                 'id_crm' => $product['id'],
                 'life_amount' => $lifeAmount,
                 'vehicle_rate' => $rate,
-                'error' => null,
+                'error' => $error,
                 'vendor_name' => $vendorCRM['Nombre'],
             ];
         }
