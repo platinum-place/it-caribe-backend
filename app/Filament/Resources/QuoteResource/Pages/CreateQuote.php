@@ -8,6 +8,8 @@ use App\Enums\QuoteType;
 use App\Filament\Resources\QuoteResource;
 use App\Models\Debtor;
 use App\Models\Quote;
+use App\Models\QuoteDebtUnemployment;
+use App\Models\QuoteDebtUnemploymentLine;
 use App\Models\QuoteFire;
 use App\Models\QuoteFireLine;
 use App\Models\QuoteLife;
@@ -124,7 +126,7 @@ class CreateQuote extends CreateRecord
                     'vehicle_model_id' => $data['vehicle_model_id'],
                     'vehicle_type_id' => $data['vehicle_type_id'],
                 ]);
-                $quoteVehicle = QuoteVehicle::create([
+                $quoteDebtUnemployment = QuoteDebtUnemployment::create([
                     'quote_id' => $quote->id,
                     'vehicle_id' => $vehicle->id,
                     'vehicle_make_id' => $data['vehicle_make_id'],
@@ -136,6 +138,7 @@ class CreateQuote extends CreateRecord
                     'vehicle_amount' => $data['vehicle_amount'],
                     'vehicle_loan_type_id' => $data['vehicle_loan_type_id'],
                     'loan_amount' => $data['loan_amount'],
+                    'insured_amount' => $data['insured_amount'],
                 ]);
             }
             if ($data['quote_type_id'] == QuoteType::VEHICLE->value) {
@@ -213,6 +216,13 @@ class CreateQuote extends CreateRecord
                     'id_crm' => $estimate['id_crm'],
                     'quote_line_status_id' => QuoteLineStatus::NOT_ACCEPTED->value,
                 ]);
+                if ($data['quote_type_id'] == 6) {
+                    $quoteDebtUnemploymentLine = QuoteDebtUnemploymentLine::create([
+                        'quote_debt_unemployment_id' => $quoteDebtUnemployment->id,
+                        'quote_line_id' => $quoteLine->id,
+                        'rate' => $estimate['rate'],
+                    ]);
+                }
                 if ($data['quote_type_id'] == QuoteType::VEHICLE->value) {
                     $quoteVehicleLine = QuoteVehicleLine::create([
                         'quote_vehicle_id' => $quoteVehicle->id,
