@@ -3,7 +3,9 @@
 use App\Http\Controllers\QuoteController;
 use App\Http\Controllers\QuoteFireController;
 use App\Http\Controllers\QuoteLifeController;
+use App\Http\Controllers\QuoteUnemploymentController;
 use App\Http\Controllers\QuoteVehicleController;
+use App\Models\QuoteUnemployment;
 use Filament\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
 
@@ -32,4 +34,9 @@ Route::middleware(Authenticate::class)
             ->name('quote-fires.download');
         Route::get('quote-fires/{quote_fire}/certificate', [QuoteFireController::class, 'downloadCertificate'])
             ->name('quote-fires.downloadCertificate');
+
+        Route::get('quote-unemployments/{quote_unemployment}', [QuoteUnemploymentController::class, 'download'])
+            ->name('quote-unemployments.download');
+        Route::get('quote-unemployments/{quote_unemployment}/certificate', [QuoteUnemploymentController::class, 'downloadCertificate'])
+            ->name('quote-unemployments.downloadCertificate');
     });

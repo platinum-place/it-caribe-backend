@@ -64,6 +64,8 @@ class EstimateQuoteUnemploymentService
             $amountTaxed = round($amountTaxed, 2);
             $taxesAmount = round($taxesAmount, 2);
 
+            $vendorCRM = $this->zohoApi->getRecords('Vendors', ['Nombre'], $product['Vendor_Name']['id'])['data'][0];
+
             $result[] = [
                 'name' => $product['Vendor_Name']['name'],
                 'unit_price' => $amount,
@@ -76,6 +78,7 @@ class EstimateQuoteUnemploymentService
                 'rate' => $rate,
                 'id_crm' => $product['id'],
                 'error' => null,
+                'vendor_name' => $vendorCRM['Nombre'],
             ];
         }
 
@@ -89,7 +92,12 @@ class EstimateQuoteUnemploymentService
      */
     protected function getRate(string $debtorBirthDate, string $productId, string $quoteUnemploymentUseTypeId, float $loanInstallment)
     {
-        $debtorAge = Carbon::parse($debtorBirthDate)->age;
+        try {
+            $debtorAge = Carbon::parse($debtorBirthDate)->age;
+        }catch (\Throwable $exception){
+            $debtorAge = $debtorBirthDate;
+        }
+
         $quoteUnemploymentUseType = QuoteUnemploymentUseType::findOrFail($quoteUnemploymentUseTypeId)->name;
 
         $selectedRate = 0;

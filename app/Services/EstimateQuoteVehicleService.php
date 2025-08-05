@@ -21,7 +21,7 @@ class EstimateQuoteVehicleService
      * @throws ConnectionException
      * @throws Exception
      */
-    public function estimate(float $vehicleAmount, int $vehicleMakeId, int $vehicleModelId, int $vehicleYear, int $vehicleTypeId, bool $isEmployee, bool $leasing, string $serviceType): array
+    public function estimate(float $vehicleAmount, int $vehicleMakeId, int $vehicleModelId, int $vehicleYear, int $vehicleTypeId, ?bool $isEmployee = false, ?bool $leasing = false, ?string $serviceType = null): array
     {
         $vehicleMake = VehicleMake::find($vehicleMakeId);
         $vehicleModel = VehicleModel::find($vehicleModelId);
@@ -34,6 +34,7 @@ class EstimateQuoteVehicleService
 
         foreach ($productsResponse['data'] as $product) {
             $shouldSkip = false;
+            $error = '';
 
             if (!empty($product['Plan'])) {
                 if ($product['Plan'] === 'Empleado' && !$isEmployee) {
@@ -48,18 +49,26 @@ class EstimateQuoteVehicleService
             try {
                 $criteria = 'Aseguradora:equals:' . $product['Vendor_Name']['id'];
                 $restrictedVehicles = $this->zohoApi->searchRecords('Restringidos', $criteria);
+            } catch (\Throwable $e) {
+                //
+            }
 
+            if (!empty($restrictedVehicles)) {
                 foreach ($restrictedVehicles['data'] as $restricted) {
                     if (\Str::contains(\Str::lower($vehicleMake->name), \Str::lower($restricted['Marca']['name']))) {
-                        if(empty($restricted['Model'])){
+                        if (empty($restricted['Modelo'])) {
+                            $error = 'Marca restringido';
                             $shouldSkip = true;
-                        }elseif(\Str::contains(\Str::lower($vehicleModel->name), \Str::lower($restricted['Model']['name']))){
+                            break;
+                        }
+
+                        if (\Str::contains(\Str::lower($vehicleModel->name), \Str::lower($restricted['Modelo']['name']))) {
+                            $error = 'Modelo restringido';
                             $shouldSkip = true;
+                            break;
                         }
                     }
                 }
-            } catch (\Throwable $e) {
-                //
             }
 
             if ($shouldSkip) {
@@ -89,14 +98,14 @@ class EstimateQuoteVehicleService
                     $totalMonthly += $product['Leasing_mensual'];
                     $amount = $totalMonthly * 12;
                 }
-            } else {
-                continue;
             }
 
             $amount = round($amount, 2);
             $amountTaxed = round($amountTaxed, 2);
             $taxesAmount = round($taxesAmount, 2);
             $totalMonthly = round($totalMonthly, 2);
+
+            $vendorCRM = $this->zohoApi->getRecords('Vendors', ['Nombre'], $product['Vendor_Name']['id'])['data'][0];
 
             $result[] = [
                 'name' => $product['Product_Name'],
@@ -111,7 +120,8 @@ class EstimateQuoteVehicleService
                 'id_crm' => $product['id'],
                 'life_amount' => $lifeAmount,
                 'vehicle_rate' => $rate,
-                'error' => null,
+                'error' => $error,
+                'vendor_name' => $vendorCRM['Nombre'],
             ];
         }
 

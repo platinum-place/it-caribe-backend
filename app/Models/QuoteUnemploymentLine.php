@@ -1,0 +1,26 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class QuoteUnemploymentLine extends Model
+{
+    use SoftDeletes;
+
+    protected $fillable = [
+        'quote_unemployment_id', 'quote_line_id', 'rate',
+    ];
+
+    public function quoteUnemployment(): BelongsTo
+    {
+        return $this->belongsTo(QuoteUnemployment::class);
+    }
+
+    public function quoteLine(): BelongsTo
+    {
+        return $this->belongsTo(QuoteLine::class);
+    }
+}

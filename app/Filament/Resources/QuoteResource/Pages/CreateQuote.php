@@ -13,6 +13,8 @@ use App\Models\QuoteFireLine;
 use App\Models\QuoteLife;
 use App\Models\QuoteLifeLine;
 use App\Models\QuoteLine;
+use App\Models\QuoteUnemployment;
+use App\Models\QuoteUnemploymentLine;
 use App\Models\QuoteVehicle;
 use App\Models\QuoteVehicleLine;
 use App\Models\Vehicle;
@@ -42,26 +44,32 @@ class CreateQuote extends CreateRecord
                                 ->required(),
                         ]),
                     QuoteResource\Components\Wizards\EstimateVehicleWizardStep::make()
-                        ->visible(fn ($get): bool => $get('quote_type_id') == QuoteType::VEHICLE->value),
+                        ->visible(fn($get): bool => $get('quote_type_id') == QuoteType::VEHICLE->value),
                     QuoteResource\Components\Wizards\VehicleWizardStep::make()
-                        ->visible(fn ($get): bool => $get('quote_type_id') == QuoteType::VEHICLE->value),
+                        ->visible(fn($get): bool => $get('quote_type_id') == QuoteType::VEHICLE->value),
 
                     QuoteResource\Components\Wizards\EstimateLifeWizardStep::make()
-                        ->visible(fn ($get): bool => $get('quote_type_id') == QuoteType::LIFE->value),
+                        ->visible(fn($get): bool => $get('quote_type_id') == QuoteType::LIFE->value),
                     QuoteResource\Components\Wizards\LifeWizardStep::make()
-                        ->visible(fn ($get): bool => $get('quote_type_id') == QuoteType::LIFE->value),
+                        ->visible(fn($get): bool => $get('quote_type_id') == QuoteType::LIFE->value),
 
                     QuoteResource\Components\Wizards\EstimateFireWizardStep::make()
-                        ->visible(fn ($get): bool => $get('quote_type_id') == QuoteType::FIRE->value),
+                        ->visible(fn($get): bool => $get('quote_type_id') == QuoteType::FIRE->value),
                     QuoteResource\Components\Wizards\FireWizardStep::make()
-                        ->visible(fn ($get): bool => $get('quote_type_id') == QuoteType::FIRE->value),
+                        ->visible(fn($get): bool => $get('quote_type_id') == QuoteType::FIRE->value),
 
                     QuoteResource\Components\Wizards\EstimateUnemploymentWizardStep::make()
-                        ->visible(fn ($get): bool => $get('quote_type_id') == QuoteType::UNEMPLOYMENT->value),
+                        ->visible(fn($get): bool => $get('quote_type_id') == QuoteType::UNEMPLOYMENT->value),
+
+                    QuoteResource\Components\Wizards\EstimateDebtUnemploymentWizardStep::make()
+                        ->visible(fn($get): bool => $get('quote_type_id') == 6),
 
                     QuoteResource\Components\Wizards\DebtorWizardStep::make(),
                     QuoteResource\Components\Wizards\CoDebtorWizardStep::make()
-                        ->hidden(fn ($get) => ! $get('co_debtor_birth_date')),
+                        ->hidden(fn($get) => !$get('co_debtor_birth_date')),
+
+                    QuoteResource\Components\Wizards\Vehicle2WizardStep::make()
+                        ->visible(fn($get): bool => $get('quote_type_id') == 6),
                 ])
                     ->columnSpanFull(),
             ]);
@@ -85,7 +93,7 @@ class CreateQuote extends CreateRecord
                 'address' => $data['address'] ?? null,
                 'age' => Carbon::parse($data['birth_date'])->age,
             ]);
-            if (! empty($data['co_debtor_first_name'])) {
+            if (!empty($data['co_debtor_first_name'])) {
                 $coDebtor = Debtor::create([
                     'first_name' => $data['co_debtor_first_name'],
                     'last_name' => $data['co_debtor_last_name'],
@@ -107,6 +115,29 @@ class CreateQuote extends CreateRecord
                 'debtor_id' => $debtor->id,
                 'user_id' => auth()->id(),
             ]);
+            if ($data['quote_type_id'] == 6) {
+                $vehicle = Vehicle::create([
+                    'vehicle_year' => $data['vehicle_year'],
+                    'chassis' => $data['chassis'],
+                    'license_plate' => $data['license_plate'],
+                    'vehicle_make_id' => $data['vehicle_make_id'],
+                    'vehicle_model_id' => $data['vehicle_model_id'],
+                    'vehicle_type_id' => $data['vehicle_type_id'],
+                ]);
+                $quoteVehicle = QuoteVehicle::create([
+                    'quote_id' => $quote->id,
+                    'vehicle_id' => $vehicle->id,
+                    'vehicle_make_id' => $data['vehicle_make_id'],
+                    'vehicle_year' => $data['vehicle_year'],
+                    'vehicle_model_id' => $data['vehicle_model_id'],
+                    'vehicle_type_id' => $data['vehicle_type_id'],
+                    'vehicle_use_id' => $data['vehicle_use_id'],
+                    'vehicle_activity_id' => $data['vehicle_activity_id'],
+                    'vehicle_amount' => $data['vehicle_amount'],
+                    'vehicle_loan_type_id' => $data['vehicle_loan_type_id'],
+                    'loan_amount' => $data['loan_amount'],
+                ]);
+            }
             if ($data['quote_type_id'] == QuoteType::VEHICLE->value) {
                 $vehicle = Vehicle::create([
                     'vehicle_year' => $data['vehicle_year'],
@@ -137,18 +168,17 @@ class CreateQuote extends CreateRecord
             if ($data['quote_type_id'] == QuoteType::LIFE->value) {
                 $quoteLife = QuoteLife::create([
                     'quote_id' => $quote->id,
-                    'co_debtor_id' => ! empty($data['co_debtor_first_name']) ? $coDebtor?->id : null,
+                    'co_debtor_id' => !empty($data['co_debtor_first_name']) ? $coDebtor?->id : null,
                     'quote_life_credit_type_id' => $data['quote_life_credit_type_id'],
                     'deadline' => $data['deadline'],
                     'guarantor' => $data['guarantor'],
                     'insured_amount' => $data['insured_amount'],
                 ]);
             }
-
             if ($data['quote_type_id'] == QuoteType::FIRE->value) {
                 $quoteFire = QuoteFire::create([
                     'quote_id' => $quote->id,
-                    'co_debtor_id' => ! empty($data['co_debtor_first_name']) ? $coDebtor?->id : null,
+                    'co_debtor_id' => !empty($data['co_debtor_first_name']) ? $coDebtor?->id : null,
                     'quote_fire_credit_type_id' => $data['quote_fire_credit_type_id'],
                     'deadline' => $data['deadline'] / 12,
                     'guarantor' => $data['guarantor'],
@@ -157,6 +187,15 @@ class CreateQuote extends CreateRecord
                     'appraisal_value' => $data['appraisal_value'],
                     'financed_value' => $data['financed_value'],
                     'property_address' => $data['property_address'],
+                ]);
+            }
+            if ($data['quote_type_id'] == QuoteType::UNEMPLOYMENT->value) {
+                $quoteUnemployment = QuoteUnemployment::create([
+                    'quote_id' => $quote->id,
+                    'quote_unemployment_debtor_type_id' => $data['quote_unemployment_debtor_type_id'],
+                    'quote_unemployment_use_type_id' => $data['quote_unemployment_use_type_id'],
+                    'deadline' => $data['deadline'],
+                    'loan_installment' => $data['loan_installment'],
                 ]);
             }
 
@@ -202,6 +241,13 @@ class CreateQuote extends CreateRecord
                         'fire_rate' => $estimate['fire_rate'],
                         'fire_amount' => $estimate['fire_amount'],
                         'life_amount' => $estimate['life_amount'],
+                    ]);
+                }
+                if ($data['quote_type_id'] == QuoteType::UNEMPLOYMENT->value) {
+                    $quoteUnemploymentLine = QuoteUnemploymentLine::create([
+                        'quote_unemployment_id' => $quoteUnemployment->id,
+                        'quote_line_id' => $quoteLine->id,
+                        'rate' => $estimate['rate'],
                     ]);
                 }
             }
