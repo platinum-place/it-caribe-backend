@@ -270,16 +270,14 @@
             @php
                 $content = $productCRM['Condiciones_certificado'];
 
-                // Usando eval de forma más segura (solo si confías en el contenido)
-                $content = preg_replace_callback('/\{\{\s*(.+?)\s*\}\}/', function($matches) use ($productCRM, $quoteVehicle) {
+                $content = preg_replace_callback('/\{\{\s*(.+?)\s*\}\}/', function($matches) {
                     $expression = trim($matches[1]);
 
                     try {
-                        // Evalúa la expresión en un contexto controlado
                         eval("\$result = $expression;");
                         return $result;
                     } catch (Exception $e) {
-                        return $matches[0]; // Devuelve el original si hay error
+                        return $matches[0];
                     }
                 }, $content);
             @endphp

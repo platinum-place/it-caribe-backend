@@ -95,7 +95,7 @@
     <thead>
     <tr>
         <th style="border: none; text-align:left;">Aseguradora</th>
-        <th style="border: none; text-align:right;">Monto Prestamo</th>
+        <th style="border: none; text-align:right;">Cuota Prestamo</th>
         <th style="border: none; text-align:right;">Plazo en Meses</th>
         <th style="border: none; text-align:right;">Total Seguro</th>
     </tr>
@@ -118,16 +118,14 @@
             @php
                 $content = $productCRM['Condiciones_certificado'];
 
-                // Usando eval de forma más segura (solo si confías en el contenido)
-                $content = preg_replace_callback('/\{\{\s*(.+?)\s*\}\}/', function($matches) use ($productCRM, $quoteUnemployment) {
+                $content = preg_replace_callback('/\{\{\s*(.+?)\s*\}\}/', function($matches) {
                     $expression = trim($matches[1]);
 
                     try {
-                        // Evalúa la expresión en un contexto controlado
                         eval("\$result = $expression;");
                         return $result;
                     } catch (Exception $e) {
-                        return $matches[0]; // Devuelve el original si hay error
+                        return $matches[0];
                     }
                 }, $content);
             @endphp
