@@ -75,6 +75,7 @@ class QuoteUnemploymentController extends Controller
         $productCRM = app(ZohoCRMService::class)->getRecords('Products', [
             'Vendor_Name',
             'P_liza',
+            'Condiciones_certificado',
         ], $selectedLine->quoteLine->id_crm)['data'][0];
 
         $vendorCRM = app(ZohoCRMService::class)->getRecords('Vendors', [
