@@ -23,7 +23,7 @@ class EstimateQuoteDebtUnemploymentService
      * @throws ConnectionException
      * @throws Exception
      */
-    public function estimate(float $insuredAmount, int $deadline): array
+    public function estimate(float $insuredAmount, int $deadline,string $debtorBirthDate, float $loanInstallment, int $quoteUnemploymentTypeId, int $quoteUnemploymentUseTypeId): array
     {
         $criteria = '((Corredor:equals:' . 3222373000092390001 . ') and (Product_Category:equals:Simple))';
         $productsResponse = $this->zohoApi->searchRecords('Products', $criteria);
@@ -31,7 +31,7 @@ class EstimateQuoteDebtUnemploymentService
         $result = [];
 
         foreach ($productsResponse['data'] as $product) {
-            $rate = $this->getRate($product['id'], $deadline);
+            $rate = $this->getRate1($product['id'], $deadline);
 
             $amount = 0;
             $amountTaxed = 0;
@@ -74,7 +74,7 @@ class EstimateQuoteDebtUnemploymentService
      * @throws ConnectionException
      * @throws Exception
      */
-    protected function getRate(string $productId, int $deadline)
+    protected function getRate1(string $productId, int $deadline)
     {
         $criteria = "Plan:equals:$productId";
         $rates = $this->zohoApi->searchRecords('Tasas', $criteria);
@@ -84,6 +84,46 @@ class EstimateQuoteDebtUnemploymentService
         foreach ($rates['data'] as $rate) {
             if ($deadline >= $rate['Edad_min'] && $deadline <= $rate['Edad_max']) {
                 $selectedRate = $rate['Name'];
+            }
+        }
+
+        return $selectedRate;
+    }
+
+    /**
+     * @throws RequestException
+     * @throws ConnectionException
+     * @throws Exception
+     */
+    protected function getRate(string $debtorBirthDate, string $productId, string $quoteUnemploymentUseTypeId, float $loanInstallment)
+    {
+        try {
+            $debtorAge = Carbon::parse($debtorBirthDate)->age;
+        }catch (\Throwable $exception){
+            $debtorAge = $debtorBirthDate;
+        }
+
+        $quoteUnemploymentUseType = QuoteUnemploymentUseType::findOrFail($quoteUnemploymentUseTypeId)->name;
+
+        $selectedRate = 0;
+
+        try {
+            $criteria = "((Plan:equals:$productId) and (Tipo:equals:$quoteUnemploymentUseType))";
+            $rates = $this->zohoApi->searchRecords('Tasas', $criteria);
+
+            foreach ($rates['data'] as $rate) {
+                if ($debtorAge >= $rate['Edad_min'] && $debtorAge <= $rate['Edad_max']) {
+                    $selectedRate = $rate['Name'];
+                }
+            }
+        } catch (\Throwable $e) {
+            $criteria = "Plan:equals:$productId";
+            $rates = $this->zohoApi->searchRecords('Tasas', $criteria);
+
+            foreach ($rates['data'] as $rate) {
+                if ($loanInstallment >= $rate['Suma_limite'] && $loanInstallment <= $rate['Suma_hasta']) {
+                    $selectedRate = round($rate['Name'], 2);
+                }
             }
         }
 

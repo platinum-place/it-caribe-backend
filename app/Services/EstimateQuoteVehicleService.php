@@ -100,7 +100,7 @@ class EstimateQuoteVehicleService
                 }
             }
 
-            if ($rate == 0 && $error == null) {
+            if ($rate == 0 && $error == '') {
                 continue;
             }
 

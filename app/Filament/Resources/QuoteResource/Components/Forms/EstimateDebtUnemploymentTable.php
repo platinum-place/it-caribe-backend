@@ -29,6 +29,10 @@ class EstimateDebtUnemploymentTable
                             $estimates = app(EstimateQuoteDebtUnemploymentService::class)->estimate(
                                 $get('insured_amount'),
                                 $get('deadline'),
+                                $get('birth_date'),
+                                $get('loan_installment'),
+                                1,
+                                $get('quote_unemployment_use_type_id'),
                             );
 
                             $set('estimates_table', $estimates);

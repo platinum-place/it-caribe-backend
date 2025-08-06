@@ -34,6 +34,22 @@ class EstimateDebtUnemploymentForm
                     ->numeric()
                     ->required()
                     ->minValue(1),
+
+                DatePicker::make('birth_date')
+                    ->label('Fecha de Nacimiento Deudor')
+                    ->required()
+                    ->maxDate(now()),
+
+                TextInput::make('loan_installment')
+                    ->label('Cuota préstamo')
+                    ->numeric()
+                    ->required()
+                    ->prefix('$'),
+
+                Select::make('quote_unemployment_use_type_id')
+                    ->label('Tipo de empleado')
+                    ->required()
+                    ->options(QuoteUnemploymentUseType::pluck('name', 'id')),
             ]);
     }
 }
