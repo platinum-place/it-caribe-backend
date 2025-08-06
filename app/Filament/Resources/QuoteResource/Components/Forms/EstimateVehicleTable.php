@@ -81,11 +81,11 @@ class EstimateVehicleTable
                             ->numeric()
                             ->columnSpan(1),
 
-//                        TextInput::make('error')
-//                            ->label('Comentario')
-//                            ->disabled()
-//                            ->dehydrated(false)
-//                            ->columnSpanFull(),
+                        TextInput::make('error')
+                            ->label('Comentario')
+                            ->disabled()
+                            ->dehydrated(false)
+                            ->columnSpanFull(),
                     ])
                     ->columns(5)
                     ->deletable(false)

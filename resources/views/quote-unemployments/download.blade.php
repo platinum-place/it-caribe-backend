@@ -93,7 +93,7 @@
     <thead>
     <tr>
         <th style="border: none; text-align:left;">Aseguradora</th>
-        <th style="border: none; text-align:right;">Monto Prestamo</th>
+        <th style="border: none; text-align:right;">Cuota Prestamo</th>
         <th style="border: none; text-align:right;">Plazo en Meses</th>
         <th style="border: none; text-align:right;">Total Seguro</th>
     </tr>
