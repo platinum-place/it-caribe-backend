@@ -110,8 +110,7 @@
     </tbody>
 </table>
 
-
-<div style="page-break-after: always;"></div>
+<div style="height: 10px;"></div>
 
 <table style="width: 100%; font-size: 12px;">
     <tr>
