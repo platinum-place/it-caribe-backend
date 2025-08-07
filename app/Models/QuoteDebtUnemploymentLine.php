@@ -11,5 +11,6 @@ class QuoteDebtUnemploymentLine extends Model
 
     protected $fillable = [
         'quote_debt_unemployment_id', 'quote_line_id', 'rate',
+        'rate2','total2','total1',
     ];
 }

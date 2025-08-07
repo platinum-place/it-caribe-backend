@@ -221,6 +221,9 @@ class CreateQuote extends CreateRecord
                         'quote_debt_unemployment_id' => $quoteDebtUnemployment->id,
                         'quote_line_id' => $quoteLine->id,
                         'rate' => $estimate['rate'],
+                        'rate2' => $estimate['rate2'],
+                        'total2' => $estimate['total2'],
+                        'total1' => $estimate['total1'],
                     ]);
                 }
                 if ($data['quote_type_id'] == QuoteType::VEHICLE->value) {

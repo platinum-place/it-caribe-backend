@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\QuoteController;
+use App\Http\Controllers\QuoteDebtUnemploymentController;
 use App\Http\Controllers\QuoteFireController;
 use App\Http\Controllers\QuoteLifeController;
 use App\Http\Controllers\QuoteUnemploymentController;
@@ -39,4 +40,9 @@ Route::middleware(Authenticate::class)
             ->name('quote-unemployments.download');
         Route::get('quote-unemployments/{quote_unemployment}/certificate', [QuoteUnemploymentController::class, 'downloadCertificate'])
             ->name('quote-unemployments.downloadCertificate');
+
+        Route::get('quote-debt-unemployments/{quote_debt_unemployment}', [QuoteDebtUnemploymentController::class, 'download'])
+            ->name('quote-debt-unemployments.download');
+        Route::get('quote-debt-unemployments/{quote_debt_unemployment}/certificate', [QuoteDebtUnemploymentController::class, 'downloadCertificate'])
+            ->name('quote-debt-unemployments.downloadCertificate');
     });
