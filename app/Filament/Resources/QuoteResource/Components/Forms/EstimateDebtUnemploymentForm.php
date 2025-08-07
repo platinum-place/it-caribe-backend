@@ -50,6 +50,12 @@ class EstimateDebtUnemploymentForm
                     ->label('Tipo de empleado')
                     ->required()
                     ->options(QuoteUnemploymentUseType::pluck('name', 'id')),
+
+                Checkbox::make('unemployment_insurance')
+                    ->label('Incluir plan Desempleo')
+                    ->inline(false)
+                    ->live()
+                    ->default(true),
             ]);
     }
 }

@@ -33,6 +33,7 @@ class EstimateDebtUnemploymentTable
                                 $get('loan_installment'),
                                 1,
                                 $get('quote_unemployment_use_type_id'),
+                                $get('unemployment_insurance'),
                             );
 
                             $set('estimates_table', $estimates);
@@ -58,6 +59,30 @@ class EstimateDebtUnemploymentTable
                             ->label('Tasa')
                             ->disabled()
                             ->dehydrated(false)
+                            ->numeric(),
+
+                        TextInput::make('rate2')
+                            ->label('Tasa desempleo')
+                            ->disabled()
+                            ->dehydrated(false)
+                            ->numeric(),
+
+                        TextInput::make('subtotal')
+                            ->label('Total deuda')
+                            ->disabled()
+                            ->dehydrated(false)
+                            ->prefix('RD$')
+                            ->mask(RawJs::make('$money($input)'))
+                            ->stripCharacters(',')
+                            ->numeric(),
+
+                        TextInput::make('total2')
+                            ->label('Total desempleo')
+                            ->disabled()
+                            ->dehydrated(false)
+                            ->prefix('RD$')
+                            ->mask(RawJs::make('$money($input)'))
+                            ->stripCharacters(',')
                             ->numeric(),
 
                         TextInput::make('total')

@@ -23,7 +23,7 @@ class EstimateQuoteDebtUnemploymentService
      * @throws ConnectionException
      * @throws Exception
      */
-    public function estimate(float $insuredAmount, int $deadline,string $debtorBirthDate, float $loanInstallment, int $quoteUnemploymentTypeId, int $quoteUnemploymentUseTypeId): array
+    public function estimate(float $insuredAmount, int $deadline, string $debtorBirthDate, float $loanInstallment, int $quoteUnemploymentTypeId, int $quoteUnemploymentUseTypeId, ?bool $unemploymentInsurance = false): array
     {
         $criteria = '((Corredor:equals:' . 3222373000092390001 . ') and (Product_Category:equals:Simple))';
         $productsResponse = $this->zohoApi->searchRecords('Products', $criteria);
@@ -43,6 +43,32 @@ class EstimateQuoteDebtUnemploymentService
                 $taxesAmount = $amount - $amountTaxed;
             }
 
+            $rate2 = 0;
+            $amount2 = 0;
+            $amountTaxed2 = 0;
+            $taxesAmount2 = 0;
+
+            if ($unemploymentInsurance) {
+                $rate2 = app(EstimateQuoteUnemploymentService::class)->getRate($debtorBirthDate, $product['id'], $quoteUnemploymentUseTypeId, $loanInstallment);
+
+                if ($rate2 > 0) {
+                    if (!empty($product['Indemnizaci_n'])) {
+                        $amount2 = $loanInstallment * ($rate2 / 100) * $product['Indemnizaci_n'] * $deadline;
+                    } else {
+                        $amount2 = $loanInstallment * ($rate2 / 100) * $deadline;
+                    }
+                    $amountTaxed2 = $amount2 / 1.16;
+                    $taxesAmount2 = $amount2 - $amountTaxed2;
+                }
+
+                $rate2 = round($rate2, 2);
+                $amount2 = round($amount2, 2);
+                $amountTaxed2 = round($amountTaxed2, 2);
+                $taxesAmount2 = round($taxesAmount2, 2);
+
+                $amount += $amount2;
+            }
+
             $rate = round($rate, 2);
             $amount = round($amount, 2);
             $amountTaxed = round($amountTaxed, 2);
@@ -59,6 +85,9 @@ class EstimateQuoteDebtUnemploymentService
                 'tax_rate' => 16,
                 'tax_amount' => $taxesAmount,
                 'total' => $amount,
+                'total1' => $amount - $amount2,
+                'total2' => $amount2,
+                'rate2' => $rate2,
                 'rate' => $rate,
                 'id_crm' => $product['id'],
                 'error' => null,
@@ -84,46 +113,6 @@ class EstimateQuoteDebtUnemploymentService
         foreach ($rates['data'] as $rate) {
             if ($deadline >= $rate['Edad_min'] && $deadline <= $rate['Edad_max']) {
                 $selectedRate = $rate['Name'];
-            }
-        }
-
-        return $selectedRate;
-    }
-
-    /**
-     * @throws RequestException
-     * @throws ConnectionException
-     * @throws Exception
-     */
-    protected function getRate(string $debtorBirthDate, string $productId, string $quoteUnemploymentUseTypeId, float $loanInstallment)
-    {
-        try {
-            $debtorAge = Carbon::parse($debtorBirthDate)->age;
-        }catch (\Throwable $exception){
-            $debtorAge = $debtorBirthDate;
-        }
-
-        $quoteUnemploymentUseType = QuoteUnemploymentUseType::findOrFail($quoteUnemploymentUseTypeId)->name;
-
-        $selectedRate = 0;
-
-        try {
-            $criteria = "((Plan:equals:$productId) and (Tipo:equals:$quoteUnemploymentUseType))";
-            $rates = $this->zohoApi->searchRecords('Tasas', $criteria);
-
-            foreach ($rates['data'] as $rate) {
-                if ($debtorAge >= $rate['Edad_min'] && $debtorAge <= $rate['Edad_max']) {
-                    $selectedRate = $rate['Name'];
-                }
-            }
-        } catch (\Throwable $e) {
-            $criteria = "Plan:equals:$productId";
-            $rates = $this->zohoApi->searchRecords('Tasas', $criteria);
-
-            foreach ($rates['data'] as $rate) {
-                if ($loanInstallment >= $rate['Suma_limite'] && $loanInstallment <= $rate['Suma_hasta']) {
-                    $selectedRate = round($rate['Name'], 2);
-                }
             }
         }
 
