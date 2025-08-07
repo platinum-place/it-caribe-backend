@@ -66,7 +66,7 @@ class EmitQuote extends Component implements HasForms
                     ->appendFiles()
                     ->downloadable()
                     ->moveFiles()
-                    ->acceptedFileTypes(['application/pdf', 'image/*'])
+//                    ->acceptedFileTypes(['application/pdf', 'image/*'])
                     ->columnSpanFull(),
             ])
             ->columns()
