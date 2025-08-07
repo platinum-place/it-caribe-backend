@@ -18,6 +18,9 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\QuoteLine::class)->constrained();
             $table->foreignIdFor(\App\Models\QuoteDebtUnemployment::class)->constrained();
             $table->decimal('rate', 18, 2)->default(0);
+            $table->decimal('rate2', 18, 2)->default(0);
+            $table->decimal('total2', 18, 2)->default(0);
+            $table->decimal('total1', 18, 2)->default(0);
         });
     }
 

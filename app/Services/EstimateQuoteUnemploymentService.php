@@ -90,7 +90,7 @@ class EstimateQuoteUnemploymentService
      * @throws ConnectionException
      * @throws Exception
      */
-    protected function getRate(string $debtorBirthDate, string $productId, string $quoteUnemploymentUseTypeId, float $loanInstallment)
+    public function getRate(string $debtorBirthDate, string $productId, string $quoteUnemploymentUseTypeId, float $loanInstallment)
     {
         try {
             $debtorAge = Carbon::parse($debtorBirthDate)->age;
