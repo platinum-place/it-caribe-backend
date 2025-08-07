@@ -56,7 +56,7 @@ class EstimateDebtUnemploymentTable
                             ->dehydrated(false),
 
                         TextInput::make('rate')
-                            ->label('Tasa')
+                            ->label('Tasa deuda')
                             ->disabled()
                             ->dehydrated(false)
                             ->numeric(),
@@ -67,7 +67,7 @@ class EstimateDebtUnemploymentTable
                             ->dehydrated(false)
                             ->numeric(),
 
-                        TextInput::make('subtotal')
+                        TextInput::make('total1')
                             ->label('Total deuda')
                             ->disabled()
                             ->dehydrated(false)

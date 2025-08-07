@@ -36,6 +36,10 @@ class ViewQuote extends ViewRecord
                             case QuoteType::UNEMPLOYMENT->value:
                                 return route('filament.quote-unemployments.download', ['quote_unemployment' => $this->record->quoteUnemployment]);
                                 break;
+
+                            case 6:
+                                return route('filament.quote-debt-unemployments.download', ['quote_debt_unemployment' => $this->record->quoteDebtUnemployment]);
+                                break;
                         }
                     }
 
@@ -55,6 +59,10 @@ class ViewQuote extends ViewRecord
 
                             case QuoteType::UNEMPLOYMENT->value:
                                 return route('filament.quote-unemployments.downloadCertificate', ['quote_unemployment' => $this->record->quoteUnemployment]);
+                                break;
+
+                            case 6:
+                                return route('filament.quote-debt-unemployments.downloadCertificate', ['quote_debt_unemployment' => $this->record->quoteDebtUnemployment]);
                                 break;
                         }
                     }

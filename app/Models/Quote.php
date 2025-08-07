@@ -46,6 +46,11 @@ class Quote extends Model
         return $this->hasOne(QuoteUnemployment::class);
     }
 
+    public function quoteDebtUnemployment(): HasOne
+    {
+        return $this->hasOne(QuoteDebtUnemployment::class);
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class QuoteDebtUnemployment extends Model
@@ -15,4 +16,9 @@ class QuoteDebtUnemployment extends Model
         'vehicle_activity_id', 'vehicle_amount','vehicle_loan_type_id','loan_amount',
         'insured_amount',
     ];
+
+    public function quote(): BelongsTo
+    {
+        return $this->belongsTo(Quote::class);
+    }
 }
