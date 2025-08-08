@@ -40,7 +40,7 @@ class EstimateFireForm
                 Fieldset::make(__('Quote fire'))
                     ->schema([
                         TextInput::make('appraisal_value')
-                            ->label('Valor Tasación')
+                            ->label('Valor Asegurado')
                             ->numeric()
                             ->required()
                             ->prefix('$'),

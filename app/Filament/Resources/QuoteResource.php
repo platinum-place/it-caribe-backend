@@ -53,8 +53,9 @@ class QuoteResource extends Resource
                     ->label(__('Debtor'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('status.name')
-                    ->label(__('Status'))
-                    ->searchable(),
+                    ->label(__('Status')),
+                Tables\Columns\TextColumn::make('type.name')
+                    ->label(__('Status')),
                 Tables\Columns\TextColumn::make('selectedLine.name')
                     ->label(__('Vendor')),
                 Tables\Columns\TextColumn::make('selectedLine.total')

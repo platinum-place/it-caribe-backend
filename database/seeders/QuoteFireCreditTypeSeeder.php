@@ -14,7 +14,8 @@ class QuoteFireCreditTypeSeeder extends Seeder
     {
         $data = [
             [
-                'name' => 'Préstamo de consumo personal (sin garantía)',
+//                'name' => 'Préstamo de consumo personal (sin garantía)',
+                'name' => 'Préstamo Hipotecario',
             ],
         ];
 

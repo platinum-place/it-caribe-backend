@@ -139,6 +139,7 @@ class CreateQuote extends CreateRecord
                     'vehicle_loan_type_id' => $data['vehicle_loan_type_id'],
                     'loan_amount' => $data['loan_amount'],
                     'insured_amount' => $data['insured_amount'],
+                    'quote_unemployment_use_type_id' => $data['quote_unemployment_use_type_id'],
                 ]);
             }
             if ($data['quote_type_id'] == QuoteType::VEHICLE->value) {

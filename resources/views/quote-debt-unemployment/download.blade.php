@@ -64,7 +64,7 @@
     <tbody>
     <tr>
         <td style="border: none; text-align:left; font-weight: bold;">Ramo/Producto:</td>
-        <td style="border: none; text-align:left;">Desempleo</td>
+        <td style="border: none; text-align:left;">Desempleo Deuda</td>
         <td style="border: none; text-align:left; font-weight: bold;">Fecha:</td>
         <td style="border: none; text-align:left;">{{ date('d/m/Y', strtotime($quote->start_date)) }}</td>
     </tr>
@@ -79,6 +79,10 @@
         <td style="border: none; text-align:left;">{{ $debtor->address }}</td>
         <td style="border: none; text-align:left; font-weight: bold;">Teléfono:</td>
         <td style="border: none; text-align:left;">{{ $debtor->home_phone }}</td>
+    </tr>
+    <tr>
+        <td style="border: none; text-align:left; font-weight: bold;">Tipo Empleado:</td>
+        <td style="border: none; text-align:left;">{{ $quoteDebtUnemployment?->quoteUnemploymentUseType?->name }}</td>
     </tr>
     </tbody>
 </table>
