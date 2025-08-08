@@ -138,7 +138,7 @@
         <td style="border: none; text-align:left;">{{ $quoteFire->deadline }}</td>
         <td style="border: none; text-align:left;">{{ number_format($quoteFire->appraisal_value, 2) }}</td>
         <td style="border: none; text-align:left;">{{ number_format($selectedLine->life_amount, 2) }}</td>
-        <td style="border: none; text-align:left;">{{ $debtor->age + ($quoteFire->deadline / 12) }}</td>
+        <td style="border: none; text-align:left;">{{ round($debtor->age + ($quoteFire->deadline / 12),1) }}</td>
         <td style="border: none; text-align:right;">{{ number_format($selectedLine->fire_amount, 2) }}</td>
         <td style="border: none; text-align:right;">{{ number_format($selectedLine->quoteLine->total, 2) }}</td>
         <td style="border: none; text-align:right;">{{ number_format($selectedLine->quoteLine->total * 12, 2) }}</td>
