@@ -111,7 +111,7 @@ class EstimateQuoteDebtUnemploymentService
         $selectedRate = 0;
 
         foreach ($rates['data'] as $rate) {
-            if ($deadline >= $rate['Edad_min'] && $deadline <= $rate['Edad_max']) {
+            if ($deadline >= $rate['Edad_min'] && $deadline <= $rate['Edad_max'] && empty($rate['Tipo'])) {
                 $selectedRate = $rate['Name'];
             }
         }
