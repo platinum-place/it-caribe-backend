@@ -93,8 +93,11 @@
     <thead>
     <tr>
         <th style="border: none; text-align:left;">Aseguradora</th>
-        <th style="border: none; text-align:right;">Cuota Prestamo</th>
+        <th style="border: none; text-align:right;">Monto Prestamo</th>
+        <th style="border: none; text-align:right;">Cuota</th>
         <th style="border: none; text-align:right;">Plazo en Meses</th>
+        <th style="border: none; text-align:right;">Seguro Desempleo</th>
+        <th style="border: none; text-align:right;">Seguro Deuda</th>
         <th style="border: none; text-align:right;">Total Seguro</th>
     </tr>
     </thead>
@@ -106,8 +109,11 @@
         @endphp
         <tr>
             <td style="border: none; text-align:left;">{{ ucwords(strtolower($vendorCRM['Nombre'])) }}</td>
-            <td style="border: none; text-align:right;">{{ number_format($quoteDebtUnemployment->loan_installment, 2) }}</td>
+            <td style="border: none; text-align:right;">{{ number_format($quoteDebtUnemployment->insured_amount, 2) }}</td>
+            <td style="border: none; text-align:right;">{{ number_format($quoteDebtUnemployment->loan_amount, 2) }}</td>
             <td style="border: none; text-align:right;">{{ $quoteDebtUnemployment->deadline }}</td>
+            <td style="border: none; text-align:right;">{{ number_format($line->total2, 2) }}</td>
+            <td style="border: none; text-align:right;">{{ number_format($line->total1, 2) }}</td>
             <td style="border: none; text-align:right;">{{ number_format($line->quoteLine->total, 2) }}</td>
         </tr>
     @endforeach

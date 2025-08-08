@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('quote_debt_unemployments', function (Blueprint $table) {
-            $table->integer('deadline')->nullable()->default(0);
+        Schema::table('quote_unemployments', function (Blueprint $table) {
+            //
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('quote_debt_unemployments', function (Blueprint $table) {
-            $table->dropColumn('deadline');
+        Schema::table('quote_unemployments', function (Blueprint $table) {
+            //
         });
     }
 };
