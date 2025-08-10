@@ -6,7 +6,6 @@ use App\Http\Controllers\QuoteFireController;
 use App\Http\Controllers\QuoteLifeController;
 use App\Http\Controllers\QuoteUnemploymentController;
 use App\Http\Controllers\QuoteVehicleController;
-use App\Models\QuoteUnemployment;
 use Filament\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
 

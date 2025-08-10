@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Quote;
 use App\Services\Api\Zoho\ZohoCRMService;
 use Illuminate\Http\Request;
+use Modules\Quote\Infrastructure\Persistance\Models\Quote;
 
 class QuoteController extends Controller
 {

@@ -54,22 +54,22 @@ class EstimateVehicleTable
                             ->dehydrated(false)
                             ->columnSpan(2),
 
-//                        TextInput::make('vehicle_rate')
-//                            ->label('Tasa')
-//                            ->disabled()
-//                            ->dehydrated(false)
-//                            ->numeric()
-//                            ->columnSpan(1),
+                        //                        TextInput::make('vehicle_rate')
+                        //                            ->label('Tasa')
+                        //                            ->disabled()
+                        //                            ->dehydrated(false)
+                        //                            ->numeric()
+                        //                            ->columnSpan(1),
 
-//                        TextInput::make('total')
-//                            ->label('Total anual')
-//                            ->disabled()
-//                            ->dehydrated(false)
-//                            ->prefix('RD$')
-//                            ->mask(RawJs::make('$money($input)'))
-//                            ->stripCharacters(',')
-//                            ->numeric()
-//                            ->columnSpan(1),
+                        //                        TextInput::make('total')
+                        //                            ->label('Total anual')
+                        //                            ->disabled()
+                        //                            ->dehydrated(false)
+                        //                            ->prefix('RD$')
+                        //                            ->mask(RawJs::make('$money($input)'))
+                        //                            ->stripCharacters(',')
+                        //                            ->numeric()
+                        //                            ->columnSpan(1),
 
                         TextInput::make('total_monthly')
                             ->label('Total mensual')

@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
-use App\Enums\QuoteLineStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\Quote\Domain\Enums\QuoteLineStatusEnum;
+use Modules\Quote\Infrastructure\Persistance\Models\Quote;
 
 class QuoteUnemployment extends Model
 {
@@ -42,7 +43,7 @@ class QuoteUnemployment extends Model
     {
         return $this->hasOne(QuoteUnemploymentLine::class)
             ->whereHas('quoteLine', function ($query) {
-                $query->where('quote_line_status_id', QuoteLineStatus::ACCEPTED->value);
+                $query->where('quote_line_status_id', QuoteLineStatusEnum::ACCEPTED->value);
             });
     }
 }

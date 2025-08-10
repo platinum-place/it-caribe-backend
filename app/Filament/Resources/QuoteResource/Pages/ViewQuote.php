@@ -2,11 +2,11 @@
 
 namespace App\Filament\Resources\QuoteResource\Pages;
 
-use App\Enums\QuoteStatus;
-use App\Enums\QuoteType;
 use App\Filament\Resources\QuoteResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
+use Modules\Quote\Domain\Enums\QuoteStatusEnum;
+use Modules\Quote\Domain\Enums\QuoteTypeEnum;
 
 class ViewQuote extends ViewRecord
 {
@@ -19,21 +19,21 @@ class ViewQuote extends ViewRecord
             Actions\Action::make('download')
                 ->translateLabel()
                 ->url(function ($record) {
-                    if ($this->record->quote_status_id !== QuoteStatus::APPROVED->value) {
+                    if ($this->record->quote_status_id !== QuoteStatusEnum::APPROVED->value) {
                         switch ($record->quote_type_id) {
-                            case QuoteType::VEHICLE->value:
+                            case QuoteTypeEnum::VEHICLE->value:
                                 return route('filament.quote-vehicles.download', ['quote_vehicle' => $this->record->quoteVehicle]);
                                 break;
 
-                            case QuoteType::LIFE->value:
+                            case QuoteTypeEnum::LIFE->value:
                                 return route('filament.quote-lives.download', ['quote_life' => $this->record->quoteLife]);
                                 break;
 
-                            case QuoteType::FIRE->value:
+                            case QuoteTypeEnum::FIRE->value:
                                 return route('filament.quote-fires.download', ['quote_fire' => $this->record->quoteFire]);
                                 break;
 
-                            case QuoteType::UNEMPLOYMENT->value:
+                            case QuoteTypeEnum::UNEMPLOYMENT->value:
                                 return route('filament.quote-unemployments.download', ['quote_unemployment' => $this->record->quoteUnemployment]);
                                 break;
 
@@ -43,21 +43,21 @@ class ViewQuote extends ViewRecord
                         }
                     }
 
-                    if ($this->record->quote_status_id === QuoteStatus::APPROVED->value) {
+                    if ($this->record->quote_status_id === QuoteStatusEnum::APPROVED->value) {
                         switch ($record->quote_type_id) {
-                            case QuoteType::VEHICLE->value:
+                            case QuoteTypeEnum::VEHICLE->value:
                                 return route('filament.quote-vehicles.downloadCertificate', ['quote_vehicle' => $this->record->quoteVehicle]);
                                 break;
 
-                            case QuoteType::LIFE->value:
+                            case QuoteTypeEnum::LIFE->value:
                                 return route('filament.quote-lives.downloadCertificate', ['quote_life' => $this->record->quoteLife]);
                                 break;
 
-                            case QuoteType::FIRE->value:
+                            case QuoteTypeEnum::FIRE->value:
                                 return route('filament.quote-fires.downloadCertificate', ['quote_fire' => $this->record->quoteFire]);
                                 break;
 
-                            case QuoteType::UNEMPLOYMENT->value:
+                            case QuoteTypeEnum::UNEMPLOYMENT->value:
                                 return route('filament.quote-unemployments.downloadCertificate', ['quote_unemployment' => $this->record->quoteUnemployment]);
                                 break;
 
@@ -73,7 +73,7 @@ class ViewQuote extends ViewRecord
             Actions\Action::make('emit')
                 ->translateLabel()
                 ->url(route('filament.admin.resources.quotes.emit', ['record' => $this->record]))
-                ->visible(fn () => $this->record->quote_status_id === QuoteStatus::PENDING->value),
+                ->visible(fn () => $this->record->quote_status_id === QuoteStatusEnum::PENDING->value),
             Actions\Action::make('documents')
                 ->label(__('Download :name', ['name' => __('Documents')]))
                 ->url(function () {
@@ -81,7 +81,7 @@ class ViewQuote extends ViewRecord
 
                     return route('filament.quotes.downloadCRMDocuments', ['id' => $id]);
                 })
-                ->visible(fn () => $this->record->quote_status_id === QuoteStatus::APPROVED->value),
+                ->visible(fn () => $this->record->quote_status_id === QuoteStatusEnum::APPROVED->value),
         ];
     }
 }

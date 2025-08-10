@@ -2,20 +2,30 @@
 
 namespace App\Models;
 
-use App\Enums\QuoteLineStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\Quote\Domain\Enums\QuoteLineStatusEnum;
+use Modules\Quote\Infrastructure\Persistance\Models\Quote;
+use Modules\Vehicle\Infrastructure\Persistence\Models\Vehicle;
+use Modules\Vehicle\Infrastructure\Persistence\Models\VehicleAccessory;
+use Modules\Vehicle\Infrastructure\Persistence\Models\VehicleActivity;
+use Modules\Vehicle\Infrastructure\Persistence\Models\VehicleColor;
+use Modules\Vehicle\Infrastructure\Persistence\Models\VehicleMake;
+use Modules\Vehicle\Infrastructure\Persistence\Models\VehicleModel;
+use Modules\Vehicle\Infrastructure\Persistence\Models\VehicleRoute;
+use Modules\Vehicle\Infrastructure\Persistence\Models\VehicleType;
+use Modules\Vehicle\Infrastructure\Persistence\Models\VehicleUse;
 
 class QuoteVehicle extends Model
 {
     use SoftDeletes;
 
     protected $fillable = [
-        'quote_id', 'vehicle_id', 'vehicle_make_id', 'vehicle_year',
+        'quote_id',  'vehicle_year', 'chassis', 'license_plate', 'vehicle_make_id', 'vehicle_year',
         'vehicle_model_id', 'vehicle_type_id', 'vehicle_use_id',
         'vehicle_activity_id', 'vehicle_amount', 'vehicle_rate',
         'vehicle_loan_type_id', 'is_employee', 'leasing', 'loan_amount',
@@ -80,7 +90,7 @@ class QuoteVehicle extends Model
     {
         return $this->hasOne(QuoteLifeLine::class)
             ->whereHas('quoteLine', function ($query) {
-                $query->where('quote_line_status_id', QuoteLineStatus::ACCEPTED->value);
+                $query->where('quote_line_status_id', QuoteLineStatusEnum::ACCEPTED->value);
             });
     }
 }

@@ -3,15 +3,15 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\VehicleAccessory;
-use App\Models\VehicleActivity;
-use App\Models\VehicleColor;
-use App\Models\VehicleMake;
-use App\Models\VehicleModel;
-use App\Models\VehicleType;
 use App\Services\ZohoCRMService;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
+use Modules\Vehicle\Infrastructure\Persistence\Models\VehicleAccessory;
+use Modules\Vehicle\Infrastructure\Persistence\Models\VehicleActivity;
+use Modules\Vehicle\Infrastructure\Persistence\Models\VehicleColor;
+use Modules\Vehicle\Infrastructure\Persistence\Models\VehicleMake;
+use Modules\Vehicle\Infrastructure\Persistence\Models\VehicleModel;
+use Modules\Vehicle\Infrastructure\Persistence\Models\VehicleType;
 
 class VehicleController extends Controller
 {

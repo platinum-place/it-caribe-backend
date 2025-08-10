@@ -2,68 +2,52 @@
 
 namespace App\Providers\Filament;
 
-use App\Filament\Pages\EditProfile;
-use App\Filament\Pages\Login;
-use Filament\Http\Middleware\Authenticate;
-use Filament\Http\Middleware\AuthenticateSession;
-use Filament\Http\Middleware\DisableBladeIconComponents;
-use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use App\Filament\Resources\QuoteResource;
+use App\Filament\Resources\UserResource;
+use Filament\Navigation\NavigationBuilder;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
-use Filament\Support\Colors\Color;
-use Filament\Support\Enums\MaxWidth;
-use Filament\Widgets;
-use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
-use Illuminate\Cookie\Middleware\EncryptCookies;
-use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
-use Illuminate\Routing\Middleware\SubstituteBindings;
-use Illuminate\Session\Middleware\StartSession;
-use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Filament\Widgets\AccountWidget;
+use Modules\Support\FilamentPanel;
 
 class AdminPanelProvider extends PanelProvider
 {
+    protected FilamentPanel $filamentPanel;
+
+    public function __construct($app)
+    {
+        parent::__construct($app);
+
+        $this->filamentPanel = new FilamentPanel;
+    }
+
+    /**
+     * @throws \Exception
+     */
     public function panel(Panel $panel): Panel
     {
-        return $panel
+        return $this->filamentPanel
+            ->buildPanel($panel)
             ->default()
             ->id('admin')
             ->path('admin')
-            ->brandLogo(asset('img/logo.png'))
-            ->brandLogoHeight('50px')
-            ->brandName('IT - Insurance Tech')
-            ->favicon(asset('img/logo.png'))
-            ->login(Login::class)
-            ->profile(EditProfile::class)
-            ->colors([
-                'primary' => Color::Amber,
-            ])
-            ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
-            ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
                 Pages\Dashboard::class,
             ])
-            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
-                // Widgets\FilamentInfoWidget::class,
+                AccountWidget::class,
             ])
-            ->middleware([
-                EncryptCookies::class,
-                AddQueuedCookiesToResponse::class,
-                StartSession::class,
-                AuthenticateSession::class,
-                ShareErrorsFromSession::class,
-                VerifyCsrfToken::class,
-                SubstituteBindings::class,
-                DisableBladeIconComponents::class,
-                DispatchServingFilamentEvent::class,
-            ])
-            ->authMiddleware([
-                Authenticate::class,
-            ])
-  ->maxContentWidth(MaxWidth::Full)
-            ->databaseNotifications()
-            ->databaseNotificationsPolling('30s');
+            ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
+            ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
+            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
+            ->navigation(function (NavigationBuilder $builder): NavigationBuilder {
+                return $this->filamentPanel
+                    ->buildNavigation($builder)
+                    ->items([
+                        ...QuoteResource::getNavigationItems(),
+                        ...UserResource::getNavigationItems(),
+                    ]);
+            });
     }
 }

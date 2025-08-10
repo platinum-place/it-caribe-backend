@@ -2,12 +2,6 @@
 
 namespace App\Filament\Resources\QuoteResource\Components\Wizards;
 
-use App\Models\VehicleActivity;
-use App\Models\VehicleColor;
-use App\Models\VehicleLoanType;
-use App\Models\VehicleMake;
-use App\Models\VehicleModel;
-use App\Models\VehicleUse;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
@@ -15,6 +9,12 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Wizard;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
+use Modules\Vehicle\Infrastructure\Persistence\Models\VehicleActivity;
+use Modules\Vehicle\Infrastructure\Persistence\Models\VehicleColor;
+use Modules\Vehicle\Infrastructure\Persistence\Models\VehicleLoanType;
+use Modules\Vehicle\Infrastructure\Persistence\Models\VehicleMake;
+use Modules\Vehicle\Infrastructure\Persistence\Models\VehicleModel;
+use Modules\Vehicle\Infrastructure\Persistence\Models\VehicleUse;
 
 class Vehicle2WizardStep
 {
@@ -48,7 +48,7 @@ class Vehicle2WizardStep
                                         $model->type ?
                                             ' ('.$model->type->name.')' :
                                             ''
-                                        ),
+                                    ),
                                 ];
                             });
                     })

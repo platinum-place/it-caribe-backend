@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\QuoteDebtUnemployment;
-use App\Models\QuoteUnemployment;
 use App\Services\Api\Zoho\ZohoCRMService;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;

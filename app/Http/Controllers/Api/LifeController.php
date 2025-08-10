@@ -12,9 +12,7 @@ use Throwable;
 
 class LifeController extends Controller
 {
-    public function __construct(protected ZohoCRMService $crm)
-    {
-    }
+    public function __construct(protected ZohoCRMService $crm) {}
 
     /**
      * @throws RequestException
@@ -34,7 +32,7 @@ class LifeController extends Controller
             $debtTax = 0;
             $amount = 0;
 
-            $criteria = 'Plan:equals:' . $product['id'];
+            $criteria = 'Plan:equals:'.$product['id'];
             $taxes = $this->crm->searchRecords('Tasas', $criteria);
             foreach ($taxes['data'] as $tax) {
                 $debtTax = $tax['Name'] / 100;
@@ -44,7 +42,7 @@ class LifeController extends Controller
 
             $data = [
                 'Subject' => $request->get('NombreCliente'),
-                'Valid_Till' => date('Y-m-d', strtotime(date('Y-m-d') . '+ 30 days')),
+                'Valid_Till' => date('Y-m-d', strtotime(date('Y-m-d').'+ 30 days')),
                 'Vigencia_desde' => date('Y-m-d'),
                 'Account_Name' => 3222373000092390001,
                 'Contact_Name' => 3222373000203318001,
@@ -82,7 +80,7 @@ class LifeController extends Controller
                 'Cliente' => $request->get('NombreCliente'),
                 'Fecha' => date('Y-m-d\TH:i:sP'),
                 'Direccion' => $request->get('Direccion'),
-                'Edad' => (int)$request->get('Edad'),
+                'Edad' => (int) $request->get('Edad'),
                 'IdenCliente' => $request->get('IdenCliente'),
                 'Codeudor' => null,
                 'Error' => $alert,
@@ -110,7 +108,7 @@ class LifeController extends Controller
                 'Coberturas' => $line['Product_Name']['id'],
                 'Quote_Stage' => 'Emitida',
                 'Vigencia_desde' => date('Y-m-d'),
-                'Valid_Till' => date('Y-m-d', strtotime(date('Y-m-d') . '+ 1 years')),
+                'Valid_Till' => date('Y-m-d', strtotime(date('Y-m-d').'+ 1 years')),
                 'Prima_neta' => round($line['Net_Total'] / 1.16, 2),
                 'ISC' => round($line['Net_Total'] - ($line['Net_Total'] / 1.16), 2),
                 'Prima' => round($line['Net_Total'], 2),

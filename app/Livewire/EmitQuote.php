@@ -2,10 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Enums\QuoteLineStatus;
-use App\Enums\QuoteStatus;
 use App\Filament\Resources\QuoteResource;
-use App\Models\Quote;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
@@ -13,6 +10,9 @@ use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Livewire\Component;
+use Modules\Quote\Domain\Enums\QuoteLineStatusEnum;
+use Modules\Quote\Domain\Enums\QuoteStatusEnum;
+use Modules\Quote\Infrastructure\Persistance\Models\Quote;
 
 class EmitQuote extends Component implements HasForms
 {
@@ -84,13 +84,13 @@ class EmitQuote extends Component implements HasForms
 
         $quote->update([
             'attachments' => $data['attachments'] ?? [],
-            'quote_status_id' => QuoteStatus::APPROVED->value,
+            'quote_status_id' => QuoteStatusEnum::APPROVED->value,
             'responsible_id' => auth()->id(),
             //            'end_date' => now()->addMonths($deadline ?? 12),
         ]);
 
         $line->update([
-            'quote_line_status_id' => QuoteLineStatus::ACCEPTED->value,
+            'quote_line_status_id' => QuoteLineStatusEnum::ACCEPTED->value,
         ]);
 
         $this->redirect(QuoteResource::getUrl('view', ['record' => $this->record]));

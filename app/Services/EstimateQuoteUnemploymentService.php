@@ -2,10 +2,8 @@
 
 namespace App\Services;
 
-use App\Enums\QuoteFireRiskType;
 use App\Models\QuoteUnemploymentDebtorType;
 use App\Models\QuoteUnemploymentUseType;
-use App\Models\VehicleType;
 use App\Services\Api\Zoho\ZohoCRMService;
 use Carbon\Carbon;
 use Exception;
@@ -14,9 +12,7 @@ use Illuminate\Http\Client\RequestException;
 
 class EstimateQuoteUnemploymentService
 {
-    public function __construct(protected ZohoCRMService $zohoApi)
-    {
-    }
+    public function __construct(protected ZohoCRMService $zohoApi) {}
 
     /**
      * @throws RequestException
@@ -27,7 +23,7 @@ class EstimateQuoteUnemploymentService
     {
         $quoteUnemploymentType = QuoteUnemploymentDebtorType::findOrFail($quoteUnemploymentTypeId)->name;
 
-        $criteria = '((Corredor:equals:' . 3222373000092390001 . ') and (Product_Category:equals:Desempleo))';
+        $criteria = '((Corredor:equals:'. 3222373000092390001 .') and (Product_Category:equals:Desempleo))';
         $productsResponse = $this->zohoApi->searchRecords('Products', $criteria);
 
         $result = [];
@@ -50,7 +46,7 @@ class EstimateQuoteUnemploymentService
                     $taxesAmount = $amount - $amountTaxed;
                 }
             } else {
-                if (!empty($product['Indemnizaci_n'])) {
+                if (! empty($product['Indemnizaci_n'])) {
                     $amount = $loanInstallment * ($rate / 100) * $product['Indemnizaci_n'] * $deadline;
                 } else {
                     $amount = $loanInstallment * ($rate / 100) * $deadline;
@@ -94,7 +90,7 @@ class EstimateQuoteUnemploymentService
     {
         try {
             $debtorAge = Carbon::parse($debtorBirthDate)->age;
-        }catch (\Throwable $exception){
+        } catch (\Throwable $exception) {
             $debtorAge = $debtorBirthDate;
         }
 

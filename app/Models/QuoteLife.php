@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
-use App\Enums\QuoteLineStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\Quote\Domain\Enums\QuoteLineStatusEnum;
+use Modules\Quote\Infrastructure\Persistance\Models\Debtor;
+use Modules\Quote\Infrastructure\Persistance\Models\Quote;
 
 class QuoteLife extends Model
 {
@@ -42,7 +44,7 @@ class QuoteLife extends Model
     {
         return $this->hasOne(QuoteLifeLine::class)
             ->whereHas('quoteLine', function ($query) {
-                $query->where('quote_line_status_id', QuoteLineStatus::ACCEPTED->value);
+                $query->where('quote_line_status_id', QuoteLineStatusEnum::ACCEPTED->value);
             });
     }
 }

@@ -35,7 +35,6 @@ class DebtorWizardStep
                 TextInput::make('home_phone')
                     ->translateLabel()
                     ->tel()
-                    ->required()
                     ->mask('999-999-9999'),
                 TextInput::make('work_phone')
                     ->translateLabel()

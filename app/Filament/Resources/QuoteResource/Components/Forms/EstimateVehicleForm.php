@@ -2,8 +2,6 @@
 
 namespace App\Filament\Resources\QuoteResource\Components\Forms;
 
-use App\Models\VehicleMake;
-use App\Models\VehicleModel;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Hidden;
@@ -12,6 +10,8 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
+use Modules\Vehicle\Infrastructure\Persistence\Models\VehicleMake;
+use Modules\Vehicle\Infrastructure\Persistence\Models\VehicleModel;
 
 class EstimateVehicleForm
 {

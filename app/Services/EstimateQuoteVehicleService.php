@@ -2,19 +2,17 @@
 
 namespace App\Services;
 
-use App\Models\VehicleMake;
-use App\Models\VehicleModel;
-use App\Models\VehicleType;
 use App\Services\Api\Zoho\ZohoCRMService;
 use Exception;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
+use Modules\Vehicle\Infrastructure\Persistence\Models\VehicleMake;
+use Modules\Vehicle\Infrastructure\Persistence\Models\VehicleModel;
+use Modules\Vehicle\Infrastructure\Persistence\Models\VehicleType;
 
 class EstimateQuoteVehicleService
 {
-    public function __construct(protected ZohoCRMService $zohoApi)
-    {
-    }
+    public function __construct(protected ZohoCRMService $zohoApi) {}
 
     /**
      * @throws RequestException
@@ -27,7 +25,7 @@ class EstimateQuoteVehicleService
         $vehicleModel = VehicleModel::find($vehicleModelId);
         $vehicleType = VehicleType::find($vehicleTypeId);
 
-        $criteria = '((Corredor:equals:' . 3222373000092390001 . ') and (Product_Category:equals:Auto))';
+        $criteria = '((Corredor:equals:'. 3222373000092390001 .') and (Product_Category:equals:Auto))';
         $productsResponse = $this->zohoApi->searchRecords('Products', $criteria);
 
         $result = [];
@@ -36,8 +34,8 @@ class EstimateQuoteVehicleService
             $shouldSkip = false;
             $error = '';
 
-            if (!empty($product['Plan'])) {
-                if ($product['Plan'] === 'Empleado' && !$isEmployee) {
+            if (! empty($product['Plan'])) {
+                if ($product['Plan'] === 'Empleado' && ! $isEmployee) {
                     continue;
                 }
 
@@ -47,13 +45,13 @@ class EstimateQuoteVehicleService
             }
 
             try {
-                $criteria = 'Aseguradora:equals:' . $product['Vendor_Name']['id'];
+                $criteria = 'Aseguradora:equals:'.$product['Vendor_Name']['id'];
                 $restrictedVehicles = $this->zohoApi->searchRecords('Restringidos', $criteria);
             } catch (\Throwable $e) {
                 //
             }
 
-            if (!empty($restrictedVehicles)) {
+            if (! empty($restrictedVehicles)) {
                 foreach ($restrictedVehicles['data'] as $restricted) {
                     if (\Str::contains(\Str::lower($vehicleMake->name), \Str::lower($restricted['Marca']['name']))) {
                         if (empty($restricted['Modelo'])) {
@@ -94,7 +92,7 @@ class EstimateQuoteVehicleService
 
                 $amount = $totalMonthly * 12;
 
-                if (!empty($product['Resp_civil']) && $leasing) {
+                if (! empty($product['Resp_civil']) && $leasing) {
                     $totalMonthly += $product['Leasing_mensual'];
                     $amount = $totalMonthly * 12;
                 }
@@ -154,19 +152,19 @@ class EstimateQuoteVehicleService
         $selectedRate = 0;
 
         foreach ($rates['data'] as $rate) {
-            if (!empty($rate['Grupo_de_veh_culo']) && !in_array($vehicleType->name, $rate['Grupo_de_veh_culo'], true)) {
+            if (! empty($rate['Grupo_de_veh_culo']) && ! in_array($vehicleType->name, $rate['Grupo_de_veh_culo'], true)) {
                 continue;
             }
 
-            if (!empty($rate['Suma_hasta']) && $vehicleAmount > $rate['Suma_hasta']) {
+            if (! empty($rate['Suma_hasta']) && $vehicleAmount > $rate['Suma_hasta']) {
                 continue;
             }
 
-            if (!empty($rate['Suma_limite']) && $vehicleAmount < $rate['Suma_limite']) {
+            if (! empty($rate['Suma_limite']) && $vehicleAmount < $rate['Suma_limite']) {
                 continue;
             }
 
-            if (!empty($rate['A_o']) && $rate['A_o'] !== $vehicleYear) {
+            if (! empty($rate['A_o']) && $rate['A_o'] !== $vehicleYear) {
                 continue;
             }
 

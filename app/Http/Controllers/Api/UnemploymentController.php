@@ -10,7 +10,6 @@ use App\Services\EstimateQuoteUnemploymentService;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Throwable;
 
 class UnemploymentController
 {
