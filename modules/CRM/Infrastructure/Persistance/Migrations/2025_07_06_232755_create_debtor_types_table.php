@@ -11,10 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tmp_vendor_products', function (Blueprint $table) {
+        Schema::create('debtor_types', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('id_crm');
+            $table->softDeletes();
+            $table->string('name');
+            $table->foreignId('created_by')->constrained('users');
+            $table->foreignId('updated_by')->nullable()->constrained('users');
+            $table->foreignId('deleted_by')->nullable()->constrained('users');
         });
     }
 
@@ -23,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tmp_vendor_products');
+        Schema::dropIfExists('debtor_types');
     }
 };
