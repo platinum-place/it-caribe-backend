@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Support;
+namespace Modules\Common\Presentation\Filament;
 
 use App\Filament\Pages\EditProfile;
 use App\Filament\Pages\Login;
@@ -22,7 +22,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
-class FilamentPanel
+class FilamentPanelBuilder
 {
     public function buildPanel(Panel $panel): Panel
     {
@@ -50,7 +50,7 @@ class FilamentPanel
             ->favicon(asset('img/logo.png'))
             ->login(Login::class)
             ->profile(EditProfile::class)
-            ->maxContentWidth(MaxWidth::Full)
+//->maxContentWidth(MaxWidth::Full)
             ->databaseNotifications()
             ->databaseNotificationsPolling('30s');
     }
@@ -82,11 +82,7 @@ class FilamentPanel
                             ->isActiveWhen(fn() => false)
                             ->badge(fn() => request()->is('crm*') ? '●' : null)
                             ->visible(fn() => auth()->user()->isAdmin()),
-                    ]),
 
-                NavigationGroup::make(__('Quotes'))
-                    ->collapsed()
-                    ->items([
                         NavigationItem::make(__('Quote'))
                             ->url('/quote')
                             ->icon('heroicon-o-document-text')

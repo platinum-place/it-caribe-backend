@@ -7,23 +7,19 @@ use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Widgets\AccountWidget;
+use Modules\Common\Presentation\Filament\FilamentPanelBuilder;
 use Modules\Quote\Presentation\Filament\Resources\QuoteLineResource;
-use Modules\Quote\Presentation\Filament\Resources\QuoteLineStatusResource;
-use Modules\Quote\Presentation\Filament\Resources\QuoteResource;
-use Modules\Quote\Presentation\Filament\Resources\QuoteStatusResource;
-use Modules\Quote\Presentation\Filament\Resources\QuoteTypeResource;
 use Modules\Quote\Submodules\Vehicle\Presentation\Filament\Resources\QuoteVehicleResource;
-use Modules\Support\FilamentPanel;
 
 class FilamentPanelProvider extends PanelProvider
 {
-    protected FilamentPanel $filamentPanel;
+    protected FilamentPanelBuilder $filamentPanel;
 
     public function __construct($app)
     {
         parent::__construct($app);
 
-        $this->filamentPanel = new FilamentPanel;
+        $this->filamentPanel = new FilamentPanelBuilder;
     }
 
     /**

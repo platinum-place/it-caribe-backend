@@ -7,9 +7,8 @@ return [
     SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
 
     /** Modules */
-    Modules\Common\CommonServiceProvider::class,
+    Modules\Common\AppServiceProvider::class,
     Modules\Vehicle\AppServiceProvider::class,
-    Modules\ZohoIntegration\AppServiceProvider::class,
     Modules\CRM\AppServiceProvider::class,
     Modules\Quote\AppServiceProvider::class,
 ];

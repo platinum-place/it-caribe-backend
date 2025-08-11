@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\ZohoIntegration\Infrastructure\Http;
+namespace Modules\Common\Infrastructure\Http;
 
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;

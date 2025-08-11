@@ -4,7 +4,7 @@ namespace Modules\Common\Infrastructure\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Modules\Common\Domain\Contracts\ZohoApiClientInterface;
-use Modules\ZohoIntegration\Infrastructure\Http\ZohoApiClient;
+use Modules\Common\Infrastructure\Http\ZohoApiClient;
 
 class ContractServiceProvider extends ServiceProvider
 {

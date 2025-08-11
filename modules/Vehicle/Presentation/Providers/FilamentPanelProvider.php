@@ -7,7 +7,7 @@ use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Widgets\AccountWidget;
-use Modules\Support\FilamentPanel;
+use Modules\Common\Presentation\Filament\FilamentPanelBuilder;
 use Modules\Vehicle\Presentation\Filament\Resources\VehicleAccessoryResource;
 use Modules\Vehicle\Presentation\Filament\Resources\VehicleActivityResource;
 use Modules\Vehicle\Presentation\Filament\Resources\VehicleColorResource;
@@ -21,13 +21,13 @@ use Modules\Vehicle\Presentation\Filament\Resources\VehicleUtilityResource;
 
 class FilamentPanelProvider extends PanelProvider
 {
-    protected FilamentPanel $filamentPanel;
+    protected FilamentPanelBuilder $filamentPanel;
 
     public function __construct($app)
     {
         parent::__construct($app);
 
-        $this->filamentPanel = new FilamentPanel;
+        $this->filamentPanel = new FilamentPanelBuilder;
     }
 
     /**

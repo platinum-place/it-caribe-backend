@@ -6,7 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Modules\Common\Infrastructure\Providers\ContractServiceProvider;
 use Modules\Common\Infrastructure\Providers\MigrationServiceProvider;
 
-class CommonServiceProvider extends ServiceProvider
+class AppServiceProvider extends ServiceProvider
 {
     protected array $providers = [
         ContractServiceProvider::class,

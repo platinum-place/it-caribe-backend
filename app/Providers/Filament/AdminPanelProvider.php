@@ -8,17 +8,17 @@ use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Widgets\AccountWidget;
-use Modules\Support\FilamentPanel;
+use Modules\Common\Presentation\Filament\FilamentPanelBuilder;
 
 class AdminPanelProvider extends PanelProvider
 {
-    protected FilamentPanel $filamentPanel;
+    protected FilamentPanelBuilder $filamentPanel;
 
     public function __construct($app)
     {
         parent::__construct($app);
 
-        $this->filamentPanel = new FilamentPanel;
+        $this->filamentPanel = new FilamentPanelBuilder;
     }
 
     /**
