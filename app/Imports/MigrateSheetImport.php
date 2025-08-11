@@ -2,8 +2,6 @@
 
 namespace App\Imports;
 
-use App\Models\QuoteVehicle;
-use App\Models\QuoteVehicleLine;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
@@ -14,6 +12,8 @@ use Modules\Quote\Domain\Enums\QuoteTypeEnum;
 use Modules\Quote\Infrastructure\Persistance\Models\Debtor;
 use Modules\Quote\Infrastructure\Persistance\Models\Quote;
 use Modules\Quote\Infrastructure\Persistance\Models\QuoteLine;
+use Modules\Quote\Submodules\Vehicle\Infrastructure\Persistence\Models\QuoteVehicle;
+use Modules\Quote\Submodules\Vehicle\Infrastructure\Persistence\Models\QuoteVehicleLine;
 use Modules\Vehicle\Infrastructure\Persistence\Models\Vehicle;
 use Modules\Vehicle\Infrastructure\Persistence\Models\VehicleMake;
 use Modules\Vehicle\Infrastructure\Persistence\Models\VehicleModel;

@@ -7,6 +7,8 @@ use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Widgets\AccountWidget;
+use Modules\CRM\Presentation\Filament\Resources\DebtorResource;
+use Modules\CRM\Presentation\Filament\Resources\DebtorTypeResource;
 use Modules\Support\FilamentPanel;
 
 class FilamentPanelProvider extends PanelProvider
@@ -42,7 +44,8 @@ class FilamentPanelProvider extends PanelProvider
                 return $this->filamentPanel
                     ->buildNavigation($builder)
                     ->items([
-
+                        ...DebtorTypeResource::getNavigationItems(),
+                        ...DebtorResource::getNavigationItems(),
                     ]);
             });
     }

@@ -22,6 +22,9 @@ class VehicleUtilitySeeder extends Seeder
             [
                 'name' => 'Híbrido/Eléctrico',
             ],
+            [
+                'name' => 'Clásico',
+            ],
         ];
 
         foreach ($data as $item) {

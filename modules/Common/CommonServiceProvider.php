@@ -4,11 +4,13 @@ namespace Modules\Common;
 
 use Illuminate\Support\ServiceProvider;
 use Modules\Common\Infrastructure\Providers\ContractServiceProvider;
+use Modules\Common\Infrastructure\Providers\MigrationServiceProvider;
 
 class CommonServiceProvider extends ServiceProvider
 {
     protected array $providers = [
         ContractServiceProvider::class,
+        MigrationServiceProvider::class,
     ];
 
     /**

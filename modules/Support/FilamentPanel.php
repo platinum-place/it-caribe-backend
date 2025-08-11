@@ -64,22 +64,54 @@ class FilamentPanel
                     ->items([
                         NavigationItem::make(__('Admin'))
                             ->url('/admin')
-                            ->icon('heroicon-o-adjustments-horizontal')
-                            ->isActiveWhen(fn () => false)
-                            ->badge(fn () => request()->is('admin*') ? '●' : null),
+                            ->icon('heroicon-o-document-text')
+                            ->isActiveWhen(fn() => false)
+                            ->badge(fn() => request()->is('admin*') ? '●' : null),
 
                         NavigationItem::make(__('Vehicle'))
                             ->url('/vehicle')
-                            ->icon('heroicon-o-wrench-screwdriver')
-                            ->isActiveWhen(fn () => false)
-                            ->badge(fn () => request()->is('vehicle*') ? '●' : null),
+                            ->icon('heroicon-o-document-text')
+                            ->isActiveWhen(fn() => false)
+                            ->badge(fn() => request()->is('vehicle*') ? '●' : null),
+
+                        NavigationItem::make(__('CRM'))
+                            ->url('/crm')
+                            ->icon('heroicon-o-document-text')
+                            ->isActiveWhen(fn() => false)
+                            ->badge(fn() => request()->is('crm*') ? '●' : null),
                     ]),
+
+                NavigationGroup::make(__('Quotes'))
+                    ->collapsed()
+                    ->items([
+                        NavigationItem::make(__('Quote'))
+                            ->url('/quote')
+                            ->icon('heroicon-o-document-text')
+                            ->isActiveWhen(fn() => false)
+                            ->badge(function () {
+                                return (
+                                    request()->is('quote') ||
+                                    (
+                                        request()->is('quote/*') && !request()->is('quote/vehicle-quote*')
+                                    )
+                                )
+                                    ? '●' :
+                                    null;
+                            }),
+
+                        NavigationItem::make(__('Vehicle quote'))
+                            ->url('/quote/vehicle-quote')
+                            ->icon('heroicon-o-document-text')
+                            ->isActiveWhen(fn() => false)
+                            ->badge(fn() => request()->is('quote/vehicle-quote*') ? '●' : null),
+                    ]),
+
             ])
             ->items([
                 NavigationItem::make(__('Dashboard'))
                     ->url(Pages\Dashboard::getUrl())
                     ->icon('heroicon-o-home')
-                    ->isActiveWhen(fn () => request()->fullUrlIs(Pages\Dashboard::getUrl())),
+                    ->isActiveWhen(fn() => request()->fullUrlIs(Pages\Dashboard::getUrl())),
             ]);
     }
 }

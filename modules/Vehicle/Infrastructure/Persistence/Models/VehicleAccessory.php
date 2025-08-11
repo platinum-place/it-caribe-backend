@@ -2,11 +2,11 @@
 
 namespace Modules\Vehicle\Infrastructure\Persistence\Models;
 
-use App\Models\QuoteVehicle;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\Quote\Submodules\Vehicle\Infrastructure\Persistence\Models\QuoteVehicle;
 
 class VehicleAccessory extends Model
 {

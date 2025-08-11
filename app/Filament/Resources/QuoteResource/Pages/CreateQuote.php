@@ -11,8 +11,6 @@ use App\Models\QuoteLife;
 use App\Models\QuoteLifeLine;
 use App\Models\QuoteUnemployment;
 use App\Models\QuoteUnemploymentLine;
-use App\Models\QuoteVehicle;
-use App\Models\QuoteVehicleLine;
 use Carbon\Carbon;
 use DB;
 use Filament\Forms\Components\Select;
@@ -26,6 +24,8 @@ use Modules\Quote\Domain\Enums\QuoteTypeEnum;
 use Modules\Quote\Infrastructure\Persistance\Models\Debtor;
 use Modules\Quote\Infrastructure\Persistance\Models\Quote;
 use Modules\Quote\Infrastructure\Persistance\Models\QuoteLine;
+use Modules\Quote\Submodules\Vehicle\Infrastructure\Persistence\Models\QuoteVehicle;
+use Modules\Quote\Submodules\Vehicle\Infrastructure\Persistence\Models\QuoteVehicleLine;
 use Modules\Vehicle\Infrastructure\Persistence\Models\Vehicle;
 
 class CreateQuote extends CreateRecord

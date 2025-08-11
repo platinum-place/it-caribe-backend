@@ -2,7 +2,6 @@
 
 namespace App\Providers\Filament;
 
-use App\Filament\Resources\QuoteResource;
 use App\Filament\Resources\UserResource;
 use Filament\Navigation\NavigationBuilder;
 use Filament\Pages;
@@ -45,7 +44,6 @@ class AdminPanelProvider extends PanelProvider
                 return $this->filamentPanel
                     ->buildNavigation($builder)
                     ->items([
-                        ...QuoteResource::getNavigationItems(),
                         ...UserResource::getNavigationItems(),
                     ]);
             });

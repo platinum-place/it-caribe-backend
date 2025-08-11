@@ -11,7 +11,7 @@ class VehicleUtility extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'id', 'name', 'created_by', 'updated_by', 'deleted_by',
+         'name', 'created_by', 'updated_by', 'deleted_by',
     ];
 
     public function createdBy(): BelongsTo

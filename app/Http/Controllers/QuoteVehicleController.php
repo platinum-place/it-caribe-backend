@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\QuoteVehicle;
 use App\Services\Api\Zoho\ZohoCRMService;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Modules\Quote\Submodules\Vehicle\Infrastructure\Persistence\Models\QuoteVehicle;
 
 class QuoteVehicleController extends Controller
 {
