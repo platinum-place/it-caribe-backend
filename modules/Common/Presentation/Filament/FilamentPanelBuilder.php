@@ -8,6 +8,7 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\MenuItem;
 use Filament\Navigation\NavigationBuilder;
 use Filament\Navigation\NavigationGroup;
 use Filament\Navigation\NavigationItem;
@@ -52,7 +53,13 @@ class FilamentPanelBuilder
             ->profile(EditProfile::class)
 //->maxContentWidth(MaxWidth::Full)
             ->databaseNotifications()
-            ->databaseNotificationsPolling('30s');
+            ->databaseNotificationsPolling('30s')
+            ->userMenuItems([
+                MenuItem::make()
+                    ->label(__('Home'))
+                    ->url(fn(): string => '/')
+                    ->icon('heroicon-o-home'),
+            ]);
     }
 
     public function buildNavigation(NavigationBuilder $builder): NavigationBuilder
