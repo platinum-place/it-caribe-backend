@@ -5,6 +5,7 @@ namespace Modules\CRM;
 use Illuminate\Support\ServiceProvider;
 use Modules\CRM\Infrastructure\Providers\ContractServiceProvider;
 use Modules\CRM\Infrastructure\Providers\MigrationServiceProvider;
+use Modules\CRM\Infrastructure\Providers\PolicyServiceProvider;
 use Modules\CRM\Presentation\Providers\FilamentPanelProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,6 +14,7 @@ class AppServiceProvider extends ServiceProvider
         MigrationServiceProvider::class,
         FilamentPanelProvider::class,
         ContractServiceProvider::class,
+        PolicyServiceProvider::class,
     ];
 
     /**

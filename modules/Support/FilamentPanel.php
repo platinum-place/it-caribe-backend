@@ -66,19 +66,22 @@ class FilamentPanel
                             ->url('/admin')
                             ->icon('heroicon-o-document-text')
                             ->isActiveWhen(fn() => false)
-                            ->badge(fn() => request()->is('admin*') ? '●' : null),
+                            ->badge(fn() => request()->is('admin*') ? '●' : null)
+                            ->visible(fn() => auth()->user()->isAdmin()),
 
                         NavigationItem::make(__('Vehicle'))
                             ->url('/vehicle')
                             ->icon('heroicon-o-document-text')
                             ->isActiveWhen(fn() => false)
-                            ->badge(fn() => request()->is('vehicle*') ? '●' : null),
+                            ->badge(fn() => request()->is('vehicle*') ? '●' : null)
+                            ->visible(fn() => auth()->user()->isAdmin()),
 
                         NavigationItem::make(__('CRM'))
                             ->url('/crm')
                             ->icon('heroicon-o-document-text')
                             ->isActiveWhen(fn() => false)
-                            ->badge(fn() => request()->is('crm*') ? '●' : null),
+                            ->badge(fn() => request()->is('crm*') ? '●' : null)
+                            ->visible(fn() => auth()->user()->isAdmin()),
                     ]),
 
                 NavigationGroup::make(__('Quotes'))
@@ -99,13 +102,12 @@ class FilamentPanel
                                     null;
                             }),
 
-                        NavigationItem::make(__('Vehicle quote'))
+                        NavigationItem::make(__('Quote vehicle'))
                             ->url('/quote/vehicle-quote')
                             ->icon('heroicon-o-document-text')
                             ->isActiveWhen(fn() => false)
                             ->badge(fn() => request()->is('quote/vehicle-quote*') ? '●' : null),
                     ]),
-
             ])
             ->items([
                 NavigationItem::make(__('Dashboard'))

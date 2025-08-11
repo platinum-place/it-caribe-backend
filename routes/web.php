@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return redirect('/admin');
+    return redirect('/quote');
 });
 
 require_once __DIR__.'/web/filament.php';

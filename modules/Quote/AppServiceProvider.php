@@ -5,6 +5,7 @@ namespace Modules\Quote;
 use Illuminate\Support\ServiceProvider;
 use Modules\Quote\Infrastructure\Providers\ContractServiceProvider;
 use Modules\Quote\Infrastructure\Providers\MigrationServiceProvider;
+use Modules\Quote\Infrastructure\Providers\PolicyServiceProvider;
 use Modules\Quote\Presentation\Providers\FilamentPanelProvider;
 use Modules\Quote\Submodules\Vehicle\AppServiceProvider as VehicleAppServiceProvider;
 
@@ -14,6 +15,7 @@ class AppServiceProvider extends ServiceProvider
         MigrationServiceProvider::class,
         FilamentPanelProvider::class,
         ContractServiceProvider::class,
+        PolicyServiceProvider::class,
         VehicleAppServiceProvider::class
     ];
 

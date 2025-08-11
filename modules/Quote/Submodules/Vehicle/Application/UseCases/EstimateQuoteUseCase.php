@@ -74,11 +74,11 @@ class EstimateQuoteUseCase implements EstimateVehicleQuoteInterface
                 }
             }
 
-            if ($shouldSkip) {
-                continue;
-            }
+//            if ($shouldSkip) {
+//                continue;
+//            }
 
-            $rate = $this->getRate($token, $product['id'], $vehicleAmount, $vehicleYear, $vehicleType);
+            $rate = empty($error) ? $this->getRate($token, $product['id'], $vehicleAmount, $vehicleYear, $vehicleType) : 0;
 
             $amount = 0;
             $amountTaxed = 0;
@@ -88,6 +88,11 @@ class EstimateQuoteUseCase implements EstimateVehicleQuoteInterface
 
             if ($rate > 0) {
                 $amount = $vehicleAmount * ($rate / 100);
+
+                if ($amount < $product['Prima_m_nima']) {
+                    $amount = $product['Prima_m_nima'];
+                }
+
                 $amountTaxed = $amount / 1.16;
                 $taxesAmount = $amount - $amountTaxed;
 
@@ -124,7 +129,7 @@ class EstimateQuoteUseCase implements EstimateVehicleQuoteInterface
                 'tax_amount' => $taxesAmount,
                 'total' => $amount,
                 'total_monthly' => $totalMonthly,
-                'id_crm' => $product['id'],
+                'description' => $product['id'],
                 'life_amount' => $lifeAmount,
                 'vehicle_rate' => $rate,
                 'error' => $error,
@@ -141,13 +146,16 @@ class EstimateQuoteUseCase implements EstimateVehicleQuoteInterface
         try {
             $rates = $this->zohoApiClient->searchRecords('Tasas', $token->accessToken, $criteria);
         } catch (\Throwable $e) {
-            try {
-                $criteria = "Plan:equals:$productId";
-                $rates = $this->zohoApiClient->searchRecords('Tasas', $token->accessToken, $criteria);
-            } catch (\Throwable $e) {
-                return 0;
-            }
+            //
         }
+
+        try {
+            $criteria = "Plan:equals:$productId";
+            $rates = $this->zohoApiClient->searchRecords('Tasas', $token->accessToken, $criteria);
+        } catch (\Throwable $e) {
+            //
+        }
+
 
         if (empty($rates['data'])) {
             return 0;

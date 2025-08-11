@@ -66,7 +66,7 @@ class CreateQuote extends CreateRecord
                     QuoteResource\Components\Wizards\EstimateDebtUnemploymentWizardStep::make()
                         ->visible(fn ($get): bool => $get('quote_type_id') == 6),
 
-                    QuoteResource\Components\Wizards\DebtorWizardStep::make(),
+                    \Modules\Common\Presentation\Filament\Forms\Components\Wizards\CreateDebtorWizardStep::make(),
                     QuoteResource\Components\Wizards\CoDebtorWizardStep::make()
                         ->hidden(fn ($get) => ! $get('co_debtor_birth_date')),
 

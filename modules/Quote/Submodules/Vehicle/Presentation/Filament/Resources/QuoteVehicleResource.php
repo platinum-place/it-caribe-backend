@@ -26,7 +26,7 @@ class QuoteVehicleResource extends Resource
 
     public static function getPluralModelLabel(): string
     {
-        return __('Quotes vehicles');
+        return __('Quote vehicles');
     }
 
     public static function form(Form $form): Form

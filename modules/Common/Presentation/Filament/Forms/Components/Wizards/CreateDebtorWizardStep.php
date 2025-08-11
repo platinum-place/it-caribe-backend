@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Filament\Resources\QuoteResource\Components\Wizards;
+namespace Modules\Common\Presentation\Filament\Forms\Components\Wizards;
 
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Wizard;
 
-class DebtorWizardStep
+class CreateDebtorWizardStep
 {
     public static function make(): Wizard\Step
     {

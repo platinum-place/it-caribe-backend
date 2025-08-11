@@ -7,6 +7,10 @@ use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Widgets\AccountWidget;
+use Modules\Quote\Infrastructure\Persistence\Models\Quote;
+use Modules\Quote\Infrastructure\Persistence\Models\QuoteLineStatus;
+use Modules\Quote\Infrastructure\Persistence\Models\QuoteStatus;
+use Modules\Quote\Infrastructure\Persistence\Models\QuoteType;
 use Modules\Quote\Presentation\Filament\Resources\QuoteLineResource;
 use Modules\Quote\Presentation\Filament\Resources\QuoteLineStatusResource;
 use Modules\Quote\Presentation\Filament\Resources\QuoteResource;
@@ -47,10 +51,10 @@ class FilamentPanelProvider extends PanelProvider
                 return $this->filamentPanel
                     ->buildNavigation($builder)
                     ->items([
-                        ...QuoteLineStatusResource::getNavigationItems(),
-                        ...QuoteStatusResource::getNavigationItems(),
-                        ...QuoteTypeResource::getNavigationItems(),
-                        ...QuoteResource::getNavigationItems(),
+                        ...(auth()->user()->isAdmin() ? QuoteLineStatusResource::getNavigationItems() : []),
+                        ...(auth()->user()->isAdmin() ? QuoteStatusResource::getNavigationItems() : []),
+                        ...(auth()->user()->isAdmin() ? QuoteTypeResource::getNavigationItems() : []),
+                        ...(auth()->user()->isAdmin() ? QuoteResource::getNavigationItems() : []),
                     ]);
             });
     }
