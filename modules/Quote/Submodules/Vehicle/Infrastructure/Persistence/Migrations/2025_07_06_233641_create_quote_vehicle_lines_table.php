@@ -18,6 +18,8 @@ return new class extends Migration
             $table->foreignId('quote_vehicle_id')->constrained('quote_vehicles');
             $table->foreignId('quote_line_id')->constrained('quote_lines');
             $table->decimal('life_amount', 18, 2)->default(0);
+            $table->decimal('latest_expenses', 18, 2)->default(0);
+            $table->decimal('markup', 18, 2)->default(0);
             $table->float('vehicle_rate')->default(0);
         });
     }

@@ -1,4 +1,4 @@
-id,created_at,updated_at,deleted_at,name,make_id,type_id,code,utility_id
+id,created_at,updated_at,deleted_at,name,vehicle_make_id,vehicle_type_id,code,vehicle_utility_id
 2,2025-06-26 19:27:28,2025-06-26 19:27:28,,Sportage,20,2,,
 4,2025-06-27 08:46:01,2025-06-27 08:46:01,,STAR 5 VAN,91,10,,
 5,2025-06-27 08:49:10,2025-06-27 08:50:05,,XC40,36,2,,

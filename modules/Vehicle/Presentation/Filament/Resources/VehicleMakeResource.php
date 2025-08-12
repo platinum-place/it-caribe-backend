@@ -27,6 +27,13 @@ class VehicleMakeResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('code')
                     ->maxLength(255),
+                Forms\Components\TextInput::make('created_by')
+                    ->required()
+                    ->numeric(),
+                Forms\Components\TextInput::make('updated_by')
+                    ->numeric(),
+                Forms\Components\TextInput::make('deleted_by')
+                    ->numeric(),
             ]);
     }
 

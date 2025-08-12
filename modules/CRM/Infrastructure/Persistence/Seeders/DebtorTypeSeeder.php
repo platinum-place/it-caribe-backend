@@ -15,12 +15,15 @@ class DebtorTypeSeeder extends Seeder
         $data = [
             [
                 'name' => 'Publico',
+                'created_by' => 1,
             ],
             [
                 'name' => 'Privado',
+                'created_by' => 1,
             ],
             [
                 'name' => 'Independiente',
+                'created_by' => 1,
             ],
         ];
 

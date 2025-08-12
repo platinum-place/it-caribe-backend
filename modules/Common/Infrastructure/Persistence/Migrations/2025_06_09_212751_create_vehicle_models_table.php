@@ -17,9 +17,9 @@ return new class extends Migration
             $table->softDeletes();
             $table->string('name');
             $table->string('code')->nullable();
-            $table->foreignId('utility_id')->nullable()->constrained('vehicle_utilities');
-            $table->foreignId('make_id')->constrained('vehicle_makes');
-            $table->foreignId('type_id')->constrained('vehicle_types');
+            $table->foreignId('vehicle_utility_id')->nullable()->constrained('vehicle_utilities');
+            $table->foreignId('vehicle_make_id')->constrained('vehicle_makes');
+            $table->foreignId('vehicle_type_id')->constrained('vehicle_types');
             $table->foreignId('created_by')->constrained('users');
             $table->foreignId('updated_by')->nullable()->constrained('users');
             $table->foreignId('deleted_by')->nullable()->constrained('users');

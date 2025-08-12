@@ -16,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
         FilamentPanelProvider::class,
         ContractServiceProvider::class,
         PolicyServiceProvider::class,
-        VehicleAppServiceProvider::class
+        VehicleAppServiceProvider::class,
     ];
 
     /**

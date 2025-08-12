@@ -2,32 +2,20 @@
 
 namespace Modules\CRM\Presentation\Providers;
 
-use Filament\Navigation\NavigationBuilder;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Widgets\AccountWidget;
 use Modules\Common\Presentation\Filament\FilamentPanelBuilder;
-use Modules\CRM\Presentation\Filament\Resources\DebtorResource;
-use Modules\CRM\Presentation\Filament\Resources\DebtorTypeResource;
 
 class FilamentPanelProvider extends PanelProvider
 {
-    protected FilamentPanelBuilder $filamentPanel;
-
-    public function __construct($app)
-    {
-        parent::__construct($app);
-
-        $this->filamentPanel = new FilamentPanelBuilder;
-    }
-
     /**
      * @throws \Exception
      */
     public function panel(Panel $panel): Panel
     {
-        return $this->filamentPanel
+        return app(FilamentPanelBuilder::class)
             ->buildPanel($panel)
             ->id('crm')
             ->path('crm')
@@ -39,14 +27,6 @@ class FilamentPanelProvider extends PanelProvider
             ])
             ->discoverResources(in: base_path('modules/CRM/Presentation/Filament/Resources'), for: 'Modules\\CRM\\Presentation\\Filament\\Resources')
             ->discoverPages(in: base_path('modules/CRM/Presentation/Filament/Pages'), for: 'Modules\\CRM\\Presentation\\Filament\\Pages')
-            ->discoverWidgets(in: base_path('modules/CRM/Presentation/Filament/Widgets'), for: 'Modules\\CRM\\Presentation\\Filament\\Widgets')
-            ->navigation(function (NavigationBuilder $builder): NavigationBuilder {
-                return $this->filamentPanel
-                    ->buildNavigation($builder)
-                    ->items([
-                        ...DebtorTypeResource::getNavigationItems(),
-                        ...DebtorResource::getNavigationItems(),
-                    ]);
-            });
+            ->discoverWidgets(in: base_path('modules/CRM/Presentation/Filament/Widgets'), for: 'Modules\\CRM\\Presentation\\Filament\\Widgets');
     }
 }

@@ -10,6 +10,6 @@ class QuoteVehicleLine extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'quote_vehicle_id', 'quote_line_id', 'life_amount',
+        'quote_vehicle_id', 'quote_line_id', 'life_amount', 'latest_expenses', 'markup',
     ];
 }

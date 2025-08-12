@@ -2,9 +2,9 @@
 
 namespace Modules\Quote\Submodules\Vehicle\Presentation\Filament\Resources\QuoteVehicleResource\Pages;
 
-use Modules\Quote\Submodules\Vehicle\Presentation\Filament\Resources\QuoteVehicleResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
+use Modules\Quote\Submodules\Vehicle\Presentation\Filament\Resources\QuoteVehicleResource;
 
 class ListQuoteVehicles extends ListRecords
 {

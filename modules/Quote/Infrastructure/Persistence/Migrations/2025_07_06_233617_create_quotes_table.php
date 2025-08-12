@@ -18,10 +18,9 @@ return new class extends Migration
             $table->foreignId('created_by')->constrained('users');
             $table->foreignId('updated_by')->nullable()->constrained('users');
             $table->foreignId('deleted_by')->nullable()->constrained('users');
-            $table->foreignId('status_id')->constrained('quote_statuses');
-            $table->foreignId('type_id')->constrained('quote_types');
+            $table->foreignId('quote_status_id')->constrained('quote_statuses');
+            $table->foreignId('quote_type_id')->constrained('quote_types');
             $table->foreignId('debtor_id')->constrained('debtors');
-            $table->foreignId('user_id')->constrained('users');
             $table->foreignId('responsible_id')->constrained('users');
             $table->json('attachments')->nullable();
             $table->date('start_date');

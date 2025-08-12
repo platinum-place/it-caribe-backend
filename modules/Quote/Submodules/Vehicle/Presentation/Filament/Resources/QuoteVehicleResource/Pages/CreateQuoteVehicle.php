@@ -2,26 +2,23 @@
 
 namespace Modules\Quote\Submodules\Vehicle\Presentation\Filament\Resources\QuoteVehicleResource\Pages;
 
-use App\Services\EstimateQuoteVehicleService;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Hidden;
-use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Wizard;
+use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
+use Filament\Resources\Pages\CreateRecord;
 use Filament\Support\RawJs;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Common\Presentation\Filament\Forms\Components\Wizards\CreateDebtorWizardStep;
 use Modules\Quote\Submodules\Vehicle\Domain\Contracts\EstimateVehicleQuoteInterface;
 use Modules\Quote\Submodules\Vehicle\Presentation\Filament\Resources\QuoteVehicleResource;
-use Filament\Actions;
-use Filament\Resources\Pages\CreateRecord;
-use Filament\Forms\Form;
-use Filament\Forms\Components\Wizard;
 use Modules\Vehicle\Infrastructure\Persistence\Models\VehicleActivity;
 use Modules\Vehicle\Infrastructure\Persistence\Models\VehicleColor;
 use Modules\Vehicle\Infrastructure\Persistence\Models\VehicleLoanType;
@@ -41,7 +38,7 @@ class CreateQuoteVehicle extends CreateRecord
                 Wizard::make([
                     Wizard\Step::make(__('Estimate'))
                         ->schema([
-                            Select::make('vehicle_make_id')
+                            Select::make('quote_vehicle.vehicle_make_id')
                                 ->label('Marca')
                                 ->options(VehicleMake::pluck('name', 'id'))
                                 ->searchable()
@@ -50,67 +47,67 @@ class CreateQuoteVehicle extends CreateRecord
                                 ->live()
                                 ->placeholder('Selecciona una Marca'),
 
-                            Select::make('vehicle_model_id')
+                            Select::make('quote_vehicle.vehicle_model_id')
                                 ->label('Modelo')
                                 ->options(function (Get $get) {
-                                    $makeId = $get('vehicle_make_id');
-                                    if (!$makeId) {
+                                    $makeId = $get('quote_vehicle.vehicle_make_id');
+                                    if (! $makeId) {
                                         return [];
                                     }
 
                                     return VehicleModel::with('type')
-                                        ->where('make_id', $makeId)
+                                        ->where('vehicle_make_id', $makeId)
                                         ->get()
                                         ->mapWithKeys(function ($model) {
                                             return [
-                                                $model->id => $model->name . (
+                                                $model->id => $model->name.(
                                                     $model->type ?
-                                                        ' (' . $model->type->name . ')' :
+                                                        ' ('.$model->type->name.')' :
                                                         ''
-                                                    ),
+                                                ),
                                             ];
                                         });
                                 })
                                 ->searchable()
                                 ->required()
                                 ->placeholder('Selecciona un modelo')
-                                ->disabled(fn(Get $get) => !$get('vehicle_make_id'))
+                                ->disabled(fn (Get $get) => ! $get('quote_vehicle.vehicle_make_id'))
                                 ->afterStateUpdated(function (Get $get, Set $set, ?string $state) {
-                                    if (!$state) {
-                                        $set('vehicle_type_id', null);
+                                    if (! $state) {
+                                        $set('quote_vehicle.vehicle_type_id', null);
 
                                         return;
                                     }
 
-                                    $set('vehicle_type_id', VehicleModel::firstWhere('id', $state)->value('type_id'));
+                                    $set('quote_vehicle.vehicle_type_id', VehicleModel::firstWhere('id', $state)->value('vehicle_type_id'));
                                 }),
 
-                            Hidden::make('vehicle_type_id'),
+                            Hidden::make('quote_vehicle.vehicle_type_id'),
 
-                            Select::make('vehicle_utility_id')
+                            Select::make('quote_vehicle.vehicle_utility_id')
                                 ->label(__('Vehicle type'))
                                 ->options(VehicleUtility::pluck('name', 'id'))
                                 ->searchable()
                                 ->required(),
 
-                            TextInput::make('vehicle_year')
+                            TextInput::make('quote_vehicle.vehicle_year')
                                 ->label('Año')
                                 ->numeric()
                                 ->required()
                                 ->minValue(1900)
                                 ->maxValue(date('Y', strtotime('+1 year'))),
 
-                            TextInput::make('vehicle_amount')
+                            TextInput::make('quote_vehicle.vehicle_amount')
                                 ->label('Suma Asegurada')
                                 ->numeric()
                                 ->required()
                                 ->prefix('$'),
 
-                            Checkbox::make('is_employee')
+                            Checkbox::make('quote_vehicle.is_employee')
                                 ->label('Empleado')
                                 ->inline(false),
 
-                            Checkbox::make('leasing')
+                            Checkbox::make('quote_vehicle.leasing')
                                 ->label('Responsabilidad Civil en Exceso')
                                 ->inline(false),
 
@@ -119,29 +116,29 @@ class CreateQuoteVehicle extends CreateRecord
                                     ->translateLabel()
                                     ->action(function (Set $set, Get $get) {
                                         $estimates = app(EstimateVehicleQuoteInterface::class)->handle(
-                                            $get('vehicle_amount'),
-                                            $get('vehicle_make_id'),
-                                            $get('vehicle_model_id'),
-                                            $get('vehicle_year'),
-                                            $get('vehicle_type_id'),
-                                            $get('vehicle_utility_id'),
-                                            $get('is_employee'),
-                                            $get('leasing'),
+                                            $get('quote_vehicle.vehicle_amount'),
+                                            $get('quote_vehicle.vehicle_make_id'),
+                                            $get('quote_vehicle.vehicle_model_id'),
+                                            $get('quote_vehicle.vehicle_year'),
+                                            $get('quote_vehicle.vehicle_type_id'),
+                                            $get('quote_vehicle.vehicle_utility_id'),
+                                            $get('quote_vehicle.is_employee'),
+                                            $get('quote_vehicle.leasing'),
                                         );
 
                                         $set('estimates_table', $estimates);
-                                        $set('estimates', $estimates);
+                                        $set('lines', $estimates);
                                     })
                                     ->color('primary')
                                     ->icon('heroicon-o-calculator'),
                             ])
                                 ->columnSpanFull(),
 
-                            Hidden::make('estimates'),
+                            Hidden::make('lines'),
 
                             Repeater::make('estimates_table')
                                 ->hiddenLabel()
-                                ->hidden(fn(Get $get) => $get('estimates') === null)
+                                ->hidden(fn (Get $get) => $get('estimates') === null)
                                 ->schema([
                                     TextInput::make('name')
                                         ->label('Aseguradora')
@@ -172,49 +169,53 @@ class CreateQuoteVehicle extends CreateRecord
 
                     Wizard\Step::make(__('Vehicle'))
                         ->schema([
-                            TextInput::make('chassis')
+                            TextInput::make('quote_vehicle.chassis')
                                 ->label('Chasis')
                                 ->required(),
 
-                            TextInput::make('license_plate')
+                            TextInput::make('quote_vehicle.license_plate')
                                 ->label('Placa'),
 
-                            Select::make('vehicle_colors')
+                            Select::make('quote_vehicle.vehicle_colors')
                                 ->label('Color')
                                 ->options(VehicleColor::pluck('name', 'id'))
                                 ->multiple(),
 
-                            Select::make('vehicle_activity_id')
+                            Select::make('quote_vehicle.vehicle_activity_id')
                                 ->label('Actividad del Vehículo')
                                 ->options(VehicleActivity::pluck('name', 'id')),
 
-                            Select::make('vehicle_use_id')
+                            Select::make('quote_vehicle.vehicle_use_id')
                                 ->label('Uso')
                                 ->options(VehicleUse::pluck('name', 'id'))
                                 ->required(),
 
-                            Select::make('vehicle_loan_type_id')
+                            Select::make('quote_vehicle.vehicle_loan_type_id')
                                 ->label('Tipo de préstamo')
                                 ->required()
                                 ->options(VehicleLoanType::pluck('name', 'id')),
 
-                            DatePicker::make('start_date')
+                            TextInput::make('quote_vehicle.loan_amount')
+                                ->label('Valor del Préstamo')
+                                ->numeric()
+                                ->required()
+                                ->prefix('$'),
+                        ])
+                        ->columns(),
+
+                    Wizard\Step::make(__('Others'))
+                        ->schema([
+                            DatePicker::make('quote.start_date')
                                 ->translateLabel()
                                 ->required()
                                 ->default(now()),
 
-                            DatePicker::make('end_date')
+                            DatePicker::make('quote.end_date')
                                 ->translateLabel()
                                 ->minDate(now())
 //                    ->maxDate(now()->addDays(30))
 //                    ->default(now()->addDays(30))
                                 ->required(),
-
-                            TextInput::make('loan_amount')
-                                ->label('Valor del Préstamo')
-                                ->numeric()
-                                ->required()
-                                ->prefix('$'),
                         ])
                         ->columns(),
 
@@ -224,10 +225,13 @@ class CreateQuoteVehicle extends CreateRecord
             ]);
     }
 
+    /**
+     * @throws \Throwable
+     */
     protected function handleRecordCreation(array $data): Model
     {
         return \DB::transaction(static function () use ($data) {
-
+            dd($data);
         });
     }
 }

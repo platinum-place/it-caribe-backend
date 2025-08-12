@@ -44,6 +44,10 @@ class ZohoApiClient implements ZohoApiClientInterface
             ->throw()
             ->json();
 
+        if (isset($response['error'])) {
+            throw new \RuntimeException($response['error']);
+        }
+
         return new ZohoToken(
             $response['access_token'],
             $response['api_domain'],

@@ -30,4 +30,9 @@ class Debtor extends Model
     {
         return $this->belongsTo(\App\Models\User::class, 'deleted_by');
     }
+
+    public function type(): BelongsTo
+    {
+        return $this->belongsTo(DebtorType::class);
+    }
 }

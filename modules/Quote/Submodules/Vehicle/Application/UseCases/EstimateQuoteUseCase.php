@@ -2,8 +2,6 @@
 
 namespace Modules\Quote\Submodules\Vehicle\Application\UseCases;
 
-use Illuminate\Http\Client\ConnectionException;
-use Illuminate\Http\Client\RequestException;
 use Modules\Common\Domain\Contracts\ZohoApiClientInterface;
 use Modules\Quote\Submodules\Vehicle\Domain\Contracts\EstimateVehicleQuoteInterface;
 use Modules\Vehicle\Infrastructure\Persistence\Models\VehicleMake;
@@ -13,16 +11,13 @@ use Modules\Vehicle\Infrastructure\Persistence\Models\VehicleUtility;
 
 class EstimateQuoteUseCase implements EstimateVehicleQuoteInterface
 {
-    public function __construct(protected ZohoApiClientInterface $zohoApiClient)
-    {
-    }
+    public function __construct(protected ZohoApiClientInterface $zohoApiClient) {}
 
     public function handle(
         float $vehicleAmount, int $vehicleMakeId, int $vehicleModelId,
-        int   $vehicleYear, int $vehicleTypeId, int $vehicleUtilityId,
+        int $vehicleYear, int $vehicleTypeId, int $vehicleUtilityId,
         ?bool $isEmployee = false, bool $leasing = false
-    )
-    {
+    ) {
         $vehicleMake = VehicleMake::find($vehicleMakeId);
         $vehicleModel = VehicleModel::find($vehicleModelId);
         $vehicleType = VehicleType::find($vehicleTypeId);
@@ -30,7 +25,7 @@ class EstimateQuoteUseCase implements EstimateVehicleQuoteInterface
 
         $token = $this->zohoApiClient->getTemporaryToken(config('zoho.oauth.refresh_token'));
 
-        $criteria = '((Corredor:equals:' . 3222373000092390001 . ') and (Product_Category:equals:Auto))';
+        $criteria = '((Corredor:equals:'. 3222373000092390001 .') and (Product_Category:equals:Auto))';
         $productsResponse = $this->zohoApiClient->searchRecords('Products', $token->accessToken, $criteria);
 
         $result = [];
@@ -39,8 +34,8 @@ class EstimateQuoteUseCase implements EstimateVehicleQuoteInterface
             $shouldSkip = false;
             $error = '';
 
-            if (!empty($product['Plan'])) {
-                if ($product['Plan'] === 'Empleado' && !$isEmployee) {
+            if (! empty($product['Plan'])) {
+                if ($product['Plan'] === 'Empleado' && ! $isEmployee) {
                     continue;
                 }
 
@@ -50,13 +45,13 @@ class EstimateQuoteUseCase implements EstimateVehicleQuoteInterface
             }
 
             try {
-                $criteria = 'Aseguradora:equals:' . $product['Vendor_Name']['id'];
+                $criteria = 'Aseguradora:equals:'.$product['Vendor_Name']['id'];
                 $restrictedVehicles = $this->zohoApiClient->searchRecords('Restringidos', $token->accessToken, $criteria);
             } catch (\Throwable $e) {
                 //
             }
 
-            if (!empty($restrictedVehicles)) {
+            if (! empty($restrictedVehicles)) {
                 foreach ($restrictedVehicles['data'] as $restricted) {
                     if (\Str::contains(\Str::lower($vehicleMake->name), \Str::lower($restricted['Marca']['name']))) {
                         if (empty($restricted['Modelo'])) {
@@ -74,9 +69,9 @@ class EstimateQuoteUseCase implements EstimateVehicleQuoteInterface
                 }
             }
 
-//            if ($shouldSkip) {
-//                continue;
-//            }
+            //            if ($shouldSkip) {
+            //                continue;
+            //            }
 
             $rate = empty($error) ? $this->getRate($token, $product['id'], $vehicleAmount, $vehicleYear, $vehicleType) : 0;
 
@@ -85,6 +80,8 @@ class EstimateQuoteUseCase implements EstimateVehicleQuoteInterface
             $taxesAmount = 0;
             $totalMonthly = 0;
             $lifeAmount = 0;
+            $latestExpenses = 0;
+            $markup = 0;
 
             if ($rate > 0) {
                 $amount = $vehicleAmount * ($rate / 100);
@@ -96,13 +93,15 @@ class EstimateQuoteUseCase implements EstimateVehicleQuoteInterface
                 $amountTaxed = $amount / 1.16;
                 $taxesAmount = $amount - $amountTaxed;
 
-                $lifeAmount = 220;
+                $lifeAmount = 120;
+                $latestExpenses = 20;
+                $markup = 80;
 
-                $totalMonthly = ($amount / 12) + $lifeAmount;
+                $totalMonthly = ($amount / 12) + $lifeAmount + $latestExpenses + $markup;
 
                 $amount = $totalMonthly * 12;
 
-                if (!empty($product['Resp_civil']) && $leasing) {
+                if (! empty($product['Resp_civil']) && $leasing) {
                     $totalMonthly += $product['Leasing_mensual'];
                     $amount = $totalMonthly * 12;
                 }
@@ -131,6 +130,8 @@ class EstimateQuoteUseCase implements EstimateVehicleQuoteInterface
                 'total_monthly' => $totalMonthly,
                 'description' => $product['id'],
                 'life_amount' => $lifeAmount,
+                'latest_expenses' => $latestExpenses,
+                'markup' => $markup,
                 'vehicle_rate' => $rate,
                 'error' => $error,
                 'vendor_name' => $vendorCRM['Nombre'],
@@ -156,7 +157,6 @@ class EstimateQuoteUseCase implements EstimateVehicleQuoteInterface
             //
         }
 
-
         if (empty($rates['data'])) {
             return 0;
         }
@@ -164,19 +164,19 @@ class EstimateQuoteUseCase implements EstimateVehicleQuoteInterface
         $selectedRate = 0;
 
         foreach ($rates['data'] as $rate) {
-            if (!empty($rate['Grupo_de_veh_culo']) && !in_array($vehicleType->name, $rate['Grupo_de_veh_culo'], true)) {
+            if (! empty($rate['Grupo_de_veh_culo']) && ! in_array($vehicleType->name, $rate['Grupo_de_veh_culo'], true)) {
                 continue;
             }
 
-            if (!empty($rate['Suma_hasta']) && $vehicleAmount > $rate['Suma_hasta']) {
+            if (! empty($rate['Suma_hasta']) && $vehicleAmount > $rate['Suma_hasta']) {
                 continue;
             }
 
-            if (!empty($rate['Suma_limite']) && $vehicleAmount < $rate['Suma_limite']) {
+            if (! empty($rate['Suma_limite']) && $vehicleAmount < $rate['Suma_limite']) {
                 continue;
             }
 
-            if (!empty($rate['A_o']) && $rate['A_o'] !== $vehicleYear) {
+            if (! empty($rate['A_o']) && $rate['A_o'] !== $vehicleYear) {
                 continue;
             }
 

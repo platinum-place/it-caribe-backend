@@ -2,14 +2,11 @@
 
 namespace Modules\Quote\Submodules\Vehicle\Presentation\Providers;
 
-use Filament\Navigation\NavigationBuilder;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Widgets\AccountWidget;
 use Modules\Common\Presentation\Filament\FilamentPanelBuilder;
-use Modules\Quote\Presentation\Filament\Resources\QuoteLineResource;
-use Modules\Quote\Submodules\Vehicle\Presentation\Filament\Resources\QuoteVehicleResource;
 
 class FilamentPanelProvider extends PanelProvider
 {
@@ -39,13 +36,6 @@ class FilamentPanelProvider extends PanelProvider
             ])
             ->discoverResources(in: base_path('modules/Quote/Submodules/Vehicle/Presentation/Filament/Resources'), for: 'Modules\\Quote\\Submodules\\Vehicle\\Presentation\\Filament\\Resources')
             ->discoverPages(in: base_path('modules/Quote/Submodules/Vehicle/Presentation/Filament/Pages'), for: 'Modules\\Quote\\Submodules\\Vehicle\\Presentation\\Filament\\Pages')
-            ->discoverWidgets(in: base_path('modules/Quote/Submodules/Vehicle/Presentation/Filament/Widgets'), for: 'Modules\\Quote\\Submodules\\Vehicle\\Presentation\\Filament\\Widgets')
-            ->navigation(function (NavigationBuilder $builder): NavigationBuilder {
-                return $this->filamentPanel
-                    ->buildNavigation($builder)
-                    ->items([
-                        ...QuoteVehicleResource::getNavigationItems(),
-                    ]);
-            });
+            ->discoverWidgets(in: base_path('modules/Quote/Submodules/Vehicle/Presentation/Filament/Widgets'), for: 'Modules\\Quote\\Submodules\\Vehicle\\Presentation\\Filament\\Widgets');
     }
 }

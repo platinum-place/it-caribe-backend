@@ -39,10 +39,10 @@ class QuoteResource extends Resource
                     ->numeric(),
                 Forms\Components\TextInput::make('deleted_by')
                     ->numeric(),
-                Forms\Components\TextInput::make('status_id')
+                Forms\Components\TextInput::make('quote_status_id')
                     ->required()
                     ->numeric(),
-                Forms\Components\TextInput::make('type_id')
+                Forms\Components\TextInput::make('quote_type_id')
                     ->required()
                     ->numeric(),
                 Forms\Components\TextInput::make('debtor_id')

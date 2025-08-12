@@ -25,14 +25,21 @@ class VehicleModelResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('make_id')
+                Forms\Components\TextInput::make('vehicle_make_id')
                     ->required()
                     ->numeric(),
-                Forms\Components\TextInput::make('type_id')
+                Forms\Components\TextInput::make('vehicle_type_id')
                     ->required()
                     ->numeric(),
                 Forms\Components\TextInput::make('code')
                     ->maxLength(255),
+                Forms\Components\TextInput::make('created_by')
+                    ->required()
+                    ->numeric(),
+                Forms\Components\TextInput::make('updated_by')
+                    ->numeric(),
+                Forms\Components\TextInput::make('deleted_by')
+                    ->numeric(),
             ]);
     }
 
@@ -54,10 +61,10 @@ class VehicleModelResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('make_id')
+                Tables\Columns\TextColumn::make('vehicle_make_id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('type_id')
+                Tables\Columns\TextColumn::make('vehicle_type_id')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('code')

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->foreignId('quote_id')->constrained('quotes');
-            $table->foreignId('status_id')->constrained('debtor_types');
+            $table->foreignId('quote_line_status_id')->constrained('quote_line_statuses');
             $table->decimal('unit_price', 18, 2);
             $table->integer('quantity');
             $table->decimal('subtotal', 18, 2);

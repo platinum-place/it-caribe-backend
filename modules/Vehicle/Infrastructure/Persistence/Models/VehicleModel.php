@@ -11,21 +11,37 @@ class VehicleModel extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'id', 'name', 'code', 'make_id', 'type_id', 'utility_id',
+        'id', 'name', 'code', 'vehicle_make_id', 'vehicle_type_id', 'vehicle_utility_id',
+        'created_by', 'updated_by', 'deleted_by',
     ];
 
     public function make(): BelongsTo
     {
-        return $this->belongsTo(VehicleMake::class, 'make_id');
+        return $this->belongsTo(VehicleMake::class);
     }
 
     public function type(): BelongsTo
     {
-        return $this->belongsTo(VehicleType::class, 'type_id');
+        return $this->belongsTo(VehicleType::class);
     }
 
     public function utility(): BelongsTo
     {
-        return $this->belongsTo(VehicleUtility::class, 'utility_id');
+        return $this->belongsTo(VehicleUtility::class);
+    }
+
+    public function createdBy(): BelongsTo
+    {
+        return $this->belongsTo(\App\Models\User::class, 'created_by');
+    }
+
+    public function updatedBy(): BelongsTo
+    {
+        return $this->belongsTo(\App\Models\User::class, 'updated_by');
+    }
+
+    public function deletedBy(): BelongsTo
+    {
+        return $this->belongsTo(\App\Models\User::class, 'deleted_by');
     }
 }

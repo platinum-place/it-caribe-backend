@@ -9,10 +9,6 @@ use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Navigation\MenuItem;
-use Filament\Navigation\NavigationBuilder;
-use Filament\Navigation\NavigationGroup;
-use Filament\Navigation\NavigationItem;
-use Filament\Pages;
 use Filament\Panel;
 use Filament\Support\Colors\Color;
 use Filament\Support\Enums\MaxWidth;
@@ -51,72 +47,42 @@ class FilamentPanelBuilder
             ->favicon(asset('img/logo.png'))
             ->login(Login::class)
             ->profile(EditProfile::class)
-//->maxContentWidth(MaxWidth::Full)
+// ->maxContentWidth(MaxWidth::Full)
             ->databaseNotifications()
             ->databaseNotificationsPolling('30s')
             ->userMenuItems([
                 MenuItem::make()
                     ->label(__('Home'))
-                    ->url(fn(): string => '/')
+                    ->url(fn (): string => '/')
                     ->icon('heroicon-o-home'),
-            ]);
-    }
 
-    public function buildNavigation(NavigationBuilder $builder): NavigationBuilder
-    {
-        return $builder
-            ->groups([
-                NavigationGroup::make(__('Panels'))
-                    ->collapsed()
-                    ->items([
-                        NavigationItem::make(__('Admin'))
-                            ->url('/admin')
-                            ->icon('heroicon-o-document-text')
-                            ->isActiveWhen(fn() => false)
-                            ->badge(fn() => request()->is('admin*') ? '●' : null)
-                            ->visible(fn() => auth()->user()->isAdmin()),
+                MenuItem::make()
+                    ->label(__('Admin'))
+                    ->url('/admin')
+                    ->icon('heroicon-o-document-text')
+                    ->visible(fn () => auth()->user()->isAdmin()),
 
-                        NavigationItem::make(__('Vehicle'))
-                            ->url('/vehicle')
-                            ->icon('heroicon-o-document-text')
-                            ->isActiveWhen(fn() => false)
-                            ->badge(fn() => request()->is('vehicle*') ? '●' : null)
-                            ->visible(fn() => auth()->user()->isAdmin()),
+                MenuItem::make()
+                    ->label(__('Quote'))
+                    ->url('/quote')
+                    ->icon('heroicon-o-document-text'),
 
-                        NavigationItem::make(__('CRM'))
-                            ->url('/crm')
-                            ->icon('heroicon-o-document-text')
-                            ->isActiveWhen(fn() => false)
-                            ->badge(fn() => request()->is('crm*') ? '●' : null)
-                            ->visible(fn() => auth()->user()->isAdmin()),
+                MenuItem::make()
+                    ->label(__('Quote vehicle'))
+                    ->url('/quote/vehicle-quote')
+                    ->icon('heroicon-o-document-text'),
 
-                        NavigationItem::make(__('Quote'))
-                            ->url('/quote')
-                            ->icon('heroicon-o-document-text')
-                            ->isActiveWhen(fn() => false)
-                            ->badge(function () {
-                                return (
-                                    request()->is('quote') ||
-                                    (
-                                        request()->is('quote/*') && !request()->is('quote/vehicle-quote*')
-                                    )
-                                )
-                                    ? '●' :
-                                    null;
-                            }),
+                MenuItem::make()
+                    ->label(__('Vehicle'))
+                    ->url('/vehicle')
+                    ->icon('heroicon-o-document-text')
+                    ->visible(fn () => auth()->user()->isAdmin()),
 
-                        NavigationItem::make(__('Quote vehicle'))
-                            ->url('/quote/vehicle-quote')
-                            ->icon('heroicon-o-document-text')
-                            ->isActiveWhen(fn() => false)
-                            ->badge(fn() => request()->is('quote/vehicle-quote*') ? '●' : null),
-                    ]),
-            ])
-            ->items([
-                NavigationItem::make(__('Dashboard'))
-                    ->url(Pages\Dashboard::getUrl())
-                    ->icon('heroicon-o-home')
-                    ->isActiveWhen(fn() => request()->fullUrlIs(Pages\Dashboard::getUrl())),
+                MenuItem::make()
+                    ->label(__('CRM'))
+                    ->url('/crm')
+                    ->icon('heroicon-o-document-text')
+                    ->visible(fn () => auth()->user()->isAdmin()),
             ]);
     }
 }

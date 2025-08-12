@@ -2,9 +2,6 @@
 
 namespace Modules\Quote\Submodules\Vehicle\Presentation\Filament\Resources;
 
-use Modules\Quote\Submodules\Vehicle\Presentation\Filament\Resources\QuoteVehicleResource\Pages;
-use Modules\Quote\Submodules\Vehicle\Presentation\Filament\Resources\QuoteVehicleResource\RelationManagers;
-use Modules\Quote\Submodules\Vehicle\Infrastructure\Persistence\Models\QuoteVehicle;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -12,6 +9,8 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Modules\Quote\Submodules\Vehicle\Infrastructure\Persistence\Models\QuoteVehicle;
+use Modules\Quote\Submodules\Vehicle\Presentation\Filament\Resources\QuoteVehicleResource\Pages;
 
 class QuoteVehicleResource extends Resource
 {

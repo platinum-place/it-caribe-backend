@@ -11,8 +11,8 @@ class Quote extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'user_id', 'type_id', 'status_id', 'debtor_id',
-        'attachments', 'start_date', 'end_date', 'id_crm',
+        'quote_type_id', 'quote_status_id', 'debtor_id',
+        'attachments', 'start_date', 'end_date',
         'responsible_id', 'created_by', 'updated_by', 'deleted_by',
     ];
 

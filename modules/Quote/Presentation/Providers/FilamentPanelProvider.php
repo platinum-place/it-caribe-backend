@@ -2,17 +2,11 @@
 
 namespace Modules\Quote\Presentation\Providers;
 
-use Filament\Navigation\NavigationBuilder;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Widgets\AccountWidget;
 use Modules\Common\Presentation\Filament\FilamentPanelBuilder;
-use Modules\Quote\Presentation\Filament\Resources\QuoteLineResource;
-use Modules\Quote\Presentation\Filament\Resources\QuoteLineStatusResource;
-use Modules\Quote\Presentation\Filament\Resources\QuoteResource;
-use Modules\Quote\Presentation\Filament\Resources\QuoteStatusResource;
-use Modules\Quote\Presentation\Filament\Resources\QuoteTypeResource;
 
 class FilamentPanelProvider extends PanelProvider
 {
@@ -42,16 +36,6 @@ class FilamentPanelProvider extends PanelProvider
             ])
             ->discoverResources(in: base_path('modules/Quote/Presentation/Filament/Resources'), for: 'Modules\\Quote\\Presentation\\Filament\\Resources')
             ->discoverPages(in: base_path('modules/Quote/Presentation/Filament/Pages'), for: 'Modules\\Quote\\Presentation\\Filament\\Pages')
-            ->discoverWidgets(in: base_path('modules/Quote/Presentation/Filament/Widgets'), for: 'Modules\\Quote\\Presentation\\Filament\\Widgets')
-            ->navigation(function (NavigationBuilder $builder): NavigationBuilder {
-                return $this->filamentPanel
-                    ->buildNavigation($builder)
-                    ->items([
-                        ...(auth()->user()->isAdmin() ? QuoteLineStatusResource::getNavigationItems() : []),
-                        ...(auth()->user()->isAdmin() ? QuoteStatusResource::getNavigationItems() : []),
-                        ...(auth()->user()->isAdmin() ? QuoteTypeResource::getNavigationItems() : []),
-                        ...(auth()->user()->isAdmin() ? QuoteResource::getNavigationItems() : []),
-                    ]);
-            });
+            ->discoverWidgets(in: base_path('modules/Quote/Presentation/Filament/Widgets'), for: 'Modules\\Quote\\Presentation\\Filament\\Widgets');
     }
 }
