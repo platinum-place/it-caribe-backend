@@ -3,15 +3,16 @@
 namespace Modules\Common\Presentation\Filament;
 
 use App\Filament\Pages\EditProfile;
-use App\Filament\Pages\Login;
+use Modules\Common\Presentation\Filament\Pages\Auth\Login;
+use Filament\Actions\Action;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\Navigation\MenuItem;
+use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Panel;
 use Filament\Support\Colors\Color;
-use Filament\Support\Enums\MaxWidth;
+use Filament\Support\Enums\Width;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -24,9 +25,27 @@ class FilamentPanelBuilder
     public function buildPanel(Panel $panel): Panel
     {
         return $panel
+            ->login()
             ->colors([
                 'primary' => Color::Amber,
             ])
+            ->spa()
+            ->databaseTransactions()
+            ->brandLogo(asset('img/logo.png'))
+            ->brandLogoHeight('50px')
+            ->brandName('IT - Insurance Tech')
+            ->favicon(asset('img/logo.png'))
+            ->databaseNotifications()
+            ->databaseNotificationsPolling('30s')
+            ->login(Login::class)
+//            ->registration()
+//            ->passwordReset()
+//            ->emailVerification()
+//            ->emailChangeVerification()
+            ->profile()
+//            ->maxContentWidth(Width::Full)
+//            ->simplePageMaxContentWidth(Width::Small)
+//            ->subNavigationPosition(SubNavigationPosition::End)
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
@@ -41,44 +60,35 @@ class FilamentPanelBuilder
             ->authMiddleware([
                 Authenticate::class,
             ])
-            ->brandLogo(asset('img/logo.png'))
-            ->brandLogoHeight('50px')
-            ->brandName('IT - Insurance Tech')
-            ->favicon(asset('img/logo.png'))
-            ->login(Login::class)
-            ->profile(EditProfile::class)
-// ->maxContentWidth(MaxWidth::Full)
-            ->databaseNotifications()
-            ->databaseNotificationsPolling('30s')
             ->userMenuItems([
-                MenuItem::make()
-                    ->label(__('Home'))
+                Action::make('home')
+                    ->translateLabel()
                     ->url(fn (): string => '/')
                     ->icon('heroicon-o-home'),
 
-                MenuItem::make()
-                    ->label(__('Admin'))
+                Action::make('admin')
+                    ->translateLabel()
                     ->url('/admin')
                     ->icon('heroicon-o-document-text')
                     ->visible(fn () => auth()->user()->isAdmin()),
 
-                MenuItem::make()
-                    ->label(__('Quote'))
+                Action::make('quote')
+                    ->translateLabel()
                     ->url('/quote')
                     ->icon('heroicon-o-document-text'),
 
-                MenuItem::make()
-                    ->label(__('Quote vehicle'))
+                Action::make('quote_vehicle')
+                    ->translateLabel()
                     ->url('/quote/vehicle-quote')
                     ->icon('heroicon-o-document-text'),
 
-                MenuItem::make()
-                    ->label(__('Vehicle'))
+                Action::make('vehicle')
+                    ->translateLabel()
                     ->url('/vehicle')
                     ->icon('heroicon-o-document-text')
                     ->visible(fn () => auth()->user()->isAdmin()),
 
-                MenuItem::make()
+                Action::make('crm')
                     ->label(__('CRM'))
                     ->url('/crm')
                     ->icon('heroicon-o-document-text')

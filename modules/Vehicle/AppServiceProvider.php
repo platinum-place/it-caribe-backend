@@ -6,7 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Modules\Vehicle\Infrastructure\Providers\ContractServiceProvider;
 use Modules\Vehicle\Infrastructure\Providers\MigrationServiceProvider;
 use Modules\Vehicle\Infrastructure\Providers\PolicyServiceProvider;
-use Modules\Vehicle\Presentation\Providers\FilamentPanelProvider;
+use Modules\Vehicle\Presentation\Providers\VehiclePanelProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -14,7 +14,7 @@ class AppServiceProvider extends ServiceProvider
         ContractServiceProvider::class,
         MigrationServiceProvider::class,
         PolicyServiceProvider::class,
-        FilamentPanelProvider::class,
+        VehiclePanelProvider::class,
     ];
 
     /**

@@ -6,14 +6,14 @@ use Illuminate\Support\ServiceProvider;
 use Modules\Quote\Infrastructure\Providers\ContractServiceProvider;
 use Modules\Quote\Infrastructure\Providers\MigrationServiceProvider;
 use Modules\Quote\Infrastructure\Providers\PolicyServiceProvider;
-use Modules\Quote\Presentation\Providers\FilamentPanelProvider;
+use Modules\Quote\Presentation\Providers\QuotePanelProvider;
 use Modules\Quote\Submodules\Vehicle\AppServiceProvider as VehicleAppServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
     protected array $providers = [
         MigrationServiceProvider::class,
-        FilamentPanelProvider::class,
+        QuotePanelProvider::class,
         ContractServiceProvider::class,
         PolicyServiceProvider::class,
         VehicleAppServiceProvider::class,
