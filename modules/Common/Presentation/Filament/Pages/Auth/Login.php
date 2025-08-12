@@ -86,7 +86,7 @@ class Login extends SimplePage
 
         $user = $authProvider->retrieveByCredentials($credentials);
 
-        if ((!$user) || (!$authProvider->validateCredentials($user, $credentials))) {
+        if ((! $user) || (! $authProvider->validateCredentials($user, $credentials))) {
             $this->userUndertakingMultiFactorAuthentication = null;
 
             $this->fireFailedEvent($authGuard, $user, $credentials);
@@ -100,7 +100,7 @@ class Login extends SimplePage
             $this->multiFactorChallengeForm->validate();
         } else {
             foreach (Filament::getMultiFactorAuthenticationProviders() as $multiFactorAuthenticationProvider) {
-                if (!$multiFactorAuthenticationProvider->isEnabled($user)) {
+                if (! $multiFactorAuthenticationProvider->isEnabled($user)) {
                     continue;
                 }
 
@@ -120,8 +120,8 @@ class Login extends SimplePage
             }
         }
 
-        if (!$authGuard->attemptWhen($credentials, function (Authenticatable $user): bool {
-            if (!($user instanceof FilamentUser)) {
+        if (! $authGuard->attemptWhen($credentials, function (Authenticatable $user): bool {
+            if (! ($user instanceof FilamentUser)) {
                 return true;
             }
 
@@ -151,7 +151,7 @@ class Login extends SimplePage
     }
 
     /**
-     * @param array<string, mixed> $credentials
+     * @param  array<string, mixed>  $credentials
      */
     protected function fireFailedEvent(Guard $guard, ?Authenticatable $user, #[SensitiveParameter] array $credentials): void
     {
@@ -161,7 +161,7 @@ class Login extends SimplePage
     protected function throwFailureValidationException(): never
     {
         throw ValidationException::withMessages([
-//            'data.email' => __('filament-panels::auth/pages/login.messages.failed'),
+            //            'data.email' => __('filament-panels::auth/pages/login.messages.failed'),
             'data.username' => __('filament-panels::auth/pages/login.messages.failed'),
         ]);
     }
@@ -176,7 +176,7 @@ class Login extends SimplePage
     {
         return $schema
             ->components([
-//                $this->getEmailFormComponent(),
+                //                $this->getEmailFormComponent(),
                 $this->getUsernameFormComponent(),
                 $this->getPasswordFormComponent(),
                 $this->getRememberFormComponent(),
@@ -197,17 +197,17 @@ class Login extends SimplePage
 
                 $enabledMultiFactorAuthenticationProviders = array_filter(
                     Filament::getMultiFactorAuthenticationProviders(),
-                    fn(MultiFactorAuthenticationProvider $multiFactorAuthenticationProvider): bool => $multiFactorAuthenticationProvider->isEnabled($user)
+                    fn (MultiFactorAuthenticationProvider $multiFactorAuthenticationProvider): bool => $multiFactorAuthenticationProvider->isEnabled($user)
                 );
 
                 return [
                     ...Arr::wrap($this->getMultiFactorProviderFormComponent()),
                     ...collect($enabledMultiFactorAuthenticationProviders)
-                        ->map(fn(MultiFactorAuthenticationProvider $multiFactorAuthenticationProvider): Component => Group::make($multiFactorAuthenticationProvider->getChallengeFormComponents($user))
+                        ->map(fn (MultiFactorAuthenticationProvider $multiFactorAuthenticationProvider): Component => Group::make($multiFactorAuthenticationProvider->getChallengeFormComponents($user))
                             ->statePath($multiFactorAuthenticationProvider->getId())
                             ->when(
                                 count($enabledMultiFactorAuthenticationProviders) > 1,
-                                fn(Group $group) => $group->visible(fn(Get $get): bool => $get('provider') === $multiFactorAuthenticationProvider->getId())
+                                fn (Group $group) => $group->visible(fn (Get $get): bool => $get('provider') === $multiFactorAuthenticationProvider->getId())
                             ))
                         ->all(),
                 ];
@@ -266,7 +266,7 @@ class Login extends SimplePage
 
         $enabledMultiFactorAuthenticationProviders = array_filter(
             Filament::getMultiFactorAuthenticationProviders(),
-            fn(MultiFactorAuthenticationProvider $multiFactorAuthenticationProvider): bool => $multiFactorAuthenticationProvider->isEnabled($user)
+            fn (MultiFactorAuthenticationProvider $multiFactorAuthenticationProvider): bool => $multiFactorAuthenticationProvider->isEnabled($user)
         );
 
         if (count($enabledMultiFactorAuthenticationProviders) <= 1) {
@@ -276,18 +276,18 @@ class Login extends SimplePage
         return Section::make()
             ->compact()
             ->secondary()
-            ->schema(fn(Section $section): array => [
+            ->schema(fn (Section $section): array => [
                 Radio::make('provider')
                     ->label(__('filament-panels::auth/pages/login.multi_factor.form.provider.label'))
                     ->options(array_map(
-                        fn(MultiFactorAuthenticationProvider $multiFactorAuthenticationProvider): string => $multiFactorAuthenticationProvider->getLoginFormLabel(),
+                        fn (MultiFactorAuthenticationProvider $multiFactorAuthenticationProvider): string => $multiFactorAuthenticationProvider->getLoginFormLabel(),
                         $enabledMultiFactorAuthenticationProviders,
                     ))
                     ->live()
                     ->afterStateUpdated(function (?string $state) use ($enabledMultiFactorAuthenticationProviders, $section, $user): void {
                         $provider = $enabledMultiFactorAuthenticationProviders[$state] ?? null;
 
-                        if (!$provider) {
+                        if (! $provider) {
                             return;
                         }
 
@@ -297,7 +297,7 @@ class Login extends SimplePage
                             ->getChildSchema()
                             ->fill();
 
-                        if (!($provider instanceof HasBeforeChallengeHook)) {
+                        if (! ($provider instanceof HasBeforeChallengeHook)) {
                             return;
                         }
 
@@ -376,14 +376,14 @@ class Login extends SimplePage
     }
 
     /**
-     * @param array<string, mixed> $data
+     * @param  array<string, mixed>  $data
      * @return array<string, mixed>
      */
     protected function getCredentialsFromFormData(#[SensitiveParameter] array $data): array
     {
         return [
             'username' => $data['username'],
-//            'email' => $data['email'],
+            //            'email' => $data['email'],
             'password' => $data['password'],
         ];
     }
@@ -394,11 +394,11 @@ class Login extends SimplePage
             return __('filament-panels::auth/pages/login.multi_factor.subheading');
         }
 
-        if (!filament()->hasRegistration()) {
+        if (! filament()->hasRegistration()) {
             return null;
         }
 
-        return new HtmlString(__('filament-panels::auth/pages/login.actions.register.before') . ' ' . $this->registerAction->toHtml());
+        return new HtmlString(__('filament-panels::auth/pages/login.actions.register.before').' '.$this->registerAction->toHtml());
     }
 
     public function content(Schema $schema): Schema
@@ -422,7 +422,7 @@ class Login extends SimplePage
                     ->alignment($this->getFormActionsAlignment())
                     ->fullWidth($this->hasFullWidthFormActions()),
             ])
-            ->visible(fn(): bool => blank($this->userUndertakingMultiFactorAuthentication));
+            ->visible(fn (): bool => blank($this->userUndertakingMultiFactorAuthentication));
     }
 
     public function getMultiFactorChallengeFormContentComponent(): Component
@@ -435,7 +435,7 @@ class Login extends SimplePage
                     ->alignment($this->getMultiFactorChallengeFormActionsAlignment())
                     ->fullWidth($this->hasFullWidthMultiFactorChallengeFormActions()),
             ])
-            ->visible(fn(): bool => filled($this->userUndertakingMultiFactorAuthentication));
+            ->visible(fn (): bool => filled($this->userUndertakingMultiFactorAuthentication));
     }
 
     public function getMultiFactorChallengeFormActionsAlignment(): string|Alignment

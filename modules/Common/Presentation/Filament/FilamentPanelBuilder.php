@@ -2,8 +2,6 @@
 
 namespace Modules\Common\Presentation\Filament;
 
-use App\Filament\Pages\EditProfile;
-use Modules\Common\Presentation\Filament\Pages\Auth\Login;
 use Filament\Actions\Action;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -19,6 +17,8 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Modules\Common\Presentation\Filament\Pages\Auth\EditProfile;
+use Modules\Common\Presentation\Filament\Pages\Auth\Login;
 
 class FilamentPanelBuilder
 {
@@ -42,7 +42,7 @@ class FilamentPanelBuilder
 //            ->passwordReset()
 //            ->emailVerification()
 //            ->emailChangeVerification()
-            ->profile()
+            ->profile(EditProfile::class)
 //            ->maxContentWidth(Width::Full)
 //            ->simplePageMaxContentWidth(Width::Small)
 //            ->subNavigationPosition(SubNavigationPosition::End)
