@@ -9,7 +9,7 @@ return [
      * Modules
      */
     Modules\Common\AppServiceProvider::class,
+    Modules\Vehicle\AppServiceProvider::class,
     Modules\CRM\AppServiceProvider::class,
     Modules\Quote\AppServiceProvider::class,
-    Modules\Vehicle\AppServiceProvider::class,
 ];

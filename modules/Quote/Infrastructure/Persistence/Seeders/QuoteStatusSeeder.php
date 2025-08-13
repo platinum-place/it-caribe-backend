@@ -3,6 +3,7 @@
 namespace Modules\Quote\Infrastructure\Persistence\Seeders;
 
 use Illuminate\Database\Seeder;
+use Modules\Quote\Infrastructure\Persistence\Models\QuoteStatus;
 
 class QuoteStatusSeeder extends Seeder
 {
@@ -12,13 +13,11 @@ class QuoteStatusSeeder extends Seeder
     public function run(): void
     {
         foreach (\Modules\Quote\Domain\Enums\QuoteStatusEnum::cases() as $enum) {
-            \Modules\Quote\Infrastructure\Persistance\Models\QuoteStatus::updateOrCreate(
-                ['id' => $enum->value],
-                [
-                    'id' => $enum->value,
-                    'name' => $enum->name,
-                ],
-            );
+            QuoteStatus::create([
+                'id' => $enum->value,
+                'name' => $enum->name,
+                'created_by' => 1,
+            ]);
         }
     }
 }

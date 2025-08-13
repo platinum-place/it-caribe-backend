@@ -11,20 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('quotes', function (Blueprint $table) {
+        Schema::create('quote_vehicles', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->softDeletes();
             $table->foreignId('created_by')->constrained('users');
             $table->foreignId('updated_by')->nullable()->constrained('users');
             $table->foreignId('deleted_by')->nullable()->constrained('users');
-            $table->foreignId('quote_status_id')->constrained('quote_statuses');
-            $table->foreignId('quote_type_id')->constrained('quote_types');
-            $table->foreignId('debtor_id')->constrained('debtors');
-            $table->foreignId('responsible_id')->nullable()->constrained('users');
-            $table->json('attachments')->nullable();
-            $table->date('start_date');
-            $table->date('end_date')->nullable();
+
+            $table->foreignId('quote_id')->constrained('quotes');
+            $table->foreignId('vehicle_id')->constrained('vehicles');
+
+            $table->decimal('vehicle_amount', 18, 2);
+            $table->decimal('vehicle_loan_amount', 18, 2)->nullable();
+
+            $table->boolean('is_employee')->default(false);
+            $table->boolean('leasing')->default(false);
         });
     }
 
@@ -33,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('quotes');
+        Schema::dropIfExists('quote_vehicles');
     }
 };

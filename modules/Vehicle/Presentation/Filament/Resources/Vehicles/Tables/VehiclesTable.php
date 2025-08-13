@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Quote\Submodules\Vehicle\Presentation\Filament\Resources\QuoteVehicles\Tables;
+namespace Modules\Vehicle\Presentation\Filament\Resources\Vehicles\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -8,12 +8,11 @@ use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
-use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 
-class QuoteVehiclesTable
+class VehiclesTable
 {
     public static function configure(Table $table): Table
     {
@@ -40,16 +39,40 @@ class QuoteVehiclesTable
                 TextColumn::make('deleted_by')
                     ->numeric()
                     ->sortable(),
-                TextColumn::make('quote_id')
+                TextColumn::make('vehicle_make_id')
                     ->numeric()
                     ->sortable(),
-                TextColumn::make('vehicle_id')
+                TextColumn::make('vehicle_model_id')
                     ->numeric()
                     ->sortable(),
-                IconColumn::make('is_employee')
-                    ->boolean(),
-                IconColumn::make('leasing')
-                    ->boolean(),
+                TextColumn::make('vehicle_type_id')
+                    ->numeric()
+                    ->sortable(),
+                TextColumn::make('vehicle_use_id')
+                    ->numeric()
+                    ->sortable(),
+                TextColumn::make('vehicle_activity_id')
+                    ->numeric()
+                    ->sortable(),
+                TextColumn::make('vehicle_loan_type_id')
+                    ->numeric()
+                    ->sortable(),
+                TextColumn::make('vehicle_utility_id')
+                    ->numeric()
+                    ->sortable(),
+                TextColumn::make('vehicle_amount')
+                    ->numeric()
+                    ->sortable(),
+                TextColumn::make('vehicle_loan_amount')
+                    ->numeric()
+                    ->sortable(),
+                TextColumn::make('vehicle_year')
+                    ->numeric()
+                    ->sortable(),
+                TextColumn::make('chassis')
+                    ->searchable(),
+                TextColumn::make('license_plate')
+                    ->searchable(),
             ])
             ->filters([
                 TrashedFilter::make(),

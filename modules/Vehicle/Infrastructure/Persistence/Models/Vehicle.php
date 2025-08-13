@@ -4,31 +4,20 @@ namespace Modules\Vehicle\Infrastructure\Persistence\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\Quote\Submodules\Vehicle\Infrastructure\Persistence\Models\QuoteVehicle;
 
-class VehicleModel extends Model
+class Vehicle extends Model
 {
     use SoftDeletes;
 
     protected $fillable = [
-        'id', 'name', 'code', 'vehicle_make_id', 'vehicle_type_id', 'vehicle_utility_id',
-        'created_by', 'updated_by', 'deleted_by',
+       'created_by', 'updated_by', 'deleted_by',
+       'vehicle_year', 'chassis', 'license_plate', 'vehicle_make_id', 'vehicle_year',
+        'vehicle_model_id', 'vehicle_type_id', 'vehicle_use_id',
+        'vehicle_activity_id',  'vehicle_loan_type_id','vehicle_utility_id',
     ];
-
-    public function make(): BelongsTo
-    {
-        return $this->belongsTo(VehicleMake::class);
-    }
-
-    public function type(): BelongsTo
-    {
-        return $this->belongsTo(VehicleType::class,'vehicle_type_id');
-    }
-
-    public function utility(): BelongsTo
-    {
-        return $this->belongsTo(VehicleUtility::class);
-    }
 
     public function createdBy(): BelongsTo
     {
@@ -43,5 +32,10 @@ class VehicleModel extends Model
     public function deletedBy(): BelongsTo
     {
         return $this->belongsTo(\App\Models\User::class, 'deleted_by');
+    }
+
+    public function quotes(): BelongsToMany
+    {
+        return $this->belongsToMany(QuoteVehicle::class);
     }
 }

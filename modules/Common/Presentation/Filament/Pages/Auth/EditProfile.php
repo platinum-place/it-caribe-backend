@@ -12,10 +12,10 @@ class EditProfile extends BaseEditProfile
     {
         return $schema
             ->components([
-//                TextInput::make('username')
-//                    ->translateLabel()
-//                    ->required()
-//                    ->maxLength(255),
+                //                TextInput::make('username')
+                //                    ->translateLabel()
+                //                    ->required()
+                //                    ->maxLength(255),
                 $this->getNameFormComponent(),
                 $this->getEmailFormComponent()
                     ->required(false),

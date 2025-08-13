@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('quote_vehicle_vehicle_accessory', function (Blueprint $table) {
+        Schema::create('vehicle_vehicle_color', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId('quote_vehicle_id')->constrained('quote_vehicles');
-            $table->foreignId('vehicle_accessory_id')->constrained('vehicle_accessories');
+            $table->foreignId('vehicle_id')->constrained('vehicles');
+            $table->foreignId('vehicle_color_id')->constrained('vehicle_colors');
         });
     }
 
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('quote_vehicle_vehicle_accessory');
+        Schema::dropIfExists('vehicle_vehicle_color');
     }
 };

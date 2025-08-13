@@ -26,25 +26,7 @@ class QuoteVehicleInfolist
                     ->numeric(),
                 TextEntry::make('quote_id')
                     ->numeric(),
-                TextEntry::make('vehicle_make_id')
-                    ->numeric(),
-                TextEntry::make('vehicle_model_id')
-                    ->numeric(),
-                TextEntry::make('vehicle_type_id')
-                    ->numeric(),
-                TextEntry::make('vehicle_use_id')
-                    ->numeric(),
-                TextEntry::make('vehicle_activity_id')
-                    ->numeric(),
-                TextEntry::make('vehicle_loan_type_id')
-                    ->numeric(),
-                TextEntry::make('vehicle_utility_id')
-                    ->numeric(),
-                TextEntry::make('vehicle_amount')
-                    ->numeric(),
-                TextEntry::make('loan_amount')
-                    ->numeric(),
-                TextEntry::make('vehicle_year')
+                TextEntry::make('vehicle_id')
                     ->numeric(),
                 IconEntry::make('is_employee')
                     ->boolean(),
