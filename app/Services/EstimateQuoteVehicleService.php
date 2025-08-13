@@ -100,9 +100,9 @@ class EstimateQuoteVehicleService
                 }
             }
 
-            if ($rate == 0 && $error == '') {
-                continue;
-            }
+//            if ($rate == 0 && $error == '') {
+//                continue;
+//            }
 
             $amount = round($amount, 2);
             $amountTaxed = round($amountTaxed, 2);
