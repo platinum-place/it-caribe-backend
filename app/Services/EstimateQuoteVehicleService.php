@@ -71,9 +71,9 @@ class EstimateQuoteVehicleService
                 }
             }
 
-            if ($shouldSkip) {
-                continue;
-            }
+//            if ($shouldSkip) {
+//                continue;
+//            }
 
             $rate = $this->getRate($product['id'], $vehicleAmount, $vehicleYear, $vehicleType);
 
