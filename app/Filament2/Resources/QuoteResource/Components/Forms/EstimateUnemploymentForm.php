@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources\QuoteResource\Components\Forms;
 
-use App\Models\QuoteUnemploymentDebtorType;
-use App\Models\QuoteUnemploymentUseType;
+use App\Models\folder\QuoteUnemploymentDebtorType;
+use App\Models\folder\QuoteUnemploymentUseType;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Select;

@@ -2,15 +2,19 @@
 
 namespace App\Filament\Resources\QuoteResource\Pages;
 
+use App\Enums\Quote\QuoteLineStatusEnum;
+use App\Enums\Quote\QuoteStatusEnum;
+use App\Enums\Quote\QuoteTypeEnum;
 use App\Filament\Resources\QuoteResource;
-use App\Models\QuoteDebtUnemployment;
-use App\Models\QuoteDebtUnemploymentLine;
-use App\Models\QuoteFire;
-use App\Models\QuoteFireLine;
-use App\Models\QuoteLife;
-use App\Models\QuoteLifeLine;
-use App\Models\QuoteUnemployment;
-use App\Models\QuoteUnemploymentLine;
+use App\Models\folder\QuoteDebtUnemployment;
+use App\Models\folder\QuoteDebtUnemploymentLine;
+use App\Models\folder\QuoteFire;
+use App\Models\folder\QuoteFireLine;
+use App\Models\folder\QuoteLife;
+use App\Models\folder\QuoteLifeLine;
+use App\Models\folder\QuoteUnemployment;
+use App\Models\folder\QuoteUnemploymentLine;
+use App\Models\Vehicle\Vehicle;
 use Carbon\Carbon;
 use DB;
 use Filament\Forms\Components\Select;
@@ -18,15 +22,11 @@ use Filament\Forms\Components\Wizard;
 use Filament\Forms\Form;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Database\Eloquent\Model;
-use Modules\Quote\Domain\Enums\QuoteLineStatusEnum;
-use Modules\Quote\Domain\Enums\QuoteStatusEnum;
-use Modules\Quote\Domain\Enums\QuoteTypeEnum;
 use Modules\Quote\Infrastructure\Persistance\Models\Debtor;
 use Modules\Quote\Infrastructure\Persistance\Models\Quote;
 use Modules\Quote\Infrastructure\Persistance\Models\QuoteLine;
-use Modules\Quote\Submodules\Vehicle\Infrastructure\Persistence\Models\QuoteVehicle;
-use Modules\Quote\Submodules\Vehicle\Infrastructure\Persistence\Models\QuoteVehicleLine;
-use Modules\Vehicle\Infrastructure\Persistence\Models\Vehicle;
+use Modules\Quote\Vehicle\Infrastructure\Persistence\Models\QuoteVehicle;
+use Modules\Quote\Vehicle\Infrastructure\Persistence\Models\QuoteVehicleLine;
 
 class CreateQuote extends CreateRecord
 {
@@ -66,7 +66,7 @@ class CreateQuote extends CreateRecord
                     QuoteResource\Components\Wizards\EstimateDebtUnemploymentWizardStep::make()
                         ->visible(fn ($get): bool => $get('quote_type_id') == 6),
 
-                    \Modules\Common\Presentation\Filament\Forms\Components\Wizards\CreateDebtorWizardStep::make(),
+                    \App\Filament\Forms\Components\Wizards\CreateDebtorWizardStep::make(),
                     QuoteResource\Components\Wizards\CoDebtorWizardStep::make()
                         ->hidden(fn ($get) => ! $get('co_debtor_birth_date')),
 

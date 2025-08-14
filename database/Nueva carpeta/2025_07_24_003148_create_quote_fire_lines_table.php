@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->softDeletes();
-            $table->foreignIdFor(\App\Models\QuoteFire::class)->constrained();
+            $table->foreignIdFor(\App\Models\folder\QuoteFire::class)->constrained();
             $table->foreignIdFor(\Modules\Quote\Infrastructure\Persistance\Models\QuoteLine::class)->constrained();
             $table->decimal('fire_amount', 18, 2)->default(0);
             $table->decimal('life_amount', 18, 2)->default(0);

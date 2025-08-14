@@ -2,6 +2,8 @@
 
 namespace App\Livewire;
 
+use App\Enums\Quote\QuoteLineStatusEnum;
+use App\Enums\Quote\QuoteStatusEnum;
 use App\Filament\Resources\QuoteResource;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\FileUpload;
@@ -10,8 +12,6 @@ use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Livewire\Component;
-use Modules\Quote\Domain\Enums\QuoteLineStatusEnum;
-use Modules\Quote\Domain\Enums\QuoteStatusEnum;
 use Modules\Quote\Infrastructure\Persistance\Models\Quote;
 
 class EmitQuote extends Component implements HasForms

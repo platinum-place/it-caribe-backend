@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Enums\Action;
-use App\Enums\Model;
+use App\Enums\forlder\Action;
+use App\Enums\forlder\Model;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 

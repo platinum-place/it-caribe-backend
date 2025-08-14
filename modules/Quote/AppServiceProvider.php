@@ -7,7 +7,7 @@ use Modules\Quote\Infrastructure\Providers\ContractServiceProvider;
 use Modules\Quote\Infrastructure\Providers\MigrationServiceProvider;
 use Modules\Quote\Infrastructure\Providers\PolicyServiceProvider;
 use Modules\Quote\Presentation\Providers\QuotePanelProvider;
-use Modules\Quote\Submodules\Vehicle\AppServiceProvider as VehicleAppServiceProvider;
+use Modules\Quote\Vehicle\AppServiceProvider as VehicleAppServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {

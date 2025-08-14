@@ -1,0 +1,66 @@
+<?php
+
+namespace Modules\Quote\Vehicle\Presentation\Filament\Resources\QuoteVehicles;
+
+use BackedEnum;
+use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Modules\Quote\Submodules\Vehicle\Presentation\Filament\Resources\QuoteVehicles\Pages\ListQuoteVehicles;
+use Modules\Quote\Vehicle\Infrastructure\Persistence\Models\QuoteVehicle;
+use Modules\Quote\Vehicle\Presentation\Filament\Resources\QuoteVehicles\Pages\CreateQuoteVehicle;
+use Modules\Quote\Vehicle\Presentation\Filament\Resources\QuoteVehicles\Pages\EditQuoteVehicle;
+use Modules\Quote\Vehicle\Presentation\Filament\Resources\QuoteVehicles\Pages\ViewQuoteVehicle;
+use Modules\Quote\Vehicle\Presentation\Filament\Resources\QuoteVehicles\Schemas\QuoteVehicleForm;
+use Modules\Quote\Vehicle\Presentation\Filament\Resources\QuoteVehicles\Schemas\QuoteVehicleInfolist;
+use Modules\Quote\Vehicle\Presentation\Filament\Resources\QuoteVehicles\Tables\QuoteVehiclesTable;
+
+class QuoteVehicleResource extends Resource
+{
+    protected static ?string $model = QuoteVehicle::class;
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+
+    public static function form(Schema $schema): Schema
+    {
+        return QuoteVehicleForm::configure($schema);
+    }
+
+    public static function infolist(Schema $schema): Schema
+    {
+        return QuoteVehicleInfolist::configure($schema);
+    }
+
+    public static function table(Table $table): Table
+    {
+        return QuoteVehiclesTable::configure($table);
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            //
+        ];
+    }
+
+    public static function getPages(): array
+    {
+        return [
+            'index' => ListQuoteVehicles::route('/'),
+            'create' => CreateQuoteVehicle::route('/create'),
+            'view' => ViewQuoteVehicle::route('/{record}'),
+            'edit' => EditQuoteVehicle::route('/{record}/edit'),
+        ];
+    }
+
+    public static function getRecordRouteBindingEloquentQuery(): Builder
+    {
+        return parent::getRecordRouteBindingEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
+    }
+}

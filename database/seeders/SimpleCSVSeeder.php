@@ -47,7 +47,7 @@ class SimpleCSVSeeder extends Seeder
                 $headers = fgetcsv($handle); // Primera línea = headers
 
                 // Obtener las columnas de la tabla para validar
-                $tableColumns = collect(DB::select("SELECT column_name FROM information_schema.columns WHERE table_name = ?", [$table]))
+                $tableColumns = collect(DB::select('SELECT column_name FROM information_schema.columns WHERE table_name = ?', [$table]))
                     ->pluck('column_name')
                     ->toArray();
 
@@ -70,7 +70,7 @@ class SimpleCSVSeeder extends Seeder
                     }
 
                     // Filtrar solo las columnas que existen en la tabla
-                    $filteredRowData = array_filter($rowData, function($key) use ($tableColumns) {
+                    $filteredRowData = array_filter($rowData, function ($key) use ($tableColumns) {
                         return in_array($key, $tableColumns);
                     }, ARRAY_FILTER_USE_KEY);
 
@@ -110,8 +110,9 @@ class SimpleCSVSeeder extends Seeder
             // Verificar si la tabla tiene columna 'id'
             $hasIdColumn = collect(DB::select("SELECT column_name FROM information_schema.columns WHERE table_name = ? AND column_name = 'id'", [$tableName]))->isNotEmpty();
 
-            if (!$hasIdColumn) {
+            if (! $hasIdColumn) {
                 echo "ℹ️ Tabla {$tableName} no tiene columna 'id', omitiendo reseteo de secuencia\n";
+
                 return;
             }
 
@@ -121,8 +122,9 @@ class SimpleCSVSeeder extends Seeder
             // Verificar si la secuencia existe
             $sequenceExists = collect(DB::select("SELECT 1 FROM pg_class WHERE relkind = 'S' AND relname = ?", [$sequenceName]))->isNotEmpty();
 
-            if (!$sequenceExists) {
+            if (! $sequenceExists) {
                 echo "ℹ️ Secuencia {$sequenceName} no existe, omitiendo reseteo\n";
+
                 return;
             }
 

@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\QuoteResource\Components\Wizards;
 
-use App\Models\QuoteLifeCreditType;
+use App\Models\folder\QuoteLifeCreditType;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Wizard;

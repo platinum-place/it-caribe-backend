@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\QuoteUnemploymentDebtorType;
-use App\Models\QuoteUnemploymentUseType;
+use App\Models\folder\QuoteUnemploymentDebtorType;
+use App\Models\folder\QuoteUnemploymentUseType;
 use App\Services\Api\Zoho\ZohoCRMService;
 use Carbon\Carbon;
 use Exception;

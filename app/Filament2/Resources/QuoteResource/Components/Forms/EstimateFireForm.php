@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\QuoteResource\Components\Forms;
 
-use App\Models\QuoteFireRiskType;
+use App\Models\folder\QuoteFireRiskType;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Fieldset;

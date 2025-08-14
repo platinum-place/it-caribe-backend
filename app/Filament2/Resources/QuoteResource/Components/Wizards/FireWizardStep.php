@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources\QuoteResource\Components\Wizards;
 
-use App\Models\QuoteFireConstructionType;
-use App\Models\QuoteFireCreditType;
+use App\Models\folder\QuoteFireConstructionType;
+use App\Models\folder\QuoteFireCreditType;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;

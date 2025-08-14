@@ -2,8 +2,8 @@
 
 namespace Modules\Quote\Infrastructure\Policies;
 
+use App\Models\Quote\QuoteLine;
 use App\Models\User;
-use Modules\Quote\Infrastructure\Persistence\Models\QuoteLine;
 
 class QuoteLinePolicy
 {

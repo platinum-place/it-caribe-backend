@@ -16,7 +16,7 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->foreignIdFor(\Modules\Quote\Infrastructure\Persistance\Models\Quote::class)->constrained();
-            $table->foreignIdFor(\App\Models\QuoteLifeCreditType::class)->constrained();
+            $table->foreignIdFor(\App\Models\folder\QuoteLifeCreditType::class)->constrained();
             $table->foreignIdFor(\Modules\Quote\Infrastructure\Persistance\Models\Debtor::class, 'co_debtor_id')->nullable()->constrained();
             $table->boolean('guarantor')->default(false);
             $table->integer('deadline')->default(0);

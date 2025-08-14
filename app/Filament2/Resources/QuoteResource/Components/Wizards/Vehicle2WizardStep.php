@@ -2,6 +2,12 @@
 
 namespace App\Filament\Resources\QuoteResource\Components\Wizards;
 
+use App\Models\Vehicle\VehicleActivity;
+use App\Models\Vehicle\VehicleColor;
+use App\Models\Vehicle\VehicleLoanType;
+use App\Models\Vehicle\VehicleMake;
+use App\Models\Vehicle\VehicleModel;
+use App\Models\Vehicle\VehicleUse;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
@@ -9,12 +15,6 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Wizard;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
-use Modules\Vehicle\Infrastructure\Persistence\Models\VehicleActivity;
-use Modules\Vehicle\Infrastructure\Persistence\Models\VehicleColor;
-use Modules\Vehicle\Infrastructure\Persistence\Models\VehicleLoanType;
-use Modules\Vehicle\Infrastructure\Persistence\Models\VehicleMake;
-use Modules\Vehicle\Infrastructure\Persistence\Models\VehicleModel;
-use Modules\Vehicle\Infrastructure\Persistence\Models\VehicleUse;
 
 class Vehicle2WizardStep
 {

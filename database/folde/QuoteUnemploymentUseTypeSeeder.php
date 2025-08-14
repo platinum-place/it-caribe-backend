@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\QuoteUnemploymentUseType;
+use App\Models\folder\QuoteUnemploymentUseType;
 use Illuminate\Database\Seeder;
 
 class QuoteUnemploymentUseTypeSeeder extends Seeder
@@ -14,11 +14,11 @@ class QuoteUnemploymentUseTypeSeeder extends Seeder
     {
         $data = [
             [
-                'id' => \App\Enums\QuoteUnemploymentUseType::PUBLIC->value,
+                'id' => \App\Enums\forlder\QuoteUnemploymentUseType::PUBLIC->value,
                 'name' => 'Público',
             ],
             [
-                'id' => \App\Enums\QuoteUnemploymentUseType::PRIVATE->value,
+                'id' => \App\Enums\forlder\QuoteUnemploymentUseType::PRIVATE->value,
                 'name' => 'Privado',
             ],
         ];

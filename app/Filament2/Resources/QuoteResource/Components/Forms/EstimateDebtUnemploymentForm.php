@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\QuoteResource\Components\Forms;
 
-use App\Models\QuoteUnemploymentUseType;
+use App\Models\folder\QuoteUnemploymentUseType;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Grid;

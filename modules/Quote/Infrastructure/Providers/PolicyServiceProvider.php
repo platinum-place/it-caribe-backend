@@ -2,12 +2,12 @@
 
 namespace Modules\Quote\Infrastructure\Providers;
 
+use App\Models\Quote\Quote;
+use App\Models\Quote\QuoteLine;
+use App\Models\Quote\QuoteLineStatus;
+use App\Models\Quote\QuoteStatus;
+use App\Models\Quote\QuoteType;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Modules\Quote\Infrastructure\Persistence\Models\Quote;
-use Modules\Quote\Infrastructure\Persistence\Models\QuoteLine;
-use Modules\Quote\Infrastructure\Persistence\Models\QuoteLineStatus;
-use Modules\Quote\Infrastructure\Persistence\Models\QuoteStatus;
-use Modules\Quote\Infrastructure\Persistence\Models\QuoteType;
 use Modules\Quote\Infrastructure\Policies\QuoteLinePolicy;
 use Modules\Quote\Infrastructure\Policies\QuoteLineStatusPolicy;
 use Modules\Quote\Infrastructure\Policies\QuotePolicy;

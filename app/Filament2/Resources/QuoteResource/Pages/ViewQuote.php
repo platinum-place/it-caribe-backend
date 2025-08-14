@@ -2,11 +2,11 @@
 
 namespace App\Filament\Resources\QuoteResource\Pages;
 
+use App\Enums\Quote\QuoteStatusEnum;
+use App\Enums\Quote\QuoteTypeEnum;
 use App\Filament\Resources\QuoteResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
-use Modules\Quote\Domain\Enums\QuoteStatusEnum;
-use Modules\Quote\Domain\Enums\QuoteTypeEnum;
 
 class ViewQuote extends ViewRecord
 {

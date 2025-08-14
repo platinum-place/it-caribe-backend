@@ -2,21 +2,21 @@
 
 namespace App\Imports;
 
+use App\Enums\Quote\QuoteLineStatusEnum;
+use App\Enums\Quote\QuoteStatusEnum;
+use App\Enums\Quote\QuoteTypeEnum;
+use App\Models\Vehicle\Vehicle;
+use App\Models\Vehicle\VehicleMake;
+use App\Models\Vehicle\VehicleModel;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
-use Modules\Quote\Domain\Enums\QuoteLineStatusEnum;
-use Modules\Quote\Domain\Enums\QuoteStatusEnum;
-use Modules\Quote\Domain\Enums\QuoteTypeEnum;
 use Modules\Quote\Infrastructure\Persistance\Models\Debtor;
 use Modules\Quote\Infrastructure\Persistance\Models\Quote;
 use Modules\Quote\Infrastructure\Persistance\Models\QuoteLine;
-use Modules\Quote\Submodules\Vehicle\Infrastructure\Persistence\Models\QuoteVehicle;
-use Modules\Quote\Submodules\Vehicle\Infrastructure\Persistence\Models\QuoteVehicleLine;
-use Modules\Vehicle\Infrastructure\Persistence\Models\Vehicle;
-use Modules\Vehicle\Infrastructure\Persistence\Models\VehicleMake;
-use Modules\Vehicle\Infrastructure\Persistence\Models\VehicleModel;
+use Modules\Quote\Vehicle\Infrastructure\Persistence\Models\QuoteVehicle;
+use Modules\Quote\Vehicle\Infrastructure\Persistence\Models\QuoteVehicleLine;
 
 class MigrateSheetImport implements ToCollection, WithHeadingRow
 {

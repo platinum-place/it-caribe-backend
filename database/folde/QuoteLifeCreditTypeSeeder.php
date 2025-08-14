@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\QuoteLifeCreditType;
+use App\Models\folder\QuoteLifeCreditType;
 use Illuminate\Database\Seeder;
 
 class QuoteLifeCreditTypeSeeder extends Seeder

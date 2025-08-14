@@ -6,13 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Quote\CancelVehicleRequest;
 use App\Http\Requests\Api\Quote\EstimateVehicleRequest;
 use App\Http\Requests\Api\Quote\IssueVehicleRequest;
+use App\Models\Vehicle\VehicleMake;
+use App\Models\Vehicle\VehicleModel;
 use App\Services\Api\Zoho\ZohoCRMService;
 use App\Services\EstimateQuoteVehicleService;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\DB;
-use Modules\Vehicle\Infrastructure\Persistence\Models\VehicleMake;
-use Modules\Vehicle\Infrastructure\Persistence\Models\VehicleModel;
 use Throwable;
 
 class VehicleQuoteController extends Controller

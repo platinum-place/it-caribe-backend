@@ -16,7 +16,7 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->foreignIdFor(\Modules\Quote\Infrastructure\Persistance\Models\QuoteLine::class)->constrained();
-            $table->foreignIdFor(\App\Models\QuoteDebtUnemployment::class)->constrained();
+            $table->foreignIdFor(\App\Models\folder\QuoteDebtUnemployment::class)->constrained();
             $table->decimal('rate', 18, 2)->default(0);
         });
     }

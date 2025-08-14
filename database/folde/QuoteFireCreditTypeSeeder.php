@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\QuoteFireCreditType;
+use App\Models\folder\QuoteFireCreditType;
 use Illuminate\Database\Seeder;
 
 class QuoteFireCreditTypeSeeder extends Seeder

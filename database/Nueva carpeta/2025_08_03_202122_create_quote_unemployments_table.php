@@ -16,8 +16,8 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->foreignIdFor(\Modules\Quote\Infrastructure\Persistance\Models\Quote::class)->constrained();
-            $table->foreignIdFor(\App\Models\QuoteUnemploymentDebtorType::class)->constrained();
-            $table->foreignIdFor(\App\Models\QuoteUnemploymentUseType::class)->constrained();
+            $table->foreignIdFor(\App\Models\folder\QuoteUnemploymentDebtorType::class)->constrained();
+            $table->foreignIdFor(\App\Models\folder\QuoteUnemploymentUseType::class)->constrained();
             $table->integer('deadline')->default(0);
             $table->decimal('loan_installment', 18, 2)->default(0);
         });
