@@ -2,11 +2,11 @@
 
 namespace App\Models\Vehicle;
 
+use App\Models\Quote\Vehicle\QuoteVehicle;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Modules\Quote\Vehicle\Infrastructure\Persistence\Models\QuoteVehicle;
 
 class VehicleColor extends Model
 {

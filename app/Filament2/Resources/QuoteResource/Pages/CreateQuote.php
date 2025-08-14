@@ -14,6 +14,8 @@ use App\Models\folder\QuoteLife;
 use App\Models\folder\QuoteLifeLine;
 use App\Models\folder\QuoteUnemployment;
 use App\Models\folder\QuoteUnemploymentLine;
+use App\Models\Quote\Vehicle\QuoteVehicle;
+use App\Models\Quote\Vehicle\QuoteVehicleLine;
 use App\Models\Vehicle\Vehicle;
 use Carbon\Carbon;
 use DB;
@@ -25,8 +27,6 @@ use Illuminate\Database\Eloquent\Model;
 use Modules\Quote\Infrastructure\Persistance\Models\Debtor;
 use Modules\Quote\Infrastructure\Persistance\Models\Quote;
 use Modules\Quote\Infrastructure\Persistance\Models\QuoteLine;
-use Modules\Quote\Vehicle\Infrastructure\Persistence\Models\QuoteVehicle;
-use Modules\Quote\Vehicle\Infrastructure\Persistence\Models\QuoteVehicleLine;
 
 class CreateQuote extends CreateRecord
 {

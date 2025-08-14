@@ -1,20 +1,23 @@
 <?php
 
-namespace App\Models\Vehicle;
+namespace App\Models\Quote\Vehicle;
 
-use App\Models\Quote\Vehicle\QuoteVehicle;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class VehicleRoute extends Model
+class QuoteVehicleLine extends Model
 {
     use SoftDeletes;
 
     protected $fillable = [
-        'id', 'name', 'created_by', 'updated_by', 'deleted_by',
+        'quote_vehicle_id', 'quote_line_id', 'life_amount', 'latest_expenses', 'markup', 'created_by', 'updated_by', 'deleted_by',
     ];
+
+    public function quoteVehicle(): BelongsTo
+    {
+        return $this->belongsTo(QuoteVehicle::class, 'quote_vehicle_id');
+    }
 
     public function createdBy(): BelongsTo
     {
@@ -29,10 +32,5 @@ class VehicleRoute extends Model
     public function deletedBy(): BelongsTo
     {
         return $this->belongsTo(\App\Models\User::class, 'deleted_by');
-    }
-
-    public function routes(): BelongsToMany
-    {
-        return $this->belongsToMany(QuoteVehicle::class);
     }
 }

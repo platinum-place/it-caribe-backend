@@ -5,6 +5,8 @@ namespace App\Imports;
 use App\Enums\Quote\QuoteLineStatusEnum;
 use App\Enums\Quote\QuoteStatusEnum;
 use App\Enums\Quote\QuoteTypeEnum;
+use App\Models\Quote\Vehicle\QuoteVehicle;
+use App\Models\Quote\Vehicle\QuoteVehicleLine;
 use App\Models\Vehicle\Vehicle;
 use App\Models\Vehicle\VehicleMake;
 use App\Models\Vehicle\VehicleModel;
@@ -15,8 +17,6 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Modules\Quote\Infrastructure\Persistance\Models\Debtor;
 use Modules\Quote\Infrastructure\Persistance\Models\Quote;
 use Modules\Quote\Infrastructure\Persistance\Models\QuoteLine;
-use Modules\Quote\Vehicle\Infrastructure\Persistence\Models\QuoteVehicle;
-use Modules\Quote\Vehicle\Infrastructure\Persistence\Models\QuoteVehicleLine;
 
 class MigrateSheetImport implements ToCollection, WithHeadingRow
 {
