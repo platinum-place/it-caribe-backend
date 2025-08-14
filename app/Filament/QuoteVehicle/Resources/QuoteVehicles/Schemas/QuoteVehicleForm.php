@@ -3,6 +3,7 @@
 namespace App\Filament\QuoteVehicle\Resources\QuoteVehicles\Schemas;
 
 use App\Filament\Forms\Components\Wizards\CreateDebtorWizardStep;
+use App\Filament\Forms\Components\Wizards\CreateLeadWizardStep;
 use App\Models\Vehicle\VehicleActivity;
 use App\Models\Vehicle\VehicleColor;
 use App\Models\Vehicle\VehicleLoanType;
@@ -10,7 +11,7 @@ use App\Models\Vehicle\VehicleMake;
 use App\Models\Vehicle\VehicleModel;
 use App\Models\Vehicle\VehicleUse;
 use App\Models\Vehicle\VehicleUtility;
-use App\Services\EstimateQuoteUseCase;
+use App\Services\Quote\Vehicle\EstimateQuoteVehicleService;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\DatePicker;
@@ -109,7 +110,7 @@ class QuoteVehicleForm
                                 Action::make('generateEstimate')
                                     ->translateLabel()
                                     ->action(function ($set, $get) {
-                                        $estimates = app(EstimateQuoteUseCase::class)->handle(
+                                        $estimates = app(EstimateQuoteVehicleService::class)->handle(
                                             $get('quote_vehicle.vehicle_amount'),
                                             $get('vehicle.vehicle_make_id'),
                                             $get('vehicle.vehicle_model_id'),
@@ -205,7 +206,7 @@ class QuoteVehicleForm
                                 ->prefix('$'),
                         ]),
 
-                    CreateDebtorWizardStep::make(),
+                    CreateLeadWizardStep::make(),
                 ])
                     ->columnSpanFull()
                     ->columns(),

@@ -6,7 +6,7 @@ use App\Enums\Quote\QuoteLineStatusEnum;
 use App\Enums\Quote\QuoteStatusEnum;
 use App\Enums\Quote\QuoteTypeEnum;
 use App\Filament\QuoteVehicle\Resources\QuoteVehicles\QuoteVehicleResource;
-use App\Models\CRM\Debtor;
+use App\Models\CRM\Lead;
 use App\Models\Quote\Quote;
 use App\Models\Quote\QuoteLine;
 use App\Models\Quote\Vehicle\QuoteVehicle;
@@ -22,10 +22,10 @@ class CreateQuoteVehicle extends CreateRecord
     protected function handleRecordCreation(array $data): Model
     {
         $user = auth()->user();
-        $data['debtor']['created_by'] = $user->id;
+        $data['lead']['created_by'] = $user->id;
         $data['vehicle']['created_by'] = $user->id;
 
-        $debtor = Debtor::create($data['debtor']);
+        $lead = Lead::create($data['lead']);
         $vehicle = Vehicle::create($data['vehicle']);
 
         $vehicle->vehicleColors()->attach($data['vehicle']['vehicle_colors']);
@@ -35,7 +35,7 @@ class CreateQuoteVehicle extends CreateRecord
         $quote = Quote::create([
             'quote_status_id' => QuoteStatusEnum::PENDING->value,
             'quote_type_id' => QuoteTypeEnum::VEHICLE->value,
-            'debtor_id' => $debtor->id,
+            'lead_id' => $lead->id,
             'start_date' => $data['quote']['start_date'],
             'end_date' => $data['quote']['end_date'],
             'created_by' => $user->id,

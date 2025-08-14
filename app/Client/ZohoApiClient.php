@@ -2,12 +2,12 @@
 
 namespace App\Client;
 
-use App\DTOs\ZohoToken;
+use App\DTOs\Api\Zoho\ZohoTokenDTO;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Http;
 
-class ZohoApiClient implements ZohoApiClientInterface
+class ZohoApiClient
 {
     /**
      * @throws RequestException
@@ -31,7 +31,7 @@ class ZohoApiClient implements ZohoApiClientInterface
      * @throws RequestException
      * @throws ConnectionException
      */
-    public function getTemporaryToken(string $refreshToken): ZohoToken
+    public function getTemporaryToken(string $refreshToken): ZohoTokenDTO
     {
         $response = Http::asForm()
             ->post(config('zoho.domains.accounts_url').'/'.config('zoho.oauth.uri'), [
@@ -47,7 +47,7 @@ class ZohoApiClient implements ZohoApiClientInterface
             throw new \RuntimeException($response['error']);
         }
 
-        return new ZohoToken(
+        return new ZohoTokenDTO(
             $response['access_token'],
             $response['api_domain'],
             $response['token_type'],

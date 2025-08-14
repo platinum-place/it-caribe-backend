@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Filament\Vehicle\Resources\VehicleLoanTypes\Pages;
+
+use App\Filament\Vehicle\Resources\VehicleLoanTypes\VehicleLoanTypeResource;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\ForceDeleteAction;
+use Filament\Actions\RestoreAction;
+use Filament\Actions\ViewAction;
+use Filament\Resources\Pages\EditRecord;
+
+class EditVehicleLoanType extends EditRecord
+{
+    protected static string $resource = VehicleLoanTypeResource::class;
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            ViewAction::make(),
+            DeleteAction::make(),
+            ForceDeleteAction::make(),
+            RestoreAction::make(),
+        ];
+    }
+}

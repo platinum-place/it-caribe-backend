@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId('deleted_by')->nullable()->constrained('users');
             $table->foreignId('quote_status_id')->constrained('quote_statuses');
             $table->foreignId('quote_type_id')->constrained('quote_types');
-            $table->foreignId('debtor_id')->constrained('debtors');
+            $table->foreignId('lead_id')->constrained('leads');
             $table->foreignId('responsible_id')->nullable()->constrained('users');
             $table->json('attachments')->nullable();
             $table->date('start_date');
