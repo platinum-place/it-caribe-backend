@@ -25,13 +25,12 @@ services:
             - app-network
 
     php-fpm:
-        tty: true
         build:
             context: .
             dockerfile: Dockerfile
             args:
-                UID: ${UID:-1000}
-                GID: ${GID:-1000}
+                WWWUSER: ${WWWUSER}
+                WWWGROUP: ${WWWGROUP}
         volumes:
             - ./:/app
             - ./docker/php/laravel.ini:/opt/bitnami/php/etc/conf.d/laravel.ini
@@ -41,38 +40,6 @@ services:
         environment:
             - OPCACHE_ENABLE=${OPCACHE_ENABLE:-1}
             - OPCACHE_ENABLE_CLI=${OPCACHE_ENABLE_CLI:-1}
-
-    php-cli:
-        tty: true
-        build:
-            context: .
-            dockerfile: Dockerfile
-            args:
-                UID: ${UID:-1000}
-                GID: ${GID:-1000}
-        volumes:
-            - ./:/app
-            - ./docker/php/laravel.ini:/opt/bitnami/php/etc/conf.d/laravel.ini
-        networks:
-            - app-network
-        container_name: ${APP_NAME}-php-cli
-
-    worker:
-        tty: true
-        build:
-            context: .
-            dockerfile: Dockerfile
-            args:
-                UID: ${UID:-1000}
-                GID: ${GID:-1000}
-        container_name: ${APP_NAME}-worker
-        volumes:
-            - ./:/app
-            - ./docker/php/laravel.ini:/opt/bitnami/php/etc/conf.d/laravel.ini
-            - ./docker/worker/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf
-        networks:
-            - app-network
-        entrypoint: ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 
 volumes:
     postgresql_data:
