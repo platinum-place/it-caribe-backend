@@ -2,10 +2,13 @@
 
 namespace App\Models\CRM;
 
+use App\Observers\CRM\LeadObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+#[ObservedBy([LeadObserver::class])]
 class Lead extends Model
 {
     use SoftDeletes;

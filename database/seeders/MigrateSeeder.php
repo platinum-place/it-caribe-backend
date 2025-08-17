@@ -13,6 +13,7 @@ use App\Models\Quote\Vehicle\QuoteVehicleLine;
 use App\Models\Vehicle\Vehicle;
 use App\Models\Vehicle\VehicleMake;
 use App\Models\Vehicle\VehicleModel;
+use App\Models\Vehicle\VehicleUtility;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -174,6 +175,24 @@ class MigrateSeeder extends Seeder
                         'created_by' => 1,
                     ]);
                 }
+                switch ($row['PLAN']) {
+                    case '0KM':
+                        $utility = '0 KM';
+                        break;
+
+                    case 'Econo':
+                        $utility = 'Japonés';
+                        break;
+
+                    case 'Hibrido / El‚ctrico' || 'Electricos':
+                        $utility = 'Híbrido/Eléctrico';
+                        break;
+
+                    default:
+                        $utility = 'Clásico';
+                        break;
+                }
+
                 $vehicle = Vehicle::create([
                     'created_by' => 1,
                     'chassis' => $row['CHASIS'] ?? null,
@@ -182,6 +201,7 @@ class MigrateSeeder extends Seeder
                     'vehicle_year' => $row['ANO'] ?? null,
                     'vehicle_model_id' => $model->id,
                     'vehicle_type_id' => $model->vehicle_type_id,
+                    'vehicle_utility_id' => VehicleUtility::firstWhere('name', $utility)->id,
                     //            'vehicle_use_id',
                     //            'vehicle_activity_id',
                     //            'vehicle_loan_type_id',

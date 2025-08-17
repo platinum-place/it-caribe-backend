@@ -17,26 +17,10 @@ class CreateLeadWizardStep
             ->schema([
                 TextInput::make('lead.first_name')
                     ->translateLabel()
-                    ->required()
-                    ->live(onBlur: true)
-                    ->afterStateUpdated(function ($state, $set, $get) {
-                        $lastName = $get('lead.last_name');
-                        $fullName = trim(($state ?? '').' '.($lastName ?? ''));
-                        $set('lead.full_name', $fullName);
-                    }),
-
+                    ->required(),
                 TextInput::make('lead.last_name')
                     ->translateLabel()
-                    ->required()
-                    ->live(onBlur: true)
-                    ->afterStateUpdated(function ($state, $set, $get) {
-                        $firstName = $get('lead.first_name');
-                        $fullName = trim(($firstName ?? '').' '.($state ?? ''));
-                        $set('lead.full_name', $fullName);
-                    }),
-
-                Hidden::make('lead.full_name'),
-
+                    ->required(),
                 TextInput::make('lead.identity_number')
                     ->translateLabel()
                     ->required(),

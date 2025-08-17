@@ -2,6 +2,7 @@
 
 namespace App\Models\Quote\Vehicle;
 
+use App\Models\Quote\QuoteLine;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -19,6 +20,11 @@ class QuoteVehicleLine extends Model
     public function quoteVehicle(): BelongsTo
     {
         return $this->belongsTo(QuoteVehicle::class, 'quote_vehicle_id');
+    }
+
+    public function quoteLine(): BelongsTo
+    {
+        return $this->belongsTo(QuoteLine::class, 'quote_vehicle_id');
     }
 
     public function createdBy(): BelongsTo
