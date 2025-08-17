@@ -25,7 +25,7 @@ class MigrateSeeder extends Seeder
      */
     private function parseDate(?string $date): ?string
     {
-        if (!$date || trim($date) === '') {
+        if (! $date || trim($date) === '') {
             return null;
         }
 
@@ -41,7 +41,9 @@ class MigrateSeeder extends Seeder
      */
     private function to_utf8_clean(?string $value): ?string
     {
-        if ($value === null) return null;
+        if ($value === null) {
+            return null;
+        }
 
         // Quitar BOM si está en el valor (no tocamos headers)
         $value = preg_replace('/^\xEF\xBB\xBF/', '', $value);
@@ -50,12 +52,13 @@ class MigrateSeeder extends Seeder
         if (mb_check_encoding($value, 'UTF-8')) {
             // eliminar caracteres de control (excepto tab, LF, CR)
             $value = preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]+/u', '', $value);
+
             return trim($value);
         }
 
         // Intentar detectar encoding; si falla, asumir Windows-1252
         $enc = mb_detect_encoding($value, ['UTF-8', 'Windows-1252', 'ISO-8859-1', 'ISO-8859-15', 'ASCII'], true);
-        if (!$enc) {
+        if (! $enc) {
             $enc = 'Windows-1252';
         }
 
@@ -78,23 +81,44 @@ class MigrateSeeder extends Seeder
         return trim($converted);
     }
 
-    /**
-     * Run the database seeds.
-     */
-    public function run(): void
+    private function cleanNumeric(?string $value): ?float
     {
-        DB::transaction(function () {
-            // Cambiar datestyle temporalmente para PostgreSQL
-            DB::statement("SET datestyle = 'DMY'");
-            $rows = [];
+        if ($value === null) {
+            return null;
+        }
+        // Elimina comas de miles y espacios
+        $clean = str_replace([',', ' '], '', $value);
+        // Si está vacío después de limpiar, retorna null
+        if ($clean === '' || strtoupper($clean) === 'NULL') {
+            return null;
+        }
 
-            // Leer el archivo CSV
-            $csvFile = base_path('csvs/VEHICULOS 1.csv');
+        return (float) $clean;
+    }
 
+    private function parseCSV()
+    {
+        $rows = [];
+
+        $csvFiles = [
+            //                            base_path('csvs/VEHICULOS 1.csv'),
+            //                            base_path('csvs/VEHICULOS 2.csv'),
+            //                        base_path('csvs/VEHICULOS 3.csv'),
+            //                        base_path('csvs/VEHICULOS 4.csv'),
+            //            base_path('csvs/VEHICULOS 5.csv'),
+            //            base_path('csvs/VEHICULOS 6.csv'),
+            //            base_path('csvs/VEHICULOS 7.csv'),
+            //            base_path('csvs/VEHICULOS 8.csv'),
+            //            base_path('csvs/VEHICULOS 9.csv'),
+            //            base_path('csvs/VEHICULOS 10.csv'),
+            //            base_path('csvs/VEHICULOS 11.csv'),
+            base_path('csvs/VEHICULOS 12.csv'),
+        ];
+
+        foreach ($csvFiles as $csvFile) {
             if (file_exists($csvFile)) {
                 $handle = fopen($csvFile, 'r');
 
-                // Probar diferentes delimitadores
                 $delimiters = [',', ';', "\t"];
                 $headers = null;
                 $delimiter = ',';
@@ -109,33 +133,29 @@ class MigrateSeeder extends Seeder
                     }
                 }
 
-                if (!$headers) {
-                    echo "❌ No se pudieron leer los headers correctamente\n";
+                if (! $headers) {
+                    echo "❌ No se pudieron leer los headers correctamente en {$csvFile}\n";
                     fclose($handle);
-                    return;
+
+                    continue;
                 }
 
-                echo "✅ Headers encontrados con delimitador '{$delimiter}': " . implode(', ', $headers) . "\n";
-                echo "📊 Total de columnas: " . count($headers) . "\n";
-
                 while (($row = fgetcsv($handle, 0, $delimiter)) !== false) {
-                    // Validar que el número de columnas coincida con los headers
                     if (count($headers) !== count($row)) {
-                        echo "⚠️ Saltando fila con número de columnas diferente: " . count($row) . " columnas vs " . count($headers) . " headers\n";
+                        echo '⚠️ Saltando fila con número de columnas diferente: '.count($row).' columnas vs '.count($headers)." headers\n";
+
                         continue;
                     }
 
                     $rowData = array_combine($headers, $row);
 
-                    // Limpiar datos vacíos y convertir valores a UTF-8 limpio (NO cambiamos keys/headers)
                     foreach ($rowData as $key => $value) {
-                        // Mantener NULL explícito
                         if ($value === '' || strtoupper($value) === 'NULL') {
                             $rowData[$key] = null;
+
                             continue;
                         }
 
-                        // Convertir/limpiar el valor a UTF-8
                         $rowData[$key] = $this->to_utf8_clean($value);
                     }
 
@@ -144,14 +164,37 @@ class MigrateSeeder extends Seeder
 
                 fclose($handle);
             }
+        }
+
+        echo '📊 Total: '.count($rows)."\n";
+
+        return $rows;
+    }
+
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        DB::transaction(function () {
+            DB::statement("SET datestyle = 'DMY'");
+
+            $rows = $this->parseCSV();
+
+            $totalInsertados = 0;
 
             foreach ($rows as $row) {
+                if (empty($row['IDENTIFICACION'])) {
+                    echo print_r($row);
+
+                    continue;
+                }
                 $lead = Lead::create([
-                    'full_name' => $row['NOMBE '] ?? null,
+                    'full_name' => $row['NOMBE '] ?? $row['NOMBRE '] ?? null,
                     //            'first_name',
                     //            'last_name',
                     'identity_number' => $row['IDENTIFICACION'] ?? null,
-//                    'age',
+                    'age' => isset($row['EDAD']) && is_int($row['EDAD']) ? $row['EDAD'] : null,
                     'birth_date' => $this->parseDate($row['FECHA DE NACIMIENTO'] ?? null),
                     //            'home_phone',
                     //            'mobile_phone',
@@ -161,13 +204,22 @@ class MigrateSeeder extends Seeder
                     //            'debtor_type_id',
                     'created_by' => 1,
                 ]);
-                $make = VehicleMake::whereRaw('LOWER(name) = ?', [strtolower($row['MARCA'] ?? null)])->firstOrFail();
+                $make = VehicleMake::whereRaw('LOWER(name) = ?', [strtolower($row['MARCA'] ?? null)])
+                    ->orWhere('name', 'ILIKE', $row['MARCA'] ?? null)
+                    ->first();
+
+                if (! $make) {
+                    $make = VehicleMake::create([
+                        'name' => $row['MODELO'],
+                        'created_by' => 1,
+                    ]);
+                }
 
                 $model = VehicleModel::whereRaw('LOWER(name) = ?', [strtolower($row['MODELO'] ?? null)])
                     ->orWhere('name', 'ILIKE', $row['MODELO'] ?? null)
                     ->first();
 
-                if (!$model) {
+                if (! $model) {
                     $model = VehicleModel::create([
                         'name' => $row['MODELO'],
                         'vehicle_make_id' => $make->id,
@@ -175,7 +227,7 @@ class MigrateSeeder extends Seeder
                         'created_by' => 1,
                     ]);
                 }
-                switch ($row['PLAN']) {
+                switch ($row['PLAN'] ?? null) {
                     case '0KM':
                         $utility = '0 KM';
                         break;
@@ -220,7 +272,7 @@ class MigrateSeeder extends Seeder
 
                 $quoteVehicle = QuoteVehicle::create([
                     'quote_id' => $quote->id,
-                    'vehicle_amount' => (float)$row[' VALOR ASEGURADO '] ?? null,
+                    'vehicle_amount' => $this->cleanNumeric($row[' VALOR ASEGURADO '] ?? 0),
                     'vehicle_id' => $vehicle->id,
                     //            'is_employee',
                     //            'leasing',
@@ -232,12 +284,13 @@ class MigrateSeeder extends Seeder
                     'name' => $row['ASEGURADORA'] ?? null,
                     //                'description',
                     'quote_id' => $quote->id,
-                    'unit_price' => (float)$row[' PRIMA TOTAL '] ?? null,
+                    'unit_price' => $this->cleanNumeric($row['PRIMA CON IMPUESTO'] ?? 0),
                     'quantity' => 1,
-                    'subtotal' => (float)$row[' PRIMA TOTAL '] ?? null,
-                    //                'tax_rate',
-                    'total' => (float)$row[' PRIMA TOTAL '] ?? null,
-                    'amount_taxed' => (float)$row[' PRIMA TOTAL '] ?? null,
+                    'subtotal' => $this->cleanNumeric($row['PRIMA CON IMPUESTO'] ?? 0),
+                    'tax_rate' => 16,
+                    'tax_amount' => $this->cleanNumeric($row['IMPUESTO'] ?? 0),
+                    'total' => $this->cleanNumeric($row[' PRIMA TOTAL '] ?? 0),
+                    'amount_taxed' => $this->cleanNumeric($row['PRIMA SIN IMPUESTO'] ?? 0),
                     'quote_line_status_id' => QuoteLineStatusEnum::ACCEPTED->value,
                     'created_by' => 1,
                 ]);
@@ -248,12 +301,16 @@ class MigrateSeeder extends Seeder
                     'life_amount' => 120,
                     'latest_expenses' => 20,
                     'markup' => 80,
-                    'total_monthly' => (float)$row[' CUOTA MENSUAL '] ?? null,
+                    'total_monthly' => $this->cleanNumeric($row[' CUOTA MENSUAL '] ?? 0),
                     //                'vehicle_rate',
-                    'amount_without_life_amount' => (float)$row[' PRIMA SIN VIDA '] ?? null,
+                    'amount_without_life_amount' => $this->cleanNumeric($row[' PRIMA SIN VIDA '] ?? 0),
                     'created_by' => 1,
                 ]);
+
+                $totalInsertados++;
             }
+
+            echo "✅ Inserciones totales: {$totalInsertados}\n";
         });
     }
 }

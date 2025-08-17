@@ -10,7 +10,6 @@ use Filament\Actions\ExportBulkAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
-use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
@@ -46,7 +45,7 @@ class QuoteVehiclesTable
                 TextColumn::make('quote.selectedLine.name')
                     ->label('ASEGURADORA'),
 
-                TextColumn::make('quote.selectedLine.total_monthly')
+                TextColumn::make('selectedLine.total_monthly')
                     ->label('PRIMA COBRADA CLIENTE (INCLUYE VIDA + MARKUP)'),
 
                 TextColumn::make('selectedLine.amount_without_life_amount')
@@ -77,7 +76,7 @@ class QuoteVehiclesTable
                     ->label('Año'),
 
                 TextColumn::make('vehicle.vehicleUtility.name')
-                    ->label('PLAN')
+                    ->label('PLAN'),
             ])
             ->filters([
                 TrashedFilter::make(),

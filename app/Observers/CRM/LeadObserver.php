@@ -9,12 +9,12 @@ class LeadObserver
 {
     public function creating(Lead $lead): void
     {
-        if (!$lead->age && $lead->birth_date) {
+        if (! $lead->age && $lead->birth_date) {
             $lead->age = Carbon::parse($lead->birth_date)->age;
         }
 
-        if (!$lead->full_name && ($lead->first_name && $lead->last_name)) {
-            $lead->age = $lead->first_name . ' ' . $lead->last_name;
+        if (! $lead->full_name && ($lead->first_name && $lead->last_name)) {
+            $lead->age = $lead->first_name.' '.$lead->last_name;
         }
     }
 

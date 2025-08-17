@@ -13,16 +13,16 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            RoleSeeder::class,
-            AdminUserSeeder::class,
-
-            // Vehicle
-            Vehicle\VehicleUseSeeder::class,
-            Vehicle\VehicleColorSeeder::class,
-            Vehicle\VehicleUtilitySeeder::class,
-            Vehicle\VehicleActivitySeeder::class,
-            Vehicle\VehicleLoanTypeSeeder::class,
-            Vehicle\VehicleAccessorySeeder::class,
+            //            RoleSeeder::class,
+            //            AdminUserSeeder::class,
+            //
+            //            // Vehicle
+            //            Vehicle\VehicleUseSeeder::class,
+            //            Vehicle\VehicleColorSeeder::class,
+            //            Vehicle\VehicleUtilitySeeder::class,
+            //            Vehicle\VehicleActivitySeeder::class,
+            //            Vehicle\VehicleLoanTypeSeeder::class,
+            //            Vehicle\VehicleAccessorySeeder::class,
 
             // Quote
             Quote\QuoteTypeSeeder::class,

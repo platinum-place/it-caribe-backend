@@ -36,7 +36,7 @@ class QuoteVehicleExporter extends Exporter
             ExportColumn::make('quote.selectedLine.name')
                 ->label('ASEGURADORA'),
 
-            ExportColumn::make('quote.selectedLine.total_monthly')
+            ExportColumn::make('selectedLine.total_monthly')
                 ->label('PRIMA COBRADA CLIENTE (INCLUYE VIDA + MARKUP)'),
 
             ExportColumn::make('selectedLine.amount_without_life_amount')
@@ -67,16 +67,16 @@ class QuoteVehicleExporter extends Exporter
                 ->label('Año'),
 
             ExportColumn::make('vehicle.vehicleUtility.name')
-                ->label('PLAN')
+                ->label('PLAN'),
         ];
     }
 
     public static function getCompletedNotificationBody(Export $export): string
     {
-        $body = 'Your quote vehicle export has completed and ' . Number::format($export->successful_rows) . ' ' . str('row')->plural($export->successful_rows) . ' exported.';
+        $body = 'Your quote vehicle export has completed and '.Number::format($export->successful_rows).' '.str('row')->plural($export->successful_rows).' exported.';
 
         if ($failedRowsCount = $export->getFailedRowsCount()) {
-            $body .= ' ' . Number::format($failedRowsCount) . ' ' . str('row')->plural($failedRowsCount) . ' failed to export.';
+            $body .= ' '.Number::format($failedRowsCount).' '.str('row')->plural($failedRowsCount).' failed to export.';
         }
 
         return $body;

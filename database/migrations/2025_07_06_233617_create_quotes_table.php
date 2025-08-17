@@ -23,7 +23,7 @@ return new class extends Migration
             $table->foreignId('lead_id')->constrained('leads');
             $table->foreignId('responsible_id')->nullable()->constrained('users');
             $table->json('attachments')->nullable();
-            $table->date('start_date');
+            $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
         });
     }
