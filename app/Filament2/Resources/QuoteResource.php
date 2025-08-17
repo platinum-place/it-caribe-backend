@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Exports\QuoteExporter;
 use App\Filament\Resources\QuoteResource\Pages;
+use App\Filament2\Exports\QuoteExporter;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\ExportBulkAction;

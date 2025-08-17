@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Exports;
+namespace App\Filament2\Exports;
 
 use App\Models\Quote;
 use Filament\Actions\Exports\ExportColumn;
