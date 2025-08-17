@@ -20,6 +20,8 @@ return new class extends Migration
             $table->decimal('life_amount', 18, 2)->default(0);
             $table->decimal('latest_expenses', 18, 2)->default(0);
             $table->decimal('markup', 18, 2)->default(0);
+            $table->decimal('amount_without_life_amount', 18, 2)->default(0);
+            $table->decimal('total_monthly', 18, 2)->default(0);
             $table->float('vehicle_rate')->default(0);
             $table->foreignId('created_by')->constrained('users');
             $table->foreignId('updated_by')->nullable()->constrained('users');

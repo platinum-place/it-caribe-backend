@@ -11,7 +11,9 @@ class QuoteVehicleLine extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'quote_vehicle_id', 'quote_line_id', 'life_amount', 'latest_expenses', 'markup', 'created_by', 'updated_by', 'deleted_by',
+        'quote_vehicle_id', 'quote_line_id', 'life_amount', 'vehicle_rate',
+        'latest_expenses', 'markup', 'amount_without_life_amount',
+        'created_by', 'updated_by', 'deleted_by',
     ];
 
     public function quoteVehicle(): BelongsTo

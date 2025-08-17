@@ -29,8 +29,8 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->text('address')->nullable();
             $table->integer('is_employee')->nullable();
-            $table->boolean('age')->default(false);
-            $table->foreignId('lead_type_id')->constrained('lead_types');
+            $table->integer('age')->nullable();
+            $table->foreignId('lead_type_id')->nullable()->constrained('lead_types');
         });
     }
 

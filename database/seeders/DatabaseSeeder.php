@@ -14,7 +14,23 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             RoleSeeder::class,
-            //            AdminUserSeeder::class,
+            AdminUserSeeder::class,
+
+            // Vehicle
+            Vehicle\VehicleUseSeeder::class,
+            Vehicle\VehicleColorSeeder::class,
+            Vehicle\VehicleUtilitySeeder::class,
+            Vehicle\VehicleActivitySeeder::class,
+            Vehicle\VehicleLoanTypeSeeder::class,
+            Vehicle\VehicleAccessorySeeder::class,
+
+            // Quote
+            Quote\QuoteTypeSeeder::class,
+            Quote\QuoteStatusSeeder::class,
+            Quote\QuoteLineStatusSeeder::class,
+
+            // CRM
+            CRM\LeadTypeSeeder::class,
         ]);
     }
 }
