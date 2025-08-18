@@ -13,4 +13,6 @@ enum QuoteStatusEnum: int
     case CANCELLED = 4;
 
     case EXPIRED = 5;
+
+    case CHECKED = 6;
 }

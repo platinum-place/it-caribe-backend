@@ -18,11 +18,11 @@ Route::middleware([
         Route::post('/cotizador/colectiva', \App\Http\Controllers\Quote\Vehicle\EstimateQuoteVehicleController::class);
         Route::post('/cotizador/EmitirAuto', \App\Http\Controllers\Quote\Vehicle\IssueQuoteVehicleController::class);
         Route::get('/cotizador/CancelarAuto', \App\Http\Controllers\Quote\Vehicle\CancelQuoteVehicleController::class);
-        Route::get('/cotizador/ValorPromedio', [\App\Http\Controllers\Api\QuoteController::class, 'valueVehicle']);
-        Route::post('/cotizador/ValidarInspeccion', [\App\Http\Controllers\Api\QuoteController::class, 'validateInspection']);
-        Route::post('/cotizador/Inspeccionar', [\App\Http\Controllers\Api\QuoteController::class, 'inspect']);
-        Route::post('/cotizador/ObtenerQRInspeccion', [\App\Http\Controllers\Api\QuoteController::class, 'getQRInspect']);
-        Route::post('/cotizador/ObtenerImagenes', [\App\Http\Controllers\Api\QuoteController::class, 'getPhotos']);
+        Route::get('/cotizador/ValorPromedio', \App\Http\Controllers\Quote\Vehicle\AverageValueController::class);
+        Route::post('/cotizador/ValidarInspeccion', \App\Http\Controllers\Quote\Vehicle\ValidateInspectionController::class);
+        Route::post('/cotizador/Inspeccionar', \App\Http\Controllers\Quote\Vehicle\InspectController::class);
+        Route::post('/cotizador/ObtenerQRInspeccion', \App\Http\Controllers\Quote\Vehicle\InspectionQRController::class);
+        Route::post('/cotizador/ObtenerImagenes', \App\Http\Controllers\Quote\Vehicle\PhotosController::class);
 
         Route::post('/cotizador/CotizaVida', [\App\Http\Controllers\Api\LifeController::class, 'estimateLife']);
         Route::post('/cotizador/EmitirVida', [\App\Http\Controllers\Api\LifeController::class, 'issueLife']);

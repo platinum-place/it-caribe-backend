@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Api\Quote;
+namespace App\Http\Requests\Quote\Vehicle;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -22,7 +22,7 @@ class ValidateInspectionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'cotz_id' => ['required'],
+            'cotz_id' => ['required', 'integer', 'exists:quote_vehicle_lines,id'],
             'passcode' => ['required', 'string', 'size:4'],
         ];
     }

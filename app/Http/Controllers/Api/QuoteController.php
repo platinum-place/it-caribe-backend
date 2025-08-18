@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\Quote\InspectRequest;
-use App\Http\Requests\Api\Quote\ValidateInspectionRequest;
 use App\Http\Requests\Quote\Vehicle\EstimateQuoteVehicleRequest;
+use App\Http\Requests\Quote\Vehicle\InspectRequest;
 use App\Http\Requests\Quote\Vehicle\IssueQuoteVehicleRequest;
+use App\Http\Requests\Quote\Vehicle\ValidateInspectionRequest;
 use App\Services\ZohoCRMService;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
