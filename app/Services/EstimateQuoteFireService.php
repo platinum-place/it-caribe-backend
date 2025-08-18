@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Enums\forlder\QuoteFireRiskType;
-use App\Services\Api\Zoho\ZohoCRMService;
+use App\Services\Zoho\ZohoCRMService;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Client\ConnectionException;

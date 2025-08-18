@@ -101,8 +101,8 @@
     <tbody>
     @foreach($lines as $line)
         @php
-            $productCRM = app(\App\Services\Api\Zoho\ZohoCRMService::class)->getRecords('Products',['Vendor_Name'],$line->quoteLine->id_crm)['data'][0];
-            $vendorCRM = app(\App\Services\Api\Zoho\ZohoCRMService::class)->getRecords('Vendors',['Nombre'],$productCRM['Vendor_Name']['id'])['data'][0];
+            $productCRM = app(\App\Services\Zoho\ZohoCRMService::class)->getRecords('Products',['Vendor_Name'],$line->quoteLine->id_crm)['data'][0];
+            $vendorCRM = app(\App\Services\Zoho\ZohoCRMService::class)->getRecords('Vendors',['Nombre'],$productCRM['Vendor_Name']['id'])['data'][0];
         @endphp
         <tr>
             <td style="border: none; text-align:left;">{{ ucwords(strtolower($vendorCRM['Nombre'])) }}</td>
@@ -121,12 +121,14 @@
         <td style="padding: 10px;">
 
             <p>
-                a) Las aseguradoras al efectuar su proceso de evaluación de riesgo, se reservan el derecho de aceptación del
+                a) Las aseguradoras al efectuar su proceso de evaluación de riesgo, se reservan el derecho de aceptación
+                del
                 mismo. En caso de que la aseguradora seleccionada decline el riesgo, el cliente será notificado.
             </p>
 
             <p>
-                b) La aseguradora se reserva el derecho para realizar variación de prima y coberturas en esta cotización de seguros
+                b) La aseguradora se reserva el derecho para realizar variación de prima y coberturas en esta cotización
+                de seguros
                 suscrita con el cliente.
             </p>
 

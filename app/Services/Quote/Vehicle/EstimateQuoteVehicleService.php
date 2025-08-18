@@ -6,7 +6,7 @@ use App\Models\Vehicle\VehicleMake;
 use App\Models\Vehicle\VehicleModel;
 use App\Models\Vehicle\VehicleType;
 use App\Models\Vehicle\VehicleUtility;
-use App\Services\Api\Zoho\ZohoService;
+use App\Services\Zoho\ZohoService;
 
 class EstimateQuoteVehicleService
 {
@@ -104,10 +104,6 @@ class EstimateQuoteVehicleService
                 }
             }
 
-            //            if ($rate == 0 && $error == '') {
-            //                continue;
-            //            }
-
             $amount = round($amount, 2);
             $amountTaxed = round($amountTaxed, 2);
             $taxesAmount = round($taxesAmount, 2);
@@ -128,6 +124,7 @@ class EstimateQuoteVehicleService
                 'description' => $product['id'],
                 'life_amount' => $lifeAmount,
                 'latest_expenses' => $latestExpenses,
+                'amount_without_life_amount' => $totalMonthly - $lifeAmount - $markup,
                 'markup' => $markup,
                 'vehicle_rate' => $rate,
                 'error' => $error,

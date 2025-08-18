@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Api\Zoho;
+namespace App\Services\Zoho;
 
 use App\Client\ZohoApiClient;
 use App\Models\Zoho\ZohoOauthAccessToken;

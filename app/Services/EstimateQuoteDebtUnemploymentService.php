@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Services\Api\Zoho\ZohoCRMService;
+use App\Services\Zoho\ZohoCRMService;
 use Exception;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;

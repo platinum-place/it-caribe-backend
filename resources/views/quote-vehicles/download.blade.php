@@ -143,13 +143,13 @@
 
     foreach ($lines as $line) {
         if ($line->total > 0) {
-            $product = app(\App\Services\Api\Zoho\ZohoCRMService::class)->getRecords(
+            $product = app(\App\Services\Zoho\ZohoCRMService::class)->getRecords(
                 'Products',
                 $productFields,
                 $line->id_crm
             )['data'][0];
 
-            $vendor = app(\App\Services\Api\Zoho\ZohoCRMService::class)->getRecords(
+            $vendor = app(\App\Services\Zoho\ZohoCRMService::class)->getRecords(
                 'Vendors',
                 $vendorFields,
                 $product['Vendor_Name']['id']
@@ -235,15 +235,15 @@
                             @break
 
                         @case('text2')
-                                @if (empty($data['product'][$row['field']]))
+                            @if (empty($data['product'][$row['field']]))
+                                No aplica
+                            @else
+                                @if ($quoteVehicle->leasing === false)
                                     No aplica
                                 @else
-                                    @if ($quoteVehicle->leasing === false)
-                                    No aplica
-                                    @else
-                                        {{ $data['product'][$row['field']] }}
-                                    @endif
+                                    {{ $data['product'][$row['field']] }}
                                 @endif
+                            @endif
                             @break
                     @endswitch
                 </td>

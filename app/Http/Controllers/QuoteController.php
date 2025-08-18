@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\Api\Zoho\ZohoCRMService;
+use App\Services\Zoho\ZohoCRMService;
 use Illuminate\Http\Request;
 use Modules\Quote\Infrastructure\Persistance\Models\Quote;
 
