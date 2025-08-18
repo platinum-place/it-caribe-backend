@@ -24,6 +24,19 @@ Route::middleware([
         Route::post('/cotizador/ObtenerQRInspeccion', \App\Http\Controllers\Quote\Vehicle\InspectionQRController::class);
         Route::post('/cotizador/ObtenerImagenes', \App\Http\Controllers\Quote\Vehicle\PhotosController::class);
 
+        Route::post('/SegurosLeyApi/GuardarSeguro', [\App\Http\Controllers\Api\InsuranceLawController::class, 'estimateVehicleLaw']);
+        Route::get('/SegurosLeyApi/Obtener/MetodosDePago', [\App\Http\Controllers\Api\InsuranceLawController::class, 'paymentType']);
+        Route::get('/SegurosLeyApi/Buscar/PorNoDocumento/{identification}', [\App\Http\Controllers\Api\InsuranceLawController::class, 'searchDocument']);
+        Route::get('/SegurosLeyApi/Anular/{id}', [\App\Http\Controllers\Api\InsuranceLawController::class, 'disableVehicleLaw']);
+
+        Route::post('/vehiculos/Marca', [\App\Http\Controllers\Api\VehicleController::class, 'makeList']);
+        Route::post('/vehiculos/Modelos/{makeId}', [\App\Http\Controllers\Api\VehicleController::class, 'modelList']);
+        Route::post('/vehiculos/TipoVehiculo', [\App\Http\Controllers\Api\VehicleController::class, 'typeList']);
+        Route::post('/vehiculos/Accesorios', [\App\Http\Controllers\Api\VehicleController::class, 'accessoriesList']);
+        Route::post('/vehiculos/Actividades', [\App\Http\Controllers\Api\VehicleController::class, 'activitiesList']);
+        Route::post('/vehiculos/Circulacion', [\App\Http\Controllers\Api\VehicleController::class, 'routeList']);
+        Route::get('/vehiculos/Color', [\App\Http\Controllers\Api\VehicleController::class, 'colorList']);
+
         Route::post('/cotizador/CotizaVida', [\App\Http\Controllers\Api\LifeController::class, 'estimateLife']);
         Route::post('/cotizador/EmitirVida', [\App\Http\Controllers\Api\LifeController::class, 'issueLife']);
         Route::post('/cotizador/CancelarVida', [\App\Http\Controllers\Api\LifeController::class, 'cancelLife']);
@@ -42,19 +55,6 @@ Route::middleware([
 
         Route::get('/cotizador/GetTipoEmpleado', [\App\Http\Controllers\Api\QuoteController::class, 'employmentTypes']);
         Route::get('/cotizador/GetGiroDelNegocio', [\App\Http\Controllers\Api\QuoteController::class, 'businessTypes']);
-
-        Route::post('/SegurosLeyApi/GuardarSeguro', [\App\Http\Controllers\Api\InsuranceLawController::class, 'estimateVehicleLaw']);
-        Route::get('/SegurosLeyApi/Obtener/MetodosDePago', [\App\Http\Controllers\Api\InsuranceLawController::class, 'paymentType']);
-        Route::get('/SegurosLeyApi/Buscar/PorNoDocumento/{identification}', [\App\Http\Controllers\Api\InsuranceLawController::class, 'searchDocument']);
-        Route::get('/SegurosLeyApi/Anular/{id}', [\App\Http\Controllers\Api\InsuranceLawController::class, 'disableVehicleLaw']);
-
-        Route::post('/vehiculos/Marca', [\App\Http\Controllers\Api\VehicleController::class, 'makeList']);
-        Route::post('/vehiculos/Modelos/{makeId}', [\App\Http\Controllers\Api\VehicleController::class, 'modelList']);
-        Route::post('/vehiculos/TipoVehiculo', [\App\Http\Controllers\Api\VehicleController::class, 'typeList']);
-        Route::post('/vehiculos/Accesorios', [\App\Http\Controllers\Api\VehicleController::class, 'accessoriesList']);
-        Route::post('/vehiculos/Actividades', [\App\Http\Controllers\Api\VehicleController::class, 'activitiesList']);
-        Route::post('/vehiculos/Circulacion', [\App\Http\Controllers\Api\VehicleController::class, 'routeList']);
-        Route::get('/vehiculos/Color', [\App\Http\Controllers\Api\VehicleController::class, 'colorList']);
 
         Route::get('/Productos', [\App\Http\Controllers\Api\ProductController::class, 'list']);
         Route::get('/Productos/Aseguradoras/{id}', [\App\Http\Controllers\Api\ProductController::class, 'show']);
