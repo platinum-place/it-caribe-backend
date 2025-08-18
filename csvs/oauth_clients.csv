@@ -1,2 +1,0 @@
-id,owner_type,owner_id,name,secret,provider,redirect_uris,grant_types,revoked,created_at,updated_at
-219e9eba-ef93-4d48-88d6-e2149d49d5aa,,,it-caribe-backend,$2y$12$0Ol/Zeyi84wQfSsU5n7DyejD0Za9SeoDW6t3oFagXDe1ILt6FY0pa,,[],"[""client_credentials""]",f,2025-06-23 21:34:41,2025-06-23 21:35:00

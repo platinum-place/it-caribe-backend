@@ -3,36 +3,23 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
-    "license": "MIT",
-    "repositories": [
-        {
-            "type": "path",
-            "url": "packages/zoho/api"
-        }
+    "keywords": [
+        "laravel",
+        "framework"
     ],
+    "license": "MIT",
     "require": {
-        "php": "^8.4",
-        "ext-bcmath": "*",
-        "ext-fileinfo": "*",
-        "barryvdh/laravel-dompdf": "^3.1",
-        "filament/filament": "^4.0",
-        "laravel-lang/common": "^6.7",
+        "php": "^8.2",
         "laravel/framework": "^12.0",
         "laravel/passport": "^13.0",
         "laravel/sanctum": "^4.0",
-        "laravel/tinker": "^2.10.1",
-        "maatwebsite/excel": "^3.1",
-        "simplesoftwareio/simple-qrcode": "^4.2",
-        "spatie/laravel-permission": "^6.17",
-        "zoho/api": "dev-main",
-        "zohocrm/php-sdk-archive": "^2.2"
+        "laravel/tinker": "^2.10.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
         "laravel/pail": "^1.2.2",
         "laravel/pint": "^1.13",
-        "laravel/sail": "^1.44",
+        "laravel/sail": "^1.41",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.6",
         "phpunit/phpunit": "^11.5.3"
@@ -42,10 +29,7 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        },
-        "files": [
-            "helpers.php"
-        ]
+        }
     },
     "autoload-dev": {
         "psr-4": {
@@ -54,9 +38,9 @@
     },
     "scripts": {
         "post-autoload-dump": [
-            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi",
-            "@php artisan filament:upgrade"
+            "@php artisan config:clear",
+            "@php artisan clear-compiled",
+            "@php artisan package:discover --ansi"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force"

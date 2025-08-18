@@ -36,16 +36,6 @@ return [
             'serve' => true,
             'throw' => false,
             'report' => false,
-            'permissions' => [
-                'file' => [
-                    'public' => 0644,
-                    'private' => 0644,
-                ],
-                'dir' => [
-                    'public' => 0755,
-                    'private' => 0755,
-                ],
-            ],
         ],
 
         'public' => [
@@ -53,31 +43,6 @@ return [
             'root' => storage_path('app/public'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
-            'permissions' => [
-                'file' => [
-                    'public' => 0644,
-                    'private' => 0644,
-                ],
-                'dir' => [
-                    'public' => 0755,
-                    'private' => 0755,
-                ],
-            ],
-        ],
-
-        'temp' => [
-            'driver' => 'local',
-            'root' => storage_path('app/temp'),
-            'permissions' => [
-                'file' => [
-                    'public' => 0644,
-                    'private' => 0644,
-                ],
-                'dir' => [
-                    'public' => 0755,
-                    'private' => 0755,
-                ],
-            ],
             'throw' => false,
             'report' => false,
         ],
@@ -111,4 +76,5 @@ return [
     'links' => [
         public_path('storage') => storage_path('app/public'),
     ],
+
 ];
