@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Api\Quote;
+namespace App\Http\Requests\Quote\Vehicle;
 
 use App\Traits\PrepareForValidationTrait;
 use Illuminate\Foundation\Http\FormRequest;
 
-class IssueVehicleRequest extends FormRequest
+class CancelQuoteVehicleRequest extends FormRequest
 {
     use PrepareForValidationTrait;
 
@@ -25,9 +25,7 @@ class IssueVehicleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'cotzid' => ['required'],
-            'ofertaID' => ['required', 'integer'],
-            'FechaVencimiento' => ['required', 'date_format:d/m/Y'],
+            'IdCotizacion' => ['required','integer', 'exists:quote_vehicle_lines,id'],
         ];
     }
 

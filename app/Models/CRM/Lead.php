@@ -16,12 +16,12 @@ class Lead extends Model
     protected $fillable = [
         'full_name', 'first_name', 'last_name', 'identity_number', 'age',
         'birth_date', 'home_phone', 'mobile_phone', 'work_phone', 'email', 'address',
-        'debtor_type_id', 'created_by', 'updated_by', 'deleted_by',
+        'lead_type_id', 'created_by', 'updated_by', 'deleted_by',
     ];
 
     public function debtorType(): BelongsTo
     {
-        return $this->belongsTo(LeadType::class, 'debtor_type_id');
+        return $this->belongsTo(LeadType::class);
     }
 
     public function createdBy(): BelongsTo

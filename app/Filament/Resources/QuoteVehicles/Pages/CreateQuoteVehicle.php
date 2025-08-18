@@ -29,8 +29,6 @@ class CreateQuoteVehicle extends CreateRecord
         $vehicle = Vehicle::create($data['vehicle']);
 
         $vehicle->vehicleColors()->attach($data['vehicle']['vehicle_colors']);
-        //        $vehicle->vehicleRoutes()->attach($data['vehicle']['vehicle_colors']);
-        //        $vehicle->vehicleAccessories()->attach($data['vehicle']['vehicle_colors']);
 
         $quote = Quote::create([
             'quote_status_id' => QuoteStatusEnum::PENDING->value,

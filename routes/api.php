@@ -16,9 +16,8 @@ Route::middleware([
 ])
     ->group(function () {
         Route::post('/cotizador/colectiva', \App\Http\Controllers\Quote\Vehicle\EstimateQuoteVehicleController::class);
-        Route::post('/cotizador/EmitirAuto', [\App\Http\Controllers\Api\VehicleQuoteController::class, 'issueVehicle']);
-        Route::get('/cotizador/CancelarAuto', [\App\Http\Controllers\Api\VehicleQuoteController::class, 'cancelVehicle']);
-
+        Route::post('/cotizador/EmitirAuto', \App\Http\Controllers\Quote\Vehicle\IssueQuoteVehicleController::class);
+        Route::get('/cotizador/CancelarAuto', \App\Http\Controllers\Quote\Vehicle\CancelQuoteVehicleController::class);
         Route::get('/cotizador/ValorPromedio', [\App\Http\Controllers\Api\QuoteController::class, 'valueVehicle']);
         Route::post('/cotizador/ValidarInspeccion', [\App\Http\Controllers\Api\QuoteController::class, 'validateInspection']);
         Route::post('/cotizador/Inspeccionar', [\App\Http\Controllers\Api\QuoteController::class, 'inspect']);

@@ -16,7 +16,7 @@ class QuoteVehicle extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'quote_id', 'vehicle_amount', 'vehicle_rate', 'vehicle_id',
+        'quote_id', 'vehicle_amount', 'vehicle_id',
         'is_employee', 'leasing', 'vehicle_loan_amount',
         'created_by', 'updated_by', 'deleted_by',
     ];

@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Quote\InspectRequest;
-use App\Http\Requests\Api\Quote\IssueVehicleRequest;
 use App\Http\Requests\Api\Quote\ValidateInspectionRequest;
-use App\Http\Requests\Quote\Vehicle\EstimateVehicleRequest;
+use App\Http\Requests\Quote\Vehicle\EstimateQuoteVehicleRequest;
+use App\Http\Requests\Quote\Vehicle\IssueQuoteVehicleRequest;
 use App\Services\ZohoCRMService;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
@@ -23,7 +23,7 @@ class QuoteController extends Controller
      * @throws Throwable
      * @throws ConnectionException
      */
-    public function estimateVehicle(EstimateVehicleRequest $request)
+    public function estimateVehicle(EstimateQuoteVehicleRequest $request)
     {
         $criteria = '((Corredor:equals:3222373000092390001) and (Product_Category:equals:Auto))';
         $products = $this->crm->searchRecords('Products', $criteria);
@@ -202,7 +202,7 @@ class QuoteController extends Controller
      * @throws Throwable
      * @throws ConnectionException
      */
-    public function issueVehicle(IssueVehicleRequest $request)
+    public function issueVehicle(IssueQuoteVehicleRequest $request)
     {
         $fields = ['id', 'Quoted_Items'];
         $quote = $this->crm->getRecords('Quotes', $fields, $request->get('cotzid'))['data'][0];

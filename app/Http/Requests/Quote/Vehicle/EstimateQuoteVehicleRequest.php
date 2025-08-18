@@ -5,7 +5,7 @@ namespace App\Http\Requests\Quote\Vehicle;
 use App\Traits\PrepareForValidationTrait;
 use Illuminate\Foundation\Http\FormRequest;
 
-class EstimateVehicleRequest extends FormRequest
+class EstimateQuoteVehicleRequest extends FormRequest
 {
     use PrepareForValidationTrait;
 
@@ -47,29 +47,6 @@ class EstimateVehicleRequest extends FormRequest
             'CirculacionID.*' => ['integer'],
             'ColorId' => ['nullable', 'array'],
             'ColorId.*' => ['integer'],
-
-            //            'NombreCliente' => ['required', 'string', 'max:255'],
-            //            'FechaNacimiento' => ['required', 'date_format:Y-m-d,d/m/Y'],
-            //            'IdCliente' => ['required', 'string', 'max:20'],
-            //            'TelefResidencia' => ['nullable', 'string'],
-            //            'TelefMovil' => ['nullable', 'string'],
-            //            'TelefTrabajo' => ['nullable', 'string'],
-            //            'Marca' => ['required', 'integer', 'exists:vehicle_makes,code'],
-            //            'Modelo' => ['required', 'integer', 'exists:vehicle_models,code'],
-            //            'Anio' => ['required', 'digits:4'],
-            //            'Chasis' => ['required', 'string', 'max:50'],
-            //            'TipoVehiculo' => ['required', 'integer'],
-            //            'MontoAsegurado' => ['required', 'numeric'],
-            //            'UsosGarantiasId' => ['required', 'integer','exists:vehicle_uses,id'],
-            //            'Email' => ['nullable', 'email'],
-            //            'Accesorios' => ['nullable', 'array'],
-            //            'Accesorios.*' => ['integer','exists:vehicle_accessories,id'],
-            //            'Actividad' => ['nullable', 'integer','exists:vehicle_activities,id'],
-            //            'Placa' => ['nullable', 'string', 'max:20'],
-            //            'CirculacionID' => ['nullable', 'array'],
-            //            'CirculacionID.*' => ['integer','exists:vehicle_routes,id'],
-            //            'ColorId' => ['nullable', 'array'],
-            //            'ColorId.*' => ['integer','exists:vehicle_colors,id'],
         ];
     }
 
