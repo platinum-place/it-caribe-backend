@@ -15,7 +15,7 @@ Route::middleware([
     EnsureJsonRequest::class,
 ])
     ->group(function () {
-        Route::post('/cotizador/colectiva', [\App\Http\Controllers\Api\VehicleQuoteController::class, 'estimateVehicle']);
+        Route::post('/cotizador/colectiva', \App\Http\Controllers\Quote\Vehicle\EstimateQuoteVehicleController::class);
         Route::post('/cotizador/EmitirAuto', [\App\Http\Controllers\Api\VehicleQuoteController::class, 'issueVehicle']);
         Route::get('/cotizador/CancelarAuto', [\App\Http\Controllers\Api\VehicleQuoteController::class, 'cancelVehicle']);
 

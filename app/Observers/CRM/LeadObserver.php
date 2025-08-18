@@ -14,7 +14,7 @@ class LeadObserver
         }
 
         if (! $lead->full_name && ($lead->first_name && $lead->last_name)) {
-            $lead->age = $lead->first_name.' '.$lead->last_name;
+            $lead->full_name = $lead->first_name.' '.$lead->last_name;
         }
     }
 

@@ -134,7 +134,7 @@ class QuoteVehicleForm
                                 ->hiddenLabel()
                                 ->hidden(fn ($get) => $get('lines') === null)
                                 ->schema([
-                                    TextInput::make('name')
+                                    TextInput::make('vendor_name')
                                         ->label('Aseguradora')
                                         ->disabled()
                                         ->dehydrated(false),

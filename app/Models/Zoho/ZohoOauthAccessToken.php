@@ -1,20 +1,29 @@
 <?php
 
-namespace App\Models\Quote;
+namespace App\Models\Zoho;
 
+use App\Observers\Zoho\ZohoOauthAccessTokenObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class QuoteLine extends Model
+#[ObservedBy([ZohoOauthAccessTokenObserver::class])]
+class ZohoOauthAccessToken extends Model
 {
     use SoftDeletes;
 
     protected $fillable = [
-        'name', 'description', 'quote_id', 'unit_price',
-        'quantity', 'subtotal', 'tax_rate', 'tax_amount', 'total',
-        'amount_taxed', 'quote_line_status_id', 'created_by', 'updated_by', 'deleted_by',
+        'access_token', 'api_domain', 'token_type', 'expires_in', 'expires_at', 'scope',
+        'created_by', 'updated_by', 'deleted_by',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'expires_at' => 'datetime',
+        ];
+    }
 
     public function createdBy(): BelongsTo
     {
@@ -29,15 +38,5 @@ class QuoteLine extends Model
     public function deletedBy(): BelongsTo
     {
         return $this->belongsTo(\App\Models\User::class, 'deleted_by');
-    }
-
-    public function quote(): BelongsTo
-    {
-        return $this->belongsTo(Quote::class);
-    }
-
-    public function status(): BelongsTo
-    {
-        return $this->belongsTo(QuoteLineStatus::class);
     }
 }

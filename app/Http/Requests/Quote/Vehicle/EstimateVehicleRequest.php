@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Api\Quote;
+namespace App\Http\Requests\Quote\Vehicle;
 
 use App\Traits\PrepareForValidationTrait;
 use Illuminate\Foundation\Http\FormRequest;

@@ -18,7 +18,7 @@ class ZohoService
     {
         $token = $this->oauth->getAccessToken();
 
-        $response = $this->api->searchRecords($module, $token->accessToken, $criteria, $page, $perPage);
+        $response = $this->api->searchRecords($module, $token->access_token, $criteria, $page, $perPage);
 
         if (empty($response) || empty($response['data'])) {
             throw new \RuntimeException(__('Records not found in Zoho'));
@@ -31,7 +31,7 @@ class ZohoService
     {
         $token = $this->oauth->getAccessToken();
 
-        $response = $this->api->getRecords($module, $token->accessToken, $fields, $id);
+        $response = $this->api->getRecords($module, $token->access_token, $fields, $id);
 
         if (empty($response) || empty($response['data'])) {
             throw new \RuntimeException(__('Records not found in Zoho'));

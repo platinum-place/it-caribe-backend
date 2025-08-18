@@ -3,19 +3,33 @@
 namespace App\Services\Api\Zoho;
 
 use App\Client\ZohoApiClient;
+use App\Models\Zoho\ZohoOauthAccessToken;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
 
 class ZohoOauthService
 {
-    public function __construct(protected ZohoApiClient $zohoApiClient) {}
+    public function __construct(protected ZohoApiClient $zohoApiClient)
+    {
+    }
 
     /**
      * @throws RequestException
      * @throws ConnectionException
      */
-    public function getAccessToken(): \App\DTOs\Api\Zoho\ZohoTokenDTO
+    public function getAccessToken()
     {
-        return $this->zohoApiClient->getTemporaryToken(config('zoho.oauth.refresh_token'));
+        $token = ZohoOauthAccessToken::query()
+            ->latest('id')
+            ->where('expires_at', '>=', now())
+            ->first();
+
+        if (!$token) {
+            $response = $this->zohoApiClient->getTemporaryToken(config('zoho.oauth.refresh_token'));
+
+            $token = ZohoOauthAccessToken::create($response);
+        }
+
+        return $token;
     }
 }
