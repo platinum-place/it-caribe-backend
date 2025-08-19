@@ -1,0 +1,8 @@
+id,name,email,username,email_verified_at,password,remember_token,created_at,updated_at,deleted_at
+2,Lisania Ogando,lisania@gruponobe.com,lisania.ogando,,$2y$12$f3DdERXfaGTcZ/AXifeixelKwFYOJPvf2r0XeYkOgKrClKlluQ3yS,,2025-06-24 07:46:12,2025-06-24 07:46:12,
+5,Ana Urbina,,ana.urbina,,$2y$12$aTUIYUCayEszFDC7I6KA8e0gw60/FQy/sAPt889/8jQxbyx079PWu,DcJPRg7AbMBdGhwAxMDQ1V66Bfwi1qv2SZgjOcckibjYpiVBZw9voFew7fbD,2025-06-26 17:58:28,2025-06-26 18:00:30,
+6,Carol Sanchez,,carol.sanchez,,$2y$12$BltRVPiS2PrVQjyTPcaVQ.jjqKGIxKsFLxdPfw0AWJhyojLOMmVKO,,2025-06-27 13:05:07,2025-06-27 13:05:07,
+3,Johanna Melendez,johanna_melendez@bancocaribe.com.do,johanna.melendez,,$2y$12$nvmPbrhLqQgb/MgmfcI3x.3sr2YfziY3DknsiHm5/3NEhE2AyRP3S,NM1smn27fSFEXwXGzMX1nr74uwYcwNo7Fjd5ekHy4qA2AK3NAMbnOYsyBwUF,2025-06-24 07:52:36,2025-06-24 13:34:16,
+4,Dorca Rivas,drivas@bancocaribe.com.do,dorca.rivas,,$2y$12$1O8zG10wn8bXdYoM3ylvHu8vq4eeRFnQTvAFUmZ.BZjRv3/i5eg/m,2qFqNSEsjLNbeYkISPcaG7fhjJvfnMLHtdBIGmA8wb30OFIhiLbiBeMcwYE2,2025-06-24 07:52:59,2025-06-27 15:47:47,
+7,Paul Melendez,,paul.melendez,,$2y$12$w/TBWy3p1CZJWzeLFsw0puYkPUnPOcHV.rfy3JbyLYlD5XNjr8toi,iItEZAf3AP4R4DPXSZOmCEL0GVxZ7DziGUO2M8OXt4X1sD72Xa0w6SC0LIsN,2025-07-01 17:57:06,2025-07-01 17:57:06,
+1,Antwon Weber,daphnee30@example.net,admin,2025-06-23 21:33:52,$2y$12$53Ntq09HQ9KkBnBT1VmF8uiKwvp5w0SC7ffRPNXfTrCqV1mpRmatu,j9zq7EeGSNmZ6514nO1kQlSnqvp6e9E6A48u6KJd9VQnMmr4CjkyRte4xFeW,2025-06-23 21:33:53,2025-07-31 13:18:16,

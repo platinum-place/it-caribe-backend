@@ -41,7 +41,6 @@ services:
     volumes:
       # Mount the application code for live updates
       - ./:/var/www
-      - ./docker/common/php-fpm/openssl.cnf:/etc/ssl/openssl.cnf
     networks:
       - laravel-development
     depends_on:
@@ -71,7 +70,6 @@ services:
       - .env
     volumes:
       - ./:/var/www
-      - ./docker/common/php-fpm/openssl.cnf:/etc/ssl/openssl.cnf
     networks:
       - laravel-development
 

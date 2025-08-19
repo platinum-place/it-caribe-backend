@@ -1,0 +1,2 @@
+id,tokenable_type,tokenable_id,name,token,abilities,last_used_at,expires_at,created_at,updated_at
+1,App\Models\User,1,api,86325164fc260238a4e8e7964ecbc01a3537a32798a9449b2b1305217c1b073d,"[""*""]",2025-07-03 12:28:05,,2025-07-03 12:27:16,2025-07-03 12:28:05
