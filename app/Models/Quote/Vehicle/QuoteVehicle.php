@@ -2,7 +2,7 @@
 
 namespace App\Models\Quote\Vehicle;
 
-use App\Enums\Quote\QuoteLineStatusEnum;
+use app\Enums\Quote\QuoteLineStatusEnum;
 use App\Models\Quote\Quote;
 use App\Models\Vehicle\Vehicle;
 use Illuminate\Database\Eloquent\Model;

@@ -14,11 +14,11 @@ class QuoteUnemploymentUseTypeSeeder extends Seeder
     {
         $data = [
             [
-                'id' => \App\Enums\forlder\QuoteUnemploymentUseType::PUBLIC->value,
+                'id' => \app\Enums\forlder\QuoteUnemploymentUseType::PUBLIC->value,
                 'name' => 'Público',
             ],
             [
-                'id' => \App\Enums\forlder\QuoteUnemploymentUseType::PRIVATE->value,
+                'id' => \app\Enums\forlder\QuoteUnemploymentUseType::PRIVATE->value,
                 'name' => 'Privado',
             ],
         ];

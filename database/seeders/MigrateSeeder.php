@@ -101,17 +101,17 @@ class MigrateSeeder extends Seeder
         $rows = [];
 
         $csvFiles = [
-            //                            base_path('csvs/VEHICULOS 1.csv'),
-            //                            base_path('csvs/VEHICULOS 2.csv'),
-            //                        base_path('csvs/VEHICULOS 3.csv'),
-            //                        base_path('csvs/VEHICULOS 4.csv'),
-            //            base_path('csvs/VEHICULOS 5.csv'),
-            //            base_path('csvs/VEHICULOS 6.csv'),
-            //            base_path('csvs/VEHICULOS 7.csv'),
-            //            base_path('csvs/VEHICULOS 8.csv'),
-            //            base_path('csvs/VEHICULOS 9.csv'),
-            //            base_path('csvs/VEHICULOS 10.csv'),
-            //            base_path('csvs/VEHICULOS 11.csv'),
+                                        base_path('csvs/VEHICULOS 1.csv'),
+                                        base_path('csvs/VEHICULOS 2.csv'),
+                                    base_path('csvs/VEHICULOS 3.csv'),
+                                    base_path('csvs/VEHICULOS 4.csv'),
+                        base_path('csvs/VEHICULOS 5.csv'),
+                        base_path('csvs/VEHICULOS 6.csv'),
+                        base_path('csvs/VEHICULOS 7.csv'),
+                        base_path('csvs/VEHICULOS 8.csv'),
+                        base_path('csvs/VEHICULOS 9.csv'),
+                        base_path('csvs/VEHICULOS 10.csv'),
+                        base_path('csvs/VEHICULOS 11.csv'),
             base_path('csvs/VEHICULOS 12.csv'),
         ];
 

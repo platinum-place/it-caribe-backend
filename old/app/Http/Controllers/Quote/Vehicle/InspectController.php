@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers\Quote\Vehicle;
 
-use App\Enums\Quote\QuoteStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Quote\Vehicle\InspectRequest;
 use App\Models\Quote\Vehicle\QuoteVehicleLine;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class InspectController extends Controller

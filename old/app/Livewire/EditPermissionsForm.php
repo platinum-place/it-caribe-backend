@@ -2,8 +2,8 @@
 
 namespace App\Livewire;
 
-use App\Enums\forlder\Action;
-use App\Enums\forlder\Model;
+use app\Enums\forlder\Action;
+use app\Enums\forlder\Model;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Concerns\InteractsWithForms;

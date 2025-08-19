@@ -2,8 +2,8 @@
 
 namespace App\Livewire;
 
-use App\Enums\Quote\QuoteLineStatusEnum;
-use App\Enums\Quote\QuoteStatusEnum;
+use app\Enums\Quote\QuoteLineStatusEnum;
+use app\Enums\Quote\QuoteStatusEnum;
 use App\Filament\Resources\QuoteResource;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\FileUpload;

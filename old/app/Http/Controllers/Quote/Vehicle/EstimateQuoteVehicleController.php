@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Quote\Vehicle;
 
-use App\Enums\Quote\QuoteLineStatusEnum;
-use App\Enums\Quote\QuoteStatusEnum;
-use App\Enums\Quote\QuoteTypeEnum;
+use app\Enums\Quote\QuoteLineStatusEnum;
+use app\Enums\Quote\QuoteStatusEnum;
+use app\Enums\Quote\QuoteTypeEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Quote\Vehicle\EstimateQuoteVehicleRequest;
 use App\Models\CRM\Lead;
@@ -16,7 +16,6 @@ use App\Models\Vehicle\Vehicle;
 use App\Models\Vehicle\VehicleMake;
 use App\Models\Vehicle\VehicleModel;
 use App\Services\Quote\Vehicle\EstimateQuoteVehicleService;
-use Illuminate\Http\Request;
 
 class EstimateQuoteVehicleController extends Controller
 {

@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources\QuoteResource\Pages;
 
-use App\Enums\Quote\QuoteLineStatusEnum;
-use App\Enums\Quote\QuoteStatusEnum;
-use App\Enums\Quote\QuoteTypeEnum;
+use app\Enums\Quote\QuoteLineStatusEnum;
+use app\Enums\Quote\QuoteStatusEnum;
+use app\Enums\Quote\QuoteTypeEnum;
 use App\Filament\Resources\QuoteResource;
 use App\Models\folder\QuoteDebtUnemployment;
 use App\Models\folder\QuoteDebtUnemploymentLine;

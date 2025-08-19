@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources\QuoteResource\Pages;
 
-use App\Enums\Quote\QuoteStatusEnum;
-use App\Enums\Quote\QuoteTypeEnum;
+use app\Enums\Quote\QuoteStatusEnum;
+use app\Enums\Quote\QuoteTypeEnum;
 use App\Filament\Resources\QuoteResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
