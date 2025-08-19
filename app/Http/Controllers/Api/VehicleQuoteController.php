@@ -128,10 +128,10 @@ class VehicleQuoteController extends Controller
                     'Impuesto' => number_format($estimate['tax_amount'], 1, '.', ''),
                     'PrimaTotal' => number_format($estimate['total'], 1, '.', ''),
                     'PrimaCuota' => number_format($estimate['total_monthly'], 1, '.', ''),
-                    'Planid' => random_int(1000000000, 9999999999),
+                    'Planid' => random_int(1000, 9999),
                     'Plan' => 'Automóvil',
                     'Aseguradora' => $estimate['vendor_name'],
-                    'IdCotizacion' => random_int(1000000000, 9999999999),
+                    'IdCotizacion' => random_int(1000, 9999),
                     'Fecha' => date('d/m/Y H:i:s A'),
                     'Error' => $estimate['error'],
                     'CoberturasList' => [
