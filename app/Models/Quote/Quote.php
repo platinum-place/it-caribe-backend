@@ -2,7 +2,7 @@
 
 namespace App\Models\Quote;
 
-use app\Enums\Quote\QuoteLineStatusEnum;
+use App\Enums\Quote\QuoteLineStatusEnum;
 use App\Models\CRM\Lead;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

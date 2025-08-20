@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Quote\Vehicle;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Quote\Vehicle\ValidateInspectionRequest;
-use App\Models\Quote\Vehicle\QuoteVehicleLine;
-use Illuminate\Http\Request;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class InspectionQRController extends Controller

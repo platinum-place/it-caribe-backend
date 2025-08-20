@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Quote\Vehicle;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Quote\Vehicle\ValidateInspectionRequest;
 use App\Models\Quote\Vehicle\QuoteVehicleLine;
-use Illuminate\Http\Request;
 
 class PhotosController extends Controller
 {

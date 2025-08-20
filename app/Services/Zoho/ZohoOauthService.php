@@ -17,7 +17,7 @@ class ZohoOauthService
      * @throws RequestException
      * @throws ConnectionException
      */
-    public function getAccessToken()
+    public function getAccessToken(): ZohoOauthAccessToken
     {
         $token = ZohoOauthAccessToken::query()
             ->latest('id')

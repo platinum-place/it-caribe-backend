@@ -12,10 +12,12 @@ class AverageValueController extends Controller
      */
     public function __invoke(Request $request)
     {
-        return response()->json([
+        $value = [
             'valorMinimo' => '0000',
             'valorEstandar' => '000.00',
             'valorMaximo' => '000.00',
-        ]);
+        ];
+
+        return response()->json($value);
     }
 }

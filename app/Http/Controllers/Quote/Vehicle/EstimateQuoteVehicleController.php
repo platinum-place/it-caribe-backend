@@ -19,6 +19,10 @@ use App\Services\Quote\Vehicle\EstimateQuoteVehicleService;
 
 class EstimateQuoteVehicleController extends Controller
 {
+    public function __construct(protected EstimateQuoteVehicleService $service){
+
+    }
+
     /**
      * Handle the incoming request.
      * @throws \JsonException
@@ -30,7 +34,7 @@ class EstimateQuoteVehicleController extends Controller
         $vehicleMake = VehicleMake::firstWhere('code', $data['Marca']);
         $vehicleModel = VehicleModel::firstWhere('code', $data['Modelo']);
 
-        $lines = app(EstimateQuoteVehicleService::class)->handle(
+        $lines = $this->service->handle(
             $data['MontoAsegurado'],
             $vehicleMake?->id,
             $vehicleModel?->id,
