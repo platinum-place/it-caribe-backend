@@ -66,11 +66,11 @@ class EstimateQuoteVehicleService
                 }
             }
 
-            //            if ($shouldSkip) {
-            //                continue;
-            //            }
-
             $rate = empty($error) ? $this->getRate($product['id'], $vehicleAmount, $vehicleYear, $vehicleType) : 0;
+
+            if ($rate == 0) {
+                continue;
+            }
 
             $amount = 0;
             $amountTaxed = 0;
@@ -80,28 +80,26 @@ class EstimateQuoteVehicleService
             $latestExpenses = 0;
             $markup = 0;
 
-            if ($rate > 0) {
-                $amount = $vehicleAmount * ($rate / 100);
+            $amount = $vehicleAmount * ($rate / 100);
 
-                if ($amount < $product['Prima_m_nima']) {
-                    $amount = $product['Prima_m_nima'];
-                }
+            if ($amount < $product['Prima_m_nima']) {
+                $amount = $product['Prima_m_nima'];
+            }
 
-                $amountTaxed = $amount / 1.16;
-                $taxesAmount = $amount - $amountTaxed;
+            $amountTaxed = $amount / 1.16;
+            $taxesAmount = $amount - $amountTaxed;
 
-                $lifeAmount = 120;
-                $latestExpenses = 20;
-                $markup = 80;
+            $lifeAmount = 120;
+            $latestExpenses = 20;
+            $markup = 80;
 
-                $totalMonthly = ($amount / 12) + $lifeAmount + $latestExpenses + $markup;
+            $totalMonthly = ($amount / 12) + $lifeAmount + $latestExpenses + $markup;
 
+            $amount = $totalMonthly * 12;
+
+            if (! empty($product['Resp_civil']) && $leasing) {
+                $totalMonthly += $product['Leasing_mensual'];
                 $amount = $totalMonthly * 12;
-
-                if (! empty($product['Resp_civil']) && $leasing) {
-                    $totalMonthly += $product['Leasing_mensual'];
-                    $amount = $totalMonthly * 12;
-                }
             }
 
             $amount = round($amount, 2);
