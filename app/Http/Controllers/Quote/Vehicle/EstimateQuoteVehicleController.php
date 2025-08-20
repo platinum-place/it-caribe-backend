@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Quote\Vehicle;
 
-use app\Enums\Quote\QuoteLineStatusEnum;
-use app\Enums\Quote\QuoteStatusEnum;
-use app\Enums\Quote\QuoteTypeEnum;
+use App\Enums\Quote\QuoteLineStatusEnum;
+use App\Enums\Quote\QuoteStatusEnum;
+use App\Enums\Quote\QuoteTypeEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Quote\Vehicle\EstimateQuoteVehicleRequest;
 use App\Models\CRM\Lead;
@@ -19,12 +19,11 @@ use App\Services\Quote\Vehicle\EstimateQuoteVehicleService;
 
 class EstimateQuoteVehicleController extends Controller
 {
-    public function __construct(protected EstimateQuoteVehicleService $service){
-
-    }
+    public function __construct(protected EstimateQuoteVehicleService $service) {}
 
     /**
      * Handle the incoming request.
+     *
      * @throws \JsonException
      */
     public function __invoke(EstimateQuoteVehicleRequest $request)
@@ -117,7 +116,7 @@ class EstimateQuoteVehicleController extends Controller
                     'Impuesto' => number_format($line['tax_amount'], 1, '.', ''),
                     'PrimaTotal' => number_format($line['total'], 1, '.', ''),
                     'PrimaCuota' => number_format($line['total_monthly'], 1, '.', ''),
-                    'Planid' => $quoteVehicleLine->id, //TODO
+                    'Planid' => $quoteVehicleLine->id, // TODO
                     'Plan' => 'Automóvil',
                     'Aseguradora' => $line['vendor_name'],
                     'IdCotizacion' => $quoteVehicleLine->id,

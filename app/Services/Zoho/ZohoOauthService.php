@@ -9,9 +9,7 @@ use Illuminate\Http\Client\RequestException;
 
 class ZohoOauthService
 {
-    public function __construct(protected ZohoApiClient $zohoApiClient)
-    {
-    }
+    public function __construct(protected ZohoApiClient $zohoApiClient) {}
 
     /**
      * @throws RequestException
@@ -24,7 +22,7 @@ class ZohoOauthService
             ->where('expires_at', '>=', now())
             ->first();
 
-        if (!$token) {
+        if (! $token) {
             $response = $this->zohoApiClient->getTemporaryToken(config('zoho.oauth.refresh_token'));
 
             $token = ZohoOauthAccessToken::create($response);

@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Quote\Vehicle;
 
-use App\Traits\PrepareForValidationTrait;
+use App\Http\Requests\Common\PrepareForValidationTrait;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CancelQuoteVehicleRequest extends FormRequest
@@ -25,7 +25,7 @@ class CancelQuoteVehicleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'IdCotizacion' => ['required','integer', 'exists:quote_vehicle_lines,id'],
+            'IdCotizacion' => ['required', 'integer', 'exists:quote_vehicle_lines,id'],
         ];
     }
 

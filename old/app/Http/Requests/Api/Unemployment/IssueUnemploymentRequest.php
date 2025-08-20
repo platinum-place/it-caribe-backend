@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Api\Unemployment;
 
-use App\Traits\PrepareForValidationTrait;
+use App\Http\Requests\Common\PrepareForValidationTrait;
 use Illuminate\Foundation\Http\FormRequest;
 
 class IssueUnemploymentRequest extends FormRequest

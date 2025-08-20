@@ -15,7 +15,7 @@ class InspectionQRController extends Controller
     {
         $data = $request->all();
 
-//        $quoteVehicleLine = QuoteVehicleLine::find($data['cotz_id']);
+        //        $quoteVehicleLine = QuoteVehicleLine::find($data['cotz_id']);
 
         $qr = base64_encode(QrCode::format('svg')
             ->size(80)

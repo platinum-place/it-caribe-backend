@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Http\Controllers\Vehicle;
+
+use App\Http\Controllers\Controller;
+use App\Models\Vehicle\VehicleMake;
+use Illuminate\Http\Request;
+
+class FetchVehicleMakeController extends Controller
+{
+    /**
+     * Handle the incoming request.
+     */
+    public function __invoke(Request $request)
+    {
+        $brands = VehicleMake::all()->map(function ($brand) {
+            return [
+                'IdMarca' => $brand->id,
+                'Marca' => $brand->name,
+            ];
+        });
+
+        return response()->json($brands);
+    }
+}

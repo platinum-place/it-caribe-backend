@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Quote\Vehicle;
 
-use App\Traits\PrepareForValidationTrait;
+use App\Http\Requests\Common\PrepareForValidationTrait;
 use Illuminate\Foundation\Http\FormRequest;
 
 class IssueQuoteVehicleRequest extends FormRequest
@@ -25,7 +25,7 @@ class IssueQuoteVehicleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'cotzid' => ['required','integer', 'exists:quote_vehicle_lines,id'],
+            'cotzid' => ['required', 'integer', 'exists:quote_vehicle_lines,id'],
             'ofertaID' => ['required', 'integer'],
             'FechaVencimiento' => ['required', 'date_format:d/m/Y'],
         ];

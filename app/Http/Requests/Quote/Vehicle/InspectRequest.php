@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Quote\Vehicle;
 
-use App\Traits\PrepareForValidationTrait;
+use App\Http\Requests\Common\PrepareForValidationTrait;
 use Illuminate\Foundation\Http\FormRequest;
 
 class InspectRequest extends FormRequest
@@ -25,7 +25,7 @@ class InspectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'cotz_id' => ['required','integer', 'exists:quote_vehicle_lines,id'],
+            'cotz_id' => ['required', 'integer', 'exists:quote_vehicle_lines,id'],
             'passcode' => ['required', 'string', 'size:4'],
             'Correo' => ['required', 'email'],
             'CantPasajeros' => ['required', 'integer'],

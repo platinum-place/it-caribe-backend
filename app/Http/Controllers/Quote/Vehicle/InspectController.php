@@ -38,7 +38,7 @@ class InspectController extends Controller
         $attachments = $quoteVehicleLine->quoteVehicle->quote->attachments;
 
         foreach ($photos as $photo => $title) {
-            if (!$request->filled($photo)) {
+            if (! $request->filled($photo)) {
                 continue;
             }
 
@@ -54,7 +54,7 @@ class InspectController extends Controller
                 default => throw new \Exception(__('validation.mimetypes', ['values' => '.jpg,.png']))
             };
 
-            $path = 'quotes/quote-vehicles/' . $quoteVehicleLine->id . '/photos/' . now()->timestamp . "/$title.$extension";
+            $path = 'quotes/quote-vehicles/'.$quoteVehicleLine->id.'/photos/'.now()->timestamp."/$title.$extension";
 
             Storage::put($path, $imageData);
 
