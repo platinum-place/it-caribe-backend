@@ -2,35 +2,21 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Enums\QuoteLineStatus;
-use App\Enums\QuoteStatus;
-use App\Enums\QuoteType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Quote\CancelVehicleRequest;
 use App\Http\Requests\Api\Quote\EstimateVehicleRequest;
 use App\Http\Requests\Api\Quote\IssueVehicleRequest;
-use App\Models\Debtor;
-use App\Models\Quote;
-use App\Models\QuoteLine;
-use App\Models\QuoteVehicle;
-use App\Models\QuoteVehicleLine;
 use App\Models\TmpVendorProduct;
-use App\Models\Vehicle;
 use App\Models\VehicleMake;
 use App\Models\VehicleModel;
-use App\Services\Api\Zoho\ZohoCRMService;
-use App\Services\EstimateQuoteVehicleService;
-use Carbon\Carbon;
+use App\Services\ZohoCRMService;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
-use Illuminate\Support\Facades\DB;
 use Throwable;
 
 class VehicleQuoteController extends Controller
 {
-    public function __construct(protected ZohoCRMService $crm)
-    {
-    }
+    public function __construct(protected ZohoCRMService $crm) {}
 
     /**
      * @throws RequestException
@@ -39,113 +25,135 @@ class VehicleQuoteController extends Controller
      */
     public function estimateVehicle(EstimateVehicleRequest $request)
     {
-        $data = $request->all();
+        $criteria = '((Corredor:equals:3222373000092390001) and (Product_Category:equals:Auto))';
+        $products = $this->crm->searchRecords('Products', $criteria);
 
-        $response = DB::transaction(static function () use ($data) {
-            $vehicleMake = VehicleMake::where('code', $data['Marca'])->firstOrFail();
-            $vehicleModel = VehicleModel::where('code', $data['Modelo'])->firstOrFail();
+        $response = [];
 
-            $estimates = app(EstimateQuoteVehicleService::class)->estimate(
-                $data['MontoAsegurado'],
-                $vehicleMake->id,
-                $vehicleModel->id,
-                $data['Anio'],
-                $vehicleModel->vehicle_type_id,
-            );
-//
-//            $debtor = Debtor::create([
-//                'first_name' => $data['NombreCliente'],
-////                'last_name' => $data['last_name'],
-//                'identity_number' => $data['IdCliente'],
-//                'birth_date' => $data['FechaNacimiento'],
-//                'home_phone' => $data['TelefResidencia'],
-//                'mobile_phone' => $data['TelefMovil'],
-//                'work_phone' => $data['TelefTrabajo'],
-//                'email' => $data['Email'],
-////                'address' => $data['address'] ,
-//                'age' => Carbon::parse($data['FechaNacimiento'])->age,
-//            ]);
-//            $quote = Quote::create([
-//                'quote_type_id' => QuoteType::VEHICLE->value,
-//                'quote_status_id' => QuoteStatus::PENDING->value,
-//                'start_date' => $data['start_date'] ?? now(),
-//                'end_date' => $data['end_date'] ?? now()->addDays(30),
-//                'debtor_id' => $debtor->id,
-////                'user_id' => auth()->id(),
-//            ]);
-//            $vehicle = Vehicle::create([
-//                'vehicle_year' => $data['vehicle_year'],
-//                'chassis' => $data['chassis'],
-//                'license_plate' => $data['license_plate'],
-//                'vehicle_make_id' => $data['vehicle_make_id'],
-//                'vehicle_model_id' => $data['vehicle_model_id'],
-//                'vehicle_type_id' => $data['vehicle_type_id'],
-//            ]);
-//            $quoteVehicle = QuoteVehicle::create([
-//                'quote_id' => $quote->id,
-//                'vehicle_id' => $vehicle->id,
-//                'vehicle_make_id' => $data['vehicle_make_id'],
-//                'vehicle_year' => $data['vehicle_year'],
-//                'vehicle_model_id' => $data['vehicle_model_id'],
-//                'vehicle_type_id' => $data['vehicle_type_id'],
-//                'vehicle_use_id' => $data['vehicle_use_id'],
-//                'vehicle_activity_id' => $data['vehicle_activity_id'],
-//                'vehicle_amount' => $data['vehicle_amount'],
-//                'vehicle_loan_type_id' => $data['vehicle_loan_type_id'],
-//                'is_employee' => $data['is_employee'],
-//                'leasing' => $data['leasing'],
-//                'loan_amount' => $data['loan_amount'],
-//            ]);
-//            $vehicle->colors()->attach($data['vehicle_colors']);
-//            $quoteVehicle->vehicleColors()->attach($data['vehicle_colors']);
+        foreach ($products['data'] as $product) {
+            $alert = '';
 
-            $response = [];
-
-            foreach ($estimates as $estimate) {
-//                $quoteLine = QuoteLine::create([
-//                    'name' => $estimate['name'],
-//                    'unit_price' => $estimate['unit_price'],
-//                    'quantity' => $estimate['quantity'],
-//                    'subtotal' => $estimate['subtotal'],
-//                    'amount_taxed' => $estimate['amount_taxed'],
-//                    'tax_rate' => $estimate['tax_rate'],
-//                    'tax_amount' => $estimate['tax_amount'],
-//                    'total' => $estimate['total'],
-//                    'quote_id' => $quote->id,
-//                    'id_crm' => $estimate['id_crm'],
-//                    'quote_line_status_id' => QuoteLineStatus::NOT_ACCEPTED->value,
-//                ]);
-//                $quoteVehicleLine = QuoteVehicleLine::create([
-//                    'quote_vehicle_id' => $quoteVehicle->id,
-//                    'quote_line_id' => $quoteLine->id,
-//                    'life_amount' => $estimate['life_amount'],
-//                ]);
-
-                $response[] = [
-                    'passcode' => null,
-                    'ofertaid' => null,
-                    'Prima' => number_format($estimate['amount_taxed'], 1, '.', ''),
-                    'Impuesto' => number_format($estimate['tax_amount'], 1, '.', ''),
-                    'PrimaTotal' => number_format($estimate['total'], 1, '.', ''),
-                    'PrimaCuota' => number_format($estimate['total_monthly'], 1, '.', ''),
-                    'Planid' => random_int(1000, 9999),
-                    'Plan' => 'Automóvil',
-                    'Aseguradora' => $estimate['vendor_name'],
-                    'IdCotizacion' => random_int(1000, 9999),
-                    'Fecha' => date('d/m/Y H:i:s A'),
-                    'Error' => $estimate['error'],
-                    'CoberturasList' => [
-                        [
-                            'Cobertura' => 'Fianza judicial',
-                            'Valor' => '1,000,000',
-                            'Error' => null,
-                        ],
-                    ],
-                ];
+            if (in_array($request->get('Actividad'), $product['Restringir_veh_culos_de_uso'])) {
+                return 'Uso del vehículo restringido.';
             }
 
-            return $response;
-        });
+            if ((date('Y') - $request->get('Anio')) > $product['Max_antig_edad']) {
+                $alert = 'La antigüedad del vehículo es mayor al limite establecido.';
+            }
+
+            if ($request->get('MontoOriginal') < $product['Suma_asegurada_min'] || $request->get('MontoOriginal') > $product['Suma_asegurada_max']) {
+                $alert = 'El plazo es mayor al limite establecido.';
+            }
+
+            $taxAmount = 0;
+
+            try {
+                $criteria = 'Plan:equals:'.$product['id'];
+                $taxes = $this->crm->searchRecords('Tasas', $criteria);
+
+                foreach ($taxes['data'] as $tax) {
+                    // if (in_array($request->get('TipoVehiculo'), $tax['Grupo_de_veh_culo'])) {
+                    if (! empty($tax['Suma_limite'])) {
+                        if ($request->get('MontoOriginal') >= $tax['Suma_limite']) {
+                            if (empty($tax['Suma_hasta'])) {
+                                $taxAmount = $tax['Name'] / 100;
+                            } elseif ($request->get('MontoOriginal') < $tax['Suma_hasta']) {
+                                $taxAmount = $tax['Name'] / 100;
+                            }
+                        }
+                    } else {
+                        $taxAmount = $tax['Name'] / 100;
+                    }
+                    // }
+                }
+            } catch (Throwable $throwable) {
+
+            }
+
+            if (! $taxAmount) {
+                $alert = 'No se encontraron tasas.';
+            }
+
+            $surchargeAmount = 0;
+
+            $amount = 0;
+
+            if (empty($alert)) {
+                $amount = $request->get('MontoAsegurado') * ($taxAmount + ($taxAmount * $surchargeAmount));
+
+                if ($amount > 0 and $amount < $product['Prima_m_nima']) {
+                    $amount = $product['Prima_m_nima'];
+                }
+
+                $amount = round($amount, 2);
+            }
+
+            $response2 = $this->crm->getRecords('Vendors', ['Nombre'], (int) $product['Vendor_Name']['id']);
+
+            $criteria = 'Name:equals:'.VehicleMake::firstWhere('code', $request->get('Marca'))->name;
+            $vehicleMake = $this->crm->searchRecords('Marcas', $criteria);
+
+            $criteria = 'Name:equals:'.VehicleModel::firstWhere('code', $request->get('Modelo'))->name;
+            $vehicleModel = $this->crm->searchRecords('Modelos', $criteria);
+
+            $data = [
+                'Subject' => $request->get('NombreCliente'),
+                'Valid_Till' => date('Y-m-d', strtotime(date('Y-m-d').'+ 30 days')),
+                'Vigencia_desde' => date('Y-m-d'),
+                'Account_Name' => 3222373000092390001,
+                'Contact_Name' => 3222373000203318001,
+                'Quote_Stage' => 'Cotizando',
+                'Nombre' => $request->get('NombreCliente'),
+                'Fecha_de_nacimiento' => date('Y-m-d', strtotime($request->get('FechaNacimiento'))),
+                'RNC_C_dula' => $request->get('IdCliente'),
+                'Correo_electr_nico' => $request->get('Email'),
+                'Tel_Celular' => $request->get('TelefMovil'),
+                'Tel_Residencia' => $request->get('TelefResidencia'),
+                'Tel_Trabajo' => $request->get('TelefTrabajo'),
+                'Plan' => 'Mensual Full',
+                'Suma_asegurada' => round($request->get('MontoAsegurado'), 2),
+                'A_o' => $request->get('Anio'),
+                'Marca' => $vehicleMake['data'][0]['id'],
+                'Modelo' => $vehicleModel['data'][0]['id'],
+                'Tipo_veh_culo' => $request->get('TipoVehiculo'),
+                'Chasis' => $request->get('Chasis'),
+                'Placa' => $request->get('Placa'),
+                'Fuente' => 'API',
+                'Quoted_Items' => [
+                    [
+                        'Quantity' => 1,
+                        'Product_Name' => $product['id'],
+                        'Total' => $amount,
+                        'Net_Total' => $amount,
+                        'List_Price' => $amount,
+                    ],
+                ],
+            ];
+
+            $responseProduct = $this->crm->insertRecords('Quotes', $data);
+
+            $response[] = [
+                'passcode' => "",
+                'ofertaid' => $responseProduct['data'][0]['details']['id'],
+                'Prima' => number_format($amount - ($amount * 0.16), 1, '.', ''),
+                'Impuesto' => number_format($amount * 0.16, 1, '.', ''),
+                'PrimaTotal' => number_format($amount, 1, '.', ''),
+                'PrimaCuota' => number_format($amount, 1, '.', ''),
+                'Planid' => TmpVendorProduct::firstWhere('id_crm', $product['id'])->id,
+                'Plan' => 'Plan Mensual Full',
+                'Aseguradora' => $response2['data'][0]['Nombre'],
+                'IdCotizacion' => (string) $responseProduct['data'][0]['details']['id'],
+                'Fecha' => date('d/m/Y H:i:s A'),
+                'Error' => $alert,
+                'CoberturasList' => [
+                    [
+                        'Cobertura' => 'Fianza judicial',
+                        'Valor' => '1,000,000',
+                        'Error' => "",
+                    ],
+                ],
+            ];
+        }
 
         $json = json_encode($response, JSON_UNESCAPED_SLASHES);
         $json = preg_replace('/"(\w+)":\s*"(\d+\.\d)"/', '"$1": $2', $json);
@@ -168,7 +176,7 @@ class VehicleQuoteController extends Controller
                 'Coberturas' => $line['Product_Name']['id'],
                 'Quote_Stage' => 'Emitida',
                 'Vigencia_desde' => date('Y-m-d'),
-                'Valid_Till' => date('Y-m-d', strtotime(date('Y-m-d') . '+ 1 years')),
+                'Valid_Till' => date('Y-m-d', strtotime(date('Y-m-d').'+ 1 years')),
                 'Prima_neta' => round($line['Net_Total'] / 1.16, 2),
                 'ISC' => round($line['Net_Total'] - ($line['Net_Total'] / 1.16), 2),
                 'Prima' => round($line['Net_Total'], 2),
