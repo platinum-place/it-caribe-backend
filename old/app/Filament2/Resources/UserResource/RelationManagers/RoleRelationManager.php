@@ -13,7 +13,7 @@ class RoleRelationManager extends RelationManager
 
     public static function getModelLabel(): string
     {
-        return __('Role');
+        return __('RoleEnum');
     }
 
     public static function getTitle(Model $ownerRecord, string $pageClass): string

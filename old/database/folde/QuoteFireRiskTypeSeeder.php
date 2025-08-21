@@ -14,11 +14,11 @@ class QuoteFireRiskTypeSeeder extends Seeder
     {
         $data = [
             [
-                'id' => \app\Enums\forlder\QuoteFireRiskType::HOUSING->value,
+                'id' => \App\forlder\QuoteFireRiskType::HOUSING->value,
                 'name' => 'Vivienda',
             ],
             [
-                'id' => \app\Enums\forlder\QuoteFireRiskType::COMMERCIAL->value,
+                'id' => \App\forlder\QuoteFireRiskType::COMMERCIAL->value,
                 'name' => 'Riesgo comercial',
             ],
         ];

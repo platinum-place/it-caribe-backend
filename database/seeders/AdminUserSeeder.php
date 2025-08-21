@@ -16,6 +16,6 @@ class AdminUserSeeder extends Seeder
             'username' => 'admin',
         ]);
 
-        $user->assignRole(\App\Enums\Role::ADMIN);
+        $user->assignRole(\App\Enums\RoleEnum::ADMIN);
     }
 }

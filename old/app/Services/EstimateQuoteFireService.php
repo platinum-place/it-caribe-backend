@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use app\Enums\forlder\QuoteFireRiskType;
+use App\forlder\QuoteFireRiskType;
 use App\Services\Zoho\ZohoCRMService;
 use Carbon\Carbon;
 use Exception;

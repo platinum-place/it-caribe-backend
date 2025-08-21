@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Enums\Role;
+use App\Enums\RoleEnum;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role as SpatieRole;
 
@@ -15,7 +15,7 @@ class RoleSeeder extends Seeder
     {
         $guards = config('auth.guards');
 
-        foreach (Role::cases() as $role) {
+        foreach (RoleEnum::cases() as $role) {
             foreach ($guards as $key => $guard) {
                 app(SpatieRole::class)->findOrCreate($role->value, $key);
             }

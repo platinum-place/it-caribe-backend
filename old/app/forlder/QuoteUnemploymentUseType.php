@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Enums\forlder;
+namespace App\forlder;
 
 enum QuoteUnemploymentUseType: int
 {

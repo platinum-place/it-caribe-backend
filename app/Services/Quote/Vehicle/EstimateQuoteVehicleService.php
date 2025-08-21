@@ -22,13 +22,16 @@ class EstimateQuoteVehicleService
         $vehicleType = VehicleType::find($vehicleTypeId);
         $vehicleUtility = VehicleUtility::find($vehicleUtilityId);
 
-        $criteria = '((Corredor:equals:'. 3222373000092390001 .') and (Product_Category:equals:Auto))';
+        $criteria = '((Corredor:equals:'. 3222373000092390001 .')';
+        $criteria .= ' and (Product_Category:equals:Auto)';
+        $criteria .= ' and (Plan:equals:'.$vehicleUtility->name.'))';
         $productsResponse = $this->zohoService->searchRecords('Products', $criteria);
+
+        dd($productsResponse);
 
         $result = [];
 
         foreach ($productsResponse['data'] as $product) {
-            $shouldSkip = false;
             $error = '';
 
             if (! empty($product['Plan'])) {
@@ -53,13 +56,11 @@ class EstimateQuoteVehicleService
                     if (\Str::contains(\Str::lower($vehicleMake->name), \Str::lower($restricted['Marca']['name']))) {
                         if (empty($restricted['Modelo'])) {
                             $error = 'Marca restringido';
-                            $shouldSkip = true;
                             break;
                         }
 
                         if (\Str::contains(\Str::lower($vehicleModel->name), \Str::lower($restricted['Modelo']['name']))) {
                             $error = 'Modelo restringido';
-                            $shouldSkip = true;
                             break;
                         }
                     }
@@ -71,14 +72,6 @@ class EstimateQuoteVehicleService
             if ($rate == 0) {
                 continue;
             }
-
-            $amount = 0;
-            $amountTaxed = 0;
-            $taxesAmount = 0;
-            $totalMonthly = 0;
-            $lifeAmount = 0;
-            $latestExpenses = 0;
-            $markup = 0;
 
             $amount = $vehicleAmount * ($rate / 100);
 

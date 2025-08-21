@@ -14,11 +14,11 @@ class QuoteUnemploymentDebtorTypeSeeder extends Seeder
     {
         $data = [
             [
-                'id' => \app\Enums\forlder\QuoteUnemploymentDebtorType::ONETIME_PAYMENT->value,
+                'id' => \App\forlder\QuoteUnemploymentDebtorType::ONETIME_PAYMENT->value,
                 'name' => 'Único Pago',
             ],
             [
-                'id' => \app\Enums\forlder\QuoteUnemploymentDebtorType::MONTHLY->value,
+                'id' => \App\forlder\QuoteUnemploymentDebtorType::MONTHLY->value,
                 'name' => 'Mensual',
             ],
         ];
