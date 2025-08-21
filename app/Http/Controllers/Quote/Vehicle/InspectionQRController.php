@@ -15,8 +15,6 @@ class InspectionQRController extends Controller
     {
         $data = $request->all();
 
-        //        $quoteVehicleLine = QuoteVehicleLine::find($data['cotz_id']);
-
         $qr = base64_encode(QrCode::format('svg')
             ->size(80)
             ->generate("https://gruponobesrl.zcrmportals.com/portal/GrupoNobeSRL/crm/tab/Quotes/{$request->get('cotz_id')}"));
