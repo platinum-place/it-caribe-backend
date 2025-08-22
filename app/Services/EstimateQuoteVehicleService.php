@@ -92,6 +92,8 @@ class EstimateQuoteVehicleService
                     $amount *= 1 + ($product['Recargo'] / 100); // suma 30%
                 }
 
+                dd($amount / 12);
+
                 $amountTaxed = $amount / 1.16;
                 $taxesAmount = $amount - $amountTaxed;
                 $lifeAmount = 220;
