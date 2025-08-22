@@ -89,7 +89,7 @@ class EstimateQuoteVehicleService
 
                 if($serviceType === 'Japonés' && !empty($product['Recargo'])){
 
-                    dd($amount, $amount *= 1.30, $lifeAmount);
+                    dd($amount, $amount * 1.30, ($amount * 1.30 )+ $lifeAmount);
                     $amount *= 1.30;
                 }
 
