@@ -72,7 +72,6 @@ class EstimateQuoteVehicleService
                 }
             }
 
-
             $rate = $this->getRate($product['id'], $vehicleAmount, $vehicleYear, $vehicleType);
 
             $amount = 0;
@@ -86,6 +85,10 @@ class EstimateQuoteVehicleService
 
                 if($serviceType === 'Japonés' && !empty($product['Recargo'])){
                     $amount += $amount * ($product['Recargo'] / 100);
+                }
+
+                if ($shouldSkip) {
+                    $amount = 0;
                 }
 
                 $amountTaxed = $amount / 1.16;
@@ -103,9 +106,6 @@ class EstimateQuoteVehicleService
                 }
             }
 
-            if ($rate == 0 && $error == '') {
-                continue;
-            }
 
             $amount = round($amount, 2);
             $amountTaxed = round($amountTaxed, 2);
