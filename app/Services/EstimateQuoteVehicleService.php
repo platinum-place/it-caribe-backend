@@ -25,7 +25,7 @@ class EstimateQuoteVehicleService
     {
         $vehicleMake = VehicleMake::find($vehicleMakeId);
         $vehicleModel = VehicleModel::find($vehicleModelId);
-        $vehicleType = VehicleType::find($vehicleTypeId);
+        $vehicleType = $vehicleModel->type;
 
         $criteria = '((Corredor:equals:' . 3222373000092390001 . ') and (Product_Category:equals:Auto))';
         $productsResponse = $this->zohoApi->searchRecords('Products', $criteria);
