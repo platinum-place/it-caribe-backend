@@ -46,7 +46,6 @@ class EstimateQuoteVehicleService
                 }
             }
 
-            dd(1);
 
             try {
                 $criteria = 'Aseguradora:equals:' . $product['Vendor_Name']['id'];
