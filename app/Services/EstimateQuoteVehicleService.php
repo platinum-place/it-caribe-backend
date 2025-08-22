@@ -46,6 +46,8 @@ class EstimateQuoteVehicleService
                 }
             }
 
+            dd(1);
+
             try {
                 $criteria = 'Aseguradora:equals:' . $product['Vendor_Name']['id'];
                 $restrictedVehicles = $this->zohoApi->searchRecords('Restringidos', $criteria);
@@ -89,7 +91,6 @@ class EstimateQuoteVehicleService
                 if($serviceType === 'Japonés' && !empty($product['Recargo'])){
                     $amount += $amount * ($product['Recargo'] / 100);
                 }
-
 
                 $amountTaxed = $amount / 1.16;
                 $taxesAmount = $amount - $amountTaxed;
