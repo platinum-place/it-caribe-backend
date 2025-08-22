@@ -91,7 +91,7 @@ class EstimateVehicleForm
                     ->default('Clásico')
                     ->options([
                         'Clásico' => 'Clásico',
-                        'Econo' => 'Japonés',
+                        'Japonés' => 'Japonés',
                         'Premier' => '0 KM',
                         'Híbrido' => 'Híbrido/Eléctrico',
                     ]),
