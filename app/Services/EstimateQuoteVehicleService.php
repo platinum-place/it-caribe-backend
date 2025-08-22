@@ -86,9 +86,9 @@ class EstimateQuoteVehicleService
 
             if ($rate > 0) {
                 $amount = $vehicleAmount * ($rate / 100);
+                dd($serviceType === 'Japonés' ,!empty($product['Recargo']));
 
                 if($serviceType === 'Japonés' && !empty($product['Recargo'])){
-                    dd($product['Recargo']);
                     $amount += $amount * ($product['Recargo'] / 100);
                 }
 
