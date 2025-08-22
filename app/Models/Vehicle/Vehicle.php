@@ -3,11 +3,15 @@
 namespace App\Models\Vehicle;
 
 use App\Models\Quote\Vehicle\QuoteVehicle;
+use App\Observers\CRM\LeadObserver;
+use App\Observers\Vehicle\VehicleObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+#[ObservedBy([VehicleObserver::class])]
 class Vehicle extends Model
 {
     use SoftDeletes;

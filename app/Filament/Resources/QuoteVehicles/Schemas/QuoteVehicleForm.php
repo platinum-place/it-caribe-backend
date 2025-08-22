@@ -59,25 +59,14 @@ class QuoteVehicleForm
                                                     $model->type ?
                                                         ' ('.$model->type->name.')' :
                                                         ''
-                                                ),
+                                                    ),
                                             ];
                                         });
                                 })
                                 ->searchable()
                                 ->required()
                                 ->placeholder('Selecciona un modelo')
-                                ->disabled(fn ($get) => ! $get('vehicle.vehicle_make_id'))
-                                ->afterStateUpdated(function ($get, $set, $state) {
-                                    if (! $state) {
-                                        $set('vehicle.vehicle_type_id', null);
-
-                                        return;
-                                    }
-
-                                    $set('vehicle.vehicle_type_id', VehicleModel::firstWhere('id', $state)->value('vehicle_type_id'));
-                                }),
-
-                            Hidden::make('vehicle.vehicle_type_id'),
+                                ->disabled(fn ($get) => ! $get('vehicle.vehicle_make_id')),
 
                             Select::make('vehicle.vehicle_utility_id')
                                 ->label(__('Vehicle type'))
@@ -114,7 +103,6 @@ class QuoteVehicleForm
                                             $get('vehicle.vehicle_make_id'),
                                             $get('vehicle.vehicle_model_id'),
                                             $get('vehicle.vehicle_year'),
-                                            $get('vehicle.vehicle_type_id'),
                                             $get('vehicle.vehicle_utility_id'),
                                             $get('quote_vehicle.is_employee'),
                                             $get('quote_vehicle.leasing'),
@@ -147,13 +135,13 @@ class QuoteVehicleForm
                                         ->mask(RawJs::make('$money($input)'))
                                         ->stripCharacters(',')
                                         ->numeric(),
-
-                                    TextInput::make('error')
-                                        ->label('Comentario')
-                                        ->disabled()
-                                        ->dehydrated(false),
+//
+//                                    TextInput::make('error')
+//                                        ->label('Comentario')
+//                                        ->disabled()
+//                                        ->dehydrated(false),
                                 ])
-                                ->columns(3)
+                                ->columns()
                                 ->deletable(false)
                                 ->reorderable(false)
                                 ->addable(false)
