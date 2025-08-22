@@ -87,9 +87,9 @@ class EstimateQuoteVehicleService
             if ($rate > 0) {
                 $amount = $vehicleAmount * ($rate / 100);
 
-//                if($serviceType === 'Japonés' && !empty($product['Recargo'])){
-//                    $amount *= 1.30;
-//                }
+                if ($serviceType === 'Japonés' && !empty($product['Recargo'])) {
+                    $amount *= 1 + ($product['Recargo'] / 100); // suma 30%
+                }
 
                 $amountTaxed = $amount / 1.16;
                 $taxesAmount = $amount - $amountTaxed;
@@ -105,6 +105,7 @@ class EstimateQuoteVehicleService
                     $amount = $totalMonthly * 12;
                 }
             }
+
 
 
             $amount = round($amount, 2);
