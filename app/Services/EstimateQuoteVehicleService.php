@@ -104,6 +104,8 @@ class EstimateQuoteVehicleService
                     $totalMonthly += $product['Leasing_mensual'];
                     $amount = $totalMonthly * 12;
                 }
+            }else{
+                $error = 'No existe tasa para el vehículo';
             }
 
 
