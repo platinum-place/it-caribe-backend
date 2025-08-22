@@ -87,25 +87,23 @@ class EstimateQuoteVehicleService
             if ($rate > 0) {
                 $amount = $vehicleAmount * ($rate / 100);
 
-//                // 👉 Recargo antes de sumar 220 o leasing
-//                if ($serviceType === 'Japonés' && !empty($product['Recargo'])) {
-//                    $amount *= 1 + ($product['Recargo'] / 100); // suma 30%
-//                }
-
-                dd($amount, $amount * 1.30);
+                if($serviceType === 'Japonés' && !empty($product['Recargo'])){
+                    $amount *= 1.30;
+                }
 
                 $amountTaxed = $amount / 1.16;
                 $taxesAmount = $amount - $amountTaxed;
+
                 $lifeAmount = 220;
+
                 $totalMonthly = ($amount / 12) + $lifeAmount;
 
-                // ✅ Agregar leasing al mensual, pero calcular amount final correctamente
+                $amount = $totalMonthly * 12;
+
                 if (!empty($product['Resp_civil']) && $leasing) {
                     $totalMonthly += $product['Leasing_mensual'];
+                    $amount = $totalMonthly * 12;
                 }
-
-                // ✅ Calcular amount final una sola vez al final
-                $amount = $totalMonthly * 12;
             }
 
 
