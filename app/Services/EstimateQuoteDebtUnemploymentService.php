@@ -52,11 +52,8 @@ class EstimateQuoteDebtUnemploymentService
                 $rate2 = app(EstimateQuoteUnemploymentService::class)->getRate($debtorBirthDate, $product['id'], $quoteUnemploymentUseTypeId, $loanInstallment);
 
                 if ($rate2 > 0) {
-                    if (!empty($product['Indemnizaci_n'])) {
-                        $amount2 = $loanInstallment * ($rate2 / 100) * $product['Indemnizaci_n'] * $deadline;
-                    } else {
-                        $amount2 = $loanInstallment * ($rate2 / 100) * $deadline;
-                    }
+                    $amount = $loanInstallment  *  6 *  $deadline / 1000 *  $rate;
+
                     $amountTaxed2 = $amount2 / 1.16;
                     $taxesAmount2 = $amount2 - $amountTaxed2;
                 }
