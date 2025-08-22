@@ -51,7 +51,7 @@ class EstimateQuoteUnemploymentService
                 }
             } else {
                 if (!empty($product['Indemnizaci_n'])) {
-                    $amount = $loanInstallment * $product['Indemnizaci_n'] * $deadline / 1000 * 9.38
+                    $amount = $loanInstallment * $product['Indemnizaci_n'] * $deadline / 1000 * 9.38;
                 } else {
                     $amount = $loanInstallment * ($rate / 100) * $deadline;
                 }
