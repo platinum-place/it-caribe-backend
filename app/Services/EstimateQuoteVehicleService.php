@@ -85,6 +85,12 @@ class EstimateQuoteVehicleService
 
             if ($rate > 0) {
                 $amount = $vehicleAmount * ($rate / 100);
+
+                if($serviceType === 'Econo'){
+                    $amount += $amount * 0.30;
+                }
+
+
                 $amountTaxed = $amount / 1.16;
                 $taxesAmount = $amount - $amountTaxed;
 
