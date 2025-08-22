@@ -36,7 +36,7 @@ class EstimateDebtUnemploymentTable
                                 $get('unemployment_insurance'),
                             );
 
-                            $set('estimates_table', $estimates);
+                            dd('estimates_table', $estimates);
                             $set('estimates', $estimates);
                         })
                         ->color('primary')
