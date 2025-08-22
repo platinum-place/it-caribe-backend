@@ -87,12 +87,12 @@ class EstimateQuoteVehicleService
             if ($rate > 0) {
                 $amount = $vehicleAmount * ($rate / 100);
 
-                // 👉 Recargo antes de sumar 220 o leasing
-                if ($serviceType === 'Japonés' && !empty($product['Recargo'])) {
-                    $amount *= 1 + ($product['Recargo'] / 100); // suma 30%
-                }
+//                // 👉 Recargo antes de sumar 220 o leasing
+//                if ($serviceType === 'Japonés' && !empty($product['Recargo'])) {
+//                    $amount *= 1 + ($product['Recargo'] / 100); // suma 30%
+//                }
 
-                dd($amount / 12);
+                dd($amount, $amount * 1.30);
 
                 $amountTaxed = $amount / 1.16;
                 $taxesAmount = $amount - $amountTaxed;
