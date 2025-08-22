@@ -34,7 +34,7 @@ class EstimateVehicleTable
                                 $get('service_type'),
                             );
 
-                            dd('estimates_table', $estimates);
+                            $set('estimates_table', $estimates);
                             $set('estimates', $estimates);
                         })
                         ->color('primary')
