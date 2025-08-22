@@ -74,6 +74,10 @@ class EstimateQuoteVehicleService
 
             $rate = $this->getRate($product['id'], $vehicleAmount, $vehicleYear, $vehicleType);
 
+            if ($shouldSkip) {
+                $rate = 0;
+            }
+
             $amount = 0;
             $amountTaxed = 0;
             $taxesAmount = 0;
@@ -85,10 +89,6 @@ class EstimateQuoteVehicleService
 
                 if($serviceType === 'Japonés' && !empty($product['Recargo'])){
                     $amount += $amount * ($product['Recargo'] / 100);
-                }
-
-                if ($shouldSkip) {
-                    $amount = 0;
                 }
 
                 $amountTaxed = $amount / 1.16;
