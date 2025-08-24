@@ -18,10 +18,13 @@ return new class extends Migration
             $table->foreignId('created_by')->constrained('users');
             $table->foreignId('updated_by')->nullable()->constrained('users');
             $table->foreignId('deleted_by')->nullable()->constrained('users');
-            $table->string('name');
-            $table->text('description')->nullable();
+
             $table->foreignId('quote_id')->constrained('quotes');
             $table->foreignId('quote_line_status_id')->constrained('quote_line_statuses');
+
+            $table->string('name');
+            $table->text('description')->nullable();
+
             $table->decimal('unit_price', 18, 2);
             $table->integer('quantity');
             $table->decimal('subtotal', 18, 2);

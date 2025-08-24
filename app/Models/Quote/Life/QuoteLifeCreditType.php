@@ -2,10 +2,13 @@
 
 namespace App\Models\Quote\Life;
 
+use App\Observers\Quote\Life\QuoteLifeCreditTypeObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+#[ObservedBy([QuoteLifeCreditTypeObserver::class])]
 class QuoteLifeCreditType extends Model
 {
     use SoftDeletes;

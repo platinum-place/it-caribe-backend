@@ -4,12 +4,15 @@ namespace App\Models\Quote;
 
 use App\Enums\Quote\QuoteLineStatusEnum;
 use App\Models\CRM\Lead;
+use App\Observers\Quote\QuoteObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+#[ObservedBy([QuoteObserver::class])]
 class Quote extends Model
 {
     use SoftDeletes;

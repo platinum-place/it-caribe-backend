@@ -23,10 +23,10 @@ Route::middleware(EnsureClientIsResourceOwner::class)
         Route::post('/vehiculos/TipoVehiculo', \App\Http\Controllers\Vehicle\FetchVehicleTypeController::class);
         Route::post('/vehiculos/Accesorios', \App\Http\Controllers\Vehicle\FetchVehicleAccessoryController::class);
         Route::post('/vehiculos/Actividades', \App\Http\Controllers\Vehicle\FetchVehicleActivityController::class);
-        Route::post('/vehiculos/Circulacion', [\App\Http\Controllers\Api\VehicleController::class, 'routeList']);
+        Route::post('/vehiculos/Circulacion', \App\Http\Controllers\Vehicle\FetchVehicleRouteController::class);
         Route::get('/vehiculos/Color', \App\Http\Controllers\Vehicle\FetchVehicleColorController::class);
 
-        //        Route::post('/cotizador/CotizaVida', [\App\Http\Controllers\Api\LifeController::class, 'estimateLife']);
+             Route::post('/cotizador/CotizaVida', \App\Http\Controllers\Quote\Life\EstimateQuoteLifeController::class);
         //        Route::post('/cotizador/EmitirVida', [\App\Http\Controllers\Api\LifeController::class, 'issueLife']);
         //        Route::post('/cotizador/CancelarVida', [\App\Http\Controllers\Api\LifeController::class, 'cancelLife']);
         //

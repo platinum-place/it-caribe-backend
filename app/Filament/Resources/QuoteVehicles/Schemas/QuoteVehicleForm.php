@@ -59,7 +59,7 @@ class QuoteVehicleForm
                                                     $model->type ?
                                                         ' ('.$model->type->name.')' :
                                                         ''
-                                                    ),
+                                                ),
                                             ];
                                         });
                                 })
@@ -135,11 +135,11 @@ class QuoteVehicleForm
                                         ->mask(RawJs::make('$money($input)'))
                                         ->stripCharacters(',')
                                         ->numeric(),
-//
-//                                    TextInput::make('error')
-//                                        ->label('Comentario')
-//                                        ->disabled()
-//                                        ->dehydrated(false),
+                                    //
+                                    //                                    TextInput::make('error')
+                                    //                                        ->label('Comentario')
+                                    //                                        ->disabled()
+                                    //                                        ->dehydrated(false),
                                 ])
                                 ->columns()
                                 ->deletable(false)

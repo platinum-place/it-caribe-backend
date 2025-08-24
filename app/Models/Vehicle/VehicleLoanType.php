@@ -2,10 +2,13 @@
 
 namespace App\Models\Vehicle;
 
+use App\Observers\Vehicle\VehicleLoanTypeObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+#[ObservedBy([VehicleLoanTypeObserver::class])]
 class VehicleLoanType extends Model
 {
     use SoftDeletes;

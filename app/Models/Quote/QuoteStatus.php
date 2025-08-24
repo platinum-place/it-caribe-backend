@@ -2,10 +2,13 @@
 
 namespace App\Models\Quote;
 
+use App\Observers\Quote\QuoteStatusObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+#[ObservedBy([QuoteStatusObserver::class])]
 class QuoteStatus extends Model
 {
     use SoftDeletes;

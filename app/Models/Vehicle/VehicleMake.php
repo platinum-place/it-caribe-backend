@@ -2,11 +2,14 @@
 
 namespace App\Models\Vehicle;
 
+use App\Observers\Vehicle\VehicleMakeObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+#[ObservedBy([VehicleMakeObserver::class])]
 class VehicleMake extends Model
 {
     use SoftDeletes;

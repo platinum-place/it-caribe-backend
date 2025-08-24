@@ -3,7 +3,6 @@
 namespace App\Models\Vehicle;
 
 use App\Models\Quote\Vehicle\QuoteVehicle;
-use App\Observers\CRM\LeadObserver;
 use App\Observers\Vehicle\VehicleObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;

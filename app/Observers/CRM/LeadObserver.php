@@ -3,18 +3,21 @@
 namespace App\Observers\CRM;
 
 use App\Models\CRM\Lead;
+use App\Observers\BaseObserver;
 use Carbon\Carbon;
 
-class LeadObserver
+class LeadObserver extends BaseObserver
 {
-    public function creating(Lead $lead): void
+    public function creating(Lead|\Illuminate\Database\Eloquent\Model $model): void
     {
-        if (! $lead->age && $lead->birth_date) {
-            $lead->age = Carbon::parse($lead->birth_date)->age;
+        parent::creating($model);
+
+        if (! $model->age && $model->birth_date) {
+            $model->age = Carbon::parse($model->birth_date)->age;
         }
 
-        if (! $lead->full_name && ($lead->first_name && $lead->last_name)) {
-            $lead->full_name = $lead->first_name.' '.$lead->last_name;
+        if (! $model->full_name && ($model->first_name && $model->last_name)) {
+            $model->full_name = $model->first_name.' '.$model->last_name;
         }
     }
 

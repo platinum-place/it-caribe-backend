@@ -3,13 +3,16 @@
 namespace App\Observers\Vehicle;
 
 use App\Models\Vehicle\Vehicle;
+use App\Observers\BaseObserver;
 
-class VehicleObserver
+class VehicleObserver extends BaseObserver
 {
-    public function creating(Vehicle $vehicle): void
+    public function creating(Vehicle|\Illuminate\Database\Eloquent\Model $model): void
     {
-        if(!$vehicle->vehicle_type_id){
-            $vehicle->vehicle_type_id = $vehicle->vehicleModel->vehicle_type_id;
+        parent::creating($model);
+
+        if (! $model->vehicle_type_id) {
+            $model->vehicle_type_id = $model->vehicleModel->vehicle_type_id;
         }
     }
 

@@ -3,10 +3,13 @@
 namespace App\Models\Quote\Vehicle;
 
 use App\Models\Quote\QuoteLine;
+use App\Observers\Quote\Vehicle\QuoteVehicleLineObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+#[ObservedBy([QuoteVehicleLineObserver::class])]
 class QuoteVehicleLine extends Model
 {
     use SoftDeletes;

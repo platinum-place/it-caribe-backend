@@ -3,13 +3,15 @@
 namespace App\Observers\Zoho;
 
 use App\Models\Zoho\ZohoOauthAccessToken;
+use App\Observers\BaseObserver;
 
-class ZohoOauthAccessTokenObserver
+class ZohoOauthAccessTokenObserver extends BaseObserver
 {
-    public function creating(ZohoOauthAccessToken $zohoOauthAccessToken): void
+    public function creating(ZohoOauthAccessToken|\Illuminate\Database\Eloquent\Model $model): void
     {
-        $zohoOauthAccessToken->created_by = auth()->id() ?? 1;
-        $zohoOauthAccessToken->expires_at = now()->addSeconds($zohoOauthAccessToken->expires_in);
+        parent::creating($model);
+
+        $model->expires_at = now()->addSeconds($model->expires_in);
     }
 
     /**

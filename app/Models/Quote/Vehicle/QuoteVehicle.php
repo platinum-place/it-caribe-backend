@@ -5,12 +5,15 @@ namespace App\Models\Quote\Vehicle;
 use app\Enums\Quote\QuoteLineStatusEnum;
 use App\Models\Quote\Quote;
 use App\Models\Vehicle\Vehicle;
+use App\Observers\Quote\Vehicle\QuoteVehicleObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+#[ObservedBy([QuoteVehicleObserver::class])]
 class QuoteVehicle extends Model
 {
     use SoftDeletes;
