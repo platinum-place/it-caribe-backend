@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\Quote\EstimateLifeRequest;
 use App\Http\Requests\Api\Quote\IssueLifeRequest;
+use App\Http\Requests\Quote\Life\EstimateQuoteLifeRequest;
 use App\Services\ZohoCRMService;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
@@ -19,7 +19,7 @@ class LifeController extends Controller
      * @throws Throwable
      * @throws ConnectionException
      */
-    public function estimateLife(EstimateLifeRequest $request)
+    public function estimateLife(EstimateQuoteLifeRequest $request)
     {
         $criteria = '((Corredor:equals:3222373000092390001) and (Product_Category:equals:Vida))';
         $products = $this->crm->searchRecords('Products', $criteria);

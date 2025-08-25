@@ -21,7 +21,7 @@ return new class extends Migration
 
             $table->foreignId('quote_id')->constrained('quotes');
             $table->foreignId('quote_life_credit_type_id')->constrained('quote_life_credit_types');
-            $table->foreignId('co_borrower_id')->constrained('leads');
+            $table->foreignId('co_borrower_id')->nullable()->constrained('leads');
 
             $table->boolean('guarantor')->default(false);
             $table->integer('deadline_month')->default(0);

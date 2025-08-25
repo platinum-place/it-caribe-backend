@@ -26,7 +26,7 @@ Route::middleware(EnsureClientIsResourceOwner::class)
         Route::post('/vehiculos/Circulacion', \App\Http\Controllers\Vehicle\FetchVehicleRouteController::class);
         Route::get('/vehiculos/Color', \App\Http\Controllers\Vehicle\FetchVehicleColorController::class);
 
-             Route::post('/cotizador/CotizaVida', \App\Http\Controllers\Quote\Life\EstimateQuoteLifeController::class);
+        Route::post('/cotizador/CotizaVida', \App\Http\Controllers\Quote\Life\EstimateQuoteLifeController::class);
         //        Route::post('/cotizador/EmitirVida', [\App\Http\Controllers\Api\LifeController::class, 'issueLife']);
         //        Route::post('/cotizador/CancelarVida', [\App\Http\Controllers\Api\LifeController::class, 'cancelLife']);
         //

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('updated_by')->nullable()->constrained('users');
             $table->foreignId('deleted_by')->nullable()->constrained('users');
 
-            $table->foreignId('quote_live_id')->constrained('quote_lives');
+            $table->foreignId('quote_life_id')->constrained('quote_lives');
             $table->foreignId('quote_line_id')->constrained('quote_lines');
 
             $table->decimal('borrower_amount', 18, 2)->default(0);

@@ -22,10 +22,9 @@ class CreateQuoteVehicle extends CreateRecord
     protected function handleRecordCreation(array $data): Model
     {
         $user = auth()->user();
-        $data['lead']['created_by'] = $user->id;
-        $data['vehicle']['created_by'] = $user->id;
 
         $lead = Lead::create($data['lead']);
+
         $vehicle = Vehicle::create($data['vehicle']);
 
         $vehicle->vehicleColors()->attach($data['vehicle']['vehicle_colors']);
@@ -39,7 +38,6 @@ class CreateQuoteVehicle extends CreateRecord
             'created_by' => $user->id,
         ]);
 
-        $data['quote_vehicle']['created_by'] = $user->id;
         $data['quote_vehicle']['quote_id'] = $quote->id;
         $data['quote_vehicle']['vehicle_id'] = $vehicle->id;
 

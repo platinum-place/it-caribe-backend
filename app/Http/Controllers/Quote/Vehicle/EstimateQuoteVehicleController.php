@@ -52,10 +52,9 @@ class EstimateQuoteVehicleController extends Controller
                 'work_phone' => $data['TelefTrabajo'],
                 'email' => $data['Email'],
                 'lead_type_id' => 1,
-                'created_by' => 1,
             ]);
+
             $vehicle = Vehicle::create([
-                'created_by' => 1,
                 'vehicle_year' => $data['Anio'],
                 'chassis' => $data['Chasis'],
                 'license_plate' => $data['Placa'],
@@ -69,14 +68,12 @@ class EstimateQuoteVehicleController extends Controller
                 'quote_type_id' => QuoteTypeEnum::VEHICLE->value,
                 'lead_id' => $lead->id,
                 'start_date' => now(),
-                'created_by' => 1,
             ]);
 
             $quoteVehicle = QuoteVehicle::create([
                 'quote_id' => $quote->id,
                 'vehicle_amount' => $data['MontoAsegurado'],
                 'vehicle_id' => $vehicle->id,
-                'created_by' => 1,
             ]);
 
             $response = [];
@@ -94,7 +91,6 @@ class EstimateQuoteVehicleController extends Controller
                     'total' => $line['total'],
                     'amount_taxed' => $line['amount_taxed'],
                     'quote_line_status_id' => QuoteLineStatusEnum::NOT_ACCEPTED->value,
-                    'created_by' => 1,
                 ]);
 
                 $quoteVehicleLine = QuoteVehicleLine::create([
@@ -106,7 +102,6 @@ class EstimateQuoteVehicleController extends Controller
                     'latest_expenses' => $line['latest_expenses'],
                     'markup' => $line['markup'],
                     'amount_without_life_amount' => $line['amount_without_life_amount'],
-                    'created_by' => 1,
                 ]);
 
                 $response[] = [

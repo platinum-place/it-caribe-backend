@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Api\Quote;
+namespace App\Http\Requests\Quote\Life;
 
 use App\Http\Requests\Common\PrepareForValidationTrait;
 use Illuminate\Foundation\Http\FormRequest;
 
-class EstimateLifeRequest extends FormRequest
+class EstimateQuoteLifeRequest extends FormRequest
 {
     use PrepareForValidationTrait;
 

@@ -2,16 +2,19 @@
 
 namespace App\Models\Quote\Life;
 
+use App\Observers\Quote\Life\QuoteLifeLineObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+#[ObservedBy([QuoteLifeLineObserver::class])]
 class QuoteLifeLine extends Model
 {
     use SoftDeletes;
 
     protected $fillable = [
-        'quote_live_id', 'quote_line_id', 'borrower_amount',
+        'quote_life_id', 'quote_line_id', 'borrower_amount',
         'co_borrower_amount', 'borrower_rate', 'co_borrower_rate',
         'created_by', 'updated_by', 'deleted_by',
     ];
@@ -31,4 +34,3 @@ class QuoteLifeLine extends Model
         return $this->belongsTo(\App\Models\User::class, 'deleted_by');
     }
 }
-
