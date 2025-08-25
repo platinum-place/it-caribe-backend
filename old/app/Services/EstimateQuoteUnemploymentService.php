@@ -23,7 +23,7 @@ class EstimateQuoteUnemploymentService
     {
         $quoteUnemploymentType = QuoteUnemploymentDebtorType::findOrFail($quoteUnemploymentTypeId)->name;
 
-        $criteria = '((Corredor:equals:'. 3222373000092390001 .') and (Product_Category:equals:Desempleo))';
+        $criteria = '((Corredor:equals:' . 3222373000092390001 . ') and (Product_Category:equals:Desempleo))';
         $productsResponse = $this->zohoApi->searchRecords('Products', $criteria);
 
         $result = [];
@@ -35,7 +35,7 @@ class EstimateQuoteUnemploymentService
 
             $rate = $this->getRate($debtorBirthDate, $product['id'], $quoteUnemploymentUseTypeId, $loanInstallment);
 
-            if ($quoteUnemploymentType == 'Mensual') {
+            if ($quoteUnemploymentType === 'Mensual') {
                 if ($product['Sin_tasas']) {
                     $amount = $rate;
                     $amountTaxed = $amount / 1.16;
@@ -46,11 +46,8 @@ class EstimateQuoteUnemploymentService
                     $taxesAmount = $amount - $amountTaxed;
                 }
             } else {
-                if (! empty($product['Indemnizaci_n'])) {
-                    $amount = $loanInstallment * ($rate / 100) * $product['Indemnizaci_n'] * $deadline;
-                } else {
-                    $amount = $loanInstallment * ($rate / 100) * $deadline;
-                }
+                $amount = $loanInstallment  *  6 *  $deadline / 1000 *  $rate;
+
                 $amountTaxed = $amount / 1.16;
                 $taxesAmount = $amount - $amountTaxed;
             }
@@ -81,16 +78,11 @@ class EstimateQuoteUnemploymentService
         return $result;
     }
 
-    /**
-     * @throws RequestException
-     * @throws ConnectionException
-     * @throws Exception
-     */
     public function getRate(string $debtorBirthDate, string $productId, string $quoteUnemploymentUseTypeId, float $loanInstallment)
     {
         try {
             $debtorAge = Carbon::parse($debtorBirthDate)->age;
-        } catch (\Throwable $exception) {
+        }catch (\Throwable $exception){
             $debtorAge = $debtorBirthDate;
         }
 

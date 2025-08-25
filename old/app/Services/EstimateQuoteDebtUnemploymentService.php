@@ -18,7 +18,7 @@ class EstimateQuoteDebtUnemploymentService
      */
     public function estimate(float $insuredAmount, int $deadline, string $debtorBirthDate, float $loanInstallment, int $quoteUnemploymentTypeId, int $quoteUnemploymentUseTypeId, ?bool $unemploymentInsurance = false): array
     {
-        $criteria = '((Corredor:equals:'. 3222373000092390001 .') and (Product_Category:equals:Simple))';
+        $criteria = '((Corredor:equals:' . 3222373000092390001 . ') and (Product_Category:equals:Simple))';
         $productsResponse = $this->zohoApi->searchRecords('Products', $criteria);
 
         $result = [];
@@ -45,11 +45,8 @@ class EstimateQuoteDebtUnemploymentService
                 $rate2 = app(EstimateQuoteUnemploymentService::class)->getRate($debtorBirthDate, $product['id'], $quoteUnemploymentUseTypeId, $loanInstallment);
 
                 if ($rate2 > 0) {
-                    if (! empty($product['Indemnizaci_n'])) {
-                        $amount2 = $loanInstallment * ($rate2 / 100) * $product['Indemnizaci_n'] * $deadline;
-                    } else {
-                        $amount2 = $loanInstallment * ($rate2 / 100) * $deadline;
-                    }
+                    $amount2 = $loanInstallment  *  6 *  $deadline / 1000 *  $rate2;
+
                     $amountTaxed2 = $amount2 / 1.16;
                     $taxesAmount2 = $amount2 - $amountTaxed2;
                 }
@@ -91,11 +88,6 @@ class EstimateQuoteDebtUnemploymentService
         return $result;
     }
 
-    /**
-     * @throws RequestException
-     * @throws ConnectionException
-     * @throws Exception
-     */
     protected function getRate1(string $productId, int $deadline)
     {
         $criteria = "Plan:equals:$productId";

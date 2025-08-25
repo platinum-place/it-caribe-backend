@@ -10,83 +10,97 @@ use App\Services\Zoho\ZohoService;
 
 class EstimateQuoteVehicleService
 {
-    public function __construct(protected ZohoService $zohoService) {}
+    public function __construct(protected ZohoService $zohoService)
+    {
+    }
 
-    public function handle(
-        float $vehicleAmount, int $vehicleMakeId, int $vehicleModelId,
-        int $vehicleYear, int $vehicleUtilityId,
-        ?bool $isEmployee = false, bool $leasing = false
-    ) {
+    public function handle(float $vehicleAmount, int $vehicleMakeId, int $vehicleModelId, int $vehicleYear, ?bool $isEmployee = false, ?bool $leasing = false, ?string $serviceType = null): array
+    {
         $vehicleMake = VehicleMake::find($vehicleMakeId);
         $vehicleModel = VehicleModel::find($vehicleModelId);
         $vehicleType = $vehicleModel->type;
-        $vehicleUtility = VehicleUtility::find($vehicleUtilityId);
 
-        $criteria = '((Corredor:equals:'. 3222373000092390001 .')';
-        $criteria .= ' and (Product_Category:equals:Auto)';
-        $criteria .= ' and (Tipo_veh_culo:equals:'.$vehicleType->name.')';
-        $criteria .= ' and (Plan:equals:'.$vehicleUtility->name.'))';
+        $criteria = '((Corredor:equals:' . 3222373000092390001 . ') and (Product_Category:equals:Auto))';
         $productsResponse = $this->zohoService->searchRecords('Products', $criteria);
 
         $result = [];
 
         foreach ($productsResponse['data'] as $product) {
+            $shouldSkip = false;
             $error = '';
 
-            if (! $isEmployee && $product['Para_empleado']) {
-                continue;
+            if (!empty($product['Plan'])) {
+                if ($product['Plan'] === 'Empleado' && !$isEmployee) {
+                    continue;
+                }
+
+                if ($product['Plan'] !== 'Empleado' && $product['Plan'] !== $serviceType) {
+                    continue;
+                }
             }
 
+
             try {
-                $criteria = 'Aseguradora:equals:'.$product['Vendor_Name']['id'];
+                $criteria = 'Aseguradora:equals:' . $product['Vendor_Name']['id'];
                 $restrictedVehicles = $this->zohoService->searchRecords('Restringidos', $criteria);
             } catch (\Throwable $e) {
                 //
             }
 
-            if (! empty($restrictedVehicles)) {
+            if (!empty($restrictedVehicles)) {
                 foreach ($restrictedVehicles['data'] as $restricted) {
                     if (\Str::contains(\Str::lower($vehicleMake->name), \Str::lower($restricted['Marca']['name']))) {
                         if (empty($restricted['Modelo'])) {
                             $error = 'Marca restringido';
+                            $shouldSkip = true;
                             break;
                         }
 
                         if (\Str::contains(\Str::lower($vehicleModel->name), \Str::lower($restricted['Modelo']['name']))) {
                             $error = 'Modelo restringido';
+                            $shouldSkip = true;
                             break;
                         }
                     }
                 }
             }
 
-            $rate = empty($error) ? $this->getRate($product['id'], $vehicleAmount, $vehicleYear, $vehicleType) : 0;
+            $rate = $this->getRate($product['id'], $vehicleAmount, $vehicleYear, $vehicleType);
 
-            if ($rate === 0) {
-                continue;
+            if ($shouldSkip) {
+                $rate = 0;
             }
 
-            $amount = $vehicleAmount * ($rate / 100);
+            $amount = 0;
+            $amountTaxed = 0;
+            $taxesAmount = 0;
+            $totalMonthly = 0;
+            $lifeAmount = 0;
 
-            if ($amount < $product['Prima_m_nima']) {
-                $amount = $product['Prima_m_nima'];
-            }
+            if ($rate > 0) {
+                $amount = $vehicleAmount * ($rate / 100);
 
-            $amountTaxed = $amount / 1.16;
-            $taxesAmount = $amount - $amountTaxed;
+                if ($serviceType === 'Japonés' && !empty($product['Recargo'])) {
+                    $amount *= 1.30;
+                }
 
-            $lifeAmount = 120;
-            $latestExpenses = 20;
-            $markup = 80;
+                $amountTaxed = $amount / 1.16;
+                $taxesAmount = $amount - $amountTaxed;
 
-            $totalMonthly = ($amount / 12) + $lifeAmount + $latestExpenses + $markup;
+                $lifeAmount = 220;
 
-            $amount = $totalMonthly * 12;
+                $totalMonthly = ($amount / 12) + $lifeAmount;
 
-            if (! empty($product['Resp_civil']) && $leasing) {
-                $totalMonthly += $product['Leasing_mensual'];
                 $amount = $totalMonthly * 12;
+
+                if (!empty($product['Resp_civil']) && $leasing) {
+                    $totalMonthly += $product['Leasing_mensual'];
+                    $amount = $totalMonthly * 12;
+                }
+            } else {
+                $error = 'No existe tasa para el vehículo';
             }
+
 
             $amount = round($amount, 2);
             $amountTaxed = round($amountTaxed, 2);
@@ -105,11 +119,8 @@ class EstimateQuoteVehicleService
                 'tax_amount' => $taxesAmount,
                 'total' => $amount,
                 'total_monthly' => $totalMonthly,
-                'description' => $product['id'],
+                'id_crm' => $product['id'],
                 'life_amount' => $lifeAmount,
-                'latest_expenses' => $latestExpenses,
-                'amount_without_life_amount' => $totalMonthly - $lifeAmount - $markup,
-                'markup' => $markup,
                 'vehicle_rate' => $rate,
                 'error' => $error,
                 'vendor_name' => $vendorCRM['Nombre'],
@@ -121,38 +132,34 @@ class EstimateQuoteVehicleService
 
     protected function getRate(string $productId, float $vehicleAmount, int $vehicleYear, VehicleType $vehicleType): float
     {
-        $selectedRate = 0;
-
+        $criteria = "((Plan:equals:$productId) and (A_o:equals:$vehicleYear))";
         try {
-            $criteria = "((Plan:equals:$productId) and (A_o:equals:$vehicleYear))";
             $rates = $this->zohoService->searchRecords('Tasas', $criteria);
         } catch (\Throwable $e) {
-            //
-        }
-
-        if (empty($rates['data'])) {
             try {
                 $criteria = "Plan:equals:$productId";
                 $rates = $this->zohoService->searchRecords('Tasas', $criteria);
             } catch (\Throwable $e) {
-                //
+                return 0;
             }
         }
 
-        if (empty($rates['data'])) {
-            return 0;
-        }
+        $selectedRate = 0;
 
         foreach ($rates['data'] as $rate) {
-            if (! empty($rate['Suma_hasta']) && $vehicleAmount > $rate['Suma_hasta']) {
+            if (!empty($rate['Grupo_de_veh_culo']) && !in_array($vehicleType->name, $rate['Grupo_de_veh_culo'], true)) {
                 continue;
             }
 
-            if (! empty($rate['Suma_limite']) && $vehicleAmount < $rate['Suma_limite']) {
+            if (!empty($rate['Suma_hasta']) && $vehicleAmount > $rate['Suma_hasta']) {
                 continue;
             }
 
-            if (! empty($rate['A_o']) && $rate['A_o'] !== $vehicleYear) {
+            if (!empty($rate['Suma_limite']) && $vehicleAmount < $rate['Suma_limite']) {
+                continue;
+            }
+
+            if (!empty($rate['A_o']) && $rate['A_o'] !== $vehicleYear) {
                 continue;
             }
 

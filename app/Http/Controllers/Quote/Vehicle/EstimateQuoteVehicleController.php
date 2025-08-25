@@ -38,7 +38,6 @@ class EstimateQuoteVehicleController extends Controller
             $vehicleMake?->id,
             $vehicleModel?->id,
             $data['Anio'],
-            $vehicleModel?->vehicle_type_id,
             1,
         );
 
