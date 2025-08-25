@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\Quote\IssueLifeRequest;
 use App\Http\Requests\Quote\Life\EstimateQuoteLifeRequest;
+use App\Http\Requests\Quote\Life\IssueQuoteLifeRequest;
 use App\Services\ZohoCRMService;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
@@ -98,7 +98,7 @@ class LifeController extends Controller
      * @throws ConnectionException
      * @throws RequestException
      */
-    public function issueLife(IssueLifeRequest $request)
+    public function issueLife(IssueQuoteLifeRequest $request)
     {
         $fields = ['id', 'Quoted_Items'];
         $quote = $this->crm->getRecords('Quotes', $fields, $request->get('Identificador'))['data'][0];
@@ -127,7 +127,7 @@ class LifeController extends Controller
      * @throws Throwable
      * @throws ConnectionException
      */
-    public function cancelLife(IssueLifeRequest $request)
+    public function cancelLife(IssueQuoteLifeRequest $request)
     {
         $fields = ['id', 'Quoted_Items'];
         $quote = $this->crm->getRecords('Quotes', $fields, $request->get('Identificador'))['data'][0];

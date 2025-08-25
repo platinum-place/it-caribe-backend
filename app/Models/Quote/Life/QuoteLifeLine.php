@@ -2,13 +2,17 @@
 
 namespace App\Models\Quote\Life;
 
+use App\Models\Quote\QuoteLine;
+use App\Models\Scopes\Quote\AcceptedLineScope;
 use App\Observers\Quote\Life\QuoteLifeLineObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 #[ObservedBy([QuoteLifeLineObserver::class])]
+#[ScopedBy([AcceptedLineScope::class])]
 class QuoteLifeLine extends Model
 {
     use SoftDeletes;
@@ -32,5 +36,15 @@ class QuoteLifeLine extends Model
     public function deletedBy(): BelongsTo
     {
         return $this->belongsTo(\App\Models\User::class, 'deleted_by');
+    }
+
+    public function quoteLife(): BelongsTo
+    {
+        return $this->belongsTo(QuoteLife::class, 'quote_life_id');
+    }
+
+    public function quoteLine(): BelongsTo
+    {
+        return $this->belongsTo(QuoteLine::class, 'quote_line_id');
     }
 }

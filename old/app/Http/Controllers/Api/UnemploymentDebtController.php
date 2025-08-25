@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Quote\EstimateUnemploymentDebtRequest;
-use App\Http\Requests\Api\Quote\IssueLifeRequest;
+use App\Http\Requests\Quote\Life\IssueQuoteLifeRequest;
 use App\Services\ZohoCRMService;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
@@ -124,7 +124,7 @@ class UnemploymentDebtController extends Controller
      * @throws Throwable
      * @throws ConnectionException
      */
-    public function issueUnemploymentDebt(IssueLifeRequest $request)
+    public function issueUnemploymentDebt(IssueQuoteLifeRequest $request)
     {
         $fields = ['id', 'Quoted_Items'];
         $quote = $this->crm->getRecords('Quotes', $fields, $request->get('Identificador'))['data'][0];
@@ -148,7 +148,7 @@ class UnemploymentDebtController extends Controller
         return response()->json(['Error' => '']);
     }
 
-    public function cancelUnemploymentDebt(IssueLifeRequest $request)
+    public function cancelUnemploymentDebt(IssueQuoteLifeRequest $request)
     {
         $fields = ['id', 'Quoted_Items'];
         $quote = $this->crm->getRecords('Quotes', $fields, $request->get('Identificador'))['data'][0];

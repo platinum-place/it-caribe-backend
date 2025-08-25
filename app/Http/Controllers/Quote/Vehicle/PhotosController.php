@@ -15,9 +15,9 @@ class PhotosController extends Controller
     {
         $data = $request->all();
 
-        $quoteVehicleLine = QuoteVehicleLine::find($data['cotz_id']);
+        $quoteVehicleLine = QuoteVehicleLine::findOrFail($data['cotz_id']);
 
-        $attachments = $quoteVehicleLine->quoteVehicle->quote->attachments;
+        $attachments = $quoteVehicleLine?->quoteVehicle->quote->attachments;
 
         $response = [];
 

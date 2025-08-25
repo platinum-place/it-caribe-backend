@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Api\Quote;
+namespace App\Http\Requests\Quote\Life;
 
 use App\Http\Requests\Common\PrepareForValidationTrait;
 use Illuminate\Foundation\Http\FormRequest;
 
-class IssueLifeRequest extends FormRequest
+class IssueQuoteLifeRequest extends FormRequest
 {
     use PrepareForValidationTrait;
 
@@ -25,7 +25,7 @@ class IssueLifeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'Identificador' => ['required'],
+            'Identificador' => ['required', 'integer', 'exists:quote_life_lines,id'],
         ];
     }
 

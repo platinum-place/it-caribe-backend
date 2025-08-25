@@ -2,7 +2,6 @@
 
 namespace App\Models\Quote;
 
-use App\Enums\Quote\QuoteLineStatusEnum;
 use App\Models\CRM\Lead;
 use App\Observers\Quote\QuoteObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
@@ -35,15 +34,14 @@ class Quote extends Model
         return $this->belongsTo(Lead::class);
     }
 
-    public function quoteLine(): HasMany
+    public function lines(): HasMany
     {
         return $this->hasMany(QuoteLine::class);
     }
 
-    public function selectedLine(): HasOne
+    public function acceptedLine(): HasOne
     {
-        return $this->hasOne(QuoteLine::class)
-            ->where('quote_line_status_id', QuoteLineStatusEnum::ACCEPTED->value);
+        return $this->hasOne(QuoteLine::class)->accepted();
     }
 
     public function createdBy(): BelongsTo

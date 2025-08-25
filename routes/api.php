@@ -27,24 +27,24 @@ Route::middleware(EnsureClientIsResourceOwner::class)
         Route::get('/vehiculos/Color', \App\Http\Controllers\Vehicle\FetchVehicleColorController::class);
 
         Route::post('/cotizador/CotizaVida', \App\Http\Controllers\Quote\Life\EstimateQuoteLifeController::class);
-        //        Route::post('/cotizador/EmitirVida', [\App\Http\Controllers\Api\LifeController::class, 'issueLife']);
-        //        Route::post('/cotizador/CancelarVida', [\App\Http\Controllers\Api\LifeController::class, 'cancelLife']);
-        //
+        Route::post('/cotizador/EmitirVida', \App\Http\Controllers\Quote\Life\IssueQuoteLifeController::class);
+        Route::post('/cotizador/CancelarVida', \App\Http\Controllers\Quote\Life\CancelQuoteLifeController::class);
+
         //        Route::post('/cotizador/CotizaDesempleoDeuda', [\App\Http\Controllers\Api\UnemploymentDebtController::class, 'estimateUnemploymentDebt']);
         //        Route::post('/cotizador/EmitirDesempleoDeuda', [\App\Http\Controllers\Api\UnemploymentDebtController::class, 'issueUnemploymentDebt']);
         //        Route::post('/cotizador/CancelarDesempleoDeuda', [\App\Http\Controllers\Api\UnemploymentDebtController::class, 'cancelUnemploymentDebt']);
-        //
+
         //        Route::post('/cotizador/CotizaDesempleo', [\App\Http\Controllers\Api\UnemploymentController::class, 'estimateUnemployment']);
         //        Route::post('/cotizador/EmitirDesempleo', [\App\Http\Controllers\Api\UnemploymentController::class, 'issueUnemployment']);
         //        Route::post('/cotizador/CancelarDesempleo', [\App\Http\Controllers\Api\UnemploymentController::class, 'cancelUnemployment']);
-        //
+
         //        Route::post('/cotizador/CotizaIncendio', [\App\Http\Controllers\Api\FireController::class, 'estimateFire']);
         //        Route::post('/cotizador/EmitirIncendio', [\App\Http\Controllers\Api\FireController::class, 'issueFire']);
         //        Route::post('/cotizador/CancelarIncendio', [\App\Http\Controllers\Api\FireController::class, 'cancelFire']);
-        //
+
         //        Route::get('/cotizador/GetTipoEmpleado', [\App\Http\Controllers\Api\QuoteController::class, 'employmentTypes']);
         //        Route::get('/cotizador/GetGiroDelNegocio', [\App\Http\Controllers\Api\QuoteController::class, 'businessTypes']);
-        //
+
         //        Route::get('/Productos', [\App\Http\Controllers\Api\ProductController::class, 'list']);
         //        Route::get('/Productos/Aseguradoras/{id}', [\App\Http\Controllers\Api\ProductController::class, 'show']);
 

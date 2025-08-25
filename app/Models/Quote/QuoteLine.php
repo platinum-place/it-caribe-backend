@@ -2,8 +2,11 @@
 
 namespace App\Models\Quote;
 
+use App\Enums\Quote\QuoteLineStatusEnum;
 use App\Observers\Quote\QuoteLineObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -42,5 +45,11 @@ class QuoteLine extends Model
     public function status(): BelongsTo
     {
         return $this->belongsTo(QuoteLineStatus::class);
+    }
+
+    #[Scope]
+    protected function accepted(Builder $query): void
+    {
+        $query->where('quote_line_status_id', QuoteLineStatusEnum::ACCEPTED->value);
     }
 }

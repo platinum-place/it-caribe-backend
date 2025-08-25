@@ -3,13 +3,16 @@
 namespace App\Models\Quote\Vehicle;
 
 use App\Models\Quote\QuoteLine;
+use App\Models\Scopes\Quote\AcceptedLineScope;
 use App\Observers\Quote\Vehicle\QuoteVehicleLineObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 #[ObservedBy([QuoteVehicleLineObserver::class])]
+#[ScopedBy([AcceptedLineScope::class])]
 class QuoteVehicleLine extends Model
 {
     use SoftDeletes;
@@ -27,7 +30,7 @@ class QuoteVehicleLine extends Model
 
     public function quoteLine(): BelongsTo
     {
-        return $this->belongsTo(QuoteLine::class, 'quote_vehicle_id');
+        return $this->belongsTo(QuoteLine::class, 'quote_line_id');
     }
 
     public function createdBy(): BelongsTo

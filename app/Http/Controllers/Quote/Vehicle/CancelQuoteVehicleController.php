@@ -16,9 +16,9 @@ class CancelQuoteVehicleController extends Controller
     {
         $data = $request->all();
 
-        $quoteVehicleLine = QuoteVehicleLine::find($data['IdCotizacion']);
+        $quoteVehicleLine = QuoteVehicleLine::findOrFail($data['IdCotizacion']);
 
-        $quoteVehicleLine->quoteVehicle->quote->update([
+        $quoteVehicleLine?->quoteVehicle->quote->update([
             'quote_status_id' => QuoteStatusEnum::CANCELLED->value,
         ]);
 

@@ -16,9 +16,9 @@ class ValidateInspectionController extends Controller
     {
         $data = $request->all();
 
-        $quoteVehicleLine = QuoteVehicleLine::find($data['cotz_id']);
+        $quoteVehicleLine = QuoteVehicleLine::findOrFail($data['cotz_id']);
 
-        $quoteVehicleLine->quoteVehicle->quote->update([
+        $quoteVehicleLine?->quoteVehicle->quote->update([
             'quote_status_id' => QuoteStatusEnum::CHECKED->value,
         ]);
 

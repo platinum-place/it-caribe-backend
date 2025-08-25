@@ -18,13 +18,13 @@ class IssueQuoteVehicleController extends Controller
     {
         $data = $request->all();
 
-        $quoteVehicleLine = QuoteVehicleLine::find($data['cotzid']);
+        $quoteVehicleLine = QuoteVehicleLine::findOrFail($data['cotzid']);
 
-        $quoteVehicleLine->quoteLine->update([
+        $quoteVehicleLine?->quoteLine->update([
             'quote_line_status_id' => QuoteLineStatusEnum::ACCEPTED->value,
         ]);
 
-        $quoteVehicleLine->quoteVehicle->quote->update([
+        $quoteVehicleLine?->quoteVehicle->quote->update([
             'end_date' => Carbon::createFromFormat('d/m/Y', $data['FechaVencimiento'])?->format('Y-m-d'),
             'quote_status_id' => QuoteStatusEnum::APPROVED->value,
         ]);

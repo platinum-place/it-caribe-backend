@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Quote\EstimateFireRequest;
-use App\Http\Requests\Api\Quote\IssueLifeRequest;
+use App\Http\Requests\Quote\Life\IssueQuoteLifeRequest;
 use App\Services\ZohoCRMService;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
@@ -141,7 +141,7 @@ class FireController extends Controller
      * @throws Throwable
      * @throws ConnectionException
      */
-    public function issueFire(IssueLifeRequest $request)
+    public function issueFire(IssueQuoteLifeRequest $request)
     {
         $fields = ['id', 'Quoted_Items'];
         $quote = $this->crm->getRecords('Quotes', $fields, $request->get('Identificador'))['data'][0];
@@ -165,7 +165,7 @@ class FireController extends Controller
         return response()->json(['Error' => '']);
     }
 
-    public function cancelFire(IssueLifeRequest $request)
+    public function cancelFire(IssueQuoteLifeRequest $request)
     {
         $fields = ['id', 'Quoted_Items'];
         $quote = $this->crm->getRecords('Quotes', $fields, $request->get('Identificador'))['data'][0];

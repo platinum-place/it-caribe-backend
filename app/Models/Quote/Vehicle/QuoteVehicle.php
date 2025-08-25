@@ -2,7 +2,6 @@
 
 namespace App\Models\Quote\Vehicle;
 
-use app\Enums\Quote\QuoteLineStatusEnum;
 use App\Models\Quote\Quote;
 use App\Models\Vehicle\Vehicle;
 use App\Observers\Quote\Vehicle\QuoteVehicleObserver;
@@ -34,17 +33,14 @@ class QuoteVehicle extends Model
         return $this->belongsTo(Vehicle::class, 'vehicle_id');
     }
 
-    public function quoteVehicleLine(): HasMany
+    public function lines(): HasMany
     {
         return $this->hasMany(QuoteVehicleLine::class);
     }
 
-    public function selectedLine(): HasOne
+    public function acceptedLine(): HasOne
     {
-        return $this->hasOne(QuoteVehicleLine::class)
-            ->whereHas('quoteLine', function ($query) {
-                $query->where('quote_line_status_id', QuoteLineStatusEnum::ACCEPTED->value);
-            });
+        return $this->hasOne(QuoteVehicleLine::class)->acceptedLine();
     }
 
     public function createdBy(): BelongsTo

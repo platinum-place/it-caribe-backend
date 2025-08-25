@@ -11,12 +11,14 @@ class InspectController extends Controller
 {
     /**
      * Handle the incoming request.
+     *
+     * @throws \Exception
      */
     public function __invoke(InspectRequest $request)
     {
         $data = $request->all();
 
-        $quoteVehicleLine = QuoteVehicleLine::find($data['cotz_id']);
+        $quoteVehicleLine = QuoteVehicleLine::findOrFail($data['cotz_id']);
 
         $photos = [
             'Foto1' => 'Foto Parte frontal',
@@ -35,7 +37,7 @@ class InspectController extends Controller
             'Foto14' => 'Otra foto',
         ];
 
-        $attachments = $quoteVehicleLine->quoteVehicle->quote->attachments;
+        $attachments = $quoteVehicleLine?->quoteVehicle->quote->attachments;
 
         foreach ($photos as $photo => $title) {
             if (! $request->filled($photo)) {
@@ -54,14 +56,14 @@ class InspectController extends Controller
                 default => throw new \Exception(__('validation.mimetypes', ['values' => '.jpg,.png']))
             };
 
-            $path = 'quotes/quote-vehicles/'.$quoteVehicleLine->id.'/photos/'.now()->timestamp."/$title.$extension";
+            $path = 'quotes/quote-vehicles/'.$quoteVehicleLine?->id.'/photos/'.now()->timestamp."/$title.$extension";
 
             Storage::put($path, $imageData);
 
             $attachments[] = $path;
         }
 
-        $quoteVehicleLine->quoteVehicle->quote->update([
+        $quoteVehicleLine?->quoteVehicle->quote->update([
             'attachments' => $attachments,
         ]);
 
