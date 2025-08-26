@@ -36,14 +36,13 @@ class EstimateQuoteVehicleService
             $shouldSkip = false;
             $error = '';
 
-
             switch ($serviceType) {
                 case 'Clásico':
                     $case1 = $product['Plan'] === 'Empleado';
                     $case2 = $product['Plan'] === 'Clásico';
                     $case3 = $product['Plan'] === null;
 
-                    if (!($case1 && $case2 && $case3)) {
+                    if (($case1 && $case2 && $case3)) {
                         continue 2;
                     }
                     break;
