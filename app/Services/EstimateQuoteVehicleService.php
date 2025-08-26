@@ -36,20 +36,46 @@ class EstimateQuoteVehicleService
             $shouldSkip = false;
             $error = '';
 
+        if($serviceType === 'Clásico') {
+            $case1 = $product['Plan'] === 'Empleado' && $isEmployee;
+            $case2 = $product['Plan'] === 'Clásico';
+            $case3 = $product['Plan'] === null;
 
+            if (!$case1 && !$case2 && !$case3) {
+                continue;
+            }
+        }
 
+            if($serviceType === 'Japonés') {
+                    $case1 = $product['Plan'] === 'Empleado' && $isEmployee;
+                    $case2 = $product['Plan'] === 'Japonés';
+                    $case3 = $product['Plan'] === null;
 
-            if($serviceType === '0 KM') {
-                    //$case1 = $product['Plan'] === 'Empleado' && $isEmployee;
-                    $case2 = $product['Plan'] === '0 KM';
-                    //$case3 = $product['Plan'] === null;
-
-                    if (!$case2 ) {
+                    if (!$case1 && !$case2 && !$case3) {
                         continue;
                     }
             }
 
 
+            if($serviceType === '0 KM') {
+                    $case1 = $product['Plan'] === 'Empleado' && $isEmployee;
+                    $case2 = $product['Plan'] === '0 KM';
+                    $case3 = $product['Plan'] === null;
+
+                    if (!$case1 && !$case2 && !$case3) {
+                        continue;
+                    }
+            }
+
+            if($serviceType === 'Híbrido/Eléctrico') {
+                    $case1 = $product['Plan'] === 'Empleado' && $isEmployee;
+                    $case2 = $product['Plan'] === 'Híbrido/Eléctrico';
+                    $case3 = $product['Plan'] === null;
+
+                    if (!$case1 && !$case2 && !$case3) {
+                        continue;
+                    }
+            }
 
             try {
                 $criteria = 'Aseguradora:equals:' . $product['Vendor_Name']['id'];
