@@ -40,7 +40,7 @@ class EmitQuote extends Component implements HasForms
                 Select::make('line')
                     ->label('Aseguradoras')
                     ->options(function () use ($lines) {
-                        return $lines->where('total', '>', 0)->toArray();
+                        return $lines->where('total', '>', 0)->pluck('name', 'id')->toArray();
                     }),
 
                 Checkbox::make('agreement')
