@@ -165,7 +165,16 @@ class EstimateQuoteVehicleService
             ];
         }
 
-        return $result;
+        if($serviceType === '0 KM') {
+           array_map(function ($item) {
+               if($item['name'] === 'HUMANO SEGUROS'){
+                   unset($item);
+               }
+                return $item;
+            }, $result);
+        }
+
+            return $result;
     }
 
     /**
