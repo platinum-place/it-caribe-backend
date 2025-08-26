@@ -48,28 +48,29 @@ class EstimateQuoteVehicleService
                     break;
 
                 case 'Japonés':
+                    $case1 = $product['Plan'] === 'Empleado' && $isEmployee;
+                    $case2 = $product['Plan'] === 'Japonés';
+                    $case3 = $product['Plan'] === null;
 
+                    if (!$case1 && !$case2 && !$case3) {
+                        continue 2;
+                    }
                     break;
 
                 case '0 KM':
+                    $case1 = $product['Plan'] === 'Empleado' && $isEmployee;
+                    $case2 = $product['Plan'] === '0 KM';
+                    $case3 = $product['Plan'] === null;
 
+                    if (!$case1 && !$case2 && !$case3) {
+                        continue 2;
+                    }
                     break;
 
                 case 'Híbrido/Eléctrico':
 
                     break;
             }
-
-//            if (!empty($product['Plan'])) {
-//                if ($product['Plan'] === 'Empleado' && !$isEmployee) {
-//                    continue;
-//                }
-//
-//                if ($product['Plan'] !== 'Empleado' && $product['Plan'] !== $serviceType) {
-//                    continue;
-//                }
-//            }
-
 
             try {
                 $criteria = 'Aseguradora:equals:' . $product['Vendor_Name']['id'];
