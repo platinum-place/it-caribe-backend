@@ -36,46 +36,45 @@ class EstimateQuoteVehicleService
             $shouldSkip = false;
             $error = '';
 
-            switch ($serviceType) {
-                case 'Clásico':
-                    $case1 = $product['Plan'] === 'Empleado' && $isEmployee;
-                    $case2 = $product['Plan'] === 'Clásico';
-                    $case3 = $product['Plan'] === null;
+        if($serviceType === 'Clásico') {
+            $case1 = $product['Plan'] === 'Empleado' && $isEmployee;
+            $case2 = $product['Plan'] === 'Clásico';
+            $case3 = $product['Plan'] === null;
 
-                    if (!$case1 && !$case2 && !$case3) {
-                        continue 2;
-                    }
-                    break;
+            if (!$case1 && !$case2 && !$case3) {
+                continue;
+            }
+        }
 
-                case 'Japonés':
+            if($serviceType === 'Japonés') {
                     $case1 = $product['Plan'] === 'Empleado' && $isEmployee;
                     $case2 = $product['Plan'] === 'Japonés';
                     $case3 = $product['Plan'] === null;
 
                     if (!$case1 && !$case2 && !$case3) {
-                        continue 2;
+                        continue;
                     }
-                    break;
+            }
 
-                case '0 KM':
+
+            if($serviceType === '0 KM') {
                     $case1 = $product['Plan'] === 'Empleado' && $isEmployee;
                     $case2 = $product['Plan'] === '0 KM';
                     $case3 = $product['Plan'] === null;
 
                     if (!$case1 && !$case2 && !$case3) {
-                        continue 2;
+                        continue;
                     }
-                    break;
+            }
 
-                case 'Híbrido/Eléctrico':
+            if($serviceType === 'Híbrido/Eléctrico') {
                     $case1 = $product['Plan'] === 'Empleado' && $isEmployee;
                     $case2 = $product['Plan'] === 'Híbrido/Eléctrico';
                     $case3 = $product['Plan'] === null;
 
                     if (!$case1 && !$case2 && !$case3) {
-                        continue 2;
+                        continue;
                     }
-                    break;
             }
 
             try {
