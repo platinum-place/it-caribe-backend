@@ -68,7 +68,13 @@ class EstimateQuoteVehicleService
                     break;
 
                 case 'Híbrido/Eléctrico':
+                    $case1 = $product['Plan'] === 'Empleado' && $isEmployee;
+                    $case2 = $product['Plan'] === 'Híbrido/Eléctrico';
+                    $case3 = $product['Plan'] === null;
 
+                    if (!$case1 && !$case2 && !$case3) {
+                        continue 2;
+                    }
                     break;
             }
 
