@@ -36,15 +36,40 @@ class EstimateQuoteVehicleService
             $shouldSkip = false;
             $error = '';
 
-            if (!empty($product['Plan'])) {
-                if ($product['Plan'] === 'Empleado' && !$isEmployee) {
-                    continue;
-                }
 
-                if ($product['Plan'] !== 'Empleado' && $product['Plan'] !== $serviceType) {
-                    continue;
-                }
+            switch ($serviceType) {
+                case 'Clásico':
+                    $case1 = $product['Plan'] === 'Empleado';
+                    $case2 = $product['Plan'] === 'Clásico';
+                    $case3 = $product['Plan'] === null;
+
+                    if (!($case1 && $case2 && $case3)) {
+                        continue 2;
+                    }
+                    break;
+
+                case 'Japonés':
+
+                    break;
+
+                case '0 KM':
+
+                    break;
+
+                case 'Híbrido/Eléctrico':
+
+                    break;
             }
+
+//            if (!empty($product['Plan'])) {
+//                if ($product['Plan'] === 'Empleado' && !$isEmployee) {
+//                    continue;
+//                }
+//
+//                if ($product['Plan'] !== 'Empleado' && $product['Plan'] !== $serviceType) {
+//                    continue;
+//                }
+//            }
 
 
             try {
