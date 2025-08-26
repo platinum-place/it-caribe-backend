@@ -44,7 +44,9 @@ class EstimateQuoteVehicleService
             if (!$case1 && !$case2 && !$case3) {
                 continue;
             }
-        }elseif($serviceType === 'Japonés') {
+        }
+
+            if($serviceType === 'Japonés') {
                     $case1 = $product['Plan'] === 'Empleado' && $isEmployee;
                     $case2 = $product['Plan'] === 'Japonés';
                     $case3 = $product['Plan'] === null;
@@ -52,15 +54,20 @@ class EstimateQuoteVehicleService
                     if (!$case1 && !$case2 && !$case3) {
                         continue;
                     }
-            }elseif($serviceType === '0 KM') {
-                    $case1 = $product['Plan'] === 'Empleado' && $isEmployee;
-                    $case2 = $product['Plan'] === '0 KM';
-                    $case3 = $product['Plan'] === null;
+            }
 
-                    if (!$case1 && !$case2 && !$case3) {
+
+            if($serviceType === '0 KM') {
+                    //$case1 = $product['Plan'] === 'Empleado' && $isEmployee;
+                    $case2 = $product['Plan'] === '0 KM';
+                    //$case3 = $product['Plan'] === null;
+
+                    if (!$case2 ) {
                         continue;
                     }
-            }elseif($serviceType === 'Híbrido/Eléctrico') {
+            }
+
+            if($serviceType === 'Híbrido/Eléctrico') {
                     $case1 = $product['Plan'] === 'Empleado' && $isEmployee;
                     $case2 = $product['Plan'] === 'Híbrido/Eléctrico';
                     $case3 = $product['Plan'] === null;
