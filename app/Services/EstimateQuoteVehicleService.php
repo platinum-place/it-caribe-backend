@@ -66,7 +66,7 @@ class EstimateQuoteVehicleService
                 }
                     $case4 = $product['Plan'] === null;
 
-                    if (!$case1 && !$case2  && (!$case3 && $id !== $product['id']) && !$case4) {
+                    if (!$case1 && !$case2  && !$case3 && !$case4) {
                         continue;
                     }
             }
