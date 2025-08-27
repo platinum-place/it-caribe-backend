@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\forlder\QuoteFireRiskType;
+use App\Enums\Quote\Fire\QuoteFireRiskTypeEnum;
 use App\Services\Zoho\ZohoCRMService;
 use Carbon\Carbon;
 use Exception;
@@ -25,7 +25,7 @@ class EstimateQuoteFireService
 
         $result = [];
 
-        if ($quoteFireRiskTypeId === QuoteFireRiskType::HOUSING->value) {
+        if ($quoteFireRiskTypeId === QuoteFireRiskTypeEnum::HOUSING->value) {
             $quoteFireRiskType = 'Vivienda';
         } else {
             $quoteFireRiskType = 'Comercial';

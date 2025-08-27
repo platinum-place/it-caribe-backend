@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\Quote\EstimateFireRequest;
+use App\Http\Requests\Quote\Fire\EstimateFireRequest;
 use App\Http\Requests\Quote\Life\IssueQuoteLifeRequest;
 use App\Services\ZohoCRMService;
 use Illuminate\Http\Client\ConnectionException;

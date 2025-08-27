@@ -1,8 +1,9 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\Quote\Fire;
 
-use App\Models\folder\QuoteFireRiskType;
+use App\Enums\Quote\Fire\QuoteFireRiskTypeEnum;
+use App\Models\Quote\Fire\QuoteFireRiskType;
 use Illuminate\Database\Seeder;
 
 class QuoteFireRiskTypeSeeder extends Seeder
@@ -14,11 +15,11 @@ class QuoteFireRiskTypeSeeder extends Seeder
     {
         $data = [
             [
-                'id' => \App\forlder\QuoteFireRiskType::HOUSING->value,
+                'id' => QuoteFireRiskTypeEnum::HOUSING->value,
                 'name' => 'Vivienda',
             ],
             [
-                'id' => \App\forlder\QuoteFireRiskType::COMMERCIAL->value,
+                'id' => QuoteFireRiskTypeEnum::COMMERCIAL->value,
                 'name' => 'Riesgo comercial',
             ],
         ];

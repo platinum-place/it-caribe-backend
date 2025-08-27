@@ -30,6 +30,8 @@ class DatabaseSeeder extends Seeder
             Quote\QuoteLineStatusSeeder::class,
             Quote\Life\QuoteLifeCreditTypeSeeder::class,
             Quote\Fire\QuoteFireConstructionTypeSeeder::class,
+            Quote\Fire\QuoteFireCreditTypeSeeder::class,
+            Quote\Fire\QuoteFireRiskTypeSeeder::class,
 
             // CRM
             CRM\LeadTypeSeeder::class,

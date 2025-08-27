@@ -2,7 +2,7 @@
 
 namespace App\Services\Quote\Fire;
 
-use App\forlder\QuoteFireRiskType;
+use App\Enums\Quote\Fire\QuoteFireRiskTypeEnum;
 use App\Services\Quote\Life\EstimateQuoteLifeService;
 use App\Services\Zoho\ZohoService;
 use Carbon\Carbon;
@@ -17,14 +17,28 @@ class EstimateQuoteFireService
         //
     }
 
-    public function handle(float $appraisalValue, int $quoteFireRiskTypeId, string $debtorBirthDate, int $deadline, float $financedValue, ?string $coDebtorBirthDate = null): array
+    public function handle(float $appraisalValue, int $quoteFireRiskTypeId, string|int $debtorBirthDate, int $deadline, float $financedValue, string|int|null $coDebtorBirthDate = null): array
     {
-        $criteria = '((Corredor:equals:'. 3222373000092390001 .') and (Product_Category:equals:Incendio))';
+        if(is_int($debtorBirthDate)){
+            $debtorAge = $debtorBirthDate;
+        }
+        else{
+            $debtorAge = Carbon::parse($debtorBirthDate)->age;
+        }
+
+        if(is_int($coDebtorBirthDate)){
+            $coDebtorAge = $coDebtorBirthDate;
+        }
+        else{
+            $coDebtorAge = Carbon::parse($coDebtorBirthDate)->age;
+        }
+
+            $criteria = '((Corredor:equals:'. 3222373000092390001 .') and (Product_Category:equals:Incendio))';
         $productsResponse = $this->zohoService->searchRecords('Products', $criteria);
 
         $result = [];
 
-        if ($quoteFireRiskTypeId === QuoteFireRiskType::HOUSING->value) {
+        if ($quoteFireRiskTypeId === QuoteFireRiskTypeEnum::HOUSING->value) {
             $quoteFireRiskType = 'Vivienda';
         } else {
             $quoteFireRiskType = 'Comercial';
@@ -44,7 +58,6 @@ class EstimateQuoteFireService
             /**
              * Start estimate life
              */
-            $debtorAge = Carbon::parse($debtorBirthDate)->age;
 
             if ($product['Edad_tasa']) {
                 $debtorAge += $deadline / 12;
@@ -66,7 +79,7 @@ class EstimateQuoteFireService
                     $coDebtorAge += $deadline / 12;
                 }
 
-                $coDebtorRate = $this->estimateQuoteLifeService->getCodebtorRate($product['id'], $coDebtorAge);
+                $coDebtorRate = app(EstimateQuoteLifeService::class)->getCodebtorRate($product['id'], $coDebtorAge);
                 $coDebtorAmount = ($financedValue / 1000) * (($coDebtorRate - $debtorRate) / 100);
             }
 
