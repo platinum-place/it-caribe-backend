@@ -113,11 +113,6 @@ class EstimateQuoteFireService
         return $result;
     }
 
-    /**
-     * @throws RequestException
-     * @throws ConnectionException
-     * @throws Exception
-     */
     protected function getFireRate(string $productId, string $quoteFireRiskType)
     {
         $selectedRate = 0;

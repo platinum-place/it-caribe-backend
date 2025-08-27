@@ -7,7 +7,13 @@ use Carbon\Carbon;
 
 class EstimateQuoteLifeService
 {
-    public function __construct(protected ZohoService $zohoService) {}
+    /**
+     * Create a new class instance.
+     */
+    public function __construct(protected ZohoService $zohoService)
+    {
+        //
+    }
 
     public function handle(string $borrowerBirthDate, int $deadline, float $insuredAmount, ?string $coBorrowerBirthDate = null, ?int $coBorrowerAge = null)
     {

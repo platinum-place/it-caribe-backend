@@ -9,7 +9,13 @@ use Illuminate\Http\Client\RequestException;
 
 class ZohoOauthService
 {
-    public function __construct(protected ZohoApiClient $zohoApiClient) {}
+    /**
+     * Create a new class instance.
+     */
+    public function __construct(protected ZohoApiClient $zohoApiClient)
+    {
+        //
+    }
 
     /**
      * @throws RequestException

@@ -38,7 +38,7 @@ Route::middleware(EnsureClientIsResourceOwner::class)
         //        Route::post('/cotizador/EmitirDesempleo', [\App\Http\Controllers\Api\UnemploymentController::class, 'issueUnemployment']);
         //        Route::post('/cotizador/CancelarDesempleo', [\App\Http\Controllers\Api\UnemploymentController::class, 'cancelUnemployment']);
 
-        //        Route::post('/cotizador/CotizaIncendio', [\App\Http\Controllers\Api\FireController::class, 'estimateFire']);
+        Route::post('/cotizador/CotizaIncendio', \App\Http\Controllers\Quote\Fire\EstimateQuoteFireController::class);
         //        Route::post('/cotizador/EmitirIncendio', [\App\Http\Controllers\Api\FireController::class, 'issueFire']);
         //        Route::post('/cotizador/CancelarIncendio', [\App\Http\Controllers\Api\FireController::class, 'cancelFire']);
 

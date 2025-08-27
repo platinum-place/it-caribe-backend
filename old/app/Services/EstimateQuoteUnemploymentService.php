@@ -23,7 +23,7 @@ class EstimateQuoteUnemploymentService
     {
         $quoteUnemploymentType = QuoteUnemploymentDebtorType::findOrFail($quoteUnemploymentTypeId)->name;
 
-        $criteria = '((Corredor:equals:' . 3222373000092390001 . ') and (Product_Category:equals:Desempleo))';
+        $criteria = '((Corredor:equals:'. 3222373000092390001 .') and (Product_Category:equals:Desempleo))';
         $productsResponse = $this->zohoApi->searchRecords('Products', $criteria);
 
         $result = [];
@@ -46,7 +46,7 @@ class EstimateQuoteUnemploymentService
                     $taxesAmount = $amount - $amountTaxed;
                 }
             } else {
-                $amount = $loanInstallment  *  6 *  $deadline / 1000 *  $rate;
+                $amount = $loanInstallment * 6 * $deadline / 1000 * $rate;
 
                 $amountTaxed = $amount / 1.16;
                 $taxesAmount = $amount - $amountTaxed;
@@ -82,7 +82,7 @@ class EstimateQuoteUnemploymentService
     {
         try {
             $debtorAge = Carbon::parse($debtorBirthDate)->age;
-        }catch (\Throwable $exception){
+        } catch (\Throwable $exception) {
             $debtorAge = $debtorBirthDate;
         }
 
