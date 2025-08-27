@@ -19,21 +19,20 @@ class EstimateQuoteFireService
 
     public function handle(float $appraisalValue, int $quoteFireRiskTypeId, string|int $debtorBirthDate, int $deadline, float $financedValue, string|int|null $coDebtorBirthDate = null): array
     {
-        if(is_int($debtorBirthDate)){
+        try {
+            $debtorAge = Carbon::parse($debtorBirthDate)->age;
+        } catch (\Exception $e) {
             $debtorAge = $debtorBirthDate;
         }
-        else{
-            $debtorAge = Carbon::parse($debtorBirthDate)->age;
-        }
 
-        if(is_int($coDebtorBirthDate)){
-            $coDebtorAge = $coDebtorBirthDate;
+        if (!empty($coDebtorBirthDate)) {
+            try {
+                $coDebtorAge = Carbon::parse($coDebtorBirthDate)->age;
+            } catch (\Exception $e) {
+                $coDebtorAge = $coDebtorBirthDate;
+            }
         }
-        else{
-            $coDebtorAge = Carbon::parse($coDebtorBirthDate)->age;
-        }
-
-            $criteria = '((Corredor:equals:'. 3222373000092390001 .') and (Product_Category:equals:Incendio))';
+        $criteria = '((Corredor:equals:' . 3222373000092390001 . ') and (Product_Category:equals:Incendio))';
         $productsResponse = $this->zohoService->searchRecords('Products', $criteria);
 
         $result = [];
@@ -72,7 +71,7 @@ class EstimateQuoteFireService
             $debtorRate = app(EstimateQuoteLifeService::class)->getBorrowerRate($product['id'], $debtorAge);
             $debtorAmount = ($financedValue / 1000) * ($debtorRate / 100);
 
-            if (! empty($coDebtorBirthDate)) {
+            if (!empty($coDebtorBirthDate)) {
                 $coDebtorAge = Carbon::parse($coDebtorBirthDate)->age;
 
                 if ($product['Edad_tasa']) {

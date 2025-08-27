@@ -35,7 +35,7 @@ class EstimateQuoteFireController extends Controller
             30,
             $data['Plazo'],
             $data['ValorFinanciado'],
-            $data['EdadCodeudor'],
+            $data['EdadCodeudor'] ?? null,
         );
 
         dd($lines);
