@@ -138,6 +138,8 @@ class EstimateQuoteVehicleService
                 if(!$error){
                     $error = 'No existe tasa para el vehículo';
                 }
+
+                continue;
             }
 
 
