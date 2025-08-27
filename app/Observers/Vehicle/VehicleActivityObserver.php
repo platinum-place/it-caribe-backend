@@ -3,7 +3,7 @@
 namespace App\Observers\Vehicle;
 
 use App\Models\Vehicle\VehicleActivity;
-use App\Observers\BaseObserver;
+use App\Observers\Common\BaseObserver;
 
 class VehicleActivityObserver extends BaseObserver
 {

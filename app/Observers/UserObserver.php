@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\User;
+use App\Observers\Common\BaseObserver;
 
 class UserObserver extends BaseObserver
 {

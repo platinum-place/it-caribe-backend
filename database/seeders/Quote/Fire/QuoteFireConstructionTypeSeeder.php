@@ -1,8 +1,9 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\Quote\Fire;
 
-use App\Models\folder\QuoteFireConstructionType;
+use App\Enums\Quote\Fire\QuoteFireConstructionTypeEnum;
+use App\Models\Quote\Fire\QuoteFireConstructionType;
 use Illuminate\Database\Seeder;
 
 class QuoteFireConstructionTypeSeeder extends Seeder
@@ -14,6 +15,7 @@ class QuoteFireConstructionTypeSeeder extends Seeder
     {
         $data = [
             [
+                'id' => QuoteFireConstructionTypeEnum::SUPERIOR->value,
                 'name' => 'Superior',
             ],
         ];

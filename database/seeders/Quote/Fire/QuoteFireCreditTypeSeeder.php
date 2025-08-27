@@ -1,8 +1,8 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\Quote\Fire;
 
-use App\Models\folder\QuoteFireCreditType;
+use App\Models\Quote\Fire\QuoteFireCreditType;
 use Illuminate\Database\Seeder;
 
 class QuoteFireCreditTypeSeeder extends Seeder

@@ -3,7 +3,7 @@
 namespace App\Observers\Vehicle;
 
 use App\Models\Vehicle\VehicleRoute;
-use App\Observers\BaseObserver;
+use App\Observers\Common\BaseObserver;
 
 class VehicleRouteObserver extends BaseObserver
 {

@@ -3,7 +3,7 @@
 namespace App\Observers\Zoho;
 
 use App\Models\Zoho\ZohoOauthAccessToken;
-use App\Observers\BaseObserver;
+use App\Observers\Common\BaseObserver;
 
 class ZohoOauthAccessTokenObserver extends BaseObserver
 {

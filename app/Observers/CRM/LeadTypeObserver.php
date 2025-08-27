@@ -3,7 +3,7 @@
 namespace App\Observers\CRM;
 
 use App\Models\CRM\LeadType;
-use App\Observers\BaseObserver;
+use App\Observers\Common\BaseObserver;
 
 class LeadTypeObserver extends BaseObserver
 {

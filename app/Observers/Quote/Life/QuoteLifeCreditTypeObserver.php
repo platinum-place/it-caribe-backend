@@ -3,7 +3,7 @@
 namespace App\Observers\Quote\Life;
 
 use App\Models\Quote\Life\QuoteLifeCreditType;
-use App\Observers\BaseObserver;
+use App\Observers\Common\BaseObserver;
 
 class QuoteLifeCreditTypeObserver extends BaseObserver
 {

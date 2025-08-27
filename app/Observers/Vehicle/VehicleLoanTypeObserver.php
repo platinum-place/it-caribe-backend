@@ -3,7 +3,7 @@
 namespace App\Observers\Vehicle;
 
 use App\Models\Vehicle\VehicleLoanType;
-use App\Observers\BaseObserver;
+use App\Observers\Common\BaseObserver;
 
 class VehicleLoanTypeObserver extends BaseObserver
 {

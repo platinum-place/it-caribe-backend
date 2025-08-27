@@ -3,7 +3,7 @@
 namespace App\Observers\Quote\Life;
 
 use App\Models\Quote\Life\QuoteLife;
-use App\Observers\BaseObserver;
+use App\Observers\Common\BaseObserver;
 
 class QuoteLifeObserver extends BaseObserver
 {

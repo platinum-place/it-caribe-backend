@@ -3,7 +3,7 @@
 namespace App\Observers\CRM;
 
 use App\Models\CRM\Lead;
-use App\Observers\BaseObserver;
+use App\Observers\Common\BaseObserver;
 use Carbon\Carbon;
 
 class LeadObserver extends BaseObserver

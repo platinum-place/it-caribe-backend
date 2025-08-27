@@ -3,7 +3,7 @@
 namespace App\Observers\Quote\Vehicle;
 
 use App\Models\Quote\Vehicle\QuoteVehicle;
-use App\Observers\BaseObserver;
+use App\Observers\Common\BaseObserver;
 
 class QuoteVehicleObserver extends BaseObserver
 {

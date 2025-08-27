@@ -3,7 +3,7 @@
 namespace App\Observers\Location;
 
 use App\Models\Location\Branch;
-use App\Observers\BaseObserver;
+use App\Observers\Common\BaseObserver;
 
 class BranchObserver extends BaseObserver
 {
