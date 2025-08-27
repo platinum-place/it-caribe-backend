@@ -3,21 +3,20 @@
 namespace App\Models\Quote\Fire;
 
 use App\Observers\Quote\Fire\QuoteFireLineObserver;
-use App\Observers\Quote\Fire\QuoteFireObserver;
+use App\Observers\Quote\Fire\QuoteFireRiskTypeObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-#[ObservedBy([QuoteFireObserver::class])]
-class QuoteFire extends Model
+#[ObservedBy([QuoteFireLineObserver::class])]
+class QuoteFireLine extends Model
 {
     use SoftDeletes;
 
     protected $fillable = [
-        'quote_id', 'quote_fire_credit_type_id', 'quote_fire_risk_type_id',
-        'quote_fire_construction_type_id', 'co_borrower_id', 'guarantor',
-        'deadline_month','deadline_year', 'appraisal_value', 'financed_value', 'property_address',
+        'quote_fire_id', 'quote_line_id', 'borrower_amount', 'fire_rate',
+        'co_borrower_amount', 'borrower_rate', 'co_borrower_rate', 'fire_amount', 'life_amount',
         'created_by', 'updated_by', 'deleted_by',
     ];
 
@@ -36,3 +35,4 @@ class QuoteFire extends Model
         return $this->belongsTo(\App\Models\User::class, 'deleted_by');
     }
 }
+
