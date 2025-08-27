@@ -36,45 +36,45 @@ class EstimateQuoteVehicleService
             $shouldSkip = false;
             $error = '';
 
-        if($serviceType === 'Clásico') {
-            $case1 = $product['Plan'] === 'Empleado' && $isEmployee;
-            $case2 = $product['Plan'] === 'Clásico';
-            $case3 = $product['Plan'] === null;
+            if ($serviceType === 'Clásico') {
+                $case1 = $product['Plan'] === 'Empleado' && $isEmployee;
+                $case2 = $product['Plan'] === 'Clásico';
+                $case3 = $product['Plan'] === null;
 
-            if (!$case1 && !$case2 && !$case3) {
-                continue;
-            }
-        }
-
-            if($serviceType === 'Japonés') {
-                    $case1 = $product['Plan'] === 'Empleado' && $isEmployee;
-                    $case2 = $product['Plan'] === 'Japonés';
-                    $case3 = $product['Plan'] === null;
-
-                    if (!$case1 && !$case2 && !$case3) {
-                        continue;
-                    }
+                if (!$case1 && !$case2 && !$case3) {
+                    continue;
+                }
             }
 
+            if ($serviceType === 'Japonés') {
+                $case1 = $product['Plan'] === 'Empleado' && $isEmployee;
+                $case2 = $product['Plan'] === 'Japonés';
+                $case3 = $product['Plan'] === null;
 
-            if($serviceType === '0 KM') {
-                    $case1 = $product['Plan'] === 'Empleado' && $isEmployee;
+                if (!$case1 && !$case2 && !$case3) {
+                    continue;
+                }
+            }
+
+
+            if ($serviceType === '0 KM') {
+                $case1 = $product['Plan'] === 'Empleado' && $isEmployee;
                 $case2 = $product['Plan'] === '0 KM';
                 $case3 = $product['Plan'] === 'Clásico';
-                    $case4 = $product['Plan'] === null;
+                $case4 = $product['Plan'] === null;
 
-                    if (!$case1 && !$case2  && !$case3 && !$case4) {
-                        continue;
-                    }
+                if (!$case1 && !$case2 && !$case3 && !$case4) {
+                    continue;
+                }
             }
 
-            if($serviceType === 'Híbrido/Eléctrico') {
-                    $case1 = $product['Plan'] === 'Empleado' && $isEmployee;
-                    $case2 = $product['Plan'] === 'Híbrido/Eléctrico';
+            if ($serviceType === 'Híbrido/Eléctrico') {
+                $case1 = $product['Plan'] === 'Empleado' && $isEmployee;
+                $case2 = $product['Plan'] === 'Híbrido/Eléctrico';
 
-                    if (!$case1 && !$case2) {
-                        continue;
-                    }
+                if (!$case1 && !$case2) {
+                    continue;
+                }
             }
 
             try {
@@ -117,7 +117,7 @@ class EstimateQuoteVehicleService
             if ($rate > 0) {
                 $amount = $vehicleAmount * ($rate / 100);
 
-                if($serviceType === 'Japonés' && !empty($product['Recargo'])){
+                if ($serviceType === 'Japonés' && !empty($product['Recargo'])) {
                     $amount *= 1.30;
                 }
 
@@ -134,7 +134,7 @@ class EstimateQuoteVehicleService
                     $totalMonthly += $product['Leasing_mensual'];
                     $amount = $totalMonthly * 12;
                 }
-            }else{
+            } else {
                 $error = 'No existe tasa para el vehículo';
             }
 
@@ -164,13 +164,13 @@ class EstimateQuoteVehicleService
             ];
         }
 
-        if($serviceType === '0 KM') {
-            $result = array_filter($result, function($item) {
+        if ($serviceType === '0 KM') {
+            $result = array_filter($result, function ($item) {
                 return $item['name'] !== 'HUMANO SEGUROS';
             });
         }
 
-            return $result;
+        return $result;
     }
 
     /**
