@@ -17,7 +17,6 @@ class QuoteLineStatusSeeder extends Seeder
             QuoteLineStatus::create([
                 'id' => $enum->value,
                 'name' => $enum->name,
-                'created_by' => 1,
             ]);
         }
     }

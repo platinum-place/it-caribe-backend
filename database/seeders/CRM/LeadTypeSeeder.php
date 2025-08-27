@@ -2,6 +2,7 @@
 
 namespace Database\Seeders\CRM;
 
+use App\Enums\CRM\LeadTypeEnum;
 use App\Models\CRM\LeadType;
 use Illuminate\Database\Seeder;
 
@@ -14,16 +15,16 @@ class LeadTypeSeeder extends Seeder
     {
         $data = [
             [
+                'id' => LeadTypeEnum::PUBLIC->value,
                 'name' => 'Publico',
-                'created_by' => 1,
             ],
             [
+                'id' => LeadTypeEnum::PRIVATE->value,
                 'name' => 'Privado',
-                'created_by' => 1,
             ],
             [
+                'id' => LeadTypeEnum::SELF_EMPLOYED->value,
                 'name' => 'Independiente',
-                'created_by' => 1,
             ],
         ];
 

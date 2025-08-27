@@ -16,7 +16,6 @@ class QuoteStatusSeeder extends Seeder
             QuoteStatus::create([
                 'id' => $enum->value,
                 'name' => $enum->name,
-                'created_by' => 1,
             ]);
         }
     }

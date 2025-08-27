@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Quote\Life;
 
+use App\Enums\CRM\LeadTypeEnum;
 use App\Enums\Quote\Life\QuoteLifeCreditTypeEnum;
 use App\Enums\Quote\QuoteLineStatusEnum;
 use App\Enums\Quote\QuoteStatusEnum;
@@ -42,18 +43,8 @@ class EstimateQuoteLifeController extends Controller
                 'identity_number' => $data['IdenCliente'],
                 'birth_date' => $data['FechaNacimiento'],
                 'home_phone' => $data['Telefono1'],
-                'lead_type_id' => 1,
+                'lead_type_id' => LeadTypeEnum::PUBLIC->value,
             ]);
-
-            //            if(isset($data['codeudor']) && $data['codeudor']){
-            //                $coBorrower = Lead::create([
-            //                    'full_name' => $data['NombreCliente'],
-            //                    'identity_number' => $data['IdenCliente'],
-            //                    'birth_date' => $data['FechaNacimiento'],
-            //                    'home_phone' => $data['Telefono1'],
-            //                    'lead_type_id' => 1,
-            //                ]);
-            //            }
 
             $quote = Quote::create([
                 'quote_status_id' => QuoteStatusEnum::PENDING->value,
@@ -64,7 +55,6 @@ class EstimateQuoteLifeController extends Controller
 
             $quoteLife = QuoteLife::create([
                 'quote_id' => $quote->id,
-                //                'co_borrower_id' => $coBorrower?->id ?? null,
                 'quote_life_credit_type_id' => QuoteLifeCreditTypeEnum::PERSONAL_LOAN->value,
                 'deadline_month' => $data['PlazoAnios'] * 12,
                 'deadline_year' => $data['PlazoAnios'],

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Quote\Fire;
 
+use App\Enums\CRM\LeadTypeEnum;
+use App\Enums\Quote\Fire\QuoteFireConstructionTypeEnum;
+use App\Enums\Quote\Fire\QuoteFireCreditTypeEnum;
 use App\Enums\Quote\Fire\QuoteFireRiskTypeEnum;
 use App\Enums\Quote\Life\QuoteLifeCreditTypeEnum;
 use App\Enums\Quote\QuoteLineStatusEnum;
@@ -10,6 +13,7 @@ use App\Enums\Quote\QuoteTypeEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Quote\Fire\EstimateFireRequest;
 use App\Models\CRM\Lead;
+use App\Models\Quote\Fire\QuoteFire;
 use App\Models\Quote\Life\QuoteLife;
 use App\Models\Quote\Life\QuoteLifeLine;
 use App\Models\Quote\Quote;
@@ -20,7 +24,9 @@ use Illuminate\Http\Request;
 
 class EstimateQuoteFireController extends Controller
 {
-    public function __construct(protected EstimateQuoteFireService $service) {}
+    public function __construct(protected EstimateQuoteFireService $service)
+    {
+    }
 
     /**
      * Handle the incoming request.
@@ -38,41 +44,31 @@ class EstimateQuoteFireController extends Controller
             $data['EdadCodeudor'] ?? null,
         );
 
-        dd($lines);
-
         $response = \DB::transaction(static function () use ($data, $lines) {
             $lead = Lead::create([
-                'full_name' => $data['NombreCliente'],
-                'identity_number' => $data['IdenCliente'],
-                'birth_date' => $data['FechaNacimiento'],
-                'home_phone' => $data['Telefono1'],
-                'lead_type_id' => 1,
+                'full_name' => $data['Cliente'],
+                'identity_number' => $data['IdentCliente'],
+                'home_phone' => $data['Telefono'],
+                'lead_type_id' => LeadTypeEnum::PUBLIC->value,
             ]);
-
-            //            if(isset($data['codeudor']) && $data['codeudor']){
-            //                $coBorrower = Lead::create([
-            //                    'full_name' => $data['NombreCliente'],
-            //                    'identity_number' => $data['IdenCliente'],
-            //                    'birth_date' => $data['FechaNacimiento'],
-            //                    'home_phone' => $data['Telefono1'],
-            //                    'lead_type_id' => 1,
-            //                ]);
-            //            }
 
             $quote = Quote::create([
                 'quote_status_id' => QuoteStatusEnum::PENDING->value,
-                'quote_type_id' => QuoteTypeEnum::LIFE->value,
+                'quote_type_id' => QuoteTypeEnum::FIRE->value,
                 'lead_id' => $lead->id,
-                'start_date' => now(),
+                'start_date' => date('Y-m-d', strtotime($data['FechaEmision'])),
+                'end_date' => date('Y-m-d', strtotime($data['FechaVencimiento'])),
             ]);
 
-            $quoteLife = QuoteLife::create([
+            $quoteLife = QuoteFire::create([
                 'quote_id' => $quote->id,
-                //                'co_borrower_id' => $coBorrower?->id ?? null,
-                'quote_life_credit_type_id' => QuoteLifeCreditTypeEnum::PERSONAL_LOAN->value,
-                'deadline_month' => $data['PlazoAnios'] * 12,
-                'deadline_year' => $data['PlazoAnios'],
-                'insured_amount' => $data['MontoOriginal'],
+                'quote_fire_credit_type_id' => QuoteFireCreditTypeEnum::MORTGAGE->value,
+                'quote_fire_risk_type_id' => QuoteFireRiskTypeEnum::HOUSING->value,
+                'quote_fire_construction_type_id' => QuoteFireConstructionTypeEnum::SUPERIOR->value,
+                'deadline_month' => $data['Plazo'] / 12,
+                'deadline_year' => $data['Plazo'],
+                'appraisal_value' => $data['ValorFinanciado'],
+                'financed_value' => $data['MontoOriginal'],
             ]);
 
             $response = [];
@@ -107,12 +103,12 @@ class EstimateQuoteFireController extends Controller
                     'identificador' => $quoteLifeLine->id,
                     'Aseguradora' => $line['vendor_name'],
                     'MontoOrig' => number_format($data['MontoOriginal'], 1, '.', ''),
-                    'Anios' => (int) $data['PlazoAnios'],
-                    'EdadTerminar' => (int) $data['Edad'] + $data['PlazoAnios'],
+                    'Anios' => (int)$data['PlazoAnios'],
+                    'EdadTerminar' => (int)$data['Edad'] + $data['PlazoAnios'],
                     'Cliente' => $data['NombreCliente'],
                     'Fecha' => date('Y-m-d\TH:i:sP'),
                     'Direccion' => $data['Direccion'],
-                    'Edad' => (int) $data['Edad'],
+                    'Edad' => (int)$data['Edad'],
                     'IdenCliente' => $data['IdenCliente'],
                     'Codeudor' => $data['codeudor'] ?? false,
                     'Error' => $line['error'],
