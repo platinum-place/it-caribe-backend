@@ -1,20 +1,21 @@
 <?php
 
-namespace App\Models\Quote\Fire;
+namespace App\Models\Quote\Unemployment;
 
-use App\Observers\Quote\Fire\QuoteFireConstructionTypeObserver;
+use App\Observers\Quote\Unemployment\QuoteUnemploymentLineObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-#[ObservedBy([QuoteFireConstructionTypeObserver::class])]
-class QuoteFireConstructionType extends Model
+#[ObservedBy([QuoteUnemploymentLineObserver::class])]
+class QuoteUnemploymentLine extends Model
 {
     use SoftDeletes;
 
     protected $fillable = [
-        'id', 'name', 'created_by', 'updated_by', 'deleted_by',
+        'id', 'name',
+        'created_by', 'updated_by', 'deleted_by',
     ];
 
     public function createdBy(): BelongsTo

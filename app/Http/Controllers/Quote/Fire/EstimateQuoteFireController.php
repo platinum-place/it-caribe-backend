@@ -6,7 +6,6 @@ use App\Enums\CRM\LeadTypeEnum;
 use App\Enums\Quote\Fire\QuoteFireConstructionTypeEnum;
 use App\Enums\Quote\Fire\QuoteFireCreditTypeEnum;
 use App\Enums\Quote\Fire\QuoteFireRiskTypeEnum;
-use App\Enums\Quote\Life\QuoteLifeCreditTypeEnum;
 use App\Enums\Quote\QuoteLineStatusEnum;
 use App\Enums\Quote\QuoteStatusEnum;
 use App\Enums\Quote\QuoteTypeEnum;
@@ -14,19 +13,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Quote\Fire\EstimateFireRequest;
 use App\Models\CRM\Lead;
 use App\Models\Quote\Fire\QuoteFire;
-use App\Models\Quote\Life\QuoteLife;
 use App\Models\Quote\Life\QuoteLifeLine;
 use App\Models\Quote\Quote;
 use App\Models\Quote\QuoteLine;
 use App\Services\Quote\Fire\EstimateQuoteFireService;
-use App\Services\Quote\Life\EstimateQuoteLifeService;
 use Illuminate\Http\Request;
 
 class EstimateQuoteFireController extends Controller
 {
-    public function __construct(protected EstimateQuoteFireService $service)
-    {
-    }
+    public function __construct(protected EstimateQuoteFireService $service) {}
 
     /**
      * Handle the incoming request.
@@ -103,12 +98,12 @@ class EstimateQuoteFireController extends Controller
                     'identificador' => $quoteLifeLine->id,
                     'Aseguradora' => $line['vendor_name'],
                     'MontoOrig' => number_format($data['MontoOriginal'], 1, '.', ''),
-                    'Anios' => (int)$data['PlazoAnios'],
-                    'EdadTerminar' => (int)$data['Edad'] + $data['PlazoAnios'],
+                    'Anios' => (int) $data['PlazoAnios'],
+                    'EdadTerminar' => (int) $data['Edad'] + $data['PlazoAnios'],
                     'Cliente' => $data['NombreCliente'],
                     'Fecha' => date('Y-m-d\TH:i:sP'),
                     'Direccion' => $data['Direccion'],
-                    'Edad' => (int)$data['Edad'],
+                    'Edad' => (int) $data['Edad'],
                     'IdenCliente' => $data['IdenCliente'],
                     'Codeudor' => $data['codeudor'] ?? false,
                     'Error' => $line['error'],

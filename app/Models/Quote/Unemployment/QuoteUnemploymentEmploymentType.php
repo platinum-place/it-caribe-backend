@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Models\Quote\Fire;
+namespace App\Models\Quote\Unemployment;
 
-use App\Observers\Quote\Fire\QuoteFireConstructionTypeObserver;
+use App\Observers\Quote\Unemployment\QuoteUnemploymentEmploymentTypeObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-#[ObservedBy([QuoteFireConstructionTypeObserver::class])]
-class QuoteFireConstructionType extends Model
+#[ObservedBy([QuoteUnemploymentEmploymentTypeObserver::class])]
+class QuoteUnemploymentEmploymentType extends Model
 {
     use SoftDeletes;
 

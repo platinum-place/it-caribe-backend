@@ -25,14 +25,14 @@ class EstimateQuoteFireService
             $borrowerAge = $borrowerBirthDate;
         }
 
-        if (!empty($coBorrowerBirthDate)) {
+        if (! empty($coBorrowerBirthDate)) {
             try {
                 $coBorrowerAge = Carbon::parse($coBorrowerBirthDate)->age;
             } catch (\Exception $e) {
                 $coBorrowerAge = $coBorrowerBirthDate;
             }
         }
-        $criteria = '((Corredor:equals:' . 3222373000092390001 . ') and (Product_Category:equals:Incendio))';
+        $criteria = '((Corredor:equals:'. 3222373000092390001 .') and (Product_Category:equals:Incendio))';
         $productsResponse = $this->zohoService->searchRecords('Products', $criteria);
 
         $result = [];
@@ -57,7 +57,6 @@ class EstimateQuoteFireService
             /**
              * Start estimate life
              */
-
             if ($product['Edad_tasa']) {
                 $borrowerAge += $deadline / 12;
             }
@@ -71,7 +70,7 @@ class EstimateQuoteFireService
             $borrowerRate = app(EstimateQuoteLifeService::class)->getBorrowerRate($product['id'], $borrowerAge);
             $borrowerAmount = ($financedValue / 1000) * ($borrowerRate / 100);
 
-            if (!empty($coBorrowerBirthDate)) {
+            if (! empty($coBorrowerBirthDate)) {
                 if ($product['Edad_tasa']) {
                     $coBorrowerAge += $deadline / 12;
                 }

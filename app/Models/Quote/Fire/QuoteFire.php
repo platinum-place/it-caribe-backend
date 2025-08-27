@@ -2,7 +2,6 @@
 
 namespace App\Models\Quote\Fire;
 
-use App\Observers\Quote\Fire\QuoteFireLineObserver;
 use App\Observers\Quote\Fire\QuoteFireObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
@@ -17,7 +16,7 @@ class QuoteFire extends Model
     protected $fillable = [
         'quote_id', 'quote_fire_credit_type_id', 'quote_fire_risk_type_id',
         'quote_fire_construction_type_id', 'co_borrower_id', 'guarantor',
-        'deadline_month','deadline_year', 'appraisal_value', 'financed_value', 'property_address',
+        'deadline_month', 'deadline_year', 'appraisal_value', 'financed_value', 'property_address',
         'created_by', 'updated_by', 'deleted_by',
     ];
 

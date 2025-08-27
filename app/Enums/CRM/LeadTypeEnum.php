@@ -2,7 +2,7 @@
 
 namespace App\Enums\CRM;
 
-enum LeadTypeEnum:int
+enum LeadTypeEnum: int
 {
     case PUBLIC = 1;
 

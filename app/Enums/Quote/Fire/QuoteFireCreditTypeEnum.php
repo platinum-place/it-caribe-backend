@@ -2,7 +2,7 @@
 
 namespace App\Enums\Quote\Fire;
 
-enum QuoteFireCreditTypeEnum:int
+enum QuoteFireCreditTypeEnum: int
 {
     case MORTGAGE = 1;
 

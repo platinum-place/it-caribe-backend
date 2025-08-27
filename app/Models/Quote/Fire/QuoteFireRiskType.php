@@ -2,7 +2,6 @@
 
 namespace App\Models\Quote\Fire;
 
-use App\Observers\Quote\Fire\QuoteFireConstructionTypeObserver;
 use App\Observers\Quote\Fire\QuoteFireRiskTypeObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;

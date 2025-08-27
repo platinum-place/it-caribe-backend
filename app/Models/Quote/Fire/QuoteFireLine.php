@@ -3,7 +3,6 @@
 namespace App\Models\Quote\Fire;
 
 use App\Observers\Quote\Fire\QuoteFireLineObserver;
-use App\Observers\Quote\Fire\QuoteFireRiskTypeObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -35,4 +34,3 @@ class QuoteFireLine extends Model
         return $this->belongsTo(\App\Models\User::class, 'deleted_by');
     }
 }
-
