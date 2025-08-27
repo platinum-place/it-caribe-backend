@@ -135,7 +135,9 @@ class EstimateQuoteVehicleService
                     $amount = $totalMonthly * 12;
                 }
             } else {
-                $error = 'No existe tasa para el vehículo';
+                if(!$error){
+                    $error = 'No existe tasa para el vehículo';
+                }
             }
 
 
