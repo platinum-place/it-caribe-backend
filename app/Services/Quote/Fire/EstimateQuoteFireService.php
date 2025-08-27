@@ -72,8 +72,6 @@ class EstimateQuoteFireService
             $debtorAmount = ($financedValue / 1000) * ($debtorRate / 100);
 
             if (!empty($coDebtorBirthDate)) {
-                $coDebtorAge = Carbon::parse($coDebtorBirthDate)->age;
-
                 if ($product['Edad_tasa']) {
                     $coDebtorAge += $deadline / 12;
                 }
