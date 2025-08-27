@@ -17,19 +17,19 @@ class EstimateQuoteFireService
         //
     }
 
-    public function handle(float $appraisalValue, int $quoteFireRiskTypeId, string|int $debtorBirthDate, int $deadline, float $financedValue, string|int|null $coDebtorBirthDate = null): array
+    public function handle(float $appraisalValue, int $quoteFireRiskTypeId, string|int $borrowerBirthDate, int $deadline, float $financedValue, string|int|null $coBorrowerBirthDate = null): array
     {
         try {
-            $debtorAge = Carbon::parse($debtorBirthDate)->age;
+            $borrowerAge = Carbon::parse($borrowerBirthDate)->age;
         } catch (\Exception $e) {
-            $debtorAge = $debtorBirthDate;
+            $borrowerAge = $borrowerBirthDate;
         }
 
-        if (!empty($coDebtorBirthDate)) {
+        if (!empty($coBorrowerBirthDate)) {
             try {
-                $coDebtorAge = Carbon::parse($coDebtorBirthDate)->age;
+                $coBorrowerAge = Carbon::parse($coBorrowerBirthDate)->age;
             } catch (\Exception $e) {
-                $coDebtorAge = $coDebtorBirthDate;
+                $coBorrowerAge = $coBorrowerBirthDate;
             }
         }
         $criteria = '((Corredor:equals:' . 3222373000092390001 . ') and (Product_Category:equals:Incendio))';
@@ -59,28 +59,28 @@ class EstimateQuoteFireService
              */
 
             if ($product['Edad_tasa']) {
-                $debtorAge += $deadline / 12;
+                $borrowerAge += $deadline / 12;
             }
 
-            $debtorRate = 0;
-            $coDebtorRate = 0;
+            $borrowerRate = 0;
+            $coBorrowerRate = 0;
 
-            $debtorAmount = 0;
-            $coDebtorAmount = 0;
+            $borrowerAmount = 0;
+            $coBorrowerAmount = 0;
 
-            $debtorRate = app(EstimateQuoteLifeService::class)->getBorrowerRate($product['id'], $debtorAge);
-            $debtorAmount = ($financedValue / 1000) * ($debtorRate / 100);
+            $borrowerRate = app(EstimateQuoteLifeService::class)->getBorrowerRate($product['id'], $borrowerAge);
+            $borrowerAmount = ($financedValue / 1000) * ($borrowerRate / 100);
 
-            if (!empty($coDebtorBirthDate)) {
+            if (!empty($coBorrowerBirthDate)) {
                 if ($product['Edad_tasa']) {
-                    $coDebtorAge += $deadline / 12;
+                    $coBorrowerAge += $deadline / 12;
                 }
 
-                $coDebtorRate = app(EstimateQuoteLifeService::class)->getCodebtorRate($product['id'], $coDebtorAge);
-                $coDebtorAmount = ($financedValue / 1000) * (($coDebtorRate - $debtorRate) / 100);
+                $coBorrowerRate = app(EstimateQuoteLifeService::class)->getCoBorrowerRate($product['id'], $coBorrowerAge);
+                $coBorrowerAmount = ($financedValue / 1000) * (($coBorrowerRate - $borrowerRate) / 100);
             }
 
-            $lifeAmount = $debtorAmount + $coDebtorAmount;
+            $lifeAmount = $borrowerAmount + $coBorrowerAmount;
             /**
              * End estimate life
              */
@@ -91,10 +91,12 @@ class EstimateQuoteFireService
             $amount = round($amount, 2);
             $amountTaxed = round($amountTaxed, 2);
             $taxesAmount = round($taxesAmount, 2);
-            $debtorAmount = round($debtorAmount, 2);
-            $coDebtorAmount = round($coDebtorAmount, 2);
+            $borrowerAmount = round($borrowerAmount, 2);
+            $coBorrowerAmount = round($coBorrowerAmount, 2);
             $lifeAmount = round($lifeAmount, 2);
             $fireAmount = round($fireAmount, 2);
+
+            $vendorCRM = $this->zohoService->getRecords('Vendors', ['Nombre'], $product['Vendor_Name']['id'])['data'][0];
 
             $result[] = [
                 'name' => $product['Vendor_Name']['name'],
@@ -105,17 +107,18 @@ class EstimateQuoteFireService
                 'tax_rate' => 16,
                 'tax_amount' => $taxesAmount,
                 'total' => $amount,
-                'id_crm' => $product['id'],
-                'debtor_amount' => $debtorAmount,
-                'co_debtor_amount' => $coDebtorAmount,
-                'debtor_rate' => $debtorRate,
-                'co_debtor_rate' => $coDebtorRate,
+                'description' => $product['id'],
+                'borrower_amount' => $borrowerAmount,
+                'co_borrower_amount' => $coBorrowerAmount,
+                'borrower_rate' => $borrowerRate,
+                'co_borrower_rate' => $coBorrowerRate,
                 'financed_value' => $financedValue,
                 'fire_rate' => $fireRate,
                 'fire_amount' => $fireAmount,
                 'life_amount' => $lifeAmount,
                 'appraisal_value' => $appraisalValue,
                 'error' => null,
+                'vendor_name' => $vendorCRM['Nombre'],
             ];
         }
 

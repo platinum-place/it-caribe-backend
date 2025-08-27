@@ -45,7 +45,7 @@ class EstimateQuoteLifeService
                     $coBorrowerAge += $deadline / 12;
                 }
 
-                $coBorrowerRate = $this->getCoborrowerRate($product['id'], $coBorrowerAge);
+                $coBorrowerRate = $this->getCoBorrowerRate($product['id'], $coBorrowerAge);
                 $coBorrowerAmount = ($insuredAmount / 1000) * (($coBorrowerRate - $borrowerRate) / 100);
             }
 
@@ -99,7 +99,7 @@ class EstimateQuoteLifeService
         return $selectedRate;
     }
 
-    public function getCoborrowerRate(string $productId, int $coBorrowerAge)
+    public function getCoBorrowerRate(string $productId, int $coBorrowerAge)
     {
         $criteria = "((Plan:equals:$productId) and (Tipo:equals:Codeudor))";
         $rates = $this->zohoService->searchRecords('Tasas', $criteria);
