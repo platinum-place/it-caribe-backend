@@ -6,6 +6,7 @@ use App\Observers\Location\BranchObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 #[ObservedBy([BranchObserver::class])]
@@ -30,5 +31,10 @@ class Branch extends Model
     public function deletedBy(): BelongsTo
     {
         return $this->belongsTo(\App\Models\User::class, 'deleted_by');
+    }
+
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(\App\Models\User::class);
     }
 }

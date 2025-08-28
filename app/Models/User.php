@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\RoleEnum;
+use App\Models\Location\Branch;
 use App\Observers\UserObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -11,9 +13,15 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
+use Filament\Models\Contracts\HasTenants;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 #[ObservedBy([UserObserver::class])]
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser, HasTenants
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasApiTokens, HasFactory, HasRoles,Notifiable,SoftDeletes;
@@ -51,5 +59,30 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return true;
+    }
+
+    public function branches(): BelongsToMany
+    {
+        return $this->belongsToMany(Branch::class);
+    }
+
+    public function getTenants(Panel $panel): Collection
+    {
+        return $this->branches;
+    }
+
+    public function canAccessTenant(Model $tenant): bool
+    {
+        return $this->branches()->whereKey($tenant)->exists();
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->hasRole(RoleEnum::ADMIN);
     }
 }
