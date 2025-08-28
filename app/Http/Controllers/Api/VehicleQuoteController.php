@@ -94,15 +94,14 @@ class VehicleQuoteController extends Controller
 
             if (!empty($restrictedVehicles)) {
                 foreach ($restrictedVehicles['data'] as $restricted) {
-                    dd($restricted);
-                    if (\Str::contains(\Str::lower($vehicleMake->name), \Str::lower($restricted['Marca']['name']))) {
+                    if (\Str::contains(\Str::lower($vehicleMake->name), \Str::lower($restricted['Marca']['name'] ?? null))) {
                         if (empty($restricted['Modelo'])) {
                             $error = 'Marca restringido';
                             $shouldSkip = true;
                             break;
                         }
 
-                        if (\Str::contains(\Str::lower($vehicleModel->name), \Str::lower($restricted['Modelo']['name']))) {
+                        if (\Str::contains(\Str::lower($vehicleModel->name), \Str::lower($restricted['Modelo']['name'] ?? null))) {
                             $error = 'Modelo restringido';
                             $shouldSkip = true;
                             break;
