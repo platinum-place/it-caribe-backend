@@ -24,6 +24,11 @@ class ZohoOauthRefreshTokenResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
+    public static function getNavigationGroup(): ?string
+    {
+        return __('Zoho');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return ZohoOauthRefreshTokenForm::configure($schema);

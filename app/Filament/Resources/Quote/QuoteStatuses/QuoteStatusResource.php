@@ -26,6 +26,11 @@ class QuoteStatusResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    public static function getNavigationGroup(): ?string
+    {
+        return __('Quote');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return QuoteStatusForm::configure($schema);

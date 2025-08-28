@@ -26,6 +26,11 @@ class VehicleResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'chassis';
 
+    public static function getNavigationGroup(): ?string
+    {
+        return __('Vehicle');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return VehicleForm::configure($schema);

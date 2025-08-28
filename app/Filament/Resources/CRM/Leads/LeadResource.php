@@ -26,6 +26,11 @@ class LeadResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'full_name';
 
+    public static function getNavigationGroup(): ?string
+    {
+        return __('CRM');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return LeadForm::configure($schema);
