@@ -182,7 +182,7 @@ class EstimateQuoteVehicleService
      * @throws ConnectionException
      * @throws Exception
      */
-    protected function getRate(string $productId, float $vehicleAmount, int $vehicleYear, VehicleType $vehicleType): float
+    public function getRate(string $productId, float $vehicleAmount, int $vehicleYear, VehicleType $vehicleType): float
     {
         $criteria = "((Plan:equals:$productId) and (A_o:equals:$vehicleYear))";
         try {

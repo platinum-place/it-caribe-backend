@@ -9,6 +9,7 @@ use App\Http\Requests\Api\Quote\IssueVehicleRequest;
 use App\Models\TmpVendorProduct;
 use App\Models\VehicleMake;
 use App\Models\VehicleModel;
+use App\Services\EstimateQuoteVehicleService;
 use App\Services\ZohoCRMService;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
@@ -25,76 +26,133 @@ class VehicleQuoteController extends Controller
      */
     public function estimateVehicle(EstimateVehicleRequest $request)
     {
-        $criteria = '((Corredor:equals:3222373000092390001) and (Product_Category:equals:Auto))';
-        $products = $this->crm->searchRecords('Products', $criteria);
+        $data= $request->all();
+
+        $vehicleMake = VehicleMake::find($data['Marca']);
+        $vehicleModel = VehicleModel::find($data['Modelo']);
+        $vehicleType = $vehicleModel->type;
+
+        $criteria = '((Corredor:equals:' . 3222373000092390001 . ') and (Product_Category:equals:Auto))';
+        $productsResponse = $this->crm->searchRecords('Products', $criteria);
 
         $response = [];
 
-        foreach ($products['data'] as $product) {
-            $alert = '';
+        $serviceType = 'Clásico';
+        $isEmployee=false;
 
-            if (in_array($request->get('Actividad'), $product['Restringir_veh_culos_de_uso'])) {
-                return 'Uso del vehículo restringido.';
+        foreach ($productsResponse['data'] as $product) {
+            $shouldSkip = false;
+            $error = '';
+
+            if ($serviceType === 'Clásico') {
+                $case1 = $product['Plan'] === 'Empleado' && $isEmployee;
+                $case2 = $product['Plan'] === 'Clásico';
+                $case3 = $product['Plan'] === null;
+
+                if (!$case1 && !$case2 && !$case3) {
+                    continue;
+                }
             }
 
-            if ((date('Y') - $request->get('Anio')) > $product['Max_antig_edad']) {
-                $alert = 'La antigüedad del vehículo es mayor al limite establecido.';
+            if ($serviceType === 'Japonés') {
+                $case1 = $product['Plan'] === 'Empleado' && $isEmployee;
+                $case2 = $product['Plan'] === 'Japonés';
+                $case3 = $product['Plan'] === null;
+
+                if (!$case1 && !$case2 && !$case3) {
+                    continue;
+                }
             }
 
-            if ($request->get('MontoOriginal') < $product['Suma_asegurada_min'] || $request->get('MontoOriginal') > $product['Suma_asegurada_max']) {
-                $alert = 'El plazo es mayor al limite establecido.';
+
+            if ($serviceType === '0 KM') {
+                $case1 = $product['Plan'] === 'Empleado' && $isEmployee;
+                $case2 = $product['Plan'] === '0 KM';
+                $case3 = $product['Plan'] === 'Clásico';
+                $case4 = $product['Plan'] === null;
+
+                if (!$case1 && !$case2 && !$case3 && !$case4) {
+                    continue;
+                }
             }
 
-            $taxAmount = 0;
+            if ($serviceType === 'Híbrido/Eléctrico') {
+                $case1 = $product['Plan'] === 'Empleado' && $isEmployee;
+                $case2 = $product['Plan'] === 'Híbrido/Eléctrico';
+
+                if (!$case1 && !$case2) {
+                    continue;
+                }
+            }
 
             try {
-                $criteria = 'Plan:equals:'.$product['id'];
-                $taxes = $this->crm->searchRecords('Tasas', $criteria);
+                $criteria = 'Aseguradora:equals:' . $product['Vendor_Name']['id'];
+                $restrictedVehicles = $this->crm->searchRecords('Restringidos', $criteria);
+            } catch (\Throwable $e) {
+                //
+            }
 
-                foreach ($taxes['data'] as $tax) {
-                    // if (in_array($request->get('TipoVehiculo'), $tax['Grupo_de_veh_culo'])) {
-                    if (! empty($tax['Suma_limite'])) {
-                        if ($request->get('MontoOriginal') >= $tax['Suma_limite']) {
-                            if (empty($tax['Suma_hasta'])) {
-                                $taxAmount = $tax['Name'] / 100;
-                            } elseif ($request->get('MontoOriginal') < $tax['Suma_hasta']) {
-                                $taxAmount = $tax['Name'] / 100;
-                            }
+            if (!empty($restrictedVehicles)) {
+                foreach ($restrictedVehicles['data'] as $restricted) {
+                    if (\Str::contains(\Str::lower($vehicleMake->name), \Str::lower($restricted['Marca']['name']))) {
+                        if (empty($restricted['Modelo'])) {
+                            $error = 'Marca restringido';
+                            $shouldSkip = true;
+                            break;
                         }
-                    } else {
-                        $taxAmount = $tax['Name'] / 100;
+
+                        if (\Str::contains(\Str::lower($vehicleModel->name), \Str::lower($restricted['Modelo']['name']))) {
+                            $error = 'Modelo restringido';
+                            $shouldSkip = true;
+                            break;
+                        }
                     }
-                    // }
                 }
-            } catch (Throwable $throwable) {
-
             }
 
-            if (! $taxAmount) {
-                $alert = 'No se encontraron tasas.';
-            }
+            $rate = app(EstimateQuoteVehicleService::class)->getRate($product['id'], $data['MontoAsegurado'], $data['Anio'], $vehicleType);
 
-            $surchargeAmount = 0;
+            if ($shouldSkip) {
+                $rate = 0;
+            }
 
             $amount = 0;
+            $amountTaxed = 0;
+            $taxesAmount = 0;
+            $totalMonthly = 0;
+            $lifeAmount = 0;
 
-            if (empty($alert)) {
-                $amount = $request->get('MontoAsegurado') * ($taxAmount + ($taxAmount * $surchargeAmount));
+            if ($rate > 0) {
+                $amount = $data['MontoAsegurado'] * ($rate / 100);
 
-                if ($amount > 0 and $amount < $product['Prima_m_nima']) {
-                    $amount = $product['Prima_m_nima'];
+                if ($serviceType === 'Japonés' && !empty($product['Recargo'])) {
+                    $amount *= 1.30;
                 }
 
-                $amount = round($amount, 2);
+                $amountTaxed = $amount / 1.16;
+                $taxesAmount = $amount - $amountTaxed;
+
+                $lifeAmount = 220;
+
+                $totalMonthly = ($amount / 12) + $lifeAmount;
+
+                $amount = $totalMonthly * 12;
+
+            } else {
+                if(!$error){
+                    $error = 'No existe tasa para el vehículo';
+                }
+
+                continue;
             }
 
-            $response2 = $this->crm->getRecords('Vendors', ['Nombre'], (int) $product['Vendor_Name']['id']);
 
-            $criteria = 'Name:equals:'.VehicleMake::firstWhere('code', $request->get('Marca'))->name;
-            $vehicleMake = $this->crm->searchRecords('Marcas', $criteria);
+            $amount = round($amount, 2);
+            $amountTaxed = round($amountTaxed, 2);
+            $taxesAmount = round($taxesAmount, 2);
+            $totalMonthly = round($totalMonthly, 2);
 
-            $criteria = 'Name:equals:'.VehicleModel::firstWhere('code', $request->get('Modelo'))->name;
-            $vehicleModel = $this->crm->searchRecords('Modelos', $criteria);
+            $vendorCRM = $this->crm->getRecords('Vendors', ['Nombre'], $product['Vendor_Name']['id'])['data'][0];
 
             $data = [
                 'Subject' => $request->get('NombreCliente'),
@@ -141,10 +199,10 @@ class VehicleQuoteController extends Controller
                 'PrimaCuota' => number_format($amount, 1, '.', ''),
                 'Planid' => random_int(1,100),
                 'Plan' => 'Plan Mensual Full',
-                'Aseguradora' => $response2['data'][0]['Nombre'],
+                'Aseguradora' => $vendorCRM['Nombre'],
                 'IdCotizacion' => (string) $responseProduct['data'][0]['details']['id'],
                 'Fecha' => date('d/m/Y H:i:s A'),
-                'Error' => $alert,
+                'Error' => null,
                 'CoberturasList' => [
                     [
                         'Cobertura' => 'Fianza judicial',
