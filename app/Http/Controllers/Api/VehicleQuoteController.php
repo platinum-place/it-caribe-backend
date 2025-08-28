@@ -28,8 +28,8 @@ class VehicleQuoteController extends Controller
     {
         $data= $request->all();
 
-        $vehicleMake = VehicleMake::find($data['Marca']);
-        $vehicleModel = VehicleModel::find($data['Modelo']);
+        $vehicleMake = VehicleMake::firstWhere('code',$data['Marca']);
+        $vehicleModel = VehicleModel::firstWhere('code',$data['Modelo']);
         $vehicleType = $vehicleModel->type;
 
         $criteria = '((Corredor:equals:' . 3222373000092390001 . ') and (Product_Category:equals:Auto))';
@@ -94,7 +94,7 @@ class VehicleQuoteController extends Controller
 
             if (!empty($restrictedVehicles)) {
                 foreach ($restrictedVehicles['data'] as $restricted) {
-                    if (!empty($restricted['Marca']['name']) && \Str::contains(\Str::lower($vehicleMake->name), \Str::lower($restricted['Marca']['name']))) {
+                    if (\Str::contains(\Str::lower($vehicleMake->name), \Str::lower($restricted['Marca']['name']))) {
                         if (empty($restricted['Modelo'])) {
                             $error = 'Marca restringido';
                             $shouldSkip = true;
