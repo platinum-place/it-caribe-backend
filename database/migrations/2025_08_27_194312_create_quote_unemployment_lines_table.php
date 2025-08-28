@@ -14,6 +14,15 @@ return new class extends Migration
         Schema::create('quote_unemployment_lines', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->softDeletes();
+            $table->foreignId('created_by')->constrained('users');
+            $table->foreignId('updated_by')->nullable()->constrained('users');
+            $table->foreignId('deleted_by')->nullable()->constrained('users');
+
+            $table->foreignId('quote_unemployment_id')->constrained('quote_unemployments');
+            $table->foreignId('quote_line_id')->constrained('quote_lines');
+
+            $table->decimal('rate', 18, 2)->default(0);
         });
     }
 

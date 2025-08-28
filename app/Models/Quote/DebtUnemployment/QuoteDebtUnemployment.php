@@ -14,7 +14,8 @@ class QuoteDebtUnemployment extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'id', 'name',
+        'deadline_month', 'deadline_year', 'vehicle_amount',
+        'loan_amount','insured_amount',
         'created_by', 'updated_by', 'deleted_by',
     ];
 
