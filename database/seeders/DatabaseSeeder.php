@@ -32,6 +32,8 @@ class DatabaseSeeder extends Seeder
             Quote\Fire\QuoteFireConstructionTypeSeeder::class,
             Quote\Fire\QuoteFireCreditTypeSeeder::class,
             Quote\Fire\QuoteFireRiskTypeSeeder::class,
+            Quote\Unemployment\QuoteUnemploymentPaymentTypeSeeder::class,
+            Quote\Unemployment\QuoteUnemploymentEmploymentTypeSeeder::class,
 
             // CRM
             CRM\LeadTypeSeeder::class,

@@ -15,7 +15,7 @@ use App\Models\Quote\Vehicle\QuoteVehicleLine;
 use App\Models\Vehicle\Vehicle;
 use App\Models\Vehicle\VehicleMake;
 use App\Models\Vehicle\VehicleModel;
-use App\Services\Quote\Vehicle\EstimateQuoteVehicleService;
+use old\Services\Quote\Vehicle\EstimateQuoteVehicleService;
 
 class EstimateQuoteVehicleController extends Controller
 {

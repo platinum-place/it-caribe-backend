@@ -14,8 +14,7 @@ use App\Models\Quote\Life\QuoteLife;
 use App\Models\Quote\Life\QuoteLifeLine;
 use App\Models\Quote\Quote;
 use App\Models\Quote\QuoteLine;
-use App\Services\Quote\Life\EstimateQuoteLifeService;
-use Illuminate\Http\Request;
+use old\Services\Quote\Life\EstimateQuoteLifeService;
 
 class EstimateQuoteLifeController extends Controller
 {

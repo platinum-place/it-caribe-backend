@@ -3,6 +3,7 @@
 namespace App\Models\Quote;
 
 use App\Models\CRM\Lead;
+use App\Models\Location\Branch;
 use App\Observers\Quote\QuoteObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
@@ -19,7 +20,7 @@ class Quote extends Model
     protected $fillable = [
         'quote_type_id', 'quote_status_id', 'lead_id',
         'attachments', 'start_date', 'end_date',
-        'responsible_id', 'created_by', 'updated_by', 'deleted_by',
+        'branch_id', 'created_by', 'updated_by', 'deleted_by',
     ];
 
     protected function casts(): array
@@ -27,6 +28,11 @@ class Quote extends Model
         return [
             'attachments' => 'array',
         ];
+    }
+
+    public function branch(): BelongsTo
+    {
+        return $this->belongsTo(Branch::class);
     }
 
     public function lead(): BelongsTo

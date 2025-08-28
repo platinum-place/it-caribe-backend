@@ -16,8 +16,7 @@ use App\Models\Quote\Fire\QuoteFire;
 use App\Models\Quote\Life\QuoteLifeLine;
 use App\Models\Quote\Quote;
 use App\Models\Quote\QuoteLine;
-use App\Services\Quote\Fire\EstimateQuoteFireService;
-use Illuminate\Http\Request;
+use old\Services\Quote\Fire\EstimateQuoteFireService;
 
 class EstimateQuoteFireController extends Controller
 {
