@@ -110,7 +110,7 @@ class VehicleQuoteController extends Controller
                 }
             }
 
-            $rate = app(EstimateQuoteVehicleService::class)->getRate($product['id'], $request->get('MontoAsegurado'), $data['Anio'], $vehicleType);
+            $rate = app(EstimateQuoteVehicleService::class)->getRate($product['id'], $request->get('MontoAsegurado'), $request->get('Anio'), $vehicleType);
 
             if ($shouldSkip) {
                 $rate = 0;
