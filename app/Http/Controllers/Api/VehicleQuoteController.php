@@ -139,7 +139,7 @@ class VehicleQuoteController extends Controller
                 'Impuesto' => number_format($amount * 0.16, 1, '.', ''),
                 'PrimaTotal' => number_format($amount, 1, '.', ''),
                 'PrimaCuota' => number_format($amount, 1, '.', ''),
-                'Planid' => TmpVendorProduct::firstWhere('id_crm', $product['id'])->id,
+                'Planid' => random_int(1,100),
                 'Plan' => 'Plan Mensual Full',
                 'Aseguradora' => $response2['data'][0]['Nombre'],
                 'IdCotizacion' => (string) $responseProduct['data'][0]['details']['id'],
