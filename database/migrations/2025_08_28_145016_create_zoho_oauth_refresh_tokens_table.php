@@ -4,21 +4,23 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('quote_unemployment_payment_types', function (Blueprint $table) {
+        Schema::create('zoho_oauth_refresh_tokens', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->softDeletes();
-            $table->string('name');
             $table->foreignId('created_by')->constrained('users');
             $table->foreignId('updated_by')->nullable()->constrained('users');
             $table->foreignId('deleted_by')->nullable()->constrained('users');
+
+            $table->string('refresh_token');
+            $table->string('api_domain')->nullable();
+            $table->string('token_type')->nullable();
         });
     }
 
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('quote_unemployment_payment_types');
+        Schema::dropIfExists('zoho_oauth_refresh_tokens');
     }
 };

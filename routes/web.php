@@ -1,5 +1,6 @@
 <?php
 
+use App\Contracts\ZohoCRMInterface;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {

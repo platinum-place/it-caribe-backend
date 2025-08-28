@@ -2,12 +2,14 @@
 
 namespace App\Providers;
 
+use App\Adapters\ZohoApiAdapter;
+use App\Contracts\ZohoCRMInterface;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
     protected array $contracts = [
-        //DgiiApiProviderInterface::class => DgiiApiAdapter::class,
+        ZohoCRMInterface::class => ZohoApiAdapter::class,
     ];
 
     /**

@@ -18,12 +18,13 @@ return new class extends Migration
             $table->foreignId('created_by')->constrained('users');
             $table->foreignId('updated_by')->nullable()->constrained('users');
             $table->foreignId('deleted_by')->nullable()->constrained('users');
+
             $table->string('access_token');
-            $table->string('scope');
-            $table->string('api_domain');
-            $table->string('token_type');
-            $table->integer('expires_in');
-            $table->dateTime('expires_at');
+            $table->string('scope')->nullable();
+            $table->string('api_domain')->nullable();
+            $table->string('token_type')->nullable();
+            $table->integer('expires_in')->nullable();
+            $table->dateTime('expires_at')->nullable();
         });
     }
 

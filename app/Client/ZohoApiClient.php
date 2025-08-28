@@ -12,9 +12,9 @@ class ZohoApiClient
      * @throws RequestException
      * @throws ConnectionException
      */
-    public function getPersistentToken(string $grantToken): array
+    public function fetchRefreshToken(string $grantToken): array
     {
-        return Http::asForm()
+        $response = Http::asForm()
             ->post(config('zoho.domains.accounts_url').'/'.config('zoho.oauth.uri'), [
                 'grant_type' => 'authorization_code',
                 'client_id' => config('zoho.oauth.client_id'),
@@ -24,13 +24,19 @@ class ZohoApiClient
             ])
             ->throw()
             ->json();
+
+        if (isset($response['error'])) {
+            throw new \RuntimeException($response['error']);
+        }
+
+        return $response;
     }
 
     /**
      * @throws RequestException
      * @throws ConnectionException
      */
-    public function getTemporaryToken(string $refreshToken): array
+    public function fetchAccessToken(string $refreshToken): array
     {
         $response = Http::asForm()
             ->post(config('zoho.domains.accounts_url').'/'.config('zoho.oauth.uri'), [
