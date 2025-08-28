@@ -23,7 +23,7 @@ class FetchTokenService
             ->where('expires_at', '>=', now())
             ->first();
 
-        if (!$accessToken) {
+        if (! $accessToken) {
             $refreshToken = ZohoOauthRefreshToken::query()
                 ->latest()
                 ->firstOrFail();

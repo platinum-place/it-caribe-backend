@@ -4,9 +4,25 @@ namespace App\Observers;
 
 use App\Models\User;
 use App\Observers\Common\BaseObserver;
+use Illuminate\Database\Eloquent\Model;
 
 class UserObserver extends BaseObserver
 {
+    public function creating(Model $model): void
+    {
+        //
+    }
+
+    public function updating(Model $model): void
+    {
+        //
+    }
+
+    public function deleting(Model $model): void
+    {
+        //
+    }
+
     /**
      * Handle the User "created" event.
      */

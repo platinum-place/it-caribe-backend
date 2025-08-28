@@ -14,8 +14,8 @@ class QuoteUnemployment extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'quote_id', 'quote_unemployment_employment_type_id','quote_unemployment_employment_type_id',
-        'deadline_month','deadline_year','loan_installment',
+        'quote_id', 'quote_unemployment_employment_type_id', 'quote_unemployment_employment_type_id',
+        'deadline_month', 'deadline_year', 'loan_installment',
         'created_by', 'updated_by', 'deleted_by',
     ];
 

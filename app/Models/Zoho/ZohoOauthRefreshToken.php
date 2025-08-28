@@ -2,7 +2,6 @@
 
 namespace App\Models\Zoho;
 
-use App\Observers\Zoho\ZohoOauthAccessTokenObserver;
 use App\Observers\Zoho\ZohoOauthRefreshTokenObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;

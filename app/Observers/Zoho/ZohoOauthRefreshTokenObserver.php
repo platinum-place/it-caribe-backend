@@ -2,7 +2,6 @@
 
 namespace App\Observers\Zoho;
 
-use App\Models\Zoho\ZohoOauthAccessToken;
 use App\Models\Zoho\ZohoOauthRefreshToken;
 use App\Observers\Common\BaseObserver;
 

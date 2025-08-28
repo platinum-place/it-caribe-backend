@@ -12,10 +12,9 @@ class RefreshTokenDTO
         public string $refreshToken,
         public string $apiDomain,
         public string $tokenType,
-        public int    $expiresIn,
+        public int $expiresIn,
 
-    )
-    {
+    ) {
         //
     }
 }

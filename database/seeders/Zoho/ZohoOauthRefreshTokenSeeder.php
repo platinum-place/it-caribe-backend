@@ -3,7 +3,6 @@
 namespace Database\Seeders\Zoho;
 
 use App\Models\Zoho\ZohoOauthRefreshToken;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class ZohoOauthRefreshTokenSeeder extends Seeder
