@@ -196,7 +196,7 @@ class VehicleQuoteController extends Controller
                 'Prima' => number_format($amount - ($amount * 0.16), 1, '.', ''),
                 'Impuesto' => number_format($amount * 0.16, 1, '.', ''),
                 'PrimaTotal' => number_format($amount, 1, '.', ''),
-                'PrimaCuota' => number_format($amount, 1, '.', ''),
+                'PrimaCuota' => number_format($amount / 12, 1, '.', ''),
                 'Planid' => random_int(1,100),
                 'Plan' => 'Plan Mensual Full',
                 'Aseguradora' => $vendorCRM['Nombre'],
