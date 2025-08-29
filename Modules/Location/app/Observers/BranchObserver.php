@@ -1,6 +1,8 @@
 <?php
 
-use App\Observers\Common\BaseObserver;
+namespace Modules\Location\Observers;
+
+use App\Observers\BaseObserver;
 use Modules\Location\Models\Branch;
 
 class BranchObserver extends BaseObserver

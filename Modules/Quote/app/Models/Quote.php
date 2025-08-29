@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Modules\Core\Models\Branch;
 use Modules\CRM\Models\Lead;
 use Modules\Location\Models\Branch;
 use Modules\Quote\Observers\QuoteObserver;
