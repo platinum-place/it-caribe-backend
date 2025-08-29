@@ -1,8 +1,8 @@
 <?php
 
-namespace App\DTOs\Zoho;
+namespace App\ValueObjects\Zoho;
 
-class AccessTokenDTO
+class AccessToken
 {
     /**
      * Create a new class instance.

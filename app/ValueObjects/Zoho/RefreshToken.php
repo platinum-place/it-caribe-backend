@@ -1,8 +1,8 @@
 <?php
 
-namespace App\DTOs\Zoho;
+namespace App\ValueObjects\Zoho;
 
-class RefreshTokenDTO
+class RefreshToken
 {
     /**
      * Create a new class instance.

@@ -4,8 +4,8 @@ namespace App\Adapters;
 
 use App\Client\ZohoApiClient;
 use App\Contracts\ZohoCRMInterface;
-use App\DTOs\Zoho\AccessTokenDTO;
-use App\DTOs\Zoho\RefreshTokenDTO;
+use App\ValueObjects\Zoho\AccessToken;
+use App\ValueObjects\Zoho\RefreshToken;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
 
@@ -23,11 +23,11 @@ class ZohoApiAdapter implements ZohoCRMInterface
      * @throws RequestException
      * @throws ConnectionException
      */
-    public function fetchRefreshToken(string $grantToken): RefreshTokenDTO
+    public function fetchRefreshToken(string $grantToken): RefreshToken
     {
         $response = $this->client->fetchRefreshToken($grantToken);
 
-        return new RefreshTokenDTO(
+        return new RefreshToken(
             $response['access_token'],
             $response['refresh_token'],
             $response['api_domain'],
@@ -40,11 +40,11 @@ class ZohoApiAdapter implements ZohoCRMInterface
      * @throws RequestException
      * @throws ConnectionException
      */
-    public function fetchAccessToken(string $refreshToken): AccessTokenDTO
+    public function fetchAccessToken(string $refreshToken): AccessToken
     {
         $response = $this->client->fetchAccessToken($refreshToken);
 
-        return new AccessTokenDTO(
+        return new AccessToken(
             $response['access_token'],
             $response['scope'],
             $response['api_domain'],
