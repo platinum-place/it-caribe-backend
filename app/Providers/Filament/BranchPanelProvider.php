@@ -5,6 +5,7 @@ namespace App\Providers\Filament;
 use App\Filament\Pages\Auth\EditProfile;
 use App\Filament\Pages\Auth\Login;
 use App\Models\Location\Branch;
+use Filament\Actions\Action;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -66,6 +67,12 @@ class BranchPanelProvider extends PanelProvider
             ->databaseTransactions()
             ->databaseNotifications()
             ->databaseNotificationsPolling('30s')
-            ->tenant(Branch::class);
+            ->tenant(Branch::class)
+            ->userMenuItems([
+                Action::make('admin')
+                    ->url(fn(): string => '/admin')
+                    ->icon('heroicon-o-cog-6-tooth')
+                    ->visible(fn(): bool => auth()->user()->isAdmin()),
+            ]);
     }
 }
