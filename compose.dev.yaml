@@ -114,13 +114,13 @@ services:
       - postgres
     command: >
       bash -lc "php artisan queue:listen redis
-        --queue=filament,exports,default
-        --sleep=1 --tries=3 --max-time=3600"
+        --queue=filament,exports,default,schemas
+        --sleep=1 --tries=3 --timeout=90"
     networks:
       - laravel-development
 
   scheduler:
-    container_name: ${APP_NAME}-queue
+    container_name: ${APP_NAME}-scheduler
     build:
       context: .
       dockerfile: docker/common/php-fpm/Dockerfile
@@ -136,8 +136,8 @@ services:
     volumes:
       - ./:/var/www
     depends_on:
-      - redis
       - postgres
+      - redis
     command: >
       bash -lc "php artisan schedule:work"
     networks:

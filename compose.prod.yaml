@@ -103,7 +103,7 @@ services:
     build:
       context: .
       dockerfile: docker/common/php-fpm/Dockerfile
-    user: "${UID:-1000}:${GID:-1000}"
+      target: production
     working_dir: /var/www
     env_file:
       - .env
@@ -113,23 +113,23 @@ services:
       REDIS_HOST: ${REDIS_HOST:-redis}
       REDIS_CLIENT: ${REDIS_CLIENT:-phpredis}
     volumes:
-      - ./:/var/www
+      - laravel-storage-production:/var/www/storage
     depends_on:
       - redis
       - postgres
     command: >
       bash -lc "php artisan queue:work redis
-        --queue=filament,exports,default
+        --queue=filament,exports,default,schemas
         --sleep=1 --tries=3 --max-time=3600"
     networks:
       - laravel-production
 
   scheduler:
-    container_name: ${APP_NAME}-queue
+    container_name: ${APP_NAME}-scheduler
     build:
       context: .
       dockerfile: docker/common/php-fpm/Dockerfile
-    user: "${UID:-1000}:${GID:-1000}"
+      target: production
     working_dir: /var/www
     env_file:
       - .env
@@ -139,10 +139,10 @@ services:
       REDIS_HOST: ${REDIS_HOST:-redis}
       REDIS_CLIENT: ${REDIS_CLIENT:-phpredis}
     volumes:
-      - ./:/var/www
+      - laravel-storage-production:/var/www/storage
     depends_on:
-      - redis
       - postgres
+      - redis
     command: >
       bash -lc "php artisan schedule:work"
     networks:
