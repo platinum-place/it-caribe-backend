@@ -9,7 +9,6 @@ use App\Filament\Resources\CRM\Leads\Pages\ViewLead;
 use App\Filament\Resources\CRM\Leads\Schemas\LeadForm;
 use App\Filament\Resources\CRM\Leads\Schemas\LeadInfolist;
 use App\Filament\Resources\CRM\Leads\Tables\LeadsTable;
-use App\Models\CRM\Lead;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -17,6 +16,7 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Modules\CRM\Models\Lead;
 
 class LeadResource extends Resource
 {

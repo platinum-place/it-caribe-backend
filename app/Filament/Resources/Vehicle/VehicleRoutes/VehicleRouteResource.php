@@ -9,7 +9,6 @@ use App\Filament\Resources\Vehicle\VehicleRoutes\Pages\ViewVehicleRoute;
 use App\Filament\Resources\Vehicle\VehicleRoutes\Schemas\VehicleRouteForm;
 use App\Filament\Resources\Vehicle\VehicleRoutes\Schemas\VehicleRouteInfolist;
 use App\Filament\Resources\Vehicle\VehicleRoutes\Tables\VehicleRoutesTable;
-use App\Models\Vehicle\VehicleRoute;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -17,6 +16,7 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Modules\Vehicle\Models\VehicleRoute;
 
 class VehicleRouteResource extends Resource
 {

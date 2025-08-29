@@ -9,7 +9,7 @@ use App\Filament\Branch\Resources\Quote\Fire\QuoteFires\Pages\ViewQuoteFire;
 use App\Filament\Branch\Resources\Quote\Fire\QuoteFires\Schemas\QuoteFireForm;
 use App\Filament\Branch\Resources\Quote\Fire\QuoteFires\Schemas\QuoteFireInfolist;
 use App\Filament\Branch\Resources\Quote\Fire\QuoteFires\Tables\QuoteFiresTable;
-use App\Models\Quote\Fire\QuoteFire;
+use App\Models\QuoteFire;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;

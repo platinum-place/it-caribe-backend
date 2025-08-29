@@ -3,13 +3,6 @@
 namespace old\Resources\QuoteVehicles\Schemas;
 
 use App\Filament\Forms\Components\Wizards\CreateLeadWizardStep;
-use App\Models\Vehicle\VehicleActivity;
-use App\Models\Vehicle\VehicleColor;
-use App\Models\Vehicle\VehicleLoanType;
-use App\Models\Vehicle\VehicleMake;
-use App\Models\Vehicle\VehicleModel;
-use App\Models\Vehicle\VehicleUse;
-use App\Models\Vehicle\VehicleUtility;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\DatePicker;
@@ -22,6 +15,13 @@ use Filament\Schemas\Components\Wizard;
 use Filament\Schemas\Components\Wizard\Step;
 use Filament\Schemas\Schema;
 use Filament\Support\RawJs;
+use Modules\Vehicle\Models\VehicleActivity;
+use Modules\Vehicle\Models\VehicleColor;
+use Modules\Vehicle\Models\VehicleLoanType;
+use Modules\Vehicle\Models\VehicleMake;
+use Modules\Vehicle\Models\VehicleModel;
+use Modules\Vehicle\Models\VehicleUse;
+use Modules\Vehicle\Models\VehicleUtility;
 use old\Services\Quote\Vehicle\EstimateQuoteVehicleService;
 
 class QuoteVehicleForm

@@ -2,7 +2,7 @@
 
 namespace old\Services\Zoho;
 
-use App\Client\ZohoApiClient;
+use app\Client\ZohoApiClient;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
 

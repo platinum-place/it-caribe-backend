@@ -9,7 +9,7 @@ use App\Filament\Branch\Resources\Quote\Unemployment\QuoteUnemployments\Pages\Vi
 use App\Filament\Branch\Resources\Quote\Unemployment\QuoteUnemployments\Schemas\QuoteUnemploymentForm;
 use App\Filament\Branch\Resources\Quote\Unemployment\QuoteUnemployments\Schemas\QuoteUnemploymentInfolist;
 use App\Filament\Branch\Resources\Quote\Unemployment\QuoteUnemployments\Tables\QuoteUnemploymentsTable;
-use App\Models\Quote\Unemployment\QuoteUnemployment;
+use App\Models\QuoteUnemployment;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;

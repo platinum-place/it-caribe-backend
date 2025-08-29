@@ -9,7 +9,7 @@ use App\Filament\Resources\Quote\Unemployment\QuoteUnemploymentEmploymentTypes\P
 use App\Filament\Resources\Quote\Unemployment\QuoteUnemploymentEmploymentTypes\Schemas\QuoteUnemploymentEmploymentTypeForm;
 use App\Filament\Resources\Quote\Unemployment\QuoteUnemploymentEmploymentTypes\Schemas\QuoteUnemploymentEmploymentTypeInfolist;
 use App\Filament\Resources\Quote\Unemployment\QuoteUnemploymentEmploymentTypes\Tables\QuoteUnemploymentEmploymentTypesTable;
-use App\Models\Quote\Unemployment\QuoteUnemploymentEmploymentType;
+use App\Models\QuoteUnemploymentEmploymentType;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;

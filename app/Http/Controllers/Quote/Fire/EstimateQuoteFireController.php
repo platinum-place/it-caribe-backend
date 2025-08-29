@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers\Quote\Fire;
 
-use App\Enums\CRM\LeadTypeEnum;
-use App\Enums\Quote\Fire\QuoteFireConstructionTypeEnum;
-use App\Enums\Quote\Fire\QuoteFireCreditTypeEnum;
-use App\Enums\Quote\Fire\QuoteFireRiskTypeEnum;
-use App\Enums\Quote\QuoteLineStatusEnum;
-use App\Enums\Quote\QuoteStatusEnum;
-use App\Enums\Quote\QuoteTypeEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Quote\Fire\EstimateFireRequest;
-use App\Models\CRM\Lead;
-use App\Models\Quote\Fire\QuoteFire;
-use App\Models\Quote\Life\QuoteLifeLine;
-use App\Models\Quote\Quote;
-use App\Models\Quote\QuoteLine;
+use App\Models\Quote;
+use App\Models\QuoteFire;
+use App\Models\QuoteLifeLine;
+use App\Models\QuoteLine;
+use Modules\CRM\Enums\LeadTypeEnum;
+use Modules\CRM\Models\Lead;
+use Modules\Quote\Enums\QuoteFireConstructionTypeEnum;
+use Modules\Quote\Enums\QuoteFireCreditTypeEnum;
+use Modules\Quote\Enums\QuoteFireRiskTypeEnum;
+use Modules\Quote\Enums\QuoteLineStatusEnum;
+use Modules\Quote\Enums\QuoteStatusEnum;
+use Modules\Quote\Enums\QuoteTypeEnum;
 use old\Services\Quote\Fire\EstimateQuoteFireService;
 
 class EstimateQuoteFireController extends Controller

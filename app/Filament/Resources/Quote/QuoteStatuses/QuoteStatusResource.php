@@ -9,7 +9,7 @@ use App\Filament\Resources\Quote\QuoteStatuses\Pages\ViewQuoteStatus;
 use App\Filament\Resources\Quote\QuoteStatuses\Schemas\QuoteStatusForm;
 use App\Filament\Resources\Quote\QuoteStatuses\Schemas\QuoteStatusInfolist;
 use App\Filament\Resources\Quote\QuoteStatuses\Tables\QuoteStatusesTable;
-use App\Models\Quote\QuoteStatus;
+use App\Models\QuoteStatus;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;

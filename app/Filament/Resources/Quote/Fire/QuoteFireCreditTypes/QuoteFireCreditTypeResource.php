@@ -9,7 +9,7 @@ use App\Filament\Resources\Quote\Fire\QuoteFireCreditTypes\Pages\ViewQuoteFireCr
 use App\Filament\Resources\Quote\Fire\QuoteFireCreditTypes\Schemas\QuoteFireCreditTypeForm;
 use App\Filament\Resources\Quote\Fire\QuoteFireCreditTypes\Schemas\QuoteFireCreditTypeInfolist;
 use App\Filament\Resources\Quote\Fire\QuoteFireCreditTypes\Tables\QuoteFireCreditTypesTable;
-use App\Models\Quote\Fire\QuoteFireCreditType;
+use App\Models\QuoteFireCreditType;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;

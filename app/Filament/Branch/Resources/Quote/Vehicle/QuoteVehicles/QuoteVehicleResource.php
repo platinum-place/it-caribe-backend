@@ -9,7 +9,7 @@ use App\Filament\Branch\Resources\Quote\Vehicle\QuoteVehicles\Pages\ViewQuoteVeh
 use App\Filament\Branch\Resources\Quote\Vehicle\QuoteVehicles\Schemas\QuoteVehicleForm;
 use App\Filament\Branch\Resources\Quote\Vehicle\QuoteVehicles\Schemas\QuoteVehicleInfolist;
 use App\Filament\Branch\Resources\Quote\Vehicle\QuoteVehicles\Tables\QuoteVehiclesTable;
-use App\Models\Quote\Vehicle\QuoteVehicle;
+use App\Models\QuoteVehicle;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;

@@ -2,8 +2,8 @@
 
 namespace old\Services\Quote\Fire;
 
-use App\Enums\Quote\Fire\QuoteFireRiskTypeEnum;
 use Carbon\Carbon;
+use Modules\Quote\Enums\QuoteFireRiskTypeEnum;
 use old\Services\Quote\Life\EstimateQuoteLifeService;
 use old\Services\Zoho\ZohoService;
 

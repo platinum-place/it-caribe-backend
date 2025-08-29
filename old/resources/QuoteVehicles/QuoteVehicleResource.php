@@ -2,7 +2,7 @@
 
 namespace old\Resources\QuoteVehicles;
 
-use App\Models\Quote\Vehicle\QuoteVehicle;
+use App\Models\QuoteVehicle;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;

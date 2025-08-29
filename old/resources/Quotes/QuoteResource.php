@@ -2,7 +2,7 @@
 
 namespace old\Resources\Quotes;
 
-use App\Models\Quote\Quote;
+use App\Models\Quote;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;

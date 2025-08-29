@@ -9,7 +9,6 @@ use App\Filament\Resources\Vehicle\VehicleAccessories\Pages\ViewVehicleAccessory
 use App\Filament\Resources\Vehicle\VehicleAccessories\Schemas\VehicleAccessoryForm;
 use App\Filament\Resources\Vehicle\VehicleAccessories\Schemas\VehicleAccessoryInfolist;
 use App\Filament\Resources\Vehicle\VehicleAccessories\Tables\VehicleAccessoriesTable;
-use App\Models\Vehicle\VehicleAccessory;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -17,6 +16,7 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Modules\Vehicle\Models\VehicleAccessory;
 
 class VehicleAccessoryResource extends Resource
 {

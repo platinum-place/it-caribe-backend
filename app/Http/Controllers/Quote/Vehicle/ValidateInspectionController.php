@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Quote\Vehicle;
 
-use app\Enums\Quote\QuoteStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Quote\Vehicle\ValidateInspectionRequest;
-use App\Models\Quote\Vehicle\QuoteVehicleLine;
+use App\Models\QuoteVehicleLine;
+use Modules\Quote\Enums\QuoteStatusEnum;
 
 class ValidateInspectionController extends Controller
 {

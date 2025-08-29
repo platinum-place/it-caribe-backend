@@ -9,7 +9,6 @@ use App\Filament\Resources\Zoho\ZohoOauthRefreshTokens\Pages\ViewZohoOauthRefres
 use App\Filament\Resources\Zoho\ZohoOauthRefreshTokens\Schemas\ZohoOauthRefreshTokenForm;
 use App\Filament\Resources\Zoho\ZohoOauthRefreshTokens\Schemas\ZohoOauthRefreshTokenInfolist;
 use App\Filament\Resources\Zoho\ZohoOauthRefreshTokens\Tables\ZohoOauthRefreshTokensTable;
-use App\Models\Zoho\ZohoOauthRefreshToken;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -17,6 +16,7 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Modules\Zoho\Models\ZohoOauthRefreshToken;
 
 class ZohoOauthRefreshTokenResource extends Resource
 {

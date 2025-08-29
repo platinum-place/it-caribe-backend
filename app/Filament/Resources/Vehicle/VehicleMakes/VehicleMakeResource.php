@@ -9,7 +9,6 @@ use App\Filament\Resources\Vehicle\VehicleMakes\Pages\ViewVehicleMake;
 use App\Filament\Resources\Vehicle\VehicleMakes\Schemas\VehicleMakeForm;
 use App\Filament\Resources\Vehicle\VehicleMakes\Schemas\VehicleMakeInfolist;
 use App\Filament\Resources\Vehicle\VehicleMakes\Tables\VehicleMakesTable;
-use App\Models\Vehicle\VehicleMake;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -17,6 +16,7 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Modules\Vehicle\Models\VehicleMake;
 
 class VehicleMakeResource extends Resource
 {

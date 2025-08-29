@@ -9,7 +9,7 @@ use App\Filament\Resources\Quote\QuoteTypes\Pages\ViewQuoteType;
 use App\Filament\Resources\Quote\QuoteTypes\Schemas\QuoteTypeForm;
 use App\Filament\Resources\Quote\QuoteTypes\Schemas\QuoteTypeInfolist;
 use App\Filament\Resources\Quote\QuoteTypes\Tables\QuoteTypesTable;
-use App\Models\Quote\QuoteType;
+use App\Models\QuoteType;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;

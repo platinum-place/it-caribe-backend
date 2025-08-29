@@ -9,7 +9,7 @@ use App\Filament\Resources\Quote\Fire\QuoteFireConstructionTypes\Pages\ViewQuote
 use App\Filament\Resources\Quote\Fire\QuoteFireConstructionTypes\Schemas\QuoteFireConstructionTypeForm;
 use App\Filament\Resources\Quote\Fire\QuoteFireConstructionTypes\Schemas\QuoteFireConstructionTypeInfolist;
 use App\Filament\Resources\Quote\Fire\QuoteFireConstructionTypes\Tables\QuoteFireConstructionTypesTable;
-use App\Models\Quote\Fire\QuoteFireConstructionType;
+use App\Models\QuoteFireConstructionType;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;

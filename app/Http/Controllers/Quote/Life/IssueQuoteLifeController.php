@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Quote\Life;
 
-use App\Enums\Quote\QuoteLineStatusEnum;
-use App\Enums\Quote\QuoteStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Quote\Life\IssueQuoteLifeRequest;
-use App\Models\Quote\Life\QuoteLifeLine;
+use App\Models\QuoteLifeLine;
+use Modules\Quote\Enums\QuoteLineStatusEnum;
+use Modules\Quote\Enums\QuoteStatusEnum;
 
 class IssueQuoteLifeController extends Controller
 {

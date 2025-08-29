@@ -9,7 +9,6 @@ use App\Filament\Resources\Vehicle\VehicleUtilities\Pages\ViewVehicleUtility;
 use App\Filament\Resources\Vehicle\VehicleUtilities\Schemas\VehicleUtilityForm;
 use App\Filament\Resources\Vehicle\VehicleUtilities\Schemas\VehicleUtilityInfolist;
 use App\Filament\Resources\Vehicle\VehicleUtilities\Tables\VehicleUtilitiesTable;
-use App\Models\Vehicle\VehicleUtility;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -17,6 +16,7 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Modules\Vehicle\Models\VehicleUtility;
 
 class VehicleUtilityResource extends Resource
 {

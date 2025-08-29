@@ -2,12 +2,12 @@
 
 namespace App\Services;
 
-use App\Enums\Quote\Fire\QuoteFireRiskTypeEnum;
 use App\Services\Zoho\ZohoCRMService;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
+use Modules\Quote\Enums\QuoteFireRiskTypeEnum;
 
 class EstimateQuoteFireService
 {

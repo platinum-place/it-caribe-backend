@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers\Quote\Life;
 
-use App\Enums\CRM\LeadTypeEnum;
-use App\Enums\Quote\Life\QuoteLifeCreditTypeEnum;
-use App\Enums\Quote\QuoteLineStatusEnum;
-use App\Enums\Quote\QuoteStatusEnum;
-use App\Enums\Quote\QuoteTypeEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Quote\Life\EstimateQuoteLifeRequest;
-use App\Models\CRM\Lead;
-use App\Models\Quote\Life\QuoteLife;
-use App\Models\Quote\Life\QuoteLifeLine;
-use App\Models\Quote\Quote;
-use App\Models\Quote\QuoteLine;
+use App\Models\Quote;
+use App\Models\QuoteLife;
+use App\Models\QuoteLifeLine;
+use App\Models\QuoteLine;
+use Modules\CRM\Enums\LeadTypeEnum;
+use Modules\CRM\Models\Lead;
+use Modules\Quote\Enums\QuoteLifeCreditTypeEnum;
+use Modules\Quote\Enums\QuoteLineStatusEnum;
+use Modules\Quote\Enums\QuoteStatusEnum;
+use Modules\Quote\Enums\QuoteTypeEnum;
 use old\Services\Quote\Life\EstimateQuoteLifeService;
 
 class EstimateQuoteLifeController extends Controller

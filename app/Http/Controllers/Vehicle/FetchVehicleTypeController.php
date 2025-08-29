@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Vehicle;
 
 use App\Http\Controllers\Controller;
-use App\Models\Vehicle\VehicleType;
 use Illuminate\Http\Request;
+use Modules\Vehicle\Models\VehicleType;
 
 class FetchVehicleTypeController extends Controller
 {

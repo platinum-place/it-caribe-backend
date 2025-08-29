@@ -2,17 +2,17 @@
 
 namespace old\Resources\QuoteVehicles\Pages;
 
-use app\Enums\Quote\QuoteLineStatusEnum;
-use app\Enums\Quote\QuoteStatusEnum;
-use app\Enums\Quote\QuoteTypeEnum;
-use App\Models\CRM\Lead;
-use App\Models\Quote\Quote;
-use App\Models\Quote\QuoteLine;
-use App\Models\Quote\Vehicle\QuoteVehicle;
-use App\Models\Quote\Vehicle\QuoteVehicleLine;
-use App\Models\Vehicle\Vehicle;
+use App\Models\Quote;
+use App\Models\QuoteLine;
+use App\Models\QuoteVehicle;
+use App\Models\QuoteVehicleLine;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Database\Eloquent\Model;
+use Modules\CRM\Models\Lead;
+use Modules\Quote\Enums\QuoteLineStatusEnum;
+use Modules\Quote\Enums\QuoteStatusEnum;
+use Modules\Quote\Enums\QuoteTypeEnum;
+use Modules\Vehicle\Models\Vehicle;
 use old\Resources\QuoteVehicles\QuoteVehicleResource;
 
 class CreateQuoteVehicle extends CreateRecord

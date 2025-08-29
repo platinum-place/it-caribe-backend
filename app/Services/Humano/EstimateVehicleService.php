@@ -12,8 +12,5 @@ class EstimateVehicleService
         //
     }
 
-    public function handle(string $make, string $model, int $year, float $amount)
-    {
-
-    }
+    public function handle(string $make, string $model, int $year, float $amount) {}
 }

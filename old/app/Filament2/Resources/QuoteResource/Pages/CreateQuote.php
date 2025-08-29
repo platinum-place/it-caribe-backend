@@ -2,9 +2,6 @@
 
 namespace App\Filament\Resources\QuoteResource\Pages;
 
-use app\Enums\Quote\QuoteLineStatusEnum;
-use app\Enums\Quote\QuoteStatusEnum;
-use app\Enums\Quote\QuoteTypeEnum;
 use App\Filament\Resources\QuoteResource;
 use App\Models\folder\QuoteDebtUnemployment;
 use App\Models\folder\QuoteDebtUnemploymentLine;
@@ -14,9 +11,8 @@ use App\Models\folder\QuoteLife;
 use App\Models\folder\QuoteLifeLine;
 use App\Models\folder\QuoteUnemployment;
 use App\Models\folder\QuoteUnemploymentLine;
-use App\Models\Quote\Vehicle\QuoteVehicle;
-use App\Models\Quote\Vehicle\QuoteVehicleLine;
-use App\Models\Vehicle\Vehicle;
+use App\Models\QuoteVehicle;
+use App\Models\QuoteVehicleLine;
 use Carbon\Carbon;
 use DB;
 use Filament\Forms\Components\Select;
@@ -24,9 +20,13 @@ use Filament\Forms\Components\Wizard;
 use Filament\Forms\Form;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Quote\Enums\QuoteLineStatusEnum;
+use Modules\Quote\Enums\QuoteStatusEnum;
+use Modules\Quote\Enums\QuoteTypeEnum;
 use Modules\Quote\Infrastructure\Persistance\Models\Debtor;
 use Modules\Quote\Infrastructure\Persistance\Models\Quote;
 use Modules\Quote\Infrastructure\Persistance\Models\QuoteLine;
+use Modules\Vehicle\Models\Vehicle;
 
 class CreateQuote extends CreateRecord
 {

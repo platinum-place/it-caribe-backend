@@ -9,7 +9,6 @@ use App\Filament\Resources\Zoho\ZohoOauthAccessTokens\Pages\ViewZohoOauthAccessT
 use App\Filament\Resources\Zoho\ZohoOauthAccessTokens\Schemas\ZohoOauthAccessTokenForm;
 use App\Filament\Resources\Zoho\ZohoOauthAccessTokens\Schemas\ZohoOauthAccessTokenInfolist;
 use App\Filament\Resources\Zoho\ZohoOauthAccessTokens\Tables\ZohoOauthAccessTokensTable;
-use App\Models\Zoho\ZohoOauthAccessToken;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -17,6 +16,7 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Modules\Zoho\Models\ZohoOauthAccessToken;
 
 class ZohoOauthAccessTokenResource extends Resource
 {

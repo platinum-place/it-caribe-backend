@@ -9,7 +9,7 @@ use App\Filament\Resources\Quote\Fire\QuoteFireRiskTypes\Pages\ViewQuoteFireRisk
 use App\Filament\Resources\Quote\Fire\QuoteFireRiskTypes\Schemas\QuoteFireRiskTypeForm;
 use App\Filament\Resources\Quote\Fire\QuoteFireRiskTypes\Schemas\QuoteFireRiskTypeInfolist;
 use App\Filament\Resources\Quote\Fire\QuoteFireRiskTypes\Tables\QuoteFireRiskTypesTable;
-use App\Models\Quote\Fire\QuoteFireRiskType;
+use App\Models\QuoteFireRiskType;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;

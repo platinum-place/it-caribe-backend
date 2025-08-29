@@ -9,7 +9,6 @@ use App\Filament\Resources\Vehicle\VehicleColors\Pages\ViewVehicleColor;
 use App\Filament\Resources\Vehicle\VehicleColors\Schemas\VehicleColorForm;
 use App\Filament\Resources\Vehicle\VehicleColors\Schemas\VehicleColorInfolist;
 use App\Filament\Resources\Vehicle\VehicleColors\Tables\VehicleColorsTable;
-use App\Models\Vehicle\VehicleColor;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -17,6 +16,7 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Modules\Vehicle\Models\VehicleColor;
 
 class VehicleColorResource extends Resource
 {

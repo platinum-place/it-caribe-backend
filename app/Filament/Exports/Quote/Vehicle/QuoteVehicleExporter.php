@@ -2,7 +2,7 @@
 
 namespace App\Filament\Exports\Quote\Vehicle;
 
-use App\Models\Quote\Vehicle\QuoteVehicle;
+use App\Models\QuoteVehicle;
 use Filament\Actions\Exports\ExportColumn;
 use Filament\Actions\Exports\Exporter;
 use Filament\Actions\Exports\Models\Export;

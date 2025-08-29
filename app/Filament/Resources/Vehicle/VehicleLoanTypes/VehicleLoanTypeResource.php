@@ -9,7 +9,6 @@ use App\Filament\Resources\Vehicle\VehicleLoanTypes\Pages\ViewVehicleLoanType;
 use App\Filament\Resources\Vehicle\VehicleLoanTypes\Schemas\VehicleLoanTypeForm;
 use App\Filament\Resources\Vehicle\VehicleLoanTypes\Schemas\VehicleLoanTypeInfolist;
 use App\Filament\Resources\Vehicle\VehicleLoanTypes\Tables\VehicleLoanTypesTable;
-use App\Models\Vehicle\VehicleLoanType;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -17,6 +16,7 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Modules\Vehicle\Models\VehicleLoanType;
 
 class VehicleLoanTypeResource extends Resource
 {

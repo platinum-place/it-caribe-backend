@@ -2,12 +2,12 @@
 
 namespace old\Services\Quote\Vehicle;
 
-use App\Models\Vehicle\VehicleMake;
-use App\Models\Vehicle\VehicleModel;
-use App\Models\Vehicle\VehicleType;
 use App\Services\Quote\Vehicle\ConnectionException;
 use App\Services\Quote\Vehicle\Exception;
 use App\Services\Quote\Vehicle\RequestException;
+use Modules\Vehicle\Models\VehicleMake;
+use Modules\Vehicle\Models\VehicleModel;
+use Modules\Vehicle\Models\VehicleType;
 use old\Services\Zoho\ZohoService;
 
 class EstimateQuoteVehicleService

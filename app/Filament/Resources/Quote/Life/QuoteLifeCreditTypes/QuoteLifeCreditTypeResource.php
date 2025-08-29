@@ -9,7 +9,7 @@ use App\Filament\Resources\Quote\Life\QuoteLifeCreditTypes\Pages\ViewQuoteLifeCr
 use App\Filament\Resources\Quote\Life\QuoteLifeCreditTypes\Schemas\QuoteLifeCreditTypeForm;
 use App\Filament\Resources\Quote\Life\QuoteLifeCreditTypes\Schemas\QuoteLifeCreditTypeInfolist;
 use App\Filament\Resources\Quote\Life\QuoteLifeCreditTypes\Tables\QuoteLifeCreditTypesTable;
-use App\Models\Quote\Life\QuoteLifeCreditType;
+use App\Models\QuoteLifeCreditType;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;

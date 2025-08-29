@@ -4,7 +4,6 @@ namespace App\Providers\Filament;
 
 use App\Filament\Pages\Auth\EditProfile;
 use App\Filament\Pages\Auth\Login;
-use App\Models\Location\Branch;
 use Filament\Actions\Action;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -15,13 +14,13 @@ use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Widgets\AccountWidget;
-use Filament\Widgets\FilamentInfoWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Modules\Location\Models\Branch;
 
 class BranchPanelProvider extends PanelProvider
 {
@@ -41,7 +40,7 @@ class BranchPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Branch/Widgets'), for: 'App\Filament\Branch\Widgets')
             ->widgets([
                 AccountWidget::class,
-                //FilamentInfoWidget::class,
+                // FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -70,9 +69,9 @@ class BranchPanelProvider extends PanelProvider
             ->tenant(Branch::class)
             ->userMenuItems([
                 Action::make('admin')
-                    ->url(fn(): string => '/admin')
+                    ->url(fn (): string => '/admin')
                     ->icon('heroicon-o-cog-6-tooth')
-                    ->visible(fn(): bool => auth()->user()->isAdmin()),
+                    ->visible(fn (): bool => auth()->user()->isAdmin()),
             ]);
     }
 }

@@ -9,7 +9,7 @@ use App\Filament\Branch\Resources\Quote\Life\QuoteLives\Pages\ViewQuoteLife;
 use App\Filament\Branch\Resources\Quote\Life\QuoteLives\Schemas\QuoteLifeForm;
 use App\Filament\Branch\Resources\Quote\Life\QuoteLives\Schemas\QuoteLifeInfolist;
 use App\Filament\Branch\Resources\Quote\Life\QuoteLives\Tables\QuoteLivesTable;
-use App\Models\Quote\Life\QuoteLife;
+use App\Models\QuoteLife;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;

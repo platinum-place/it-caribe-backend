@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Adapters\ZohoApiAdapter;
+use app\Adapters\ZohoApiAdapter;
 use App\Contracts\ZohoCRMInterface;
 use Illuminate\Support\ServiceProvider;
 
