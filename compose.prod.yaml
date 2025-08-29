@@ -98,6 +98,56 @@ services:
       timeout: 5s
       retries: 3
 
+  queue:
+    container_name: ${APP_NAME}-queue
+    build:
+      context: .
+      dockerfile: docker/common/php-fpm/Dockerfile
+    user: "${UID:-1000}:${GID:-1000}"
+    working_dir: /var/www
+    env_file:
+      - .env
+    environment:
+      APP_ENV: ${APP_ENV}
+      QUEUE_CONNECTION: ${QUEUE_CONNECTION}
+      REDIS_HOST: ${REDIS_HOST:-redis}
+      REDIS_CLIENT: ${REDIS_CLIENT:-phpredis}
+    volumes:
+      - ./:/var/www
+    depends_on:
+      - redis
+      - postgres
+    command: >
+      bash -lc "php artisan queue:work redis
+        --queue=filament,exports,default
+        --sleep=1 --tries=3 --max-time=3600"
+    networks:
+      - laravel-production
+
+  scheduler:
+    container_name: ${APP_NAME}-queue
+    build:
+      context: .
+      dockerfile: docker/common/php-fpm/Dockerfile
+    user: "${UID:-1000}:${GID:-1000}"
+    working_dir: /var/www
+    env_file:
+      - .env
+    environment:
+      APP_ENV: ${APP_ENV}
+      QUEUE_CONNECTION: ${QUEUE_CONNECTION}
+      REDIS_HOST: ${REDIS_HOST:-redis}
+      REDIS_CLIENT: ${REDIS_CLIENT:-phpredis}
+    volumes:
+      - ./:/var/www
+    depends_on:
+      - redis
+      - postgres
+    command: >
+      bash -lc "php artisan schedule:work"
+    networks:
+      - laravel-production
+
 networks:
   # Attach the service to the 'laravel' network.
   # -----------------------------------------------------------

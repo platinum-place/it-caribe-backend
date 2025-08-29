@@ -2,9 +2,11 @@
 
 namespace App\Filament\Branch\Resources\Quote\Vehicle\QuoteVehicles\Tables;
 
+use App\Filament\Exports\Quote\Vehicle\QuoteVehicleExporter;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\ExportBulkAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
@@ -67,6 +69,8 @@ class QuoteVehiclesTable
                     DeleteBulkAction::make(),
                     ForceDeleteBulkAction::make(),
                     RestoreBulkAction::make(),
+                    ExportBulkAction::make()
+                        ->exporter(QuoteVehicleExporter::class),
                 ]),
             ]);
     }
