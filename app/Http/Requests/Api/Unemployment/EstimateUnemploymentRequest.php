@@ -28,7 +28,7 @@ class EstimateUnemploymentRequest extends FormRequest
             'Cuota' => ['required', 'numeric'],
             'Plazo' => ['required', 'integer'],
             'TiempoLaborando' => ['required', 'integer'],
-            'Edad' => ['required', 'integer'],
+            'Edad' => ['nullable', 'integer'],
             'MontoOriginal' => ['required', 'numeric'],
             'idTipoEmpleado' => ['required', 'integer'],
             'FormaDePago' => ['required', 'string', 'in:Mensual,PagoTotal'],
