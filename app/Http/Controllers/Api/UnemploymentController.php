@@ -25,7 +25,7 @@ class UnemploymentController
         $data = $request->all();
 
         $estimates = app(EstimateQuoteUnemploymentService::class)->estimate(
-            $data['Edad'],
+            $data['Edad'] ?? $data['TiempoLaborando'] ?? 30,
             $data['MontoOriginal'],
             $data['Plazo'],
             1,
