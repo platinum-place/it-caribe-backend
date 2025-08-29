@@ -263,10 +263,10 @@ class MigrateSeeder extends Seeder
                     'quote_type_id' => QuoteTypeEnum::VEHICLE->value,
                     'quote_status_id' => QuoteStatusEnum::APPROVED->value,
                     'lead_id' => $lead->id,
+                    'branch_id' => 1,
                     //            'attachments',
                     'start_date' => $this->parseDate($row['FECHA  '] ?? null),
                     'end_date' => $this->parseDate($row['VENCIMIENTO'] ?? null),
-                    'responsible_id' => 1,
                     'created_by' => 1,
                 ]);
 

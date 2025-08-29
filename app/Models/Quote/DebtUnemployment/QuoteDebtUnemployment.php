@@ -2,10 +2,13 @@
 
 namespace App\Models\Quote\DebtUnemployment;
 
+use App\Models\Location\Branch;
+use App\Models\Quote\Quote;
 use App\Observers\Quote\DebtUnemployment\QuoteDebtUnemploymentObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 #[ObservedBy([QuoteDebtUnemploymentObserver::class])]
@@ -18,6 +21,11 @@ class QuoteDebtUnemployment extends Model
         'loan_amount', 'insured_amount',
         'created_by', 'updated_by', 'deleted_by',
     ];
+
+    public function branch(): HasOneThrough
+    {
+        return $this->hasOneThrough(Branch::class, Quote::class, 'id', 'id', 'quote_id', 'branch_id');
+    }
 
     public function createdBy(): BelongsTo
     {

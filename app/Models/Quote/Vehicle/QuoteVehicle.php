@@ -2,6 +2,7 @@
 
 namespace App\Models\Quote\Vehicle;
 
+use App\Models\Location\Branch;
 use App\Models\Quote\Quote;
 use App\Models\Vehicle\Vehicle;
 use App\Observers\Quote\Vehicle\QuoteVehicleObserver;
@@ -11,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 #[ObservedBy([QuoteVehicleObserver::class])]
 class QuoteVehicle extends Model
@@ -22,6 +24,11 @@ class QuoteVehicle extends Model
         'is_employee', 'leasing', 'vehicle_loan_amount',
         'created_by', 'updated_by', 'deleted_by',
     ];
+
+    public function branch(): HasOneThrough
+    {
+        return $this->hasOneThrough(Branch::class, Quote::class, 'id', 'id', 'quote_id', 'branch_id');
+    }
 
     public function quote(): BelongsTo
     {

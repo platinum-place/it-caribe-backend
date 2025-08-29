@@ -2,10 +2,13 @@
 
 namespace App\Models\Quote\Fire;
 
+use App\Models\Location\Branch;
+use App\Models\Quote\Quote;
 use App\Observers\Quote\Fire\QuoteFireObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 #[ObservedBy([QuoteFireObserver::class])]
@@ -19,6 +22,11 @@ class QuoteFire extends Model
         'deadline_month', 'deadline_year', 'appraisal_value', 'financed_value', 'property_address',
         'created_by', 'updated_by', 'deleted_by',
     ];
+
+    public function branch(): HasOneThrough
+    {
+        return $this->hasOneThrough(Branch::class, Quote::class, 'id', 'id', 'quote_id', 'branch_id');
+    }
 
     public function createdBy(): BelongsTo
     {
