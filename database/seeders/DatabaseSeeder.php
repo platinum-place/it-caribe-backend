@@ -4,9 +4,9 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Modules\CRM\Database\Seeders\CRMDatabaseSeeder;
-use Modules\Quote\Database\Seeders\QuoteDatabaseSeeder;
-use Modules\Vehicle\Database\Seeders\VehicleDatabaseSeeder;
+use old\Modules\CRM\database\seeders\CRMDatabaseSeeder;
+use old\Modules\Quote\database\seeders\QuoteDatabaseSeeder;
+use old\Modules\Vehicle\database\seeders\VehicleDatabaseSeeder;
 
 class DatabaseSeeder extends Seeder
 {

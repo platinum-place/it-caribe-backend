@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Quote\Vehicle\IssueQuoteVehicleRequest;
 use App\Models\QuoteVehicleLine;
 use Carbon\Carbon;
-use Modules\Quote\Enums\QuoteLineStatusEnum;
-use Modules\Quote\Enums\QuoteStatusEnum;
+use old\Modules\Quote\app\Enums\QuoteLineStatusEnum;
+use old\Modules\Quote\app\Enums\QuoteStatusEnum;
 
 class IssueQuoteVehicleController extends Controller
 {

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Vehicle;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Modules\Vehicle\Models\VehicleActivity;
+use old\Modules\Vehicle\app\Models\VehicleActivity;
 
 class FetchVehicleActivityController extends Controller
 {

@@ -8,14 +8,14 @@ use App\Models\Quote;
 use App\Models\QuoteFire;
 use App\Models\QuoteLifeLine;
 use App\Models\QuoteLine;
-use Modules\CRM\Enums\LeadTypeEnum;
-use Modules\CRM\Models\Lead;
-use Modules\Quote\Enums\QuoteFireConstructionTypeEnum;
-use Modules\Quote\Enums\QuoteFireCreditTypeEnum;
-use Modules\Quote\Enums\QuoteFireRiskTypeEnum;
-use Modules\Quote\Enums\QuoteLineStatusEnum;
-use Modules\Quote\Enums\QuoteStatusEnum;
-use Modules\Quote\Enums\QuoteTypeEnum;
+use old\Modules\CRM\app\Enums\LeadTypeEnum;
+use old\Modules\CRM\app\Models\Lead;
+use old\Modules\Quote\app\Enums\QuoteFireConstructionTypeEnum;
+use old\Modules\Quote\app\Enums\QuoteFireCreditTypeEnum;
+use old\Modules\Quote\app\Enums\QuoteFireRiskTypeEnum;
+use old\Modules\Quote\app\Enums\QuoteLineStatusEnum;
+use old\Modules\Quote\app\Enums\QuoteStatusEnum;
+use old\Modules\Quote\app\Enums\QuoteTypeEnum;
 use old\Services\Quote\Fire\EstimateQuoteFireService;
 
 class EstimateQuoteFireController extends Controller

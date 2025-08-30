@@ -8,13 +8,13 @@ use App\Models\Quote;
 use App\Models\QuoteLine;
 use App\Models\QuoteVehicle;
 use App\Models\QuoteVehicleLine;
-use Modules\CRM\Models\Lead;
-use Modules\Quote\Enums\QuoteLineStatusEnum;
-use Modules\Quote\Enums\QuoteStatusEnum;
-use Modules\Quote\Enums\QuoteTypeEnum;
-use Modules\Vehicle\Models\Vehicle;
-use Modules\Vehicle\Models\VehicleMake;
-use Modules\Vehicle\Models\VehicleModel;
+use old\Modules\CRM\app\Models\Lead;
+use old\Modules\Quote\app\Enums\QuoteLineStatusEnum;
+use old\Modules\Quote\app\Enums\QuoteStatusEnum;
+use old\Modules\Quote\app\Enums\QuoteTypeEnum;
+use old\Modules\Vehicle\app\Models\Vehicle;
+use old\Modules\Vehicle\app\Models\VehicleMake;
+use old\Modules\Vehicle\app\Models\VehicleModel;
 use old\Services\Quote\Vehicle\EstimateQuoteVehicleService;
 
 class EstimateQuoteVehicleController extends Controller

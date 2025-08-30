@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Quote\Life;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Quote\Life\IssueQuoteLifeRequest;
 use App\Models\QuoteLifeLine;
-use Modules\Quote\Enums\QuoteStatusEnum;
+use old\Modules\Quote\app\Enums\QuoteStatusEnum;
 
 class CancelQuoteLifeController extends Controller
 {

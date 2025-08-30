@@ -8,12 +8,12 @@ use App\Models\Quote;
 use App\Models\QuoteLife;
 use App\Models\QuoteLifeLine;
 use App\Models\QuoteLine;
-use Modules\CRM\Enums\LeadTypeEnum;
-use Modules\CRM\Models\Lead;
-use Modules\Quote\Enums\QuoteLifeCreditTypeEnum;
-use Modules\Quote\Enums\QuoteLineStatusEnum;
-use Modules\Quote\Enums\QuoteStatusEnum;
-use Modules\Quote\Enums\QuoteTypeEnum;
+use old\Modules\CRM\app\Enums\LeadTypeEnum;
+use old\Modules\CRM\app\Models\Lead;
+use old\Modules\Quote\app\Enums\QuoteLifeCreditTypeEnum;
+use old\Modules\Quote\app\Enums\QuoteLineStatusEnum;
+use old\Modules\Quote\app\Enums\QuoteStatusEnum;
+use old\Modules\Quote\app\Enums\QuoteTypeEnum;
 use old\Services\Quote\Life\EstimateQuoteLifeService;
 
 class EstimateQuoteLifeController extends Controller

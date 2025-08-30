@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Quote\Vehicle;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Quote\Vehicle\ValidateInspectionRequest;
 use App\Models\QuoteVehicleLine;
-use Modules\Quote\Enums\QuoteStatusEnum;
+use old\Modules\Quote\app\Enums\QuoteStatusEnum;
 
 class ValidateInspectionController extends Controller
 {
