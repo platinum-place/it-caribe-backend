@@ -2,7 +2,7 @@
 
 namespace old\Resources\QuoteVehicles\Tables;
 
-use App\Filament\Exports\Quote\Vehicle\QuoteVehicleExporter;
+use old\Filament\Exports\Quote\Vehicle\QuoteVehicleExporter;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;

@@ -2,9 +2,9 @@
 
 namespace Modules\Quote\Database\Seeders;
 
-use App\Models\QuoteFireCreditType;
 use Illuminate\Database\Seeder;
 use Modules\Quote\Enums\QuoteFireCreditTypeEnum;
+use Modules\Quote\Models\QuoteFireCreditType;
 
 class QuoteFireCreditTypeSeeder extends Seeder
 {

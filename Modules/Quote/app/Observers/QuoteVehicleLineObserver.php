@@ -2,8 +2,8 @@
 
 namespace Modules\Quote\Observers;
 
-use App\Models\QuoteVehicleLine;
-use App\Observers\Common\BaseObserver;
+use App\Observers\BaseObserver;
+use Modules\Quote\Models\QuoteVehicleLine;
 
 class QuoteVehicleLineObserver extends BaseObserver
 {

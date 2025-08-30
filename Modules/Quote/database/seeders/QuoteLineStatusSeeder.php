@@ -2,9 +2,9 @@
 
 namespace Modules\Quote\Database\Seeders;
 
-use App\Models\QuoteLineStatus;
 use Illuminate\Database\Seeder;
 use Modules\Quote\Enums\QuoteLineStatusEnum;
+use Modules\Quote\Models\QuoteLineStatus;
 
 class QuoteLineStatusSeeder extends Seeder
 {

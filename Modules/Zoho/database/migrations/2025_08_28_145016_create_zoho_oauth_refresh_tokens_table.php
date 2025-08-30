@@ -20,8 +20,6 @@ return new class extends Migration
             $table->foreignId('deleted_by')->nullable()->constrained('users');
 
             $table->string('refresh_token');
-            $table->string('api_domain')->nullable();
-            $table->string('token_type')->nullable();
         });
     }
 

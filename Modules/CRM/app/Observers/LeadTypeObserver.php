@@ -2,7 +2,7 @@
 
 namespace Modules\CRM\Observers;
 
-use App\Observers\Common\BaseObserver;
+use App\Observers\BaseObserver;
 use Modules\CRM\Models\LeadType;
 
 class LeadTypeObserver extends BaseObserver

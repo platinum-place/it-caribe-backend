@@ -2,9 +2,9 @@
 
 namespace Modules\Quote\Database\Seeders;
 
-use App\Models\QuoteFireConstructionType;
 use Illuminate\Database\Seeder;
 use Modules\Quote\Enums\QuoteFireConstructionTypeEnum;
+use Modules\Quote\Models\QuoteFireConstructionType;
 
 class QuoteFireConstructionTypeSeeder extends Seeder
 {

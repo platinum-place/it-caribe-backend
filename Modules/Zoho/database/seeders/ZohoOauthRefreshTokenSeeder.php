@@ -3,6 +3,7 @@
 namespace Modules\Zoho\Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Modules\Zoho\Models\ZohoOauthClient;
 use Modules\Zoho\Models\ZohoOauthRefreshToken;
 
 class ZohoOauthRefreshTokenSeeder extends Seeder

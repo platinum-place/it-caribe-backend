@@ -2,7 +2,7 @@
 
 namespace Modules\Quote\Observers;
 
-use App\Observers\Common\BaseObserver;
+use App\Observers\BaseObserver;
 use Modules\Quote\Models\QuoteStatus;
 
 class QuoteStatusObserver extends BaseObserver

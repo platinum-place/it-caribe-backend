@@ -2,8 +2,8 @@
 
 namespace Modules\Quote\Observers;
 
-use App\Models\QuoteDebtUnemployment;
-use App\Observers\Common\BaseObserver;
+use App\Observers\BaseObserver;
+use Modules\Quote\Models\QuoteDebtUnemployment;
 
 class QuoteDebtUnemploymentObserver extends BaseObserver
 {

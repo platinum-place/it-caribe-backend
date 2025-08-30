@@ -12,6 +12,7 @@ class ZohoDatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
+            ZohoOauthClientSeeder::class,
             ZohoOauthRefreshTokenSeeder::class,
         ]);
     }

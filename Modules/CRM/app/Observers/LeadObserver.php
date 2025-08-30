@@ -2,7 +2,7 @@
 
 namespace Modules\CRM\Observers;
 
-use App\Observers\Common\BaseObserver;
+use App\Observers\BaseObserver;
 use Carbon\Carbon;
 use Modules\CRM\Models\Lead;
 

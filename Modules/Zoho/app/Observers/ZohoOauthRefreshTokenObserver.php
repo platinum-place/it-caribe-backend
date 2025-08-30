@@ -2,7 +2,7 @@
 
 namespace Modules\Zoho\Observers;
 
-use App\Observers\Common\BaseObserver;
+use App\Observers\BaseObserver;
 use Modules\Zoho\Models\ZohoOauthRefreshToken;
 
 class ZohoOauthRefreshTokenObserver extends BaseObserver

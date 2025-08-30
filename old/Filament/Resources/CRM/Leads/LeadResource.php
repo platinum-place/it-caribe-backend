@@ -1,0 +1,73 @@
+<?php
+
+namespace App\Filament\Resources\CRM\Leads;
+
+use App\Filament\Resources\CRM\Leads\Tables\LeadsTable;
+use BackedEnum;
+use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Modules\CRM\Models\Lead;
+use old\Filament\Resources\CRM\Leads\Pages\CreateLead;
+use old\Filament\Resources\CRM\Leads\Pages\EditLead;
+use old\Filament\Resources\CRM\Leads\Pages\ListLeads;
+use old\Filament\Resources\CRM\Leads\Pages\ViewLead;
+use old\Filament\Resources\CRM\Leads\Schemas\LeadForm;
+use old\Filament\Resources\CRM\Leads\Schemas\LeadInfolist;
+
+class LeadResource extends Resource
+{
+    protected static ?string $model = Lead::class;
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+
+    protected static ?string $recordTitleAttribute = 'full_name';
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('CRM');
+    }
+
+    public static function form(Schema $schema): Schema
+    {
+        return LeadForm::configure($schema);
+    }
+
+    public static function infolist(Schema $schema): Schema
+    {
+        return LeadInfolist::configure($schema);
+    }
+
+    public static function table(Table $table): Table
+    {
+        return LeadsTable::configure($table);
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            //
+        ];
+    }
+
+    public static function getPages(): array
+    {
+        return [
+            'index' => ListLeads::route('/'),
+            'create' => CreateLead::route('/create'),
+            'view' => ViewLead::route('/{record}'),
+            'edit' => EditLead::route('/{record}/edit'),
+        ];
+    }
+
+    public static function getRecordRouteBindingEloquentQuery(): Builder
+    {
+        return parent::getRecordRouteBindingEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
+    }
+}

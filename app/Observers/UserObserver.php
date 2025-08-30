@@ -3,7 +3,6 @@
 namespace App\Observers;
 
 use App\Models\User;
-use App\Observers\Common\BaseObserver;
 use Illuminate\Database\Eloquent\Model;
 
 class UserObserver extends BaseObserver

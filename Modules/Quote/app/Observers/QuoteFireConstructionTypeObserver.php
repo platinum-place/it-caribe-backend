@@ -2,8 +2,8 @@
 
 namespace Modules\Quote\Observers;
 
-use App\Models\QuoteFireConstructionType;
-use App\Observers\Common\BaseObserver;
+use App\Observers\BaseObserver;
+use Modules\Quote\Models\QuoteFireConstructionType;
 
 class QuoteFireConstructionTypeObserver extends BaseObserver
 {

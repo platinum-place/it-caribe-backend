@@ -2,9 +2,9 @@
 
 namespace Modules\Quote\Database\Seeders;
 
-use App\Models\QuoteUnemploymentPaymentType;
 use Illuminate\Database\Seeder;
 use Modules\Quote\Enums\QuoteUnemploymentPaymentTypeEnum;
+use Modules\Quote\Models\QuoteUnemploymentPaymentType;
 
 class QuoteUnemploymentPaymentTypeSeeder extends Seeder
 {

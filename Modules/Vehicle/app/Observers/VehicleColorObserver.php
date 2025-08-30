@@ -2,7 +2,7 @@
 
 namespace Modules\Vehicle\Observers;
 
-use App\Observers\Common\BaseObserver;
+use App\Observers\BaseObserver;
 use Modules\Vehicle\Models\VehicleColor;
 
 class VehicleColorObserver extends BaseObserver

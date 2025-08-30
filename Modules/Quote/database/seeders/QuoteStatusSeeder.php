@@ -2,8 +2,8 @@
 
 namespace Modules\Quote\Database\Seeders;
 
-use App\Models\QuoteStatus;
 use Illuminate\Database\Seeder;
+use Modules\Quote\Models\QuoteStatus;
 
 class QuoteStatusSeeder extends Seeder
 {

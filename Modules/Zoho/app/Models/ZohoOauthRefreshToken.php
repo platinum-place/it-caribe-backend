@@ -14,16 +14,9 @@ class ZohoOauthRefreshToken extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'refresh_token', 'api_domain', 'token_type',
+        'refresh_token',
         'created_by', 'updated_by', 'deleted_by',
     ];
-
-    protected function casts(): array
-    {
-        return [
-            'expires_at' => 'datetime',
-        ];
-    }
 
     public function createdBy(): BelongsTo
     {

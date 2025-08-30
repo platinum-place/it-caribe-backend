@@ -2,7 +2,7 @@
 
 namespace old\Resources\QuoteVehicles\Schemas;
 
-use App\Filament\Forms\Components\Wizards\CreateLeadWizardStep;
+use old\Filament\Forms\Components\Wizards\CreateLeadWizardStep;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\DatePicker;
