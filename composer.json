@@ -13,6 +13,10 @@
         {
             "type": "path",
             "url": "./packages/location"
+        },
+        {
+            "type": "path",
+            "url": "./packages/crm"
         }
     ],
     "require": {
@@ -24,6 +28,7 @@
         "laravel/passport": "^13.0",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.10.1",
+        "root/crm": "dev-main",
         "root/location": "dev-main",
         "root/zoho-api": "dev-main",
         "spatie/laravel-package-tools": "^1.92",

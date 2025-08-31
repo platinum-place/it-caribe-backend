@@ -77,6 +77,9 @@ class AdminPanelProvider extends PanelProvider
                 Action::make('zoho')
                     ->url(fn (): string => '/zoho')
                     ->icon('heroicon-o-cog-6-tooth'),
+                Action::make('crm')
+                    ->url(fn (): string => '/crm')
+                    ->icon('heroicon-o-cog-6-tooth'),
             ]);
     }
 }

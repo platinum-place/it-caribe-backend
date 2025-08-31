@@ -1,6 +1,6 @@
 <?php
 
-namespace Root\Example\Infrastructure\Persistence\Seeders;
+namespace Root\CRM\Infrastructure\Persistence\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-
+            LeadTypeSeeder::class,
         ]);
     }
 }

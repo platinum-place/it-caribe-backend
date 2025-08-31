@@ -1,17 +1,17 @@
 {
-    "name": "root/example",
+    "name": "root/crm",
     "autoload": {
         "psr-4": {
-            "Root\\Example\\": "src/"
+            "Root\\CRM\\": "src/"
         }
     },
     "require": {},
     "extra": {
         "laravel": {
             "providers": [
-                "Root\\Example\\PackageServiceProvider",
-                "Root\\Example\\AppServiceProvider",
-                "Root\\Example\\FilamentPanelProvider"
+                "Root\\CRM\\PackageServiceProvider",
+                "Root\\CRM\\AppServiceProvider",
+                "Root\\CRM\\FilamentPanelProvider"
             ]
         }
     }

@@ -12,12 +12,12 @@ class PackageServiceProvider extends SpatiePackageServiceProvider
     public function configurePackage(Package $package): void
     {
         $package
-            ->name('zoho-api')
-            ->hasConfigFile('zoho')
+            ->name('example')
+            ->hasConfigFile('example')
             ->discoversMigrations()
+            ->runsMigrations()
             ->hasInstallCommand(function (InstallCommand $command) {
                 $command
-                    ->askToRunMigrations()
                     ->endWith(function (InstallCommand $command) {
                         $command->call('db:seed', [
                             '--class' => DatabaseSeeder::class,

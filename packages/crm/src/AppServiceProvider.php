@@ -1,6 +1,6 @@
 <?php
 
-namespace Root\Example;
+namespace Root\CRM;
 
 use Illuminate\Support\ServiceProvider;
 

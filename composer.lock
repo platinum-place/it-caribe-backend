@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d27b569f63a23e9d24e5b6f79d81af8d",
+    "content-hash": "1a4981ebb9bb6f905b352452b40af28b",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -7626,6 +7626,33 @@
             "time": "2025-06-25T14:20:11+00:00"
         },
         {
+            "name": "root/crm",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "./packages/crm",
+                "reference": "77027e1ef61045bc5389c74d44a0d29687d4d383"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Root\\CRM\\PackageServiceProvider",
+                        "Root\\CRM\\AppServiceProvider",
+                        "Root\\CRM\\FilamentPanelProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Root\\CRM\\": "src/"
+                }
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
             "name": "root/location",
             "version": "dev-main",
             "dist": {
@@ -14412,6 +14439,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "roave/security-advisories": 20,
+        "root/crm": 20,
         "root/location": 20,
         "root/zoho-api": 20
     },

@@ -1,6 +1,6 @@
 <?php
 
-namespace Root\Example;
+namespace Root\CRM;
 
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -24,18 +24,18 @@ class FilamentPanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         return $panel
-            ->id('zoho')
-            ->path('zoho')
+            ->id('crm')
+            ->path('crm')
             ->login()
             ->colors([
                 'primary' => Color::Amber,
             ])
-            ->discoverResources(in: __DIR__.'/Presentation/Filament/Resources', for: 'Root\\Example\\Presentation\\Filament\\Resources')
-            ->discoverPages(in: __DIR__.'/Presentation/Filament/Pages', for: 'Root\\Example\\Presentation\\Filament\\Pages')
+            ->discoverResources(in: __DIR__.'/Presentation/Filament/Resources', for: 'Root\\CRM\\Presentation\\Filament\\Resources')
+            ->discoverPages(in: __DIR__.'/Presentation/Filament/Pages', for: 'Root\\CRM\\Presentation\\Filament\\Pages')
             ->pages([
                 Dashboard::class,
             ])
-            ->discoverWidgets(in: __DIR__.'/Presentation/Filament/Widgets', for: 'Root\\Example\\Presentation\\Filament\\Widgets')
+            ->discoverWidgets(in: __DIR__.'/Presentation/Filament/Widgets', for: 'Root\\CRM\\Presentation\\Filament\\Widgets')
             ->widgets([
                 AccountWidget::class,
                 // FilamentInfoWidget::class,
