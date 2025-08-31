@@ -16,7 +16,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
 use Laravel\Sanctum\HasApiTokens;
-use old\Modules\Location\app\Models\Branch;
+use Root\Location\Infrastructure\Persistence\Models\Branch;
 use Spatie\Permission\Traits\HasRoles;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
