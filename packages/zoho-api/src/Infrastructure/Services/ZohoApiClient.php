@@ -36,13 +36,13 @@ class ZohoApiClient
      * @throws RequestException
      * @throws ConnectionException
      */
-    public function fetchAccessToken(string $refreshToken): array
+    public function fetchAccessToken(string $refreshToken, string $clientId, string $clientSecret): array
     {
         $response = Http::asForm()
             ->post(config('zoho.domains.accounts').'/'.config('zoho.uri.oauth').'/token', [
                 'grant_type' => 'refresh_token',
-                'client_id' => config('zoho.oauth.client_id'),
-                'client_secret' => config('zoho.oauth.client_secret'),
+                'client_id' => $clientId,
+                'client_secret' => $clientSecret,
                 'refresh_token' => $refreshToken,
             ])
             ->throw()

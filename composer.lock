@@ -7631,12 +7631,13 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/zoho-api",
-                "reference": "fd7d4c50ee12c1f96c37861130f5f7e3ebeca2b5"
+                "reference": "510ff28b61ef89c00d2a547165c824b17e11f4e1"
             },
             "type": "library",
             "extra": {
                 "laravel": {
                     "providers": [
+                        "Root\\ZohoApi\\PackageServiceProvider",
                         "Root\\ZohoApi\\AppServiceProvider",
                         "Root\\ZohoApi\\FilamentPanelProvider"
                     ]

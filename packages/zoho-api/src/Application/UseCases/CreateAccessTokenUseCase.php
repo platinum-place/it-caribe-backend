@@ -9,7 +9,7 @@ use Root\ZohoApi\Domain\Contracts\ZohoOauthRefreshTokenRepositoryInterface;
 use Root\ZohoApi\Domain\Entities\ZohoOauthAccessTokenEntity;
 use Root\ZohoApi\Domain\ValueObjects\OauthClient;
 
-class CreateRefreshTokenUseCase
+class CreateAccessTokenUseCase
 {
     /**
      * Create a new class instance.
@@ -23,21 +23,20 @@ class CreateRefreshTokenUseCase
         //
     }
 
-    public function handle(string $code): ZohoOauthAccessTokenEntity
+    public function handle(): ZohoOauthAccessTokenEntity
     {
         $oauthClient = $this->oauthClientRepository->findLast();
 
-        $response = $this->zohoCRM->fetchRefreshToken(
-            $code,
+        $oauthRefreshToken = $this->oauthRefreshTokenRepository->findLast();
+
+        $response = $this->zohoCRM->fetchAccessToken(
+            $oauthRefreshToken->refreshToken,
             new OauthClient(
                 $oauthClient->clientId,
-                $oauthClient->clientSecret,
-                $oauthClient->redirectUri
+                $oauthClient->clientSecret
             )
         );
 
-        $this->oauthRefreshTokenRepository->store($response->refreshToken);
-
-        return $this->oauthAccessTokenRepository->store($response->accessToken);
+        return $this->oauthAccessTokenRepository->store($response);
     }
 }

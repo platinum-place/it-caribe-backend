@@ -7,7 +7,7 @@ use Illuminate\Http\Client\RequestException;
 use Root\ZohoApi\Domain\Contracts\ZohoCRMInterface;
 use Root\ZohoApi\Domain\ValueObjects\AccessToken;
 use Root\ZohoApi\Domain\ValueObjects\AuthorizationCode;
-use Root\ZohoApi\Domain\ValueObjects\RefreshToken;
+use Root\ZohoApi\Domain\ValueObjects\OauthClient;
 use Root\ZohoApi\Infrastructure\Services\ZohoApiClient;
 
 class ZohoApiAdapter implements ZohoCRMInterface
@@ -24,9 +24,9 @@ class ZohoApiAdapter implements ZohoCRMInterface
      * @throws RequestException
      * @throws ConnectionException
      */
-    public function fetchRefreshToken(string $grantToken, string $clientId, string $clientSecret, string $redirectUri): AuthorizationCode
+    public function fetchRefreshToken(string $grantToken, OauthClient $oauthClient): AuthorizationCode
     {
-        $response = $this->client->fetchRefreshToken($grantToken, $clientId, $clientSecret, $redirectUri);
+        $response = $this->client->fetchRefreshToken($grantToken, $oauthClient->clientId, $oauthClient->clientSecret, $oauthClient->redirectUri);
 
         return new AuthorizationCode(
             $response['refresh_token'],
@@ -43,16 +43,16 @@ class ZohoApiAdapter implements ZohoCRMInterface
      * @throws RequestException
      * @throws ConnectionException
      */
-    public function fetchAccessToken(string $refreshToken): AccessToken
+    public function fetchAccessToken(string $refreshToken, OauthClient $oauthClient): AccessToken
     {
-        $response = $this->client->fetchAccessToken($refreshToken);
+        $response = $this->client->fetchAccessToken($refreshToken, $oauthClient->clientId, $oauthClient->clientSecret);
 
         return new AccessToken(
             $response['access_token'],
-            $response['scope'],
             $response['api_domain'],
             $response['token_type'],
             $response['expires_in'],
+            $response['scope'],
         );
     }
 }
