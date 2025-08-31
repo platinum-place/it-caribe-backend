@@ -1,8 +1,8 @@
 <?php
 
-namespace Root\ZohoApi;
+namespace Root\Location;
 
-use Root\ZohoApi\Infrastructure\Persistence\Seeders\DatabaseSeeder;
+use Root\Location\Infrastructure\Persistence\Seeders\DatabaseSeeder;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider as SpatiePackageServiceProvider;
@@ -12,8 +12,8 @@ class PackageServiceProvider extends SpatiePackageServiceProvider
     public function configurePackage(Package $package): void
     {
         $package
-            ->name('zoho-api')
-            ->hasConfigFile('zoho')
+            ->name('location')
+            ->hasConfigFile('location')
             ->discoversMigrations()
             ->runsMigrations()
             ->hasInstallCommand(function (InstallCommand $command) {

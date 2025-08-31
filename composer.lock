@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "73c1f2dc6d7cc0d00dd20f1f5cf29768",
+    "content-hash": "d27b569f63a23e9d24e5b6f79d81af8d",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -7626,6 +7626,33 @@
             "time": "2025-06-25T14:20:11+00:00"
         },
         {
+            "name": "root/location",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "./packages/location",
+                "reference": "5ec1781eb8560700f9ab9917f6b5d355b35d057e"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Root\\Location\\PackageServiceProvider",
+                        "Root\\Location\\AppServiceProvider",
+                        "Root\\Location\\FilamentPanelProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Root\\Location\\": "src/"
+                }
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
             "name": "root/zoho-api",
             "version": "dev-main",
             "dist": {
@@ -14385,6 +14412,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "roave/security-advisories": 20,
+        "root/location": 20,
         "root/zoho-api": 20
     },
     "prefer-stable": true,

@@ -1,6 +1,6 @@
 <?php
 
-namespace Root\Example;
+namespace Root\Location;
 
 use Illuminate\Support\ServiceProvider;
 

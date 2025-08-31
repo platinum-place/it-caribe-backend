@@ -1,0 +1,18 @@
+{
+    "name": "root/location",
+    "autoload": {
+        "psr-4": {
+            "Root\\Location\\": "src/"
+        }
+    },
+    "require": {},
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Root\\Location\\PackageServiceProvider",
+                "Root\\Location\\AppServiceProvider",
+                "Root\\Location\\FilamentPanelProvider"
+            ]
+        }
+    }
+}

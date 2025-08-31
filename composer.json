@@ -9,6 +9,10 @@
         {
             "type": "path",
             "url": "./packages/zoho-api"
+        },
+        {
+            "type": "path",
+            "url": "./packages/location"
         }
     ],
     "require": {
@@ -20,6 +24,7 @@
         "laravel/passport": "^13.0",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.10.1",
+        "root/location": "dev-main",
         "root/zoho-api": "dev-main",
         "spatie/laravel-package-tools": "^1.92",
         "spatie/laravel-permission": "^6.21"

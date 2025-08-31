@@ -71,6 +71,12 @@ class AdminPanelProvider extends PanelProvider
                 Action::make('branches')
                     ->url(fn (): string => '/branch')
                     ->icon('heroicon-o-cog-6-tooth'),
+                Action::make('location')
+                    ->url(fn (): string => '/location')
+                    ->icon('heroicon-o-cog-6-tooth'),
+                Action::make('zoho')
+                    ->url(fn (): string => '/zoho')
+                    ->icon('heroicon-o-cog-6-tooth'),
             ]);
     }
 }
