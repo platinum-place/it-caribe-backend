@@ -80,6 +80,9 @@ class AdminPanelProvider extends PanelProvider
                 Action::make('crm')
                     ->url(fn (): string => '/crm')
                     ->icon('heroicon-o-cog-6-tooth'),
+                Action::make('vehicles')
+                    ->url(fn (): string => '/vehicles')
+                    ->icon('heroicon-o-cog-6-tooth'),
             ]);
     }
 }

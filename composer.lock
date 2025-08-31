@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1a4981ebb9bb6f905b352452b40af28b",
+    "content-hash": "674ca4ef94730218e97cda10e7647bd3",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -7680,6 +7680,33 @@
             }
         },
         {
+            "name": "root/vehicles",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "./packages/vehicles",
+                "reference": "46a68e04505c1318e07eac56d44be14ef237853b"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Root\\Vehicles\\PackageServiceProvider",
+                        "Root\\Vehicles\\AppServiceProvider",
+                        "Root\\Vehicles\\FilamentPanelProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Root\\Vehicles\\": "src/"
+                }
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
             "name": "root/zoho-api",
             "version": "dev-main",
             "dist": {
@@ -14441,6 +14468,7 @@
         "roave/security-advisories": 20,
         "root/crm": 20,
         "root/location": 20,
+        "root/vehicles": 20,
         "root/zoho-api": 20
     },
     "prefer-stable": true,

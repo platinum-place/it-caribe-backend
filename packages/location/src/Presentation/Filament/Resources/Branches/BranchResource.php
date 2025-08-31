@@ -17,7 +17,6 @@ use Root\Location\Presentation\Filament\Resources\Branches\Pages\ViewBranch;
 use Root\Location\Presentation\Filament\Resources\Branches\Schemas\BranchForm;
 use Root\Location\Presentation\Filament\Resources\Branches\Schemas\BranchInfolist;
 use Root\Location\Presentation\Filament\Resources\Branches\Tables\BranchesTable;
-use Root\Location\Presentation\Filament\Resources\Branches\RelationManagers;
 
 class BranchResource extends Resource
 {

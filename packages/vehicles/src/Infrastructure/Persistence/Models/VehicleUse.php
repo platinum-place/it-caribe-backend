@@ -1,28 +1,21 @@
 <?php
 
-namespace Root\CRM\Infrastructure\Persistence\Models;
+namespace Root\Vehicles\Infrastructure\Persistence\Models;
 
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Root\CRM\Infrastructure\Persistence\Observers\LeadObserver;
+use Root\Vehicles\Infrastructure\Persistence\Observers\VehicleUseObserver;
 
-#[ObservedBy([LeadObserver::class])]
-class Lead extends Model
+#[ObservedBy([VehicleUseObserver::class])]
+class VehicleUse extends Model
 {
     use SoftDeletes;
 
     protected $fillable = [
-        'full_name', 'first_name', 'last_name', 'identity_number', 'age',
-        'birth_date', 'home_phone', 'mobile_phone', 'work_phone', 'email', 'address',
-        'lead_type_id', 'created_by', 'updated_by', 'deleted_by',
+        'id', 'name', 'created_by', 'updated_by', 'deleted_by',
     ];
-
-    public function debtorType(): BelongsTo
-    {
-        return $this->belongsTo(LeadType::class);
-    }
 
     public function createdBy(): BelongsTo
     {
@@ -37,10 +30,5 @@ class Lead extends Model
     public function deletedBy(): BelongsTo
     {
         return $this->belongsTo(\App\Models\User::class, 'deleted_by');
-    }
-
-    public function type(): BelongsTo
-    {
-        return $this->belongsTo(LeadType::class);
     }
 }
