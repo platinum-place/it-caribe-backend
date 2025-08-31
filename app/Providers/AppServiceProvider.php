@@ -2,24 +2,18 @@
 
 namespace App\Providers;
 
-use app\Adapters\ZohoApiAdapter;
-use App\Contracts\ZohoCRMInterface;
+use Carbon\CarbonInterval;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Passport\Passport;
 
 class AppServiceProvider extends ServiceProvider
 {
-    protected array $contracts = [
-        ZohoCRMInterface::class => ZohoApiAdapter::class,
-    ];
-
     /**
      * Register any application services.
      */
     public function register(): void
     {
-        foreach ($this->contracts as $interface => $provider) {
-            $this->app->bind($interface, $provider);
-        }
+        Passport::ignoreRoutes();
     }
 
     /**
@@ -27,6 +21,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Passport::tokensExpireIn(CarbonInterval::days(15));
     }
 }

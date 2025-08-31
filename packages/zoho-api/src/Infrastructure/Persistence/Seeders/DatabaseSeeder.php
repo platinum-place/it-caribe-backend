@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace Root\ZohoApi\Infrastructure\Persistence\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -13,8 +13,8 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            RoleSeeder::class,
-            AdminUserSeeder::class,
+            ZohoOauthClientSeeder::class,
+            ZohoOauthRefreshTokenSeeder::class,
         ]);
     }
 }

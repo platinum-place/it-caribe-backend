@@ -5,6 +5,12 @@
     "description": "The skeleton application for the Laravel framework.",
     "keywords": ["laravel", "framework"],
     "license": "MIT",
+    "repositories": [
+        {
+            "type": "path",
+            "url": "./packages/zoho-api"
+        }
+    ],
     "require": {
         "php": "^8.2",
         "ext-fileinfo": "*",
@@ -14,6 +20,8 @@
         "laravel/passport": "^13.0",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.10.1",
+        "root/zoho-api": "dev-main",
+        "spatie/laravel-package-tools": "^1.92",
         "spatie/laravel-permission": "^6.21"
     },
     "require-dev": {

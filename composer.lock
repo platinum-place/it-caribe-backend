@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e5cacb57394c8ea8685808706cfdd8f0",
+    "content-hash": "73c1f2dc6d7cc0d00dd20f1f5cf29768",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -7626,6 +7626,32 @@
             "time": "2025-06-25T14:20:11+00:00"
         },
         {
+            "name": "root/zoho-api",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "./packages/zoho-api",
+                "reference": "fd7d4c50ee12c1f96c37861130f5f7e3ebeca2b5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Root\\ZohoApi\\AppServiceProvider",
+                        "Root\\ZohoApi\\FilamentPanelProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Root\\ZohoApi\\": "src/"
+                }
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
             "name": "ryangjchandler/blade-capture-directive",
             "version": "v1.1.0",
             "source": {
@@ -14357,7 +14383,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "roave/security-advisories": 20
+        "roave/security-advisories": 20,
+        "root/zoho-api": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
