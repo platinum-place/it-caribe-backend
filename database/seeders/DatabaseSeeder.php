@@ -24,6 +24,11 @@ class DatabaseSeeder extends Seeder
             VehicleUtilitySeeder::class,
             ZohoOauthClientSeeder::class,
             ZohoOauthRefreshTokenSeeder::class,
+            ZohoOauthRefreshTokenSeeder::class,
+            VehicleTypeSeeder::class,
+            VehicleMakeSeeder::class,
+            VehicleModelSeeder::class,
+            UserSeeder::class,
         ]);
     }
 }
