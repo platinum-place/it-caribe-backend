@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\Migrate\Vehicle;
 
 use App\Enums\LeadTypeEnum;
 use App\Enums\QuoteLineStatusEnum;
@@ -19,7 +19,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Rap2hpoutre\FastExcel\FastExcel;
 
-class MigrationSeeder extends Seeder
+class Sheet5Seeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -29,11 +29,12 @@ class MigrationSeeder extends Seeder
         DB::transaction(function () {
             $path = base_path('migrate/Consolidado Polizas de Vehiculos Julio 2025.xlsx');
 
-            $collection = (new FastExcel)->sheet(1)->import($path);
+            $collection = (new FastExcel)->sheet(5)->import($path);
 
-            $branch = Branch::create([
-                'name' => 'Principal',
-            ]);
+            $branch = Branch::firstOrCreate(
+                ['name' => 'Principal'],
+                ['name' => 'Principal'],
+            );
 
             $collection->each(function ($line) use ($branch) {
                 $lead = Lead::create([
@@ -62,18 +63,17 @@ class MigrationSeeder extends Seeder
                     'quote_line_status_id' => QuoteLineStatusEnum::ACCEPTED->value,
                 ]);
 
-                $make = VehicleMake::where('name', 'ILIKE', '%' . $line['MARCA'] . '%')->first();
+                $make = VehicleMake::where('name', 'ILIKE', '%'.$line['MARCA'].'%')->first();
 
-                if (!$make) {
+                if (! $make) {
                     $make = VehicleMake::create([
-                        'name' => $line['MARCA']
+                        'name' => $line['MARCA'],
                     ]);
                 }
 
+                $model = VehicleModel::where('name', 'ILIKE', '%'.$line['MODELO'].'%')->first();
 
-                $model = VehicleModel::where('name', 'ILIKE', '%' . $line[ "MODELO"] . '%')->first();
-
-                if (!$model) {
+                if (! $model) {
                     $model = VehicleModel::create([
                         'name' => $line['MODELO'],
                         'vehicle_make_id' => $make->id,
@@ -82,8 +82,8 @@ class MigrationSeeder extends Seeder
                 }
 
                 $vehicle = Vehicle::create([
-                    'vehicle_year'=> $line["AÑO"],
-                    'chassis'=> $line["CHASIS"],
+                    'vehicle_year' => $line['AÑO'],
+                    'chassis' => $line['CHASIS'],
                     'vehicle_make_id' => $make->id,
                     'vehicle_model_id' => $model->id,
                     'vehicle_type_id' => $model->vehicle_type_id,
@@ -91,15 +91,15 @@ class MigrationSeeder extends Seeder
 
                 $quoteVehicle = QuoteVehicle::create([
                     'quote_id' => $quote->id,
-                    'vehicle_amount'=>(float) $line["VALOR ASEGURADO"],
+                    'vehicle_amount' => (float) $line['VALOR ASEGURADO'],
                     'vehicle_id' => $vehicle->id,
                 ]);
 
-                $quoteVehicleLine =QuoteVehicleLine::create([
+                $quoteVehicleLine = QuoteVehicleLine::create([
                     'quote_vehicle_id' => $quoteVehicle->id,
                     'quote_line_id' => $quoteLine->id,
-                    'total_monthly' =>(float) $line["CUOTA MENSUAL"],
-                    'amount_without_life_amount'=>(float) $line["PRIMA SIN VIDA"],
+                    'total_monthly' => (float) $line['CUOTA MENSUAL'],
+                    'amount_without_life_amount' => (float) $line['PRIMA SIN VIDA'],
                 ]);
             });
         });
