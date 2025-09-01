@@ -1,0 +1,32 @@
+<?php
+
+namespace App\Repositories;
+
+use App\Contracts\ZohoOauthAccessTokenRepositoryInterface;
+use App\Entities\ZohoOauthAccessTokenEntity;
+use App\Models\ZohoOauthAccessToken;
+use App\ValueObjects\AccessToken;
+
+class ZohoOauthAccessTokenEloquentRepository implements ZohoOauthAccessTokenRepositoryInterface
+{
+    public function store(AccessToken $accessToken): ZohoOauthAccessTokenEntity
+    {
+        $record = ZohoOauthAccessToken::create([
+            'access_token' => $accessToken->accessToken,
+            'api_domain' => $accessToken->apiDomain,
+            'token_type' => $accessToken->tokenType,
+            'expires_in' => $accessToken->expiresIn,
+            'scope' => $accessToken->scope,
+        ]);
+
+        return new ZohoOauthAccessTokenEntity(
+            $record->id,
+            $record->access_token,
+            $record->api_domain,
+            $record->token_type,
+            $record->expires_in,
+            $record->expires_at,
+            $record->scope,
+        );
+    }
+}
