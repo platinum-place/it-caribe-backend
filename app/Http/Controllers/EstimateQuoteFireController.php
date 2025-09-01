@@ -1,6 +1,6 @@
 <?php
 
-namespace App\FilamentHttp\Controllers\Quote\Fire;
+namespace App\Http\Controllers\Quote\Fire;
 
 use App\Enums\Lead;
 use App\Enums\LeadTypeEnum;
