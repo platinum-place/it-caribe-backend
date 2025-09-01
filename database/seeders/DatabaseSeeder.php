@@ -15,6 +15,15 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RoleSeeder::class,
             AdminUserSeeder::class,
+            LeadTypeSeeder::class,
+            VehicleAccessorySeeder::class,
+            VehicleColorSeeder::class,
+            VehicleUseSeeder::class,
+            VehicleActivitySeeder::class,
+            VehicleLoanTypeSeeder::class,
+            VehicleUtilitySeeder::class,
+            ZohoOauthClientSeeder::class,
+            ZohoOauthRefreshTokenSeeder::class,
         ]);
     }
 }
