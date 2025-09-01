@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
             VehicleMakeSeeder::class,
             VehicleModelSeeder::class,
             UserSeeder::class,
+            PassportSeeder::class,
         ]);
     }
 }
