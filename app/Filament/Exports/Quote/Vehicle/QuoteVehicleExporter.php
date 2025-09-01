@@ -33,22 +33,22 @@ class QuoteVehicleExporter extends Exporter
             ExportColumn::make('quote.end_date')
                 ->label('VENCIMIENTO'),
 
-            ExportColumn::make('quote.selectedLine.name')
+            ExportColumn::make('quote.acceptedLine.name')
                 ->label('ASEGURADORA'),
 
-            ExportColumn::make('selectedLine.total_monthly')
+            ExportColumn::make('acceptedLine.total_monthly')
                 ->label('PRIMA COBRADA CLIENTE (INCLUYE VIDA + MARKUP)'),
 
-            ExportColumn::make('selectedLine.amount_without_life_amount')
+            ExportColumn::make('acceptedLine.amount_without_life_amount')
                 ->label('PRIMA VEHICULO (SIN VIDA Y MARKUP)'),
 
-            ExportColumn::make('selectedLine.life_amount')
+            ExportColumn::make('acceptedLine.life_amount')
                 ->label('PRIMA VIDA'),
 
-            ExportColumn::make('selectedLine.markup')
+            ExportColumn::make('acceptedLine.markup')
                 ->label('MARKUP VEHICULO'),
 
-            ExportColumn::make('quote.selectedLine.total')
+            ExportColumn::make('quote.acceptedLine.total')
                 ->label('PRIMA A PAGAR ASEGURADORA VEH.'),
 
             ExportColumn::make('vehicle_amount')

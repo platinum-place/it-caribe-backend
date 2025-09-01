@@ -44,7 +44,7 @@ class QuoteVehicle extends Model
 
     public function acceptedLine(): HasOne
     {
-        return $this->hasOne(QuoteVehicleLine::class)->acceptedLine();
+        return $this->hasOne(QuoteVehicleLine::class)->whereHas('quoteLine', fn ($q) => $q->accepted());
     }
 
     public function createdBy(): BelongsTo

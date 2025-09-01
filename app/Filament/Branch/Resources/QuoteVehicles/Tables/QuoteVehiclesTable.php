@@ -43,22 +43,22 @@ class QuoteVehiclesTable
                     ->sortable()
                     ->label('VENCIMIENTO'),
 
-                TextColumn::make('quote.selectedLine.name')
+                TextColumn::make('quote.acceptedLine.name')
                     ->label('ASEGURADORA'),
 
-                TextColumn::make('selectedLine.total_monthly')
+                TextColumn::make('acceptedLine.total_monthly')
                     ->label('PRIMA COBRADA CLIENTE (INCLUYE VIDA + MARKUP)'),
 
-                TextColumn::make('selectedLine.amount_without_life_amount')
+                TextColumn::make('acceptedLine.amount_without_life_amount')
                     ->label('PRIMA VEHICULO (SIN VIDA Y MARKUP)'),
 
-                TextColumn::make('selectedLine.life_amount')
+                TextColumn::make('acceptedLine.life_amount')
                     ->label('PRIMA VIDA'),
 
-                TextColumn::make('selectedLine.markup')
+                TextColumn::make('acceptedLine.markup')
                     ->label('MARKUP VEHICULO'),
 
-                TextColumn::make('quote.selectedLine.total')
+                TextColumn::make('quote.acceptedLine.total')
                     ->label('PRIMA A PAGAR ASEGURADORA VEH.'),
 
                 TextColumn::make('vehicle_amount')

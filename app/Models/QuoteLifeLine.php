@@ -2,16 +2,13 @@
 
 namespace App\Models;
 
-use App\Models\Scopes\AcceptedLineScope;
 use App\Observers\QuoteLifeLineObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
-use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 #[ObservedBy([QuoteLifeLineObserver::class])]
-#[ScopedBy([AcceptedLineScope::class])]
 class QuoteLifeLine extends Model
 {
     use SoftDeletes;

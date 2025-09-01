@@ -42,7 +42,7 @@ class Sheet12Seeder extends Seeder
                     'full_name' => $line['NOMBE '],
                     'identity_number' => $line['IDENTIFICACION'],
                     'age' => $line['EDAD'] === 'No aplica' or empty($line['EDAD']) ? null : $line['EDAD'],
-                    'birth_date' => $line['FECHA DE NACIMIENTO'] instanceof DateTimeImmutable  ?  $line['FECHA DE NACIMIENTO'] : null,
+                    'birth_date' => $line['FECHA DE NACIMIENTO'] instanceof DateTimeImmutable ? $line['FECHA DE NACIMIENTO'] : null,
                     'lead_type_id' => LeadTypeEnum::PUBLIC->value,
                 ]);
 
@@ -60,21 +60,21 @@ class Sheet12Seeder extends Seeder
                     'description' => $line['PLAN'],
                     'quote_id' => $quote->id,
                     'quantity' => 1,
-                    'total' => (float)$line['PRIMA TOTAL'],
+                    'total' => (float) $line['PRIMA TOTAL'],
                     'quote_line_status_id' => QuoteLineStatusEnum::ACCEPTED->value,
                 ]);
 
-                $make = VehicleMake::where('name', 'ILIKE', '%' . $line['MARCA'] . '%')->first();
+                $make = VehicleMake::where('name', 'ILIKE', '%'.$line['MARCA'].'%')->first();
 
-                if (!$make) {
+                if (! $make) {
                     $make = VehicleMake::create([
                         'name' => $line['MARCA'],
                     ]);
                 }
 
-                $model = VehicleModel::where('name', 'ILIKE', '%' . $line['MODELO'] . '%')->first();
+                $model = VehicleModel::where('name', 'ILIKE', '%'.$line['MODELO'].'%')->first();
 
-                if (!$model) {
+                if (! $model) {
                     $model = VehicleModel::create([
                         'name' => $line['MODELO'],
                         'vehicle_make_id' => $make->id,
@@ -92,15 +92,15 @@ class Sheet12Seeder extends Seeder
 
                 $quoteVehicle = QuoteVehicle::create([
                     'quote_id' => $quote->id,
-                    'vehicle_amount' => (float)$line['VALOR ASEGURADO'],
+                    'vehicle_amount' => (float) $line['VALOR ASEGURADO'],
                     'vehicle_id' => $vehicle->id,
                 ]);
 
                 $quoteVehicleLine = QuoteVehicleLine::create([
                     'quote_vehicle_id' => $quoteVehicle->id,
                     'quote_line_id' => $quoteLine->id,
-                    'total_monthly' => (float)$line['CUOTA MENSUAL'],
-                    'amount_without_life_amount' => (float)$line['PRIMA SIN VIDA'],
+                    'total_monthly' => (float) $line['CUOTA MENSUAL'],
+                    'amount_without_life_amount' => (float) $line['PRIMA SIN VIDA'],
                 ]);
             });
         });
