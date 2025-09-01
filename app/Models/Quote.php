@@ -2,16 +2,13 @@
 
 namespace App\Models;
 
+use App\Observers\QuoteObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\Lead;
-use App\Models\Branch;
-use App\Observers\QuoteObserver;
-use App\Models\QuoteLine;
 
 #[ObservedBy([QuoteObserver::class])]
 class Quote extends Model

@@ -2,15 +2,12 @@
 
 namespace App\Models;
 
-use App\Models\Quote;
-use App\Models\User;
+use App\Observers\QuoteDebtUnemploymentObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\Branch;
-use App\Observers\QuoteDebtUnemploymentObserver;
 
 #[ObservedBy([QuoteDebtUnemploymentObserver::class])]
 class QuoteDebtUnemployment extends Model

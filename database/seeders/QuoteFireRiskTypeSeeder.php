@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Enums\QuoteFireRiskTypeEnum;
 use App\Models\QuoteFireRiskType;
+use Illuminate\Database\Seeder;
 
 class QuoteFireRiskTypeSeeder extends Seeder
 {

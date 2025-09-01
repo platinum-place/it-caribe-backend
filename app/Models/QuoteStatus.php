@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
+use App\Observers\QuoteStatusObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Observers\QuoteStatusObserver;
 
 #[ObservedBy([QuoteStatusObserver::class])]
 class QuoteStatus extends Model

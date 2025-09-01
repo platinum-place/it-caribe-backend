@@ -2,7 +2,6 @@
 
 namespace App\Observers;
 
-use App\Observers\BaseObserver;
 use App\Models\QuoteLifeLine;
 
 class QuoteLifeLineObserver extends BaseObserver

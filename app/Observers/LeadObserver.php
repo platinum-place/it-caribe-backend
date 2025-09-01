@@ -2,8 +2,8 @@
 
 namespace App\Observers;
 
+use App\Models\Lead;
 use Carbon\Carbon;
-use Root\CRM\Infrastructure\Persistence\Models\Lead;
 
 class LeadObserver extends BaseObserver
 {

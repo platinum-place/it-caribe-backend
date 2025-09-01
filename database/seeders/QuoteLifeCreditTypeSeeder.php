@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Enums\QuoteLifeCreditTypeEnum;
 use App\Models\QuoteLifeCreditType;
+use Illuminate\Database\Seeder;
 
 class QuoteLifeCreditTypeSeeder extends Seeder
 {

@@ -2,12 +2,12 @@
 
 namespace App\Filament\Branch\Resources\QuoteUnemployments\Pages;
 
+use App\Filament\Branch\Resources\QuoteUnemployments\QuoteUnemploymentResource;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ForceDeleteAction;
 use Filament\Actions\RestoreAction;
 use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\EditRecord;
-use App\Filament\Branch\Resources\QuoteUnemployments\QuoteUnemploymentResource;
 
 class EditQuoteUnemployment extends EditRecord
 {

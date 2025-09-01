@@ -25,13 +25,13 @@ return new class extends Migration
             $table->string('name');
             $table->text('description')->nullable();
 
-            $table->decimal('unit_price', 18, 2);
-            $table->integer('quantity');
-            $table->decimal('subtotal', 18, 2);
-            $table->decimal('amount_taxed', 18, 2);
-            $table->decimal('tax_rate', 18, 2)->nullable();
+            $table->decimal('unit_price', 18, 2)->default(0);
+            $table->integer('quantity')->default(0);
+            $table->decimal('subtotal', 18, 2)->default(0);
+            $table->decimal('amount_taxed', 18, 2)->default(0);
+            $table->decimal('tax_rate', 18, 2)->default(0);
             $table->decimal('tax_amount', 18, 2)->default(0);
-            $table->decimal('total', 18, 2);
+            $table->decimal('total', 18, 2)->default(0);
         });
     }
 

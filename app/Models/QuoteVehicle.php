@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Observers\QuoteVehicleObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -9,11 +10,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\Branch;
-use App\Models\QuoteVehicleLine;
-use App\Observers\QuoteVehicleObserver;
-use App\Models\Vehicle;
-use App\Models\Quote;
 
 #[ObservedBy([QuoteVehicleObserver::class])]
 class QuoteVehicle extends Model

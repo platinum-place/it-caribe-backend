@@ -3,14 +3,12 @@
 namespace App\Models;
 
 use App\Models\Scopes\AcceptedLineScope;
+use App\Observers\QuoteLifeLineObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\QuoteLife;
-use App\Observers\QuoteLifeLineObserver;
-use App\Models\QuoteLine;
 
 #[ObservedBy([QuoteLifeLineObserver::class])]
 #[ScopedBy([AcceptedLineScope::class])]

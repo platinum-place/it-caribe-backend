@@ -2,7 +2,13 @@
 
 namespace App\Filament\Branch\Resources\QuoteDebtUnemployments;
 
+use App\Filament\Branch\Resources\QuoteDebtUnemployments\Pages\CreateQuoteDebtUnemployment;
+use App\Filament\Branch\Resources\QuoteDebtUnemployments\Pages\EditQuoteDebtUnemployment;
+use App\Filament\Branch\Resources\QuoteDebtUnemployments\Pages\ListQuoteDebtUnemployments;
 use App\Filament\Branch\Resources\QuoteDebtUnemployments\Pages\ViewQuoteDebtUnemployment;
+use App\Filament\Branch\Resources\QuoteDebtUnemployments\Schemas\QuoteDebtUnemploymentForm;
+use App\Filament\Branch\Resources\QuoteDebtUnemployments\Schemas\QuoteDebtUnemploymentInfolist;
+use App\Filament\Branch\Resources\QuoteDebtUnemployments\Tables\QuoteDebtUnemploymentsTable;
 use App\Models\QuoteDebtUnemployment;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -11,12 +17,6 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Branch\Resources\QuoteDebtUnemployments\Pages\CreateQuoteDebtUnemployment;
-use App\Filament\Branch\Resources\QuoteDebtUnemployments\Pages\EditQuoteDebtUnemployment;
-use App\Filament\Branch\Resources\QuoteDebtUnemployments\Pages\ListQuoteDebtUnemployments;
-use App\Filament\Branch\Resources\QuoteDebtUnemployments\Schemas\QuoteDebtUnemploymentForm;
-use App\Filament\Branch\Resources\QuoteDebtUnemployments\Schemas\QuoteDebtUnemploymentInfolist;
-use App\Filament\Branch\Resources\QuoteDebtUnemployments\Tables\QuoteDebtUnemploymentsTable;
 
 class QuoteDebtUnemploymentResource extends Resource
 {

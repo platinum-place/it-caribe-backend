@@ -2,16 +2,14 @@
 
 namespace App\Models;
 
+use App\Enums\QuoteLineStatusEnum;
+use App\Observers\QuoteLineObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Enums\QuoteLineStatusEnum;
-use App\Observers\QuoteLineObserver;
-use App\Models\Quote;
-use App\Models\QuoteLineStatus;
 
 #[ObservedBy([QuoteLineObserver::class])]
 class QuoteLine extends Model

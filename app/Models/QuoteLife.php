@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Observers\QuoteLifeObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -9,10 +10,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\Branch;
-use App\Models\QuoteLifeLine;
-use App\Observers\QuoteLifeObserver;
-use App\Models\Quote;
 
 #[ObservedBy([QuoteLifeObserver::class])]
 class QuoteLife extends Model
@@ -27,7 +24,7 @@ class QuoteLife extends Model
 
     public function branch(): HasOneThrough
     {
-        return $this->hasOneThrough( Branch::class, Quote::class, 'id', 'id', 'quote_id', 'branch_id');
+        return $this->hasOneThrough(Branch::class, Quote::class, 'id', 'id', 'quote_id', 'branch_id');
     }
 
     public function quote(): BelongsTo

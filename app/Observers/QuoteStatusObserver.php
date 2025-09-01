@@ -2,7 +2,6 @@
 
 namespace App\Observers;
 
-use App\Observers\BaseObserver;
 use App\Models\QuoteStatus;
 
 class QuoteStatusObserver extends BaseObserver

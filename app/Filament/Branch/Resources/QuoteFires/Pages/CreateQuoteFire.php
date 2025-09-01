@@ -2,8 +2,8 @@
 
 namespace App\Filament\Branch\Resources\QuoteFires\Pages;
 
-use Filament\Resources\Pages\CreateRecord;
 use App\Filament\Branch\Resources\QuoteFires\QuoteFireResource;
+use Filament\Resources\Pages\CreateRecord;
 
 class CreateQuoteFire extends CreateRecord
 {

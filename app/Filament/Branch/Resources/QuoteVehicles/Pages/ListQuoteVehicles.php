@@ -2,9 +2,9 @@
 
 namespace App\Filament\Branch\Resources\QuoteVehicles\Pages;
 
+use App\Filament\Branch\Resources\QuoteVehicles\QuoteVehicleResource;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
-use App\Filament\Branch\Resources\QuoteVehicles\QuoteVehicleResource;
 
 class ListQuoteVehicles extends ListRecords
 {

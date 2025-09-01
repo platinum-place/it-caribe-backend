@@ -2,9 +2,9 @@
 
 namespace App\Filament\Branch\Resources\QuoteDebtUnemployments\Pages;
 
+use App\Filament\Branch\Resources\QuoteDebtUnemployments\QuoteDebtUnemploymentResource;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
-use App\Filament\Branch\Resources\QuoteDebtUnemployments\QuoteDebtUnemploymentResource;
 
 class ListQuoteDebtUnemployments extends ListRecords
 {

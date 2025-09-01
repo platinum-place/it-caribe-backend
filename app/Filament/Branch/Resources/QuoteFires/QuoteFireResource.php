@@ -2,8 +2,12 @@
 
 namespace App\Filament\Branch\Resources\QuoteFires;
 
+use App\Filament\Branch\Resources\QuoteFires\Pages\CreateQuoteFire;
 use App\Filament\Branch\Resources\QuoteFires\Pages\EditQuoteFire;
+use App\Filament\Branch\Resources\QuoteFires\Pages\ListQuoteFires;
+use App\Filament\Branch\Resources\QuoteFires\Pages\ViewQuoteFire;
 use App\Filament\Branch\Resources\QuoteFires\Schemas\QuoteFireForm;
+use App\Filament\Branch\Resources\QuoteFires\Schemas\QuoteFireInfolist;
 use App\Filament\Branch\Resources\QuoteFires\Tables\QuoteFiresTable;
 use App\Models\QuoteFire;
 use BackedEnum;
@@ -13,10 +17,6 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Branch\Resources\QuoteFires\Pages\CreateQuoteFire;
-use App\Filament\Branch\Resources\QuoteFires\Pages\ListQuoteFires;
-use App\Filament\Branch\Resources\QuoteFires\Pages\ViewQuoteFire;
-use App\Filament\Branch\Resources\QuoteFires\Schemas\QuoteFireInfolist;
 
 class QuoteFireResource extends Resource
 {

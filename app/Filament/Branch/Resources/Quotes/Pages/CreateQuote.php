@@ -2,8 +2,8 @@
 
 namespace App\Filament\Branch\Resources\Quotes\Pages;
 
-use Filament\Resources\Pages\CreateRecord;
 use App\Filament\Branch\Resources\Quotes\QuoteResource;
+use Filament\Resources\Pages\CreateRecord;
 
 class CreateQuote extends CreateRecord
 {

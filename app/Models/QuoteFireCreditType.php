@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
+use App\Observers\QuoteFireCreditTypeObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Observers\QuoteFireCreditTypeObserver;
 
 #[ObservedBy([QuoteFireCreditTypeObserver::class])]
 class QuoteFireCreditType extends Model

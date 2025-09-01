@@ -2,9 +2,9 @@
 
 namespace App\Filament\Branch\Resources\Quotes\Pages;
 
+use App\Filament\Branch\Resources\Quotes\QuoteResource;
 use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
-use App\Filament\Branch\Resources\Quotes\QuoteResource;
 
 class ViewQuote extends ViewRecord
 {

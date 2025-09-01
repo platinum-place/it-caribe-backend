@@ -2,9 +2,9 @@
 
 namespace App\Filament\Branch\Resources\QuoteDebtUnemployments\Pages;
 
+use App\Filament\Branch\Resources\QuoteDebtUnemployments\QuoteDebtUnemploymentResource;
 use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
-use App\Filament\Branch\Resources\QuoteDebtUnemployments\QuoteDebtUnemploymentResource;
 
 class ViewQuoteDebtUnemployment extends ViewRecord
 {

@@ -2,8 +2,8 @@
 
 namespace App\Filament\Branch\Resources\QuoteVehicles\Pages;
 
-use Filament\Resources\Pages\CreateRecord;
 use App\Filament\Branch\Resources\QuoteVehicles\QuoteVehicleResource;
+use Filament\Resources\Pages\CreateRecord;
 
 class CreateQuoteVehicle extends CreateRecord
 {

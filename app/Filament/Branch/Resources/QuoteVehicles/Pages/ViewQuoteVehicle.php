@@ -2,9 +2,9 @@
 
 namespace App\Filament\Branch\Resources\QuoteVehicles\Pages;
 
+use App\Filament\Branch\Resources\QuoteVehicles\QuoteVehicleResource;
 use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
-use App\Filament\Branch\Resources\QuoteVehicles\QuoteVehicleResource;
 
 class ViewQuoteVehicle extends ViewRecord
 {

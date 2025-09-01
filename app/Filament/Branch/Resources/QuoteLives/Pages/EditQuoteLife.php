@@ -2,12 +2,12 @@
 
 namespace App\Filament\Branch\Resources\QuoteLives\Pages;
 
+use App\Filament\Branch\Resources\QuoteLives\QuoteLifeResource;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ForceDeleteAction;
 use Filament\Actions\RestoreAction;
 use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\EditRecord;
-use App\Filament\Branch\Resources\QuoteLives\QuoteLifeResource;
 
 class EditQuoteLife extends EditRecord
 {

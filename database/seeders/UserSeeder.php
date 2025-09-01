@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -31,15 +30,15 @@ class UserSeeder extends Seeder
 
                 if ($row[0] == config('app.admin_id')) {
                     User::find(config('app.admin_id'))->update([
-                        'password'          => $row[5],
+                        'password' => $row[5],
                     ]);
                 } else {
                     User::create([
-                        'id'                => $row[0],
-                        'name'              => $row[1],
-                        'email'             => $row[2],
-                        'username'          => $row[3],
-                        'password'          => $row[5],
+                        'id' => $row[0],
+                        'name' => $row[1],
+                        'email' => $row[2],
+                        'username' => $row[3],
+                        'password' => $row[5],
                     ]);
                 }
             }
