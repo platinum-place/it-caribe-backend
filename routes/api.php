@@ -9,25 +9,25 @@ Route::middleware(EnsureClientIsResourceOwner::class)
     ->middleware(SecurityHeaders::class)
     ->middleware(EnsureJsonRequest::class)
     ->group(function () {
-        // Route::post('/cotizador/colectiva', \App\Http\Controllers\EstimateQuoteVehicleController::class);
-        // Route::post('/cotizador/EmitirAuto', \App\Http\Controllers\IssueQuoteVehicleController::class);
-        // Route::get('/cotizador/CancelarAuto', \App\Http\Controllers\CancelQuoteVehicleController::class);
-        // Route::get('/cotizador/ValorPromedio', \App\Http\Controllers\AverageValueController::class);
-        // Route::post('/cotizador/ValidarInspeccion', \App\Http\Controllers\ValidateInspectionController::class);
-        // Route::post('/cotizador/Inspeccionar', \App\Http\Controllers\InspectController::class);
-        // Route::post('/cotizador/ObtenerQRInspeccion', \App\Http\Controllers\InspectionQRController::class);
-        // Route::post('/cotizador/ObtenerImagenes', \App\Http\Controllers\PhotosController::class);
+//         Route::post('/cotizador/colectiva', \App\Http\Controllers\EstimateQuoteVehicleController::class);
+         Route::post('/cotizador/EmitirAuto', \App\Http\Controllers\IssueQuoteVehicleController::class);
+         Route::get('/cotizador/CancelarAuto', \App\Http\Controllers\CancelQuoteVehicleController::class);
+         Route::get('/cotizador/ValorPromedio', \App\Http\Controllers\AverageValueController::class);
+//         Route::post('/cotizador/ValidarInspeccion', \App\Http\Controllers\ValidateInspectionController::class);
+//         Route::post('/cotizador/Inspeccionar', \App\Http\Controllers\InspectController::class);
+//         Route::post('/cotizador/ObtenerQRInspeccion', \App\Http\Controllers\InspectionQRController::class);
+         Route::post('/cotizador/ObtenerImagenes', \App\Http\Controllers\PhotosController::class);
 
-        // Route::post('/vehiculos/Marca', \App\Http\Controllers\FetchVehicleMakeController::class);
-        // Route::post('/vehiculos/Modelos/{makeId}', \App\Http\Controllers\FetchVehicleModelController::class);
-        // Route::post('/vehiculos/TipoVehiculo', \App\Http\Controllers\FetchVehicleTypeController::class);
-        // Route::post('/vehiculos/Accesorios', \App\Http\Controllers\FetchVehicleAccessoryController::class);
-        // Route::post('/vehiculos/Actividades', \App\Http\Controllers\FetchVehicleActivityController::class);
-        // Route::post('/vehiculos/Circulacion', \App\Http\Controllers\FetchVehicleRouteController::class);
-        // Route::get('/vehiculos/Color', \App\Http\Controllers\FetchVehicleColorController::class);
+         Route::post('/vehiculos/Marca', \App\Http\Controllers\FetchVehicleMakeController::class);
+         Route::post('/vehiculos/Modelos/{makeId}', \App\Http\Controllers\FetchVehicleModelController::class);
+         Route::post('/vehiculos/TipoVehiculo', \App\Http\Controllers\FetchVehicleTypeController::class);
+         Route::post('/vehiculos/Accesorios', \App\Http\Controllers\FetchVehicleAccessoryController::class);
+         Route::post('/vehiculos/Actividades', \App\Http\Controllers\FetchVehicleActivityController::class);
+         Route::post('/vehiculos/Circulacion', \App\Http\Controllers\FetchVehicleRouteController::class);
+         Route::get('/vehiculos/Color', \App\Http\Controllers\FetchVehicleColorController::class);
 
         // Route::post('/cotizador/CotizaVida', \App\Http\Controllers\EstimateQuoteLifeController::class);
-        // Route::post('/cotizador/EmitirVida', \App\Http\Controllers\IssueQuoteLifeController::class);
+         Route::post('/cotizador/EmitirVida', \App\Http\Controllers\IssueQuoteLifeController::class);
         // Route::post('/cotizador/CancelarVida', \App\Http\Controllers\CancelQuoteLifeController::class);
 
         //        Route::post('/cotizador/CotizaDesempleoDeuda', [\App\Http\Controllers\Api\UnemploymentDebtController::class, 'estimateUnemploymentDebt']);

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\Lead;
 use App\Enums\QuoteLineStatusEnum;
 use App\Enums\QuoteStatusEnum;
 use App\Enums\QuoteTypeEnum;
@@ -14,11 +13,10 @@ use App\Models\QuoteVehicleLine;
 use App\Models\Vehicle;
 use App\Models\VehicleMake;
 use App\Models\VehicleModel;
-use old\Services\Quote\Vehicle\EstimateQuoteVehicleService;
 
 class EstimateQuoteVehicleController extends Controller
 {
-    public function __construct(protected EstimateQuoteVehicleService $service) {}
+    //public function __construct(protected EstimateQuoteVehicleService $service) {}
 
     /**
      * Handle the incoming request.
