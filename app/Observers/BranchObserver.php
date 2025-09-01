@@ -11,7 +11,7 @@ class BranchObserver extends BaseObserver
      */
     public function created(Branch $branch): void
     {
-        //
+        $branch->users()->attach(config('app.admin_id'));
     }
 
     /**

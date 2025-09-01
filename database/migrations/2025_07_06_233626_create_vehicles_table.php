@@ -25,9 +25,9 @@ return new class extends Migration
             $table->foreignId('vehicle_activity_id')->nullable()->constrained('vehicle_activities');
             $table->foreignId('vehicle_loan_type_id')->nullable()->constrained('vehicle_loan_types');
             $table->foreignId('vehicle_utility_id')->nullable()->constrained('vehicle_utilities');
-            $table->year('vehicle_year');
-            $table->string('chassis');
-            $table->string('license_plate');
+            $table->year('vehicle_year')->nullable();
+            $table->string('chassis')->nullable();
+            $table->string('license_plate')->nullable();
 
         });
     }

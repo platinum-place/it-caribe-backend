@@ -36,6 +36,9 @@ class VehicleModelSeeder extends Seeder
                     'code' => $row[7],
                 ]);
             }
+
+            $maxId = DB::table('vehicle_models')->max('id');
+            DB::statement("SELECT setval('vehicle_models_id_seq', {$maxId})");
         });
     }
 }

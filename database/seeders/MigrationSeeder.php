@@ -10,7 +10,11 @@ use App\Models\Branch;
 use App\Models\Lead;
 use App\Models\Quote;
 use App\Models\QuoteLine;
+use App\Models\QuoteVehicle;
+use App\Models\QuoteVehicleLine;
 use App\Models\Vehicle;
+use App\Models\VehicleMake;
+use App\Models\VehicleModel;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Rap2hpoutre\FastExcel\FastExcel;
@@ -58,21 +62,46 @@ class MigrationSeeder extends Seeder
                     'quote_line_status_id' => QuoteLineStatusEnum::ACCEPTED->value,
                 ]);
 
+                $make = VehicleMake::where('name', 'ILIKE', '%' . $line['MARCA'] . '%')->first();
+
+                if (!$make) {
+                    $make = VehicleMake::create([
+                        'name' => $line['MARCA']
+                    ]);
+                }
+
+
+                $model = VehicleModel::where('name', 'ILIKE', '%' . $line[ "MODELO"] . '%')->first();
+
+                if (!$model) {
+                    $model = VehicleModel::create([
+                        'name' => $line['MODELO'],
+                        'vehicle_make_id' => $make->id,
+                        'vehicle_type_id' => 1,
+                    ]);
+                }
+
                 $vehicle = Vehicle::create([
-                    'vehicle_year',
-                    'chassis',
-                    'license_plate',
-                    'vehicle_make_id',
-                    'vehicle_model_id',
-                    'vehicle_type_id',
-                    'vehicle_use_id',
-                    'vehicle_activity_id',
-                    'vehicle_loan_type_id',
-                    'vehicle_utility_id',
+                    'vehicle_year'=> $line["AÑO"],
+                    'chassis'=> $line["CHASIS"],
+                    'vehicle_make_id' => $make->id,
+                    'vehicle_model_id' => $model->id,
+                    'vehicle_type_id' => $model->vehicle_type_id,
+                ]);
+
+                $quoteVehicle = QuoteVehicle::create([
+                    'quote_id' => $quote->id,
+                    'vehicle_amount'=>(float) $line["VALOR ASEGURADO"],
+                    'vehicle_id' => $vehicle->id,
+                ]);
+
+                $quoteVehicleLine =QuoteVehicleLine::create([
+                    'quote_vehicle_id' => $quoteVehicle->id,
+                    'quote_line_id' => $quoteLine->id,
+                    'total_monthly' =>(float) $line["CUOTA MENSUAL"],
+                    'amount_without_life_amount'=>(float) $line["PRIMA SIN VIDA"],
                 ]);
             });
-
-            dd($collection->get(1));
         });
     }
 }
