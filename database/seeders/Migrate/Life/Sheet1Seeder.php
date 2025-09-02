@@ -43,7 +43,7 @@ class Sheet1Seeder extends Seeder
                     'lead_type_id' => LeadTypeEnum::PUBLIC->value,
                 ]);
 
-                if (!empty($line['Identificación Co'])) {
+                if (! empty($line['Identificación Co'])) {
                     $coBorrower = Lead::create([
                         'full_name' => $line['Codeudor'],
                         'identity_number' => $line['Identificación Co'],
@@ -53,7 +53,7 @@ class Sheet1Seeder extends Seeder
                 }
 
                 $quote = Quote::create([
-                    'quote_type_id' => QuoteTypeEnum::VEHICLE->value,
+                    'quote_type_id' => QuoteTypeEnum::LIFE->value,
                     'quote_status_id' => QuoteStatusEnum::APPROVED->value,
                     'lead_id' => $borrower->id,
                     'start_date' => $line['Fecha_Emi'],
@@ -66,7 +66,7 @@ class Sheet1Seeder extends Seeder
                     'description' => $line['Descripción Producto'],
                     'quote_id' => $quote->id,
                     'quantity' => 1,
-                    'total' => (float)$line['MONTO A PAGAR'],
+                    'total' => (float) $line['MONTO A PAGAR'],
                     'quote_line_status_id' => QuoteLineStatusEnum::ACCEPTED->value,
                 ]);
 
@@ -74,14 +74,14 @@ class Sheet1Seeder extends Seeder
                     'quote_id' => $quote->id,
                     'co_borrower_id' => $coBorrower?->id ?? null,
                     'quote_life_credit_type_id' => QuoteLifeCreditTypeEnum::PERSONAL_LOAN->value,
-                    'deadline_month' => (int)$line['Plazo'],
-                    'insured_amount' => (float)$line['Monto Orig.'],
+                    'deadline_month' => (int) $line['Plazo'],
+                    'insured_amount' => (float) $line['Monto Orig.'],
                 ]);
 
                 $quoteLifeLine = QuoteLifeLine::create([
                     'quote_life_id' => $quoteLife->id,
                     'quote_line_id' => $quoteLine->id,
-                    'borrower_rate' => (int)$line['Tasa'],
+                    'borrower_rate' => (int) $line['Tasa'],
                 ]);
             });
         });

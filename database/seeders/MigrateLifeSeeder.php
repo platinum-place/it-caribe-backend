@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use Database\Seeders\Migrate\Life\Sheet1Seeder;
 use Database\Seeders\Migrate\Life\Sheet2Seeder;
 use Database\Seeders\Migrate\Life\Sheet3Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class MigrateLifeSeeder extends Seeder

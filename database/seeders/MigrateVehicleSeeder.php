@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use Database\Seeders\Migrate\Vehicle\Sheet10Seeder;
+use Database\Seeders\Migrate\Vehicle\Sheet11Seeder;
+use Database\Seeders\Migrate\Vehicle\Sheet12Seeder;
 use Database\Seeders\Migrate\Vehicle\Sheet1Seeder;
 use Database\Seeders\Migrate\Vehicle\Sheet2Seeder;
 use Database\Seeders\Migrate\Vehicle\Sheet3Seeder;
@@ -11,10 +14,6 @@ use Database\Seeders\Migrate\Vehicle\Sheet6Seeder;
 use Database\Seeders\Migrate\Vehicle\Sheet7Seeder;
 use Database\Seeders\Migrate\Vehicle\Sheet8Seeder;
 use Database\Seeders\Migrate\Vehicle\Sheet9Seeder;
-use Database\Seeders\Migrate\Vehicle\Sheet10Seeder;
-use Database\Seeders\Migrate\Vehicle\Sheet11Seeder;
-use Database\Seeders\Migrate\Vehicle\Sheet12Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class MigrateVehicleSeeder extends Seeder

@@ -70,7 +70,7 @@ class Sheet3Seeder extends Seeder
             $branchId = $this->getBranchId($line['Sucursal'], $newBranches);
 
             // Prepare borrower data
-            $borrowerId = 'borrower_' . $index; // Temporary ID for relationships
+            $borrowerId = 'borrower_'.$index; // Temporary ID for relationships
             $borrowersData[] = [
                 'temp_id' => $borrowerId,
                 'full_name' => $line['Nombre Cliente'],
@@ -86,8 +86,8 @@ class Sheet3Seeder extends Seeder
 
             // Prepare co-borrower data if exists
             $coBorrowerId = null;
-            if (!empty($line['Identificación Co'])) {
-                $coBorrowerId = 'co_borrower_' . $index;
+            if (! empty($line['Identificación Co'])) {
+                $coBorrowerId = 'co_borrower_'.$index;
                 $coBorrowersData[] = [
                     'temp_id' => $coBorrowerId,
                     'full_name' => $line['Codeudor'],
@@ -102,11 +102,11 @@ class Sheet3Seeder extends Seeder
             }
 
             // Store other data with temp references
-            $quoteId = 'quote_' . $index;
+            $quoteId = 'quote_'.$index;
             $quotesData[] = [
                 'temp_id' => $quoteId,
                 'borrower_temp_id' => $borrowerId,
-                'quote_type_id' => QuoteTypeEnum::VEHICLE->value,
+                'quote_type_id' => QuoteTypeEnum::LIFE->value,
                 'quote_status_id' => QuoteStatusEnum::APPROVED->value,
                 'start_date' => $line['Fecha_Emi'],
                 'end_date' => $line['Fecha_Venc'],
@@ -117,14 +117,14 @@ class Sheet3Seeder extends Seeder
 
             ];
 
-            $quoteLineId = 'quote_line_' . $index;
+            $quoteLineId = 'quote_line_'.$index;
             $quoteLinesData[] = [
                 'temp_id' => $quoteLineId,
                 'quote_temp_id' => $quoteId,
                 'name' => 'Mapfre',
                 'description' => $line['Descripción Producto'],
                 'quantity' => 1,
-                'total' => (float)$line['MONTO A PAGAR'],
+                'total' => (float) $line['MONTO A PAGAR'],
                 'quote_line_status_id' => QuoteLineStatusEnum::ACCEPTED->value,
                 'created_at' => $now,
                 'updated_at' => $now,
@@ -132,14 +132,14 @@ class Sheet3Seeder extends Seeder
 
             ];
 
-            $quoteLifeId = 'quote_life_' . $index;
+            $quoteLifeId = 'quote_life_'.$index;
             $quoteLifesData[] = [
                 'temp_id' => $quoteLifeId,
                 'quote_temp_id' => $quoteId,
                 'co_borrower_temp_id' => $coBorrowerId,
                 'quote_life_credit_type_id' => QuoteLifeCreditTypeEnum::PERSONAL_LOAN->value,
-                'deadline_month' => (int)$line['Plazo'],
-                'insured_amount' => (float)$line['Monto Orig.'],
+                'deadline_month' => (int) $line['Plazo'],
+                'insured_amount' => (float) $line['Monto Orig.'],
                 'created_at' => $now,
                 'updated_at' => $now,
                 'created_by' => 1,
@@ -148,7 +148,7 @@ class Sheet3Seeder extends Seeder
             $quoteLifeLinesData[] = [
                 'quote_life_temp_id' => $quoteLifeId,
                 'quote_line_temp_id' => $quoteLineId,
-                'borrower_rate' => (int)$line['Tasa'],
+                'borrower_rate' => (int) $line['Tasa'],
                 'created_at' => $now,
                 'updated_at' => $now,
                 'created_by' => 1,
@@ -156,16 +156,16 @@ class Sheet3Seeder extends Seeder
             ];
         }
 
-        DB::transaction(function () use ($newBranches, $borrowersData, $coBorrowersData, $quotesData, $quoteLinesData, $quoteLifesData, $quoteLifeLinesData) {
+        DB::transaction(function () use ($newBranches, $borrowersData, $coBorrowersData, $quotesData) {
             // Insert new branches first
-            if (!empty($newBranches)) {
+            if (! empty($newBranches)) {
                 DB::table('branches')->insert($newBranches);
             }
 
             // Insert borrowers and get IDs
             $borrowerIds = $this->bulkInsertWithIds('leads', $borrowersData);
             $coBorrowerIds = [];
-            if (!empty($coBorrowersData)) {
+            if (! empty($coBorrowersData)) {
                 $coBorrowerIds = $this->bulkInsertWithIds('leads', $coBorrowersData);
             }
 
@@ -207,6 +207,7 @@ class Sheet3Seeder extends Seeder
         $insertData = array_map(function ($item) {
             $filtered = $item;
             unset($filtered['temp_id']);
+
             return $filtered;
         }, $data);
 
