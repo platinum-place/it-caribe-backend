@@ -8,4 +8,6 @@ use Modules\Domain\Common\ValueObjects\AccessToken;
 interface ZohoOauthAccessTokenRepositoryInterface
 {
     public function store(AccessToken $accessToken): ZohoOauthAccessTokenEntity;
+
+    public function findLast(): ZohoOauthAccessTokenEntity;
 }

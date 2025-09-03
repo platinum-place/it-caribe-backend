@@ -5,9 +5,9 @@ namespace Modules\Domain\Common\ValueObjects;
 class OauthClient
 {
     public function __construct(
-        public string $clientId,
-        public string $clientSecret,
-        public ?string $redirectUri = null,
+        public readonly string $clientId,
+        public readonly string $clientSecret,
+        public readonly ?string $redirectUri = null,
     ) {
         //
     }

@@ -10,8 +10,13 @@ class ZohoOauthClientEloquentRepository implements ZohoOauthClientRepositoryInte
 {
     public function findLast(): ZohoOauthClientEntity
     {
-        $record = ZohoOauthClient::query()->latest()->firstOrFail();
+        return $this->returnEntity(
+            ZohoOauthClient::query()->latest()->firstOrFail()
+        );
+    }
 
+    protected function returnEntity(ZohoOauthClient $record): ZohoOauthClientEntity
+    {
         return new ZohoOauthClientEntity(
             $record->id,
             $record->client_id,

@@ -5,8 +5,8 @@ namespace Modules\Domain\Common\ValueObjects;
 class AuthorizationCode
 {
     public function __construct(
-        public string $refreshToken,
-        public AccessToken $accessToken,
+        public readonly string $refreshToken,
+        public readonly AccessToken $accessToken,
     ) {
         //
     }

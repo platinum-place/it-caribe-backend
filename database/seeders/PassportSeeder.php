@@ -63,7 +63,7 @@ class PassportSeeder extends Seeder
                     'revoked' => filter_var($row[8], FILTER_VALIDATE_BOOLEAN),
                     'created_at' => $row[9] ? Carbon::parse($row[9]) : now(),
                     'updated_at' => $row[10] ? Carbon::parse($row[10]) : now(),
-                    'redirect_uris' => 'not found',
+                    'redirect_uris' => [],
                 ]);
             }
 

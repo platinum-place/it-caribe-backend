@@ -7,7 +7,6 @@ use Illuminate\Http\Client\RequestException;
 use Modules\Domain\Common\Contracts\ZohoCRMInterface;
 use Modules\Domain\Common\ValueObjects\AccessToken;
 use Modules\Domain\Common\ValueObjects\AuthorizationCode;
-use Modules\Domain\Common\ValueObjects\OauthClient;
 use Modules\Infrastructure\Common\Clients\ZohoApiClient;
 
 class ZohoApiAdapter implements ZohoCRMInterface
@@ -24,9 +23,9 @@ class ZohoApiAdapter implements ZohoCRMInterface
      * @throws RequestException
      * @throws ConnectionException
      */
-    public function fetchRefreshToken(string $grantToken, OauthClient $oauthClient): AuthorizationCode
+    public function fetchRefreshToken(string $grantToken, string $clientId, string $clientSecret, string $redirectUri): AuthorizationCode
     {
-        $response = $this->client->fetchRefreshToken($grantToken, $oauthClient->clientId, $oauthClient->clientSecret, $oauthClient->redirectUri);
+        $response = $this->client->fetchRefreshToken($grantToken, $clientId, $clientSecret, $redirectUri);
 
         return new AuthorizationCode(
             $response['refresh_token'],
@@ -43,9 +42,9 @@ class ZohoApiAdapter implements ZohoCRMInterface
      * @throws RequestException
      * @throws ConnectionException
      */
-    public function fetchAccessToken(string $refreshToken, OauthClient $oauthClient): AccessToken
+    public function fetchAccessToken(string $refreshToken, string $clientId, string $clientSecret): AccessToken
     {
-        $response = $this->client->fetchAccessToken($refreshToken, $oauthClient->clientId, $oauthClient->clientSecret);
+        $response = $this->client->fetchAccessToken($refreshToken, $clientId, $clientSecret);
 
         return new AccessToken(
             $response['access_token'],
@@ -54,5 +53,16 @@ class ZohoApiAdapter implements ZohoCRMInterface
             $response['expires_in'],
             $response['scope'],
         );
+    }
+
+    /**
+     * @throws RequestException
+     * @throws ConnectionException
+     */
+    public function fetchRecordsByCriteria(string $module, string $accessToken, string $criteria, int $page = 1, int $perPage = 200): array
+    {
+        $response = $this->client->fetchRecordsByCriteria($module, $accessToken, $criteria, $page, $perPage);
+
+        return $response['data'];
     }
 }

@@ -3,6 +3,8 @@
 namespace Modules\Infrastructure\Common\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Modules\Application\Common\Contracts\FetchZohoRecordInterface;
+use Modules\Application\Common\UseCases\FetchRecordsUseCase;
 use Modules\Domain\Common\Contracts\ZohoCRMInterface;
 use Modules\Domain\Common\Repositories\ZohoOauthAccessTokenRepositoryInterface;
 use Modules\Domain\Common\Repositories\ZohoOauthClientRepositoryInterface;
@@ -19,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
         ZohoOauthAccessTokenRepositoryInterface::class => ZohoOauthAccessTokenEloquentRepository::class,
         ZohoOauthClientRepositoryInterface::class => ZohoOauthClientEloquentRepository::class,
         ZohoOauthRefreshTokenRepositoryInterface::class => ZohoOauthRefreshTokenEloquentRepository::class,
+        FetchZohoRecordInterface::class => FetchRecordsUseCase::class,
     ];
 
     /**
@@ -27,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         foreach ($this->contracts as $interface => $class) {
-            $this->app->bind($interface, $class);
+            $this->app->singleton($interface, $class);
         }
 
         $this->mergeConfigFrom(base_path('src/Infrastructure/Common/Config/zoho.php'), 'zoho');

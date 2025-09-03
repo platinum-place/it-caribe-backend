@@ -11,14 +11,29 @@ class ZohoOauthAccessTokenEloquentRepository implements ZohoOauthAccessTokenRepo
 {
     public function store(AccessToken $accessToken): ZohoOauthAccessTokenEntity
     {
-        $record = ZohoOauthAccessToken::create([
-            'access_token' => $accessToken->accessToken,
-            'api_domain' => $accessToken->apiDomain,
-            'token_type' => $accessToken->tokenType,
-            'expires_in' => $accessToken->expiresIn,
-            'scope' => $accessToken->scope,
-        ]);
+        return $this->returnEntity(
+            ZohoOauthAccessToken::create([
+                'access_token' => $accessToken->accessToken,
+                'api_domain' => $accessToken->apiDomain,
+                'token_type' => $accessToken->tokenType,
+                'expires_in' => $accessToken->expiresIn,
+                'expires_at' => now()->addSeconds($accessToken->expiresIn),
+                'scope' => $accessToken->scope,
+            ])
+        );
+    }
 
+    public function findLast(): ZohoOauthAccessTokenEntity
+    {
+        return $this->returnEntity(
+            ZohoOauthAccessToken::query()
+                ->whereDate('expires_at', '>=', now())
+                ->firstOrFail()
+        );
+    }
+
+    protected function returnEntity(ZohoOauthAccessToken $record): ZohoOauthAccessTokenEntity
+    {
         return new ZohoOauthAccessTokenEntity(
             $record->id,
             $record->access_token,

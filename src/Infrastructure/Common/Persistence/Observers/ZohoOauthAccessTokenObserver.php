@@ -7,13 +7,6 @@ use Modules\Infrastructure\Common\Persistence\Models\ZohoOauthAccessToken;
 
 class ZohoOauthAccessTokenObserver extends BaseObserver
 {
-    public function creating(ZohoOauthAccessToken|\Illuminate\Database\Eloquent\Model $model): void
-    {
-        parent::creating($model);
-
-        $model->expires_at = now()->addSeconds($model->expires_in);
-    }
-
     /**
      * Handle the ZohoOauthAccessToken "created" event.
      */

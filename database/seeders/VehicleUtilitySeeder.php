@@ -25,6 +25,9 @@ class VehicleUtilitySeeder extends Seeder
             [
                 'name' => 'Clásico',
             ],
+            [
+                'name' => 'Coreano',
+            ],
         ];
 
         foreach ($data as $item) {

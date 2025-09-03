@@ -59,9 +59,9 @@ class ZohoApiClient
      * @throws RequestException
      * @throws ConnectionException
      */
-    public function searchRecords(string $module, string $token, string $criteria, int $page = 1, int $perPage = 200): ?array
+    public function fetchRecordsByCriteria(string $module, string $token, string $criteria, int $page = 1, int $perPage = 200): ?array
     {
-        $url = sprintf('%s/%s/search', config('zoho.domains.api').'/'.config('zoho.c'), $module);
+        $url = sprintf('%s/%s/search', config('zoho.domains.api').'/'.config('zoho.uri.crm'), $module);
 
         return Http::withToken($token, 'Zoho-oauthtoken')
             ->get($url, http_build_query([
@@ -77,16 +77,22 @@ class ZohoApiClient
      * @throws RequestException
      * @throws ConnectionException
      */
-    public function getRecords(string $module, string $token, array $fields, ?string $id = ''): ?array
+    public function fetchRecords(string $module, string $token, array $fields, ?string $id = ''): array
     {
         $url = sprintf('%s/%s%s', config('zoho.domains.api').'/'.config('zoho.uri.crm'), $module, $id ? "/$id" : '');
 
-        return Http::withToken($token, 'Zoho-oauthtoken')
+        $response = Http::withToken($token, 'Zoho-oauthtoken')
             ->get($url, [
                 'fields' => implode(',', $fields),
             ])
             ->throw()
             ->json();
+
+        if (isset($response['error'])) {
+            throw new \RuntimeException($response['error']);
+        }
+
+        return $response;
     }
 
     /**
