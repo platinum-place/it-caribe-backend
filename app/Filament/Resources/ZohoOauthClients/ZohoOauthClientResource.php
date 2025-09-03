@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\ZohoOauthClients;
 
 use App\Filament\Resources\ZohoOauthClients\Pages\ManageZohoOauthClients;
-use App\Models\ZohoOauthClient;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
@@ -23,6 +22,7 @@ use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Modules\Infrastructure\Common\Persistence\Models\ZohoOauthClient;
 
 class ZohoOauthClientResource extends Resource
 {

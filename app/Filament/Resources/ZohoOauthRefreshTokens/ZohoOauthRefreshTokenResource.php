@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\ZohoOauthRefreshTokens;
 
 use App\Filament\Resources\ZohoOauthRefreshTokens\Pages\ManageZohoOauthRefreshTokens;
-use App\Models\ZohoOauthRefreshToken;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -18,6 +17,7 @@ use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Modules\Infrastructure\Common\Persistence\Models\ZohoOauthRefreshToken;
 
 class ZohoOauthRefreshTokenResource extends Resource
 {

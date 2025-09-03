@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Modules\Infrastructure\Common\Persistence\Seeders\ZohoOauthClientSeeder;
+use Modules\Infrastructure\Common\Persistence\Seeders\ZohoOauthRefreshTokenSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -33,6 +35,8 @@ class DatabaseSeeder extends Seeder
             QuoteFireCreditTypeSeeder::class,
             QuoteFireConstructionTypeSeeder::class,
             QuoteUnemploymentPaymentTypeSeeder::class,
+
+            \Modules\Infrastructure\Common\Persistence\Seeders\DatabaseSeeder::class,
 
             VehicleTypeSeeder::class,
             VehicleMakeSeeder::class,

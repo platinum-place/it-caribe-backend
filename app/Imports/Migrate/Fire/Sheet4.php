@@ -21,7 +21,7 @@ use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithCalculatedFormulas;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 
-class Sheet4 implements ToCollection, WithChunkReading, WithCalculatedFormulas
+class Sheet4 implements ToCollection, WithCalculatedFormulas, WithChunkReading
 {
     public function collection(Collection $collection)
     {

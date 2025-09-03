@@ -1,10 +1,8 @@
 <?php
 
-namespace App\Providers;
+namespace Modules\Infrastructure\Common\Providers;
 
-use Carbon\CarbonInterval;
 use Illuminate\Support\ServiceProvider;
-use Laravel\Passport\Passport;
 use Modules\Domain\Common\Contracts\ZohoCRMInterface;
 use Modules\Domain\Common\Repositories\ZohoOauthAccessTokenRepositoryInterface;
 use Modules\Domain\Common\Repositories\ZohoOauthClientRepositoryInterface;
@@ -32,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
             $this->app->bind($interface, $class);
         }
 
-        Passport::ignoreRoutes();
+        $this->mergeConfigFrom(base_path('src/Infrastructure/Common/Config/zoho.php'), 'zoho');
     }
 
     /**
@@ -40,6 +38,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Passport::tokensExpireIn(CarbonInterval::days(15));
+        $this->loadMigrationsFrom(base_path('src/Infrastructure/Common/Persistence/Migrations'));
     }
 }

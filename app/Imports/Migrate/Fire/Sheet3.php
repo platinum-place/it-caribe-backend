@@ -21,7 +21,7 @@ use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithCalculatedFormulas;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 
-class Sheet3 implements ToCollection, WithChunkReading, WithCalculatedFormulas
+class Sheet3 implements ToCollection, WithCalculatedFormulas, WithChunkReading
 {
     public function collection(Collection $collection)
     {
@@ -59,8 +59,8 @@ class Sheet3 implements ToCollection, WithChunkReading, WithCalculatedFormulas
                     'description' => $row->get(7),
                     'quote_id' => $quote->id,
                     'quantity' => 1,
-                    'amount_taxed'=> $row->get(10),
-                    'tax_amount'=> $row->get(12),
+                    'amount_taxed' => $row->get(10),
+                    'tax_amount' => $row->get(12),
                     'total' => $row->get(11),
                     'quote_line_status_id' => QuoteLineStatusEnum::ACCEPTED->value,
                 ]);

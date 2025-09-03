@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\ZohoOauthAccessTokens;
 
 use App\Filament\Resources\ZohoOauthAccessTokens\Pages\ManageZohoOauthAccessTokens;
-use App\Models\ZohoOauthAccessToken;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
@@ -25,6 +24,7 @@ use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Modules\Infrastructure\Common\Persistence\Models\ZohoOauthAccessToken;
 
 class ZohoOauthAccessTokenResource extends Resource
 {

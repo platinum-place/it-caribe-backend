@@ -3,11 +3,11 @@
 namespace App\Filament\Resources\ZohoOauthRefreshTokens\Pages;
 
 use App\Filament\Resources\ZohoOauthRefreshTokens\ZohoOauthRefreshTokenResource;
-use App\UseCases\CreateRefreshTokenUseCase;
 use Filament\Actions\Action;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ManageRecords;
+use Modules\Application\Common\UseCases\CreateRefreshTokenUseCase;
 
 class ManageZohoOauthRefreshTokens extends ManageRecords
 {
