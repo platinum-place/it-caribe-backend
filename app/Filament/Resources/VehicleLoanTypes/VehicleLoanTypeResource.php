@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\VehicleLoanTypes;
 
 use App\Filament\Resources\VehicleLoanTypes\Pages\ManageVehicleLoanTypes;
-use App\Models\VehicleLoanType;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
@@ -24,6 +23,7 @@ use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Modules\Infrastructure\Catalogs\Vehicles\Persistence\Models\VehicleLoanType;
 
 class VehicleLoanTypeResource extends Resource
 {

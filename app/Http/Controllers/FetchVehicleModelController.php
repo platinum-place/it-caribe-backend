@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\VehicleModel;
 use Illuminate\Http\Request;
+use Modules\Infrastructure\Catalogs\Vehicles\Persistence\Models\VehicleModel;
 
 class FetchVehicleModelController extends Controller
 {

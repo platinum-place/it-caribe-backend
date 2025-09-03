@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\VehicleAccessory;
 use Illuminate\Http\Request;
+use Modules\Infrastructure\Catalogs\Vehicles\Persistence\Models\VehicleAccessory;
 
 class FetchVehicleAccessoryController extends Controller
 {

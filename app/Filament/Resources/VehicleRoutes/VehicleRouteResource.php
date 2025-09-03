@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\VehicleRoutes;
 
 use App\Filament\Resources\VehicleRoutes\Pages\ManageVehicleRoutes;
-use App\Models\VehicleRoute;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
@@ -24,6 +23,7 @@ use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Modules\Infrastructure\Catalogs\Vehicles\Persistence\Models\VehicleRoute;
 
 class VehicleRouteResource extends Resource
 {

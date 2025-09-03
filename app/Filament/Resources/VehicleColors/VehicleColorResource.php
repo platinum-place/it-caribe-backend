@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\VehicleColors;
 
 use App\Filament\Resources\VehicleColors\Pages\ManageVehicleColors;
-use App\Models\VehicleColor;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
@@ -24,6 +23,7 @@ use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Modules\Infrastructure\Catalogs\Vehicles\Persistence\Models\VehicleColor;
 
 class VehicleColorResource extends Resource
 {

@@ -10,9 +10,9 @@ use App\Models\Quote;
 use App\Models\QuoteLine;
 use App\Models\QuoteVehicle;
 use App\Models\QuoteVehicleLine;
-use App\Models\Vehicle;
-use App\Models\VehicleMake;
-use App\Models\VehicleModel;
+use Modules\Infrastructure\Catalogs\Vehicles\Persistence\Models\Vehicle;
+use Modules\Infrastructure\Catalogs\Vehicles\Persistence\Models\VehicleMake;
+use Modules\Infrastructure\Catalogs\Vehicles\Persistence\Models\VehicleModel;
 
 class EstimateQuoteVehicleController extends Controller
 {

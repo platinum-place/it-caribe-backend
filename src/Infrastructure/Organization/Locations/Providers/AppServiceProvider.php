@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->loadMigrationsFrom(
-            base_path('src/Infrastructure/Organization\Locations/Persistence/Migrations')
+            base_path('src/Infrastructure/Organization/Locations/Persistence/Migrations')
         );
     }
 }

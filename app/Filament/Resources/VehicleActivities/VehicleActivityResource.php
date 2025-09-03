@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\VehicleActivities;
 
 use App\Filament\Resources\VehicleActivities\Pages\ManageVehicleActivities;
-use App\Models\VehicleActivity;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
@@ -24,6 +23,7 @@ use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Modules\Infrastructure\Catalogs\Vehicles\Persistence\Models\VehicleActivity;
 
 class VehicleActivityResource extends Resource
 {
