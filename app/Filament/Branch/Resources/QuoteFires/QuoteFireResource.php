@@ -9,7 +9,6 @@ use App\Filament\Branch\Resources\QuoteFires\Pages\ViewQuoteFire;
 use App\Filament\Branch\Resources\QuoteFires\Schemas\QuoteFireForm;
 use App\Filament\Branch\Resources\QuoteFires\Schemas\QuoteFireInfolist;
 use App\Filament\Branch\Resources\QuoteFires\Tables\QuoteFiresTable;
-use App\Models\QuoteFire;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -17,6 +16,7 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Modules\Infrastructure\Quotations\Products\Fire\Persistence\Models\QuoteFire;
 
 class QuoteFireResource extends Resource
 {

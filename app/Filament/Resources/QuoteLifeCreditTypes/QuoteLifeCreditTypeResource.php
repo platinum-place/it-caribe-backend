@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\QuoteLifeCreditTypes;
 
 use App\Filament\Resources\QuoteLifeCreditTypes\Pages\ManageQuoteLifeCreditTypes;
-use App\Models\QuoteLifeCreditType;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
@@ -24,6 +23,7 @@ use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Modules\Infrastructure\Quotations\Products\Life\Persistence\Models\QuoteLifeCreditType;
 
 class QuoteLifeCreditTypeResource extends Resource
 {

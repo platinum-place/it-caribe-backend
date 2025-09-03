@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\QuoteUnemploymentPaymentTypes;
 
 use App\Filament\Resources\QuoteUnemploymentPaymentTypes\Pages\ManageQuoteUnemploymentPaymentTypes;
-use App\Models\QuoteUnemploymentPaymentType;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
@@ -24,6 +23,7 @@ use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Modules\Infrastructure\Quotations\Products\Unemployment\Persistence\Models\QuoteUnemploymentPaymentType;
 
 class QuoteUnemploymentPaymentTypeResource extends Resource
 {

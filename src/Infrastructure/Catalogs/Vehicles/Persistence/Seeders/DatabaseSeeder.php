@@ -18,11 +18,8 @@ class DatabaseSeeder extends Seeder
             VehicleActivitySeeder::class,
             VehicleColorSeeder::class,
             VehicleLoanTypeSeeder::class,
-            VehicleTypeSeeder::class,
             VehicleUtilitySeeder::class,
             VehicleUseSeeder::class,
-            VehicleMakeSeeder::class,
-            VehicleModelSeeder::class,
         ]);
     }
 }

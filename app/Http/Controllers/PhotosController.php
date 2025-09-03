@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ValidateInspectionRequest;
-use App\Models\QuoteVehicleLine;
+use Modules\Infrastructure\Quotations\Products\Vehicle\Persistence\Models\QuoteVehicleLine;
 
 class PhotosController extends Controller
 {

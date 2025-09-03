@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\QuoteStatusEnum;
 use App\Http\Requests\CancelQuoteVehicleRequest;
-use App\Models\QuoteVehicleLine;
+use Modules\Domain\Quotations\Core\Enums\QuoteStatusEnum;
+use Modules\Infrastructure\Quotations\Products\Vehicle\Persistence\Models\QuoteVehicleLine;
 
 class CancelQuoteVehicleController extends Controller
 {

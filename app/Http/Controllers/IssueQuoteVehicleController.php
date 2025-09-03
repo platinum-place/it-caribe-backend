@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\QuoteLineStatusEnum;
-use App\Enums\QuoteStatusEnum;
 use App\Http\Requests\IssueQuoteVehicleRequest;
-use App\Models\QuoteVehicleLine;
 use Carbon\Carbon;
+use Modules\Domain\Quotations\Core\Enums\QuoteLineStatusEnum;
+use Modules\Domain\Quotations\Core\Enums\QuoteStatusEnum;
+use Modules\Infrastructure\Quotations\Products\Vehicle\Persistence\Models\QuoteVehicleLine;
 
 class IssueQuoteVehicleController extends Controller
 {

@@ -4,15 +4,15 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Modules\Infrastructure\Catalogs\Vehicles\Persistence\Seeders\VehicleAccessorySeeder;
-use Modules\Infrastructure\Catalogs\Vehicles\Persistence\Seeders\VehicleActivitySeeder;
-use Modules\Infrastructure\Catalogs\Vehicles\Persistence\Seeders\VehicleColorSeeder;
-use Modules\Infrastructure\Catalogs\Vehicles\Persistence\Seeders\VehicleLoanTypeSeeder;
-use Modules\Infrastructure\Catalogs\Vehicles\Persistence\Seeders\VehicleMakeSeeder;
-use Modules\Infrastructure\Catalogs\Vehicles\Persistence\Seeders\VehicleModelSeeder;
-use Modules\Infrastructure\Catalogs\Vehicles\Persistence\Seeders\VehicleTypeSeeder;
-use Modules\Infrastructure\Catalogs\Vehicles\Persistence\Seeders\VehicleUseSeeder;
-use Modules\Infrastructure\Catalogs\Vehicles\Persistence\Seeders\VehicleUtilitySeeder;
+use Modules\Infrastructure\Quotations\Core\Persistence\Seeders\QuoteLineStatusSeeder;
+use Modules\Infrastructure\Quotations\Core\Persistence\Seeders\QuoteStatusSeeder;
+use Modules\Infrastructure\Quotations\Core\Persistence\Seeders\QuoteTypeSeeder;
+use Modules\Infrastructure\Quotations\Products\Fire\Persistence\Seeders\QuoteFireConstructionTypeSeeder;
+use Modules\Infrastructure\Quotations\Products\Fire\Persistence\Seeders\QuoteFireCreditTypeSeeder;
+use Modules\Infrastructure\Quotations\Products\Fire\Persistence\Seeders\QuoteFireRiskTypeSeeder;
+use Modules\Infrastructure\Quotations\Products\Life\Persistence\Seeders\QuoteLifeCreditTypeSeeder;
+use Modules\Infrastructure\Quotations\Products\Unemployment\Persistence\Seeders\QuoteUnemploymentEmploymentTypeSeeder;
+use Modules\Infrastructure\Quotations\Products\Unemployment\Persistence\Seeders\QuoteUnemploymentPaymentTypeSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -28,20 +28,21 @@ class DatabaseSeeder extends Seeder
             \Modules\Infrastructure\CRM\Persistence\Seeders\DatabaseSeeder::class,
             \Modules\Infrastructure\Catalogs\Vehicles\Persistence\Seeders\DatabaseSeeder::class,
 
-            QuoteUnemploymentEmploymentTypeSeeder::class,
-            QuoteTypeSeeder::class,
-            QuoteStatusSeeder::class,
-            QuoteLineStatusSeeder::class,
-            QuoteLifeCreditTypeSeeder::class,
-            QuoteFireRiskTypeSeeder::class,
-            QuoteFireCreditTypeSeeder::class,
-            QuoteFireConstructionTypeSeeder::class,
-            QuoteUnemploymentPaymentTypeSeeder::class,
+            \Modules\Infrastructure\Quotations\Core\Persistence\Seeders\DatabaseSeeder::class,
+            \Modules\Infrastructure\Quotations\Products\Fire\Persistence\Seeders\DatabaseSeeder::class,
+            \Modules\Infrastructure\Quotations\Products\Life\Persistence\Seeders\DatabaseSeeder::class,
+            \Modules\Infrastructure\Quotations\Products\Unemployment\Persistence\Seeders\DatabaseSeeder::class,
 
             \Modules\Infrastructure\Zoho\Persistence\Seeders\DatabaseSeeder::class,
 
+            /**
+             * Migrate TODO
+             */
             UserSeeder::class,
             PassportSeeder::class,
+            VehicleTypeSeeder::class,
+            VehicleMakeSeeder::class,
+            VehicleModelSeeder::class,
         ]);
     }
 }

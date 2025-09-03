@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\QuoteFireCreditTypes;
 
 use App\Filament\Resources\QuoteFireCreditTypes\Pages\ManageQuoteFireCreditTypes;
-use App\Models\QuoteFireCreditType;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
@@ -24,6 +23,7 @@ use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Modules\Infrastructure\Quotations\Products\Fire\Persistence\Models\QuoteFireCreditType;
 
 class QuoteFireCreditTypeResource extends Resource
 {

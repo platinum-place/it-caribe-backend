@@ -8,6 +8,12 @@ return [
     Modules\Infrastructure\CRM\Providers\AppServiceProvider::class,
     Modules\Infrastructure\Organization\Locations\Providers\AppServiceProvider::class,
     Modules\Infrastructure\Catalogs\Vehicles\Providers\AppServiceProvider::class,
+    Modules\Infrastructure\Quotations\Core\Providers\AppServiceProvider::class,
+    Modules\Infrastructure\Quotations\Products\DebtUnemployment\Providers\AppServiceProvider::class,
+    Modules\Infrastructure\Quotations\Products\Fire\Providers\AppServiceProvider::class,
+    Modules\Infrastructure\Quotations\Products\Life\Providers\AppServiceProvider::class,
+    Modules\Infrastructure\Quotations\Products\Unemployment\Providers\AppServiceProvider::class,
+    Modules\Infrastructure\Quotations\Products\Vehicle\Providers\AppServiceProvider::class,
 
     App\Providers\Filament\AdminPanelProvider::class,
     App\Providers\Filament\BranchPanelProvider::class,

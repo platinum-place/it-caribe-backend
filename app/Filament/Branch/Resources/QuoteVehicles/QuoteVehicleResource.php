@@ -9,7 +9,6 @@ use App\Filament\Branch\Resources\QuoteVehicles\Pages\ViewQuoteVehicle;
 use App\Filament\Branch\Resources\QuoteVehicles\Schemas\QuoteVehicleForm;
 use App\Filament\Branch\Resources\QuoteVehicles\Schemas\QuoteVehicleInfolist;
 use App\Filament\Branch\Resources\QuoteVehicles\Tables\QuoteVehiclesTable;
-use App\Models\QuoteVehicle;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -17,6 +16,7 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Modules\Infrastructure\Quotations\Products\Vehicle\Persistence\Models\QuoteVehicle;
 
 class QuoteVehicleResource extends Resource
 {

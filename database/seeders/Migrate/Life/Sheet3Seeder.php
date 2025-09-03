@@ -2,15 +2,15 @@
 
 namespace Database\Seeders\Migrate\Life;
 
-use App\Enums\QuoteLifeCreditTypeEnum;
-use App\Enums\QuoteLineStatusEnum;
-use App\Enums\QuoteStatusEnum;
-use App\Enums\QuoteTypeEnum;
 use Carbon\Carbon;
 use DateTimeImmutable;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Modules\Domain\CRM\Enums\LeadTypeEnum;
+use Modules\Domain\Quotations\Core\Enums\QuoteLineStatusEnum;
+use Modules\Domain\Quotations\Core\Enums\QuoteStatusEnum;
+use Modules\Domain\Quotations\Core\Enums\QuoteTypeEnum;
+use Modules\Domain\Quotations\Products\Life\Enums\QuoteLifeCreditTypeEnum;
 use Modules\Infrastructure\Organization\Locations\Persistence\Models\Branch;
 use Rap2hpoutre\FastExcel\FastExcel;
 

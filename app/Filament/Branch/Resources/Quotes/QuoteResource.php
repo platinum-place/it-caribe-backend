@@ -9,7 +9,6 @@ use App\Filament\Branch\Resources\Quotes\Pages\ViewQuote;
 use App\Filament\Branch\Resources\Quotes\Schemas\QuoteForm;
 use App\Filament\Branch\Resources\Quotes\Schemas\QuoteInfolist;
 use App\Filament\Branch\Resources\Quotes\Tables\QuotesTable;
-use App\Models\Quote;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -17,6 +16,7 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Modules\Infrastructure\Quotations\Core\Persistence\Models\Quote;
 
 class QuoteResource extends Resource
 {

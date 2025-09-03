@@ -9,7 +9,6 @@ use App\Filament\Branch\Resources\QuoteDebtUnemployments\Pages\ViewQuoteDebtUnem
 use App\Filament\Branch\Resources\QuoteDebtUnemployments\Schemas\QuoteDebtUnemploymentForm;
 use App\Filament\Branch\Resources\QuoteDebtUnemployments\Schemas\QuoteDebtUnemploymentInfolist;
 use App\Filament\Branch\Resources\QuoteDebtUnemployments\Tables\QuoteDebtUnemploymentsTable;
-use App\Models\QuoteDebtUnemployment;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -17,6 +16,7 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Modules\Infrastructure\Quotations\Products\DebtUnemployment\Persistence\Models\QuoteDebtUnemployment;
 
 class QuoteDebtUnemploymentResource extends Resource
 {

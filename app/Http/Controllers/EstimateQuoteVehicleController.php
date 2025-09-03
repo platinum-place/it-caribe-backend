@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\QuoteLineStatusEnum;
-use App\Enums\QuoteStatusEnum;
-use App\Enums\QuoteTypeEnum;
 use App\Http\Requests\EstimateQuoteVehicleRequest;
-use App\Models\Quote;
-use App\Models\QuoteLine;
-use App\Models\QuoteVehicle;
-use App\Models\QuoteVehicleLine;
+use Modules\Domain\Quotations\Core\Enums\QuoteLineStatusEnum;
+use Modules\Domain\Quotations\Core\Enums\QuoteStatusEnum;
+use Modules\Domain\Quotations\Core\Enums\QuoteTypeEnum;
 use Modules\Infrastructure\Catalogs\Vehicles\Persistence\Models\Vehicle;
 use Modules\Infrastructure\Catalogs\Vehicles\Persistence\Models\VehicleMake;
 use Modules\Infrastructure\Catalogs\Vehicles\Persistence\Models\VehicleModel;
+use Modules\Infrastructure\Quotations\Core\Persistence\Models\Quote;
+use Modules\Infrastructure\Quotations\Core\Persistence\Models\QuoteLine;
+use Modules\Infrastructure\Quotations\Products\Vehicle\Persistence\Models\QuoteVehicle;
+use Modules\Infrastructure\Quotations\Products\Vehicle\Persistence\Models\QuoteVehicleLine;
 
 class EstimateQuoteVehicleController extends Controller
 {

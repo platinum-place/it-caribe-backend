@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\QuoteTypes;
 
 use App\Filament\Resources\QuoteTypes\Pages\ManageQuoteTypes;
-use App\Models\QuoteType;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
@@ -24,6 +23,7 @@ use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Modules\Infrastructure\Quotations\Core\Persistence\Models\QuoteType;
 
 class QuoteTypeResource extends Resource
 {

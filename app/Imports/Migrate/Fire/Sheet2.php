@@ -2,24 +2,24 @@
 
 namespace App\Imports\Migrate\Fire;
 
-use App\Enums\QuoteFireConstructionTypeEnum;
-use App\Enums\QuoteFireCreditTypeEnum;
-use App\Enums\QuoteFireRiskTypeEnum;
-use App\Enums\QuoteLineStatusEnum;
-use App\Enums\QuoteStatusEnum;
-use App\Enums\QuoteTypeEnum;
-use App\Models\Quote;
-use App\Models\QuoteFire;
-use App\Models\QuoteFireLine;
-use App\Models\QuoteLine;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithCalculatedFormulas;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Modules\Domain\CRM\Enums\LeadTypeEnum;
+use Modules\Domain\Quotations\Core\Enums\QuoteLineStatusEnum;
+use Modules\Domain\Quotations\Core\Enums\QuoteStatusEnum;
+use Modules\Domain\Quotations\Core\Enums\QuoteTypeEnum;
+use Modules\Domain\Quotations\Products\Fire\Enums\QuoteFireConstructionTypeEnum;
+use Modules\Domain\Quotations\Products\Fire\Enums\QuoteFireCreditTypeEnum;
+use Modules\Domain\Quotations\Products\Fire\Enums\QuoteFireRiskTypeEnum;
 use Modules\Infrastructure\CRM\Persistence\Models\Lead;
 use Modules\Infrastructure\Organization\Locations\Persistence\Models\Branch;
+use Modules\Infrastructure\Quotations\Core\Persistence\Models\Quote;
+use Modules\Infrastructure\Quotations\Core\Persistence\Models\QuoteLine;
+use Modules\Infrastructure\Quotations\Products\Fire\Persistence\Models\QuoteFire;
+use Modules\Infrastructure\Quotations\Products\Fire\Persistence\Models\QuoteFireLine;
 
 class Sheet2 implements ToCollection, WithCalculatedFormulas, WithChunkReading
 {

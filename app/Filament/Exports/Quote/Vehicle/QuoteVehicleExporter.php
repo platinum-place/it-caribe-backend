@@ -2,11 +2,11 @@
 
 namespace App\Filament\Exports\Quote\Vehicle;
 
-use App\Models\QuoteVehicle;
 use Filament\Actions\Exports\ExportColumn;
 use Filament\Actions\Exports\Exporter;
 use Filament\Actions\Exports\Models\Export;
 use Illuminate\Support\Number;
+use Modules\Infrastructure\Quotations\Products\Vehicle\Persistence\Models\QuoteVehicle;
 
 class QuoteVehicleExporter extends Exporter
 {

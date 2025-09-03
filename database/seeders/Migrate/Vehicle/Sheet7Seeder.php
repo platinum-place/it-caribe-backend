@@ -2,21 +2,21 @@
 
 namespace Database\Seeders\Migrate\Vehicle;
 
-use App\Enums\QuoteLineStatusEnum;
-use App\Enums\QuoteStatusEnum;
-use App\Enums\QuoteTypeEnum;
-use App\Models\Quote;
-use App\Models\QuoteLine;
-use App\Models\QuoteVehicle;
-use App\Models\QuoteVehicleLine;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Modules\Domain\CRM\Enums\LeadTypeEnum;
+use Modules\Domain\Quotations\Core\Enums\QuoteLineStatusEnum;
+use Modules\Domain\Quotations\Core\Enums\QuoteStatusEnum;
+use Modules\Domain\Quotations\Core\Enums\QuoteTypeEnum;
 use Modules\Infrastructure\Catalogs\Vehicles\Persistence\Models\Vehicle;
 use Modules\Infrastructure\Catalogs\Vehicles\Persistence\Models\VehicleMake;
 use Modules\Infrastructure\Catalogs\Vehicles\Persistence\Models\VehicleModel;
 use Modules\Infrastructure\CRM\Persistence\Models\Lead;
 use Modules\Infrastructure\Organization\Locations\Persistence\Models\Branch;
+use Modules\Infrastructure\Quotations\Core\Persistence\Models\Quote;
+use Modules\Infrastructure\Quotations\Core\Persistence\Models\QuoteLine;
+use Modules\Infrastructure\Quotations\Products\Vehicle\Persistence\Models\QuoteVehicle;
+use Modules\Infrastructure\Quotations\Products\Vehicle\Persistence\Models\QuoteVehicleLine;
 use Rap2hpoutre\FastExcel\FastExcel;
 
 class Sheet7Seeder extends Seeder

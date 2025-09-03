@@ -9,7 +9,6 @@ use App\Filament\Branch\Resources\QuoteLives\Pages\ViewQuoteLife;
 use App\Filament\Branch\Resources\QuoteLives\Schemas\QuoteLifeForm;
 use App\Filament\Branch\Resources\QuoteLives\Schemas\QuoteLifeInfolist;
 use App\Filament\Branch\Resources\QuoteLives\Tables\QuoteLivesTable;
-use App\Models\QuoteLife;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -17,6 +16,7 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Modules\Infrastructure\Quotations\Products\Life\Persistence\Models\QuoteLife;
 
 class QuoteLifeResource extends Resource
 {
