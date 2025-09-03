@@ -24,6 +24,16 @@ class QuoteVehicleResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
+    public static function getModelLabel(): string
+    {
+        return 'Cotización Plan Auto';
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return 'Cotizaciones Plan Auto';
+    }
+
     public static function form(Schema $schema): Schema
     {
         return QuoteVehicleForm::configure($schema);
@@ -42,7 +52,7 @@ class QuoteVehicleResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\LinesRelationManager::class,
         ];
     }
 

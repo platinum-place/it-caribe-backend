@@ -27,7 +27,7 @@ class ZohoOauthAccessTokenEloquentRepository implements ZohoOauthAccessTokenRepo
     {
         return $this->returnEntity(
             ZohoOauthAccessToken::query()
-                ->whereDate('expires_at', '>=', now())
+                ->where('expires_at', '>=', now())
                 ->firstOrFail()
         );
     }

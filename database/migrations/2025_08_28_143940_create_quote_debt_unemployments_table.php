@@ -22,6 +22,7 @@ return new class extends Migration
             $table->foreignId('quote_id')->constrained('quotes');
             $table->foreignId('quote_unemployment_employment_type_id')->constrained('quote_unemployment_employment_types');
             $table->foreignId('vehicle_id')->constrained('vehicles');
+            $table->foreignId('branch_id')->nullable()->constrained('branches');
 
             $table->integer('deadline_month')->default(0);
             $table->integer('deadline_year')->default(0);

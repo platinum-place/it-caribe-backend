@@ -143,6 +143,7 @@ class Sheet3Seeder extends Seeder
                 'created_at' => $now,
                 'updated_at' => $now,
                 'created_by' => 1,
+                'branch_id' => $branchId,
             ];
 
             $quoteLifeLinesData[] = [
@@ -192,6 +193,7 @@ class Sheet3Seeder extends Seeder
         // Create new branch entry
         $newBranches[] = [
             'name' => $branchName,
+            'created_by' => 1,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];

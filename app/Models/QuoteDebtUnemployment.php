@@ -6,7 +6,6 @@ use App\Observers\QuoteDebtUnemploymentObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 #[ObservedBy([QuoteDebtUnemploymentObserver::class])]
@@ -15,14 +14,14 @@ class QuoteDebtUnemployment extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'deadline_month', 'deadline_year', 'vehicle_amount',
+        'quote_id', 'branch_id', 'deadline_month', 'deadline_year', 'vehicle_amount',
         'loan_amount', 'insured_amount',
         'created_by', 'updated_by', 'deleted_by',
     ];
 
-    public function branch(): HasOneThrough
+    public function branch(): BelongsTo
     {
-        return $this->hasOneThrough(Branch::class, Quote::class, 'id', 'id', 'quote_id', 'branch_id');
+        return $this->belongsTo(Branch::class);
     }
 
     public function createdBy(): BelongsTo

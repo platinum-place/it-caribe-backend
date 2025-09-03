@@ -68,6 +68,8 @@ class Sheet2 implements ToCollection, WithCalculatedFormulas, WithChunkReading
                     'quote_fire_construction_type_id' => QuoteFireConstructionTypeEnum::SUPERIOR->value,
                     'appraisal_value' => $row->get(12),
                     'property_address' => $row->get(7),
+                    'branch_id' => $branch->id,
+
                 ]);
 
                 $quoteFireLine = QuoteFireLine::create([

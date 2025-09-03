@@ -93,6 +93,8 @@ class Sheet2Seeder extends Seeder
                     'quote_id' => $quote->id,
                     'vehicle_amount' => (float) $line['VALOR ASEGURADO'],
                     'vehicle_id' => $vehicle->id,
+                    'branch_id' => $branch->id,
+
                 ]);
 
                 $quoteVehicleLine = QuoteVehicleLine::create([

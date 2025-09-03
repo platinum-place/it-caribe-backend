@@ -2,12 +2,12 @@
 
 namespace Modules\Domain\Common\ValueObjects;
 
-class OauthClient
+readonly class OauthClient
 {
     public function __construct(
-        public readonly string $clientId,
-        public readonly string $clientSecret,
-        public readonly ?string $redirectUri = null,
+        public string $clientId,
+        public string $clientSecret,
+        public ?string $redirectUri = null,
     ) {
         //
     }

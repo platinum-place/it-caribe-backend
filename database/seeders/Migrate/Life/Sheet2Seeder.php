@@ -76,6 +76,8 @@ class Sheet2Seeder extends Seeder
                     'quote_life_credit_type_id' => QuoteLifeCreditTypeEnum::PERSONAL_LOAN->value,
                     'deadline_month' => (int) $line['Plazo'],
                     'insured_amount' => (float) $line['Monto Orig.'],
+                    'branch_id' => $branch->id,
+
                 ]);
 
                 $quoteLifeLine = QuoteLifeLine::create([

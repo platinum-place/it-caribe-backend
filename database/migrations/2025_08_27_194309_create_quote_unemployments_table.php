@@ -21,6 +21,7 @@ return new class extends Migration
 
             $table->foreignId('quote_unemployment_payment_type_id')->constrained('quote_unemployment_payment_types');
             $table->foreignId('quote_unemployment_employment_type_id')->constrained('quote_unemployment_employment_types');
+            $table->foreignId('branch_id')->nullable()->constrained('branches');
 
             $table->foreignId('quote_id')->constrained('quotes');
 

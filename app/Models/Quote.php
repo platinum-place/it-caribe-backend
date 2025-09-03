@@ -28,6 +28,16 @@ class Quote extends Model
         ];
     }
 
+    public function status(): BelongsTo
+    {
+        return $this->belongsTo(QuoteStatus::class, 'quote_status_id');
+    }
+
+    public function type(): BelongsTo
+    {
+        return $this->belongsTo(QuoteType::class, 'quote_type_id');
+    }
+
     public function branch(): BelongsTo
     {
         return $this->belongsTo(Branch::class);

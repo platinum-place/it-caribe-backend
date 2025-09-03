@@ -24,6 +24,7 @@ return new class extends Migration
             $table->foreignId('quote_fire_construction_type_id')->constrained('quote_fire_construction_types');
             $table->foreignId('quote_fire_credit_type_id')->constrained('quote_fire_credit_types');
             $table->foreignId('quote_fire_risk_type_id')->constrained('quote_fire_risk_types');
+            $table->foreignId('branch_id')->nullable()->constrained('branches');
 
             $table->foreignId('co_borrower_id')->nullable()->constrained('leads');
             $table->boolean('guarantor')->default(false);

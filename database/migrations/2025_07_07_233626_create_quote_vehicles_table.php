@@ -23,6 +23,7 @@ return new class extends Migration
 
             $table->foreignId('quote_id')->constrained('quotes');
             $table->foreignId('vehicle_id')->constrained('vehicles');
+            $table->foreignId('branch_id')->nullable()->constrained('branches');
 
             $table->decimal('vehicle_amount', 18, 2);
             $table->decimal('vehicle_loan_amount', 18, 2)->nullable();

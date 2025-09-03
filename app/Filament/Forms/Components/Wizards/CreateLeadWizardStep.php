@@ -2,11 +2,11 @@
 
 namespace App\Filament\Forms\Components\Wizards;
 
+use App\Models\LeadType;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Wizard\Step;
-use old\Modules\CRM\app\Models\LeadType;
 
 class CreateLeadWizardStep
 {
@@ -15,38 +15,38 @@ class CreateLeadWizardStep
         return Step::make(__('Debtor'))
             ->schema([
                 TextInput::make('lead.first_name')
-                    ->translateLabel()
+                    ->label('Nombre')
                     ->required(),
                 TextInput::make('lead.last_name')
-                    ->translateLabel()
+                    ->label('Apellido')
                     ->required(),
                 TextInput::make('lead.identity_number')
-                    ->translateLabel()
+                    ->label('Cédula')
                     ->required(),
                 DatePicker::make('lead.birth_date')
-                    ->translateLabel()
+                    ->label('Fecha de nacimiento')
                     ->required(),
                 TextInput::make('lead.email')
-                    ->translateLabel()
+                    ->label('Correo electrónico')
                     ->email(),
                 TextInput::make('lead.mobile_phone')
-                    ->translateLabel()
+                    ->label('Celular')
                     ->tel()
                     ->required()
                     ->mask('999-999-9999'),
                 TextInput::make('lead.home_phone')
-                    ->translateLabel()
+                    ->label('Teléfono residencial')
                     ->tel()
                     ->mask('999-999-9999'),
                 TextInput::make('lead.work_phone')
-                    ->translateLabel()
+                    ->label('Teléfono laboral')
                     ->tel()
                     ->mask('999-999-9999'),
                 TextInput::make('lead.address')
-                    ->translateLabel()
+                    ->label('Dirección')
                     ->columnSpanFull(),
                 Select::make('lead.lead_type_id')
-                    ->label('Tipo')
+                    ->label('Tipo de cliente')
                     ->options(LeadType::pluck('name', 'id')),
             ])
             ->columns();

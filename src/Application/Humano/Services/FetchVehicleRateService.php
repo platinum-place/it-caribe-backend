@@ -23,7 +23,11 @@ class FetchVehicleRateService
                     continue;
                 }
 
-                if ($vehicleAmount > $rate['Suma_hasta'] || $vehicleAmount < $rate['Suma_limite']) {
+                if (! empty($rate['Suma_hasta']) && $vehicleAmount > $rate['Suma_hasta']) {
+                    continue;
+                }
+
+                if (! empty($rate['Suma_limite']) && $vehicleAmount < $rate['Suma_limite']) {
                     continue;
                 }
 

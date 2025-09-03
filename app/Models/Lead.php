@@ -19,7 +19,7 @@ class Lead extends Model
         'lead_type_id', 'created_by', 'updated_by', 'deleted_by',
     ];
 
-    public function debtorType(): BelongsTo
+    public function type(): BelongsTo
     {
         return $this->belongsTo(LeadType::class);
     }
@@ -37,10 +37,5 @@ class Lead extends Model
     public function deletedBy(): BelongsTo
     {
         return $this->belongsTo(\App\Models\User::class, 'deleted_by');
-    }
-
-    public function type(): BelongsTo
-    {
-        return $this->belongsTo(LeadType::class);
     }
 }
