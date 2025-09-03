@@ -7,7 +7,7 @@ use Filament\Actions\Action;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ManageRecords;
-use Modules\Application\Common\UseCases\CreateRefreshTokenUseCase;
+use Modules\Application\Zoho\UseCases\CreateRefreshTokenUseCase;
 
 class ManageZohoOauthRefreshTokens extends ManageRecords
 {

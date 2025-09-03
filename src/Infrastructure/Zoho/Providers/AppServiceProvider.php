@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Providers;
+namespace Modules\Infrastructure\Zoho\Providers;
 
-use Carbon\CarbonInterval;
 use Illuminate\Support\ServiceProvider;
-use Laravel\Passport\Passport;
+use Modules\Application\Zoho\Contracts\FetchZohoRecordInterface;
+use Modules\Application\Zoho\UseCases\FetchRecordsUseCase;
 use Modules\Domain\Zoho\Contracts\ZohoCRMInterface;
 use Modules\Domain\Zoho\Repositories\ZohoOauthAccessTokenRepositoryInterface;
 use Modules\Domain\Zoho\Repositories\ZohoOauthClientRepositoryInterface;
@@ -21,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
         ZohoOauthAccessTokenRepositoryInterface::class => ZohoOauthAccessTokenEloquentRepository::class,
         ZohoOauthClientRepositoryInterface::class => ZohoOauthClientEloquentRepository::class,
         ZohoOauthRefreshTokenRepositoryInterface::class => ZohoOauthRefreshTokenEloquentRepository::class,
+        FetchZohoRecordInterface::class => FetchRecordsUseCase::class,
     ];
 
     /**
@@ -29,10 +30,10 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         foreach ($this->contracts as $interface => $class) {
-            $this->app->bind($interface, $class);
+            $this->app->singleton($interface, $class);
         }
 
-        Passport::ignoreRoutes();
+        $this->mergeConfigFrom(base_path('src/Infrastructure/Zoho/Config/zoho.php'), 'zoho');
     }
 
     /**
@@ -40,6 +41,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Passport::tokensExpireIn(CarbonInterval::days(15));
+        $this->loadMigrationsFrom(base_path('src/Infrastructure/Zoho/Persistence/Migrations'));
     }
 }

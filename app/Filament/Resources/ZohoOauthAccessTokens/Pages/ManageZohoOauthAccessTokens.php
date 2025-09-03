@@ -6,7 +6,7 @@ use App\Filament\Resources\ZohoOauthAccessTokens\ZohoOauthAccessTokenResource;
 use Filament\Actions\Action;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ManageRecords;
-use Modules\Application\Common\UseCases\CreateAccessTokenUseCase;
+use Modules\Application\Zoho\UseCases\CreateAccessTokenUseCase;
 
 class ManageZohoOauthAccessTokens extends ManageRecords
 {

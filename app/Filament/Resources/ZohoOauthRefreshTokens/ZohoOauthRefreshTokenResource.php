@@ -17,7 +17,7 @@ use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Modules\Infrastructure\Common\Persistence\Models\ZohoOauthRefreshToken;
+use Modules\Infrastructure\Zoho\Persistence\Models\ZohoOauthRefreshToken;
 
 class ZohoOauthRefreshTokenResource extends Resource
 {

@@ -2,7 +2,7 @@
 
 namespace Modules\Application\Humano\Services;
 
-use Modules\Application\Common\Contracts\FetchZohoRecordInterface;
+use Modules\Application\Zoho\Contracts\FetchZohoRecordInterface;
 
 class FetchVehicleRateService
 {

@@ -2,10 +2,10 @@
 
 namespace Modules\Application\Humano\UseCases;
 
-use Modules\Application\Common\Contracts\FetchZohoRecordInterface;
 use Modules\Application\Humano\Contracts\EstimateHumanoVehicleInsuranceInterface;
 use Modules\Application\Humano\Services\FetchVehicleRateService;
 use Modules\Application\Humano\Services\ValidateVehicleRestrictedService;
+use Modules\Application\Zoho\Contracts\FetchZohoRecordInterface;
 use Modules\Domain\Insurance\ValueObjects\InsuranceQuotation;
 
 class EstimateZohoVehicleUseCase implements EstimateHumanoVehicleInsuranceInterface

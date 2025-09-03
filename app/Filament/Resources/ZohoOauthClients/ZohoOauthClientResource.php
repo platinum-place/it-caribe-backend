@@ -22,7 +22,7 @@ use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Modules\Infrastructure\Common\Persistence\Models\ZohoOauthClient;
+use Modules\Infrastructure\Zoho\Persistence\Models\ZohoOauthClient;
 
 class ZohoOauthClientResource extends Resource
 {

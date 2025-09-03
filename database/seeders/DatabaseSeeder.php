@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
             QuoteFireConstructionTypeSeeder::class,
             QuoteUnemploymentPaymentTypeSeeder::class,
 
-            \Modules\Infrastructure\Common\Persistence\Seeders\DatabaseSeeder::class,
+            \Modules\Infrastructure\Zoho\Persistence\Seeders\DatabaseSeeder::class,
 
             VehicleTypeSeeder::class,
             VehicleMakeSeeder::class,
