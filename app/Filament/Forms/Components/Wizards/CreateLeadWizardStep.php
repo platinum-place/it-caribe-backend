@@ -2,11 +2,11 @@
 
 namespace App\Filament\Forms\Components\Wizards;
 
-use App\Models\LeadType;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Wizard\Step;
+use Modules\Infrastructure\CRM\Persistence\Models\LeadType;
 
 class CreateLeadWizardStep
 {

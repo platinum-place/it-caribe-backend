@@ -9,7 +9,6 @@ use App\Filament\Resources\LeadTypes\Pages\ViewLeadType;
 use App\Filament\Resources\LeadTypes\Schemas\LeadTypeForm;
 use App\Filament\Resources\LeadTypes\Schemas\LeadTypeInfolist;
 use App\Filament\Resources\LeadTypes\Tables\LeadTypesTable;
-use App\Models\LeadType;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -17,6 +16,7 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Modules\Infrastructure\CRM\Persistence\Models\LeadType;
 
 class LeadTypeResource extends Resource
 {

@@ -2,12 +2,9 @@
 
 namespace Database\Seeders\Migrate\Vehicle;
 
-use App\Enums\LeadTypeEnum;
 use App\Enums\QuoteLineStatusEnum;
 use App\Enums\QuoteStatusEnum;
 use App\Enums\QuoteTypeEnum;
-use App\Models\Branch;
-use App\Models\Lead;
 use App\Models\Quote;
 use App\Models\QuoteLine;
 use App\Models\QuoteVehicle;
@@ -18,6 +15,9 @@ use App\Models\VehicleModel;
 use DateTimeImmutable;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Modules\Domain\CRM\Enums\LeadTypeEnum;
+use Modules\Infrastructure\CRM\Persistence\Models\Lead;
+use Modules\Infrastructure\Organization\Locations\Persistence\Models\Branch;
 use Rap2hpoutre\FastExcel\FastExcel;
 
 class Sheet12Seeder extends Seeder

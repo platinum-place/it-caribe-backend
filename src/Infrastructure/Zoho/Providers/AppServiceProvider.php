@@ -33,7 +33,10 @@ class AppServiceProvider extends ServiceProvider
             $this->app->singleton($interface, $class);
         }
 
-        $this->mergeConfigFrom(base_path('src/Infrastructure/Zoho/Config/zoho.php'), 'zoho');
+        $this->mergeConfigFrom(
+            base_path('src/Infrastructure/Zoho/Config/zoho.php'),
+            'zoho'
+        );
     }
 
     /**
@@ -41,6 +44,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->loadMigrationsFrom(base_path('src/Infrastructure/Zoho/Persistence/Migrations'));
+        $this->loadMigrationsFrom(
+            base_path('src/Infrastructure/Zoho/Persistence/Migrations')
+        );
     }
 }

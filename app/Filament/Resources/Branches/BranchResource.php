@@ -9,7 +9,6 @@ use App\Filament\Resources\Branches\Pages\ViewBranch;
 use App\Filament\Resources\Branches\Schemas\BranchForm;
 use App\Filament\Resources\Branches\Schemas\BranchInfolist;
 use App\Filament\Resources\Branches\Tables\BranchesTable;
-use App\Models\Branch;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -17,6 +16,7 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Modules\Infrastructure\Organization\Locations\Persistence\Models\Branch;
 
 class BranchResource extends Resource
 {

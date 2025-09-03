@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\Infrastructure\Organization\Locations\Persistence\Models\Branch;
 
 #[ObservedBy([QuoteUnemploymentObserver::class])]
 class QuoteUnemployment extends Model

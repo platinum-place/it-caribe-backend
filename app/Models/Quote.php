@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\Infrastructure\CRM\Persistence\Models\Lead;
+use Modules\Infrastructure\Organization\Locations\Persistence\Models\Branch;
 
 #[ObservedBy([QuoteObserver::class])]
 class Quote extends Model

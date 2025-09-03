@@ -2,16 +2,16 @@
 
 namespace Database\Seeders\Migrate\Life;
 
-use App\Enums\LeadTypeEnum;
 use App\Enums\QuoteLifeCreditTypeEnum;
 use App\Enums\QuoteLineStatusEnum;
 use App\Enums\QuoteStatusEnum;
 use App\Enums\QuoteTypeEnum;
-use App\Models\Branch;
 use Carbon\Carbon;
 use DateTimeImmutable;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Modules\Domain\CRM\Enums\LeadTypeEnum;
+use Modules\Infrastructure\Organization\Locations\Persistence\Models\Branch;
 use Rap2hpoutre\FastExcel\FastExcel;
 
 class Sheet3Seeder extends Seeder

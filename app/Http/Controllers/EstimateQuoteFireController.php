@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Quote\Fire;
 
 use App\Enums\Lead;
-use App\Enums\LeadTypeEnum;
 use App\Enums\QuoteFireConstructionTypeEnum;
 use App\Enums\QuoteFireCreditTypeEnum;
 use App\Enums\QuoteFireRiskTypeEnum;
@@ -15,6 +14,7 @@ use App\Models\Quote;
 use App\Models\QuoteFire;
 use App\Models\QuoteLifeLine;
 use App\Models\QuoteLine;
+use Modules\Domain\CRM\Enums\LeadTypeEnum;
 use old\Services\Quote\Fire\EstimateQuoteFireService;
 
 class EstimateQuoteFireController extends Controller

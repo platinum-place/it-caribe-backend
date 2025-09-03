@@ -15,13 +15,16 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RoleSeeder::class,
             AdminUserSeeder::class,
-            LeadTypeSeeder::class,
+
+            \Modules\Infrastructure\CRM\Persistence\Seeders\DatabaseSeeder::class,
+
             VehicleAccessorySeeder::class,
             VehicleColorSeeder::class,
             VehicleUseSeeder::class,
             VehicleActivitySeeder::class,
             VehicleLoanTypeSeeder::class,
             VehicleUtilitySeeder::class,
+
             QuoteUnemploymentEmploymentTypeSeeder::class,
             QuoteTypeSeeder::class,
             QuoteStatusSeeder::class,

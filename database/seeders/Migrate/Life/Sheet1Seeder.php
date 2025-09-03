@@ -2,19 +2,19 @@
 
 namespace Database\Seeders\Migrate\Life;
 
-use App\Enums\LeadTypeEnum;
 use App\Enums\QuoteLifeCreditTypeEnum;
 use App\Enums\QuoteLineStatusEnum;
 use App\Enums\QuoteStatusEnum;
 use App\Enums\QuoteTypeEnum;
-use App\Models\Branch;
-use App\Models\Lead;
 use App\Models\Quote;
 use App\Models\QuoteLife;
 use App\Models\QuoteLifeLine;
 use App\Models\QuoteLine;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Modules\Domain\CRM\Enums\LeadTypeEnum;
+use Modules\Infrastructure\CRM\Persistence\Models\Lead;
+use Modules\Infrastructure\Organization\Locations\Persistence\Models\Branch;
 use Rap2hpoutre\FastExcel\FastExcel;
 
 class Sheet1Seeder extends Seeder

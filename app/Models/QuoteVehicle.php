@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\Infrastructure\Organization\Locations\Persistence\Models\Branch;
 
 #[ObservedBy([QuoteVehicleObserver::class])]
 class QuoteVehicle extends Model

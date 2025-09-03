@@ -2,15 +2,12 @@
 
 namespace App\Imports\Migrate\Fire;
 
-use App\Enums\LeadTypeEnum;
 use App\Enums\QuoteFireConstructionTypeEnum;
 use App\Enums\QuoteFireCreditTypeEnum;
 use App\Enums\QuoteFireRiskTypeEnum;
 use App\Enums\QuoteLineStatusEnum;
 use App\Enums\QuoteStatusEnum;
 use App\Enums\QuoteTypeEnum;
-use App\Models\Branch;
-use App\Models\Lead;
 use App\Models\Quote;
 use App\Models\QuoteFire;
 use App\Models\QuoteFireLine;
@@ -20,6 +17,9 @@ use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithCalculatedFormulas;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
+use Modules\Domain\CRM\Enums\LeadTypeEnum;
+use Modules\Infrastructure\CRM\Persistence\Models\Lead;
+use Modules\Infrastructure\Organization\Locations\Persistence\Models\Branch;
 
 class Sheet3 implements ToCollection, WithCalculatedFormulas, WithChunkReading
 {

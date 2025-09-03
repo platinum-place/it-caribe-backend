@@ -7,7 +7,6 @@ use App\Enums\QuoteStatusEnum;
 use App\Enums\QuoteTypeEnum;
 use App\Filament\Branch\Resources\QuoteVehicles\QuoteVehicleResource;
 use App\Filament\Forms\Components\Wizards\CreateLeadWizardStep;
-use App\Models\Lead;
 use App\Models\Quote;
 use App\Models\QuoteLine;
 use App\Models\QuoteVehicle;
@@ -27,7 +26,8 @@ use Filament\Resources\Pages\CreateRecord;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Wizard\Step;
 use Illuminate\Database\Eloquent\Model;
-use Modules\Application\Insurance\UseCases\EstimateVehicleUseCase;
+use Modules\Application\Insurances\Core\UseCases\EstimateVehicleUseCase;
+use Modules\Infrastructure\CRM\Persistence\Models\Lead;
 
 class CreateQuoteVehicle extends CreateRecord
 {
