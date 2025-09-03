@@ -4,15 +4,6 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Modules\Infrastructure\Quotations\Core\Persistence\Seeders\QuoteLineStatusSeeder;
-use Modules\Infrastructure\Quotations\Core\Persistence\Seeders\QuoteStatusSeeder;
-use Modules\Infrastructure\Quotations\Core\Persistence\Seeders\QuoteTypeSeeder;
-use Modules\Infrastructure\Quotations\Products\Fire\Persistence\Seeders\QuoteFireConstructionTypeSeeder;
-use Modules\Infrastructure\Quotations\Products\Fire\Persistence\Seeders\QuoteFireCreditTypeSeeder;
-use Modules\Infrastructure\Quotations\Products\Fire\Persistence\Seeders\QuoteFireRiskTypeSeeder;
-use Modules\Infrastructure\Quotations\Products\Life\Persistence\Seeders\QuoteLifeCreditTypeSeeder;
-use Modules\Infrastructure\Quotations\Products\Unemployment\Persistence\Seeders\QuoteUnemploymentEmploymentTypeSeeder;
-use Modules\Infrastructure\Quotations\Products\Unemployment\Persistence\Seeders\QuoteUnemploymentPaymentTypeSeeder;
 
 class DatabaseSeeder extends Seeder
 {

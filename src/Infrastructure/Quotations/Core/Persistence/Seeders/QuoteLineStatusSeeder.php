@@ -4,9 +4,7 @@ namespace Modules\Infrastructure\Quotations\Core\Persistence\Seeders;
 
 use Illuminate\Database\Seeder;
 use Modules\Domain\Quotations\Core\Enums\QuoteLineStatusEnum;
-use Modules\Domain\Quotations\Core\Enums\QuoteStatusEnum;
 use Modules\Infrastructure\Quotations\Core\Persistence\Models\QuoteLineStatus;
-use Modules\Infrastructure\Quotations\Core\Persistence\Models\QuoteStatus;
 
 class QuoteLineStatusSeeder extends Seeder
 {
