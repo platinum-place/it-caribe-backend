@@ -13,7 +13,7 @@ class ValidateVehicleRestrictedService
     public function handle(string $vehicleMakeCode, string $vehicleModelCode): bool
     {
         try {
-            $criteria = 'Aseguradora:equals:'. 3222373000090614510;
+            $criteria = 'Aseguradora:equals:'. 3222373000005945063;
             $restrictedVehicles = $this->findZohoRecord->handle('Restringidos', $criteria);
 
             foreach ($restrictedVehicles['data'] as $restricted) {
