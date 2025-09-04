@@ -150,6 +150,7 @@ class CreateQuoteVehicle extends CreateRecord
             $vehicle->vehicle_year,
             $quoteVehicle->vehicle_amount,
             $quoteVehicle->is_employee,
+            $quoteVehicle->leasing,
         );
 
         foreach ($lines as $line) {

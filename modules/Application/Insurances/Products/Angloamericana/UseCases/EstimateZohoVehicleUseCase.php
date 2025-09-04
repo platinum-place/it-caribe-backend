@@ -1,15 +1,16 @@
 <?php
 
-namespace Modules\Application\Insurances\Products\Sura\UseCases;
+namespace Modules\Application\Insurances\Products\Angloamericana\UseCases;
 
+use Modules\Application\Insurances\Products\Angloamericana\Contracts\EstimateVehicleAngloamericanaInterface;
 use Modules\Application\Insurances\Products\Monumental\Contracts\EstimateVehicleMonumentalInterface;
-use Modules\Application\Insurances\Products\Sura\Services\FetchVehicleRateService;
-use Modules\Application\Insurances\Products\Sura\Services\ValidateVehicleRestrictedService;
+use Modules\Application\Insurances\Products\Angloamericana\Services\FetchVehicleRateService;
+use Modules\Application\Insurances\Products\Angloamericana\Services\ValidateVehicleRestrictedService;
 use Modules\Application\Insurances\Products\Sura\Contracts\EstimateVehicleSuraInterface;
 use Modules\Application\Zoho\Contracts\FetchZohoRecordInterface;
 use Modules\Domain\Insurances\Core\ValueObjects\InsuranceQuotation;
 
-class EstimateZohoVehicleUseCase implements EstimateVehicleSuraInterface
+class EstimateZohoVehicleUseCase implements EstimateVehicleAngloamericanaInterface
 {
     public function __construct(
         protected FetchZohoRecordInterface $findZohoRecord,
@@ -17,12 +18,8 @@ class EstimateZohoVehicleUseCase implements EstimateVehicleSuraInterface
         protected FetchVehicleRateService $fetchVehicleRateService,
     ) {}
 
-    public function handle(string $vehicleMakeCode, string $vehicleModelCode, string $vehicleTypeCode, string $vehicleUtilityCode, string $vehicleYear, float $vehicleAmount): ?InsuranceQuotation
+    public function handle(string $vehicleMakeCode, string $vehicleModelCode, string $vehicleTypeCode, string $vehicleUtilityCode, string $vehicleYear, float $vehicleAmount, bool $leasing): ?InsuranceQuotation
     {
-        if ($vehicleUtilityCode === 'Japonés') {
-            return null;
-        }
-
         if ($this->validateRestrictedService->handle($vehicleMakeCode, $vehicleModelCode)) {
             return null;
         }
@@ -39,6 +36,10 @@ class EstimateZohoVehicleUseCase implements EstimateVehicleSuraInterface
 //        }
 
         foreach ($records as $record) {
+            if ($record['Plan'] !== $vehicleUtilityCode) {
+                continue;
+            }
+
             $rate = $this->fetchVehicleRateService->handle($record['id'], $vehicleYear, $vehicleTypeCode, $vehicleAmount);
 
             if ($rate === 0) {
@@ -46,10 +47,6 @@ class EstimateZohoVehicleUseCase implements EstimateVehicleSuraInterface
             }
 
             $amount = $vehicleAmount * ($rate / 100);
-
-            if ($vehicleTypeCode === 'Japonés' && ! empty($record['Recargo'])) {
-                $amount *= 1.30;
-            }
 
             $amountTaxed = $amount / 1.16;
             $taxesAmount = $amount - $amountTaxed;
@@ -59,6 +56,11 @@ class EstimateZohoVehicleUseCase implements EstimateVehicleSuraInterface
             $totalMonthly = ($amount / 12) + $lifeAmount;
 
             $amount = $totalMonthly * 12;
+
+            if (!empty($product['Resp_civil']) && $leasing) {
+                $totalMonthly += $product['Leasing_mensual'];
+                $amount = $totalMonthly * 12;
+            }
 
             $r = new InsuranceQuotation(
                 120,

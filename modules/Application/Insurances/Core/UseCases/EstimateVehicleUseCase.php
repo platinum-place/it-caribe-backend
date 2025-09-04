@@ -2,6 +2,7 @@
 
 namespace Modules\Application\Insurances\Core\UseCases;
 
+use Modules\Application\Insurances\Products\Angloamericana\Contracts\EstimateVehicleAngloamericanaInterface;
 use Modules\Application\Insurances\Products\Humano\Contracts\EstimateVehicleHumanoInterface;
 use Modules\Application\Insurances\Products\Monumental\Contracts\EstimateVehicleMonumentalInterface;
 use Modules\Application\Insurances\Products\Sura\Contracts\EstimateVehicleSuraInterface;
@@ -11,7 +12,8 @@ class EstimateVehicleUseCase
     public function __construct(
         protected EstimateVehicleHumanoInterface     $estimateVehicleHumano,
         protected EstimateVehicleMonumentalInterface $estimateVehicleMonumental,
-        protected EstimateVehicleSuraInterface $estimateVehicleSura
+        protected EstimateVehicleSuraInterface $estimateVehicleSura,
+        protected EstimateVehicleAngloamericanaInterface $estimateVehicleAngloamericana,
     ) {}
 
     public function handle(
@@ -22,6 +24,7 @@ class EstimateVehicleUseCase
         string $vehicleYear,
         float $vehicleAmount,
         bool $isEmployee,
+        bool $leasing,
     ) {
         $result = [];
 
@@ -31,7 +34,7 @@ class EstimateVehicleUseCase
             $vehicleTypeCode,
             $vehicleUtilityCode,
             $vehicleYear,
-            $vehicleAmount
+            $vehicleAmount,
         );
 
         $result[] = $this->estimateVehicleMonumental->handle(
@@ -40,7 +43,7 @@ class EstimateVehicleUseCase
             $vehicleTypeCode,
             $vehicleUtilityCode,
             $vehicleYear,
-            $vehicleAmount
+            $vehicleAmount,
         );
 
         if($isEmployee) {
@@ -53,6 +56,16 @@ class EstimateVehicleUseCase
                 $vehicleAmount,
             );
         }
+
+        $result[] = $this->estimateVehicleAngloamericana->handle(
+            $vehicleMakeCode,
+            $vehicleModelCode,
+            $vehicleTypeCode,
+            $vehicleUtilityCode,
+            $vehicleYear,
+            $vehicleAmount,
+            $leasing
+        );
 
         return array_filter($result);
     }
