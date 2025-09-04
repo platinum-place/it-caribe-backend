@@ -3,7 +3,7 @@
 namespace App\Filament\Branch\Resources\QuoteVehicles\Pages;
 
 use App\Filament\Branch\Resources\QuoteVehicles\QuoteVehicleResource;
-use App\Filament\Forms\Components\Wizards\CreateLeadWizardStep;
+use App\Filament\Forms\Components\Wizards\Lead\Create\CreateLeadStep;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -37,85 +37,90 @@ class CreateQuoteVehicle extends CreateRecord
 
     protected function getSteps(): array
     {
-        return [
-            CreateLeadWizardStep::make(),
+        return array_merge(
+            CreateLeadStep::make(),
+            [
+                Step::make('Vehículo 1/2')
+                    ->schema([
+                        Select::make('vehicle.vehicle_make_id')
+                            ->label('Marca')
+                            ->searchable()
+                            ->options(VehicleMake::pluck('name', 'id'))
+                            ->live()
+                            ->required(),
 
-            Step::make('Vehículo')
-                ->schema([
-                    Select::make('vehicle.vehicle_make_id')
-                        ->label('Marca')
-                        ->searchable()
-                        ->options(VehicleMake::pluck('name', 'id'))
-                        ->live()
-                        ->required(),
+                        Select::make('vehicle.vehicle_model_id')
+                            ->label('Modelo')
+                            ->searchable()
+                            ->options(fn (Get $get) => VehicleModel::where('vehicle_make_id', $get('vehicle.vehicle_make_id'))->pluck('name', 'id'))
+                            ->live()
+                            ->required(),
 
-                    Select::make('vehicle.vehicle_model_id')
-                        ->label('Modelo')
-                        ->searchable()
-                        ->options(fn (Get $get) => VehicleModel::where('vehicle_make_id', $get('vehicle.vehicle_make_id'))->pluck('name', 'id'))
-                        ->live()
-                        ->required(),
+                        Select::make('vehicle.vehicle_utility_id')
+                            ->label('Tipo de vehículo ')
+                            ->options(VehicleUtility::pluck('name', 'id'))
+                            ->required(),
 
-                    Select::make('vehicle.vehicle_utility_id')
-                        ->label('Tipo de vehículo ')
-                        ->options(VehicleUtility::pluck('name', 'id'))
-                        ->required(),
+                        TextInput::make('vehicle.vehicle_year')
+                            ->label('Año')
+                            ->numeric()
+                            ->required()
+                            ->minValue(1900)
+                            ->maxValue(date('Y', strtotime('+1 year'))),
 
-                    TextInput::make('vehicle.chassis')
-                        ->label('Chasis')
-                        ->required(),
+                        TextInput::make('vehicle.vehicle_amount')
+                            ->label('Suma asegurada')
+                            ->numeric()
+                            ->required()
+                            ->prefix('$'),
 
-                    TextInput::make('vehicle.vehicle_year')
-                        ->label('Año')
-                        ->numeric()
-                        ->required()
-                        ->minValue(1900)
-                        ->maxValue(date('Y', strtotime('+1 year'))),
+                        Checkbox::make('vehicle.is_employee')
+                            ->label('Empleado')
+                            ->inline(false),
 
-                    TextInput::make('vehicle.vehicle_amount')
-                        ->label('Suma asegurada')
-                        ->numeric()
-                        ->required()
-                        ->prefix('$'),
+                        Checkbox::make('vehicle.leasing')
+                            ->label('Responsabilidad civil en exceso')
+                            ->inline(false),
+                    ])
+                    ->columns(),
 
-                    Checkbox::make('vehicle.is_employee')
-                        ->label('Empleado')
-                        ->inline(false),
+                Step::make('Vehículo 2/2')
+                    ->schema([
+                        TextInput::make('vehicle.chassis')
+                            ->label('Chasis')
+                            ->required(),
 
-                    Checkbox::make('vehicle.leasing')
-                        ->label('Responsabilidad civil en exceso')
-                        ->inline(false),
+                        TextInput::make('vehicle.license_plate')
+                            ->label('Placa')
+                            ->required(),
 
-                    TextInput::make('vehicle.license_plate')
-                        ->label('Placa')
-                        ->required(),
+                        Select::make('vehicle.vehicle_colors')
+                            ->label('Colores')
+                            ->options(VehicleColor::pluck('name', 'id'))
+                            ->multiple(),
 
-                    Select::make('vehicle.vehicle_colors')
-                        ->label('Colores')
-                        ->options(VehicleColor::pluck('name', 'id'))
-                        ->multiple(),
+                        Select::make('vehicle.vehicle_activity_id')
+                            ->label('Actividad del vehículo')
+                            ->options(VehicleActivity::pluck('name', 'id')),
 
-                    Select::make('vehicle.vehicle_activity_id')
-                        ->label('Actividad del vehículo')
-                        ->options(VehicleActivity::pluck('name', 'id')),
+                        Select::make('vehicle.vehicle_use_id')
+                            ->label('Uso')
+                            ->options(VehicleUse::pluck('name', 'id')),
 
-                    Select::make('vehicle.vehicle_use_id')
-                        ->label('Uso')
-                        ->options(VehicleUse::pluck('name', 'id')),
+                        Select::make('vehicle.vehicle_loan_type_id')
+                            ->label('Tipo de préstamo')
+                            ->live()
+                            ->options(VehicleLoanType::pluck('name', 'id')),
 
-                    Select::make('vehicle.vehicle_loan_type_id')
-                        ->label('Tipo de préstamo')
-                        ->live()
-                        ->options(VehicleLoanType::pluck('name', 'id')),
-
-                    TextInput::make('vehicle.vehicle_loan_amount')
-                        ->label('Valor del préstamo')
-                        ->numeric()
-                        ->required(fn (Get $get) => $get('vehicle.vehicle_loan_type_id'))
-                        ->prefix('$'),
-                ])
-                ->columns(),
-        ];
+                        TextInput::make('vehicle.vehicle_loan_amount')
+                            ->label('Valor del préstamo')
+                            ->numeric()
+                            ->required(fn (Get $get) => $get('vehicle.vehicle_loan_type_id'))
+                            ->prefix('$'),
+                    ])
+                    ->columns(),
+            ]
+        );
     }
 
     protected function handleRecordCreation(array $data): Model

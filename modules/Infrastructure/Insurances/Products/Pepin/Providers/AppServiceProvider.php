@@ -1,15 +1,15 @@
 <?php
 
-namespace Modules\Infrastructure\Insurances\Products\Sura\Providers;
+namespace Modules\Infrastructure\Insurances\Products\Pepin\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Modules\Application\Insurances\Products\Sura\Contracts\EstimateVehicleSuraInterface;
-use Modules\Application\Insurances\Products\Sura\UseCases\EstimateZohoVehicleUseCase;
+use Modules\Application\Insurances\Products\Pepin\Contracts\EstimateVehiclePepinInterface;
+use Modules\Application\Insurances\Products\Pepin\UseCases\EstimateZohoVehicleUseCase;
 
 class AppServiceProvider extends ServiceProvider
 {
     protected array $contracts = [
-        EstimateVehicleSuraInterface::class => EstimateZohoVehicleUseCase::class,
+        EstimateVehiclePepinInterface::class => EstimateZohoVehicleUseCase::class,
     ];
 
     /**

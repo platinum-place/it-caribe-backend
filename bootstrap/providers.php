@@ -9,6 +9,7 @@ return [
     Modules\Infrastructure\Insurances\Products\Monumental\Providers\AppServiceProvider::class,
     Modules\Infrastructure\Insurances\Products\Sura\Providers\AppServiceProvider::class,
     Modules\Infrastructure\Insurances\Products\Angloamericana\Providers\AppServiceProvider::class,
+    Modules\Infrastructure\Insurances\Products\Pepin\Providers\AppServiceProvider::class,
 
     Modules\Infrastructure\CRM\Providers\AppServiceProvider::class,
     Modules\Infrastructure\Organization\Locations\Providers\AppServiceProvider::class,

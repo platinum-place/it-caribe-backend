@@ -4,8 +4,6 @@ namespace Modules\Infrastructure\Insurances\Products\Angloamericana\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Modules\Application\Insurances\Products\Angloamericana\Contracts\EstimateVehicleAngloamericanaInterface;
-use Modules\Application\Insurances\Products\Monumental\Contracts\EstimateVehicleMonumentalInterface;
-use Modules\Application\Insurances\Products\Sura\Contracts\EstimateVehicleSuraInterface;
 use Modules\Application\Insurances\Products\Angloamericana\UseCases\EstimateZohoVehicleUseCase;
 
 class AppServiceProvider extends ServiceProvider

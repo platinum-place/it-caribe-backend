@@ -1,14 +1,14 @@
 <?php
 
-namespace Modules\Application\Insurances\Products\Monumental\UseCases;
+namespace Modules\Application\Insurances\Products\Pepin\UseCases;
 
-use Modules\Application\Insurances\Products\Monumental\Contracts\EstimateVehicleMonumentalInterface;
-use Modules\Application\Insurances\Products\Monumental\Services\FetchVehicleRateService;
-use Modules\Application\Insurances\Products\Monumental\Services\ValidateVehicleRestrictedService;
+use Modules\Application\Insurances\Products\Pepin\Contracts\EstimateVehiclePepinInterface;
+use Modules\Application\Insurances\Products\Pepin\Services\FetchVehicleRateService;
+use Modules\Application\Insurances\Products\Pepin\Services\ValidateVehicleRestrictedService;
 use Modules\Application\Zoho\Contracts\FetchZohoRecordInterface;
 use Modules\Domain\Insurances\Core\ValueObjects\InsuranceQuotation;
 
-class EstimateZohoVehicleUseCase implements EstimateVehicleMonumentalInterface
+class EstimateZohoVehicleUseCase implements EstimateVehiclePepinInterface
 {
     public function __construct(
         protected FetchZohoRecordInterface $findZohoRecord,
@@ -16,7 +16,7 @@ class EstimateZohoVehicleUseCase implements EstimateVehicleMonumentalInterface
         protected FetchVehicleRateService $fetchVehicleRateService,
     ) {}
 
-    public function handle(string $vehicleMakeCode, string $vehicleModelCode, string $vehicleTypeCode, string $vehicleUtilityCode, string $vehicleYear, float $vehicleAmount): ?InsuranceQuotation
+    public function handle(string $vehicleMakeCode, string $vehicleModelCode, string $vehicleTypeCode, string $vehicleUtilityCode, string $vehicleYear, float $vehicleAmount, bool $leasing): ?InsuranceQuotation
     {
         if ($this->validateRestrictedService->handle($vehicleMakeCode, $vehicleModelCode)) {
             return null;
@@ -24,7 +24,7 @@ class EstimateZohoVehicleUseCase implements EstimateVehicleMonumentalInterface
 
         $r = null;
 
-        $criteria = '((Vendor_Name:equals:'. 3222373000090614510 .') and (Corredor:equals:'. 3222373000092390001 .') and (Product_Category:equals:Auto))';
+        $criteria = '((Vendor_Name:equals:'. 3222373000005945063 .') and (Corredor:equals:'. 3222373000092390001 .') and (Product_Category:equals:Auto))';
         $records = $this->findZohoRecord->handle('Products', $criteria);
 
         //        $services = array_column($records, 'Plan');
@@ -34,10 +34,6 @@ class EstimateZohoVehicleUseCase implements EstimateVehicleMonumentalInterface
         //        }
 
         foreach ($records as $record) {
-            if ($record['Plan'] !== $vehicleUtilityCode) {
-                continue;
-            }
-
             $rate = $this->fetchVehicleRateService->handle($record['id'], $vehicleYear, $vehicleTypeCode, $vehicleAmount);
 
             if ($rate === 0) {
@@ -45,10 +41,6 @@ class EstimateZohoVehicleUseCase implements EstimateVehicleMonumentalInterface
             }
 
             $amount = $vehicleAmount * ($rate / 100);
-
-            if ($vehicleTypeCode === 'Japonés' && ! empty($record['Recargo'])) {
-                $amount *= 1.30;
-            }
 
             $amountTaxed = $amount / 1.16;
             $taxesAmount = $amount - $amountTaxed;
@@ -59,13 +51,18 @@ class EstimateZohoVehicleUseCase implements EstimateVehicleMonumentalInterface
 
             $amount = $totalMonthly * 12;
 
+            if (! empty($record['Resp_civil']) && $leasing) {
+                $totalMonthly += $record['Leasing_mensual'];
+                $amount = $totalMonthly * 12;
+            }
+
             $r = new InsuranceQuotation(
                 120,
                 20,
                 80,
                 $rate,
                 $record['id'],
-                'Monumental',
+                'Pepin',
                 round($amountTaxed, 2),
                 16,
                 round($taxesAmount, 2),

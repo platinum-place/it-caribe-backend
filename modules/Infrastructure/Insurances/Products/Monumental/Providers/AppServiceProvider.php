@@ -3,8 +3,8 @@
 namespace Modules\Infrastructure\Insurances\Products\Monumental\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Modules\Application\Insurances\Products\Monumental\UseCases\EstimateZohoVehicleUseCase;
 use Modules\Application\Insurances\Products\Monumental\Contracts\EstimateVehicleMonumentalInterface;
+use Modules\Application\Insurances\Products\Monumental\UseCases\EstimateZohoVehicleUseCase;
 
 class AppServiceProvider extends ServiceProvider
 {
