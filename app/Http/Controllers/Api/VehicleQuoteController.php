@@ -245,7 +245,7 @@ class VehicleQuoteController extends Controller
             break;
         }
 
-        return response()->json(['Error' => '']);
+        return response()->json(['Error' => '', 'EmiID'=>$request->get('cotzid')]);
     }
 
     public function cancelVehicle(CancelVehicleRequest $request)
