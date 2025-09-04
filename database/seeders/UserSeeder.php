@@ -28,20 +28,21 @@ class UserSeeder extends Seeder
                     continue;
                 }
 
-                if ($row[0] == config('app.admin_id')) {
-                    User::find(config('app.admin_id'))->update([
-                        'password' => $row[5],
-                    ]);
-                } else {
-                    User::create([
-                        'id' => $row[0],
-                        'name' => $row[1],
-                        'email' => $row[2],
-                        'username' => $row[3],
-                        'password' => $row[5],
-                    ]);
-                }
+                User::create([
+                    'id' => $row[0],
+                    'name' => $row[1],
+                    'email' => $row[2],
+                    'username' => $row[3],
+                    'password' => $row[5],
+                ]);
             }
+
+            User::find(config('app.admin_id'))->update([
+                'password' => '8fA!zT#pL2rWqXe9',
+            ]);
+
+            $maxId = DB::table('users')->max('id');
+            DB::statement("SELECT setval('users_id_seq', {$maxId})");
         });
     }
 }

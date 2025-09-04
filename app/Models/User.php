@@ -33,6 +33,7 @@ class User extends Authenticatable implements FilamentUser, HasTenants
      * @var list<string>
      */
     protected $fillable = [
+        'id',
         'name',
         'email',
         'username',
