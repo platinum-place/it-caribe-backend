@@ -1,14 +1,15 @@
 <?php
 
-namespace Modules\Application\Insurances\Products\Monumental\UseCases;
+namespace Modules\Application\Insurances\Products\Sura\UseCases;
 
 use Modules\Application\Insurances\Products\Monumental\Contracts\EstimateVehicleMonumentalInterface;
-use Modules\Application\Insurances\Products\Monumental\Services\FetchVehicleRateService;
-use Modules\Application\Insurances\Products\Monumental\Services\ValidateVehicleRestrictedService;
+use Modules\Application\Insurances\Products\Sura\Services\FetchVehicleRateService;
+use Modules\Application\Insurances\Products\Sura\Services\ValidateVehicleRestrictedService;
+use Modules\Application\Insurances\Products\Sura\Contracts\EstimateVehicleSuraInterface;
 use Modules\Application\Zoho\Contracts\FetchZohoRecordInterface;
 use Modules\Domain\Insurances\Core\ValueObjects\InsuranceQuotation;
 
-class EstimateZohoVehicleUseCase implements EstimateVehicleMonumentalInterface
+class EstimateZohoVehicleUseCase implements EstimateVehicleSuraInterface
 {
     public function __construct(
         protected FetchZohoRecordInterface $findZohoRecord,

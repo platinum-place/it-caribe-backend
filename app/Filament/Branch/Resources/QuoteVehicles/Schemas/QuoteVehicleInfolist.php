@@ -60,8 +60,8 @@ class QuoteVehicleInfolist
                                     ->label('Modelo del vehículo'),
                                 TextEntry::make('vehicle.vehicleType.name')
                                     ->label('Tipo de vehículo'),
-                                TextEntry::make('vehicle.vehicleUse.name')
-                                    ->label('Uso del vehículo'),
+                                TextEntry::make('vehicle.vehicle_year')
+                                    ->label('Año del vehículo'),
                                 TextEntry::make('vehicle.vehicleUtility.name')
                                     ->label('Utilidad del vehículo'),
                                 TextEntry::make('vehicle_amount')

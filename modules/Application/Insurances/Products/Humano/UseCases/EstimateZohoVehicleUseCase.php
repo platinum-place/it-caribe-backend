@@ -2,13 +2,13 @@
 
 namespace Modules\Application\Insurances\Products\Humano\UseCases;
 
-use Modules\Application\Insurances\Products\Humano\Contracts\EstimateHumanoVehicleInsuranceInterface;
+use Modules\Application\Insurances\Products\Humano\Contracts\EstimateVehicleHumanoInterface;
 use Modules\Application\Insurances\Products\Humano\Services\FetchVehicleRateService;
 use Modules\Application\Insurances\Products\Humano\Services\ValidateVehicleRestrictedService;
 use Modules\Application\Zoho\Contracts\FetchZohoRecordInterface;
 use Modules\Domain\Insurances\Core\ValueObjects\InsuranceQuotation;
 
-class EstimateZohoVehicleUseCase implements EstimateHumanoVehicleInsuranceInterface
+class EstimateZohoVehicleUseCase implements EstimateVehicleHumanoInterface
 {
     public function __construct(
         protected FetchZohoRecordInterface $findZohoRecord,
@@ -27,11 +27,11 @@ class EstimateZohoVehicleUseCase implements EstimateHumanoVehicleInsuranceInterf
         $criteria = '((Vendor_Name:equals:'. 3222373000005945077 .') and (Corredor:equals:'. 3222373000092390001 .') and (Product_Category:equals:Auto))';
         $records = $this->findZohoRecord->handle('Products', $criteria);
 
-        $services = array_column($records, 'Plan');
+//        $services = array_column($records, 'Plan');
 
-        if (! in_array($vehicleUtilityCode, $services, true)) {
-            $vehicleUtilityCode = 'Clásico';
-        }
+//        if (! in_array($vehicleUtilityCode, $services, true)) {
+//            $vehicleUtilityCode = 'Clásico';
+//        }
 
         foreach ($records as $record) {
             if ($record['Plan'] !== $vehicleUtilityCode) {

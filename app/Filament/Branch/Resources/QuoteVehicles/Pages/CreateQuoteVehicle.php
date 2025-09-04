@@ -101,8 +101,7 @@ class CreateQuoteVehicle extends CreateRecord
 
                     Select::make('vehicle.vehicle_use_id')
                         ->label('Uso')
-                        ->options(VehicleUse::pluck('name', 'id'))
-                        ->required(),
+                        ->options(VehicleUse::pluck('name', 'id')),
 
                     Select::make('vehicle.vehicle_loan_type_id')
                         ->label('Tipo de préstamo')
@@ -150,6 +149,7 @@ class CreateQuoteVehicle extends CreateRecord
             $vehicle->vehicleUtility->name,
             $vehicle->vehicle_year,
             $quoteVehicle->vehicle_amount,
+            $quoteVehicle->is_employee,
         );
 
         foreach ($lines as $line) {
