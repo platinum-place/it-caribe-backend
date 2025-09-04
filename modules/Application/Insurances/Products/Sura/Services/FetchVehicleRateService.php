@@ -18,13 +18,7 @@ class FetchVehicleRateService
             $criteria = '((Plan:equals:'.$serviceId.") and (A_o:equals:$vehicleYear))";
             $rates = $this->findZohoRecord->handle('Tasas', $criteria);
 
-            foreach ($rates as $rate) {
-                if (! in_array($vehicleTypeCode, $rate['Grupo_de_veh_culo'], true)) {
-                    continue;
-                }
-
-                $selectedRate = $rate['Name'];
-            }
+            $selectedRate = $rates[0]['Name'];
         } catch (\Throwable $e) {
             //
         }

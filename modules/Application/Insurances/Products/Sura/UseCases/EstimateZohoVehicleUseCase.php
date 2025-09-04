@@ -19,13 +19,17 @@ class EstimateZohoVehicleUseCase implements EstimateVehicleSuraInterface
 
     public function handle(string $vehicleMakeCode, string $vehicleModelCode, string $vehicleTypeCode, string $vehicleUtilityCode, string $vehicleYear, float $vehicleAmount): ?InsuranceQuotation
     {
+        if ($vehicleUtilityCode === 'Japonés') {
+            return null;
+        }
+
         if ($this->validateRestrictedService->handle($vehicleMakeCode, $vehicleModelCode)) {
             return null;
         }
 
         $r = null;
 
-        $criteria = '((Vendor_Name:equals:'. 3222373000090614510 .') and (Corredor:equals:'. 3222373000092390001 .') and (Product_Category:equals:Auto))';
+        $criteria = '((Vendor_Name:equals:'. 3222373000013629453 .') and (Corredor:equals:'. 3222373000092390001 .') and (Product_Category:equals:Auto))';
         $records = $this->findZohoRecord->handle('Products', $criteria);
 
 //        $services = array_column($records, 'Plan');
@@ -35,10 +39,6 @@ class EstimateZohoVehicleUseCase implements EstimateVehicleSuraInterface
 //        }
 
         foreach ($records as $record) {
-            if ($record['Plan'] !== $vehicleUtilityCode) {
-                continue;
-            }
-
             $rate = $this->fetchVehicleRateService->handle($record['id'], $vehicleYear, $vehicleTypeCode, $vehicleAmount);
 
             if ($rate === 0) {
