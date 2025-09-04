@@ -28,6 +28,7 @@ return new class extends Migration
             $table->integer('deadline_month')->default(0);
             $table->integer('deadline_year')->default(0);
             $table->decimal('loan_installment', 18, 2)->default(0);
+            $table->decimal('insured_amount', 18, 2)->default(0);
         });
     }
 

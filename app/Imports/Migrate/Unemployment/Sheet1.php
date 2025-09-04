@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Imports\Migrate\Fire;
+namespace App\Imports\Migrate\Unemployment;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -13,67 +13,74 @@ use Modules\Domain\Quotations\Core\Enums\QuoteTypeEnum;
 use Modules\Domain\Quotations\Products\Fire\Enums\QuoteFireConstructionTypeEnum;
 use Modules\Domain\Quotations\Products\Fire\Enums\QuoteFireCreditTypeEnum;
 use Modules\Domain\Quotations\Products\Fire\Enums\QuoteFireRiskTypeEnum;
+use Modules\Domain\Quotations\Products\Unemployment\Enums\QuoteUnemploymentEmploymentTypeEnum;
+use Modules\Domain\Quotations\Products\Unemployment\Enums\QuoteUnemploymentPaymentTypeEnum;
 use Modules\Infrastructure\CRM\Persistence\Models\Lead;
 use Modules\Infrastructure\Organization\Locations\Persistence\Models\Branch;
 use Modules\Infrastructure\Quotations\Core\Persistence\Models\Quote;
 use Modules\Infrastructure\Quotations\Core\Persistence\Models\QuoteLine;
 use Modules\Infrastructure\Quotations\Products\Fire\Persistence\Models\QuoteFire;
 use Modules\Infrastructure\Quotations\Products\Fire\Persistence\Models\QuoteFireLine;
+use Modules\Infrastructure\Quotations\Products\Unemployment\Persistence\Models\QuoteUnemployment;
+use Modules\Infrastructure\Quotations\Products\Unemployment\Persistence\Models\QuoteUnemploymentLine;
 
 class Sheet1 implements ToCollection, WithChunkReading
 {
     public function collection(Collection $collection)
     {
         DB::transaction(function () use ($collection) {
-            $branch = Branch::findOrFail(1);
-
             foreach ($collection as $row) {
-                if ($row->get(0) === 'No.') {
+                if ($row->get(0) === "#") {
                     continue;
                 }
 
-                if (empty($row->get(5))) {
+                if (empty($row->get(1))) {
                     break;
                 }
 
+                $branch = Branch::firstOrCreate(
+                    ['name' => $row->get(1)],
+                    ['name' => $row->get(1)],
+                );
+
                 $borrower = Lead::create([
-                    'full_name' => $row->get(5),
-                    'identity_number' => $row->get(4),
-                    'birth_date' => date('Y-m-d', strtotime($row->get(13))),
+                    'full_name' => $row->get(4),
+                    'identity_number' => $row->get(3),
                     'lead_type_id' => LeadTypeEnum::PUBLIC->value,
                 ]);
 
                 $quote = Quote::create([
-                    'quote_type_id' => QuoteTypeEnum::FIRE->value,
+                    'quote_type_id' => QuoteTypeEnum::UNEMPLOYMENT->value,
                     'quote_status_id' => QuoteStatusEnum::APPROVED->value,
                     'lead_id' => $borrower->id,
-                    'start_date' => date('Y-m-d', strtotime($row->get(1))),
-                    'end_date' => date('Y-m-d', strtotime($row->get(2))),
+                    'start_date' => date('Y-m-d', strtotime($row->get(8))),
+                    'end_date' => date('Y-m-d', strtotime($row->get(9))),
                     'branch_id' => $branch->id,
                 ]);
 
                 $quoteLine = QuoteLine::create([
-                    'name' => 'Humano',
+                    'name' => 'Mapfre',
                     'description' => $row->get(8),
                     'quote_id' => $quote->id,
                     'quantity' => 1,
                     'quote_line_status_id' => QuoteLineStatusEnum::ACCEPTED->value,
+                    'subtotal' => $row->get(8),
+                    'total' => $row->get(7),
                 ]);
 
-                $quoteFire = QuoteFire::create([
+                $quoteUnemployment = QuoteUnemployment::create([
                     'quote_id' => $quote->id,
-                    'quote_fire_credit_type_id' => QuoteFireCreditTypeEnum::PERSONAL->value,
-                    'quote_fire_risk_type_id' => QuoteFireRiskTypeEnum::COMMERCIAL->value,
-                    'quote_fire_construction_type_id' => QuoteFireConstructionTypeEnum::SUPERIOR->value,
-                    'appraisal_value' => $row->get(12),
-                    'property_address' => $row->get(7),
                     'branch_id' => $branch->id,
+                    'quote_unemployment_employment_type_id' => QuoteUnemploymentEmploymentTypeEnum::PUBLIC->value,
+                    'quote_unemployment_payment_type_id' => QuoteUnemploymentPaymentTypeEnum::MONTHLY->value,
+                    'deadline_month' => $row->get(10),
+                    'loan_installment' => $row->get(6),
+                    'insured_amount' => $row->get(5),
                 ]);
 
-                $quoteFireLine = QuoteFireLine::create([
-                    'quote_fire_id' => $quoteFire->id,
+                $quoteUnemploymentLine = QuoteUnemploymentLine::create([
+                    'quote_unemployment_id' => $quoteUnemployment->id,
                     'quote_line_id' => $quoteLine->id,
-                    'fire_rate' => empty($row->get(11)) ? 0 : $row->get(11),
                 ]);
             }
         });
