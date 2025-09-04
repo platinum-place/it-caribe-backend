@@ -2,10 +2,6 @@
 
 namespace Modules\Infrastructure\Quotations\Core\Providers;
 
-use App\Filament\Pages\Auth\EditProfile;
-use App\Filament\Pages\Auth\Login;
-use App\Http\Middleware\EnsureAdmin;
-use Filament\Actions\Action;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;

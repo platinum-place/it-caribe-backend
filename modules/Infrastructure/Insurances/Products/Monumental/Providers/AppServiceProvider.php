@@ -1,13 +1,15 @@
 <?php
 
-namespace Modules\Infrastructure\Quotations\Products\DebtUnemployment\Providers;
+namespace Modules\Infrastructure\Insurances\Products\Monumental\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Modules\Application\Insurances\Products\Monumental\UseCases\EstimateZohoVehicleUseCase;
+use Modules\Application\Insurances\Products\Monumental\Contracts\EstimateMonumentalVehicleInsuranceInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
     protected array $contracts = [
-
+        EstimateMonumentalVehicleInsuranceInterface::class => EstimateZohoVehicleUseCase::class,
     ];
 
     /**
@@ -18,8 +20,6 @@ class AppServiceProvider extends ServiceProvider
         foreach ($this->contracts as $interface => $class) {
             $this->app->singleton($interface, $class);
         }
-
-        $this->app->register(FilamentServiceProvider::class);
     }
 
     /**
@@ -27,8 +27,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->loadMigrationsFrom(
-            base_path('modules/Infrastructure/Quotations/Products/DebtUnemployment/Persistence/Migrations')
-        );
+        //
     }
 }

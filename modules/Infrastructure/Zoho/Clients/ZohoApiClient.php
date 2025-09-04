@@ -63,7 +63,7 @@ class ZohoApiClient
     {
         $url = sprintf('%s/%s/search', config('zoho.domains.api').'/'.config('zoho.uri.crm'), $module);
 
-        return Http::withToken($token, 'Zoho-oauthtoken')
+        $response = Http::withToken($token, 'Zoho-oauthtoken')
             ->get($url, http_build_query([
                 'criteria' => $criteria,
                 'page' => $page,
@@ -71,6 +71,12 @@ class ZohoApiClient
             ]))
             ->throw()
             ->json();
+
+        if (isset($response['error'])) {
+            throw new \RuntimeException($response['error']);
+        }
+
+        return $response;
     }
 
     /**

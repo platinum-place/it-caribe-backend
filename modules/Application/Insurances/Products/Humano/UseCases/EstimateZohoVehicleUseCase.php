@@ -11,12 +11,10 @@ use Modules\Domain\Insurances\Core\ValueObjects\InsuranceQuotation;
 class EstimateZohoVehicleUseCase implements EstimateHumanoVehicleInsuranceInterface
 {
     public function __construct(
-        protected FetchZohoRecordInterface         $findZohoRecord,
+        protected FetchZohoRecordInterface $findZohoRecord,
         protected ValidateVehicleRestrictedService $validateRestrictedService,
-        protected FetchVehicleRateService          $fetchVehicleRateService,
-    )
-    {
-    }
+        protected FetchVehicleRateService $fetchVehicleRateService,
+    ) {}
 
     public function handle(string $vehicleMakeCode, string $vehicleModelCode, string $vehicleTypeCode, string $vehicleUtilityCode, string $vehicleYear, float $vehicleAmount): ?InsuranceQuotation
     {
@@ -26,12 +24,12 @@ class EstimateZohoVehicleUseCase implements EstimateHumanoVehicleInsuranceInterf
 
         $r = null;
 
-        $criteria = '((Vendor_Name:equals:' . 3222373000005945077 . ') and (Corredor:equals:' . 3222373000092390001 . ') and (Product_Category:equals:Auto))';
+        $criteria = '((Vendor_Name:equals:'. 3222373000005945077 .') and (Corredor:equals:'. 3222373000092390001 .') and (Product_Category:equals:Auto))';
         $records = $this->findZohoRecord->handle('Products', $criteria);
 
         $services = array_column($records, 'Plan');
 
-        if (!in_array($vehicleUtilityCode, $services, true)) {
+        if (! in_array($vehicleUtilityCode, $services, true)) {
             $vehicleUtilityCode = 'Clásico';
         }
 
@@ -48,7 +46,7 @@ class EstimateZohoVehicleUseCase implements EstimateHumanoVehicleInsuranceInterf
 
             $amount = $vehicleAmount * ($rate / 100);
 
-            if ($vehicleTypeCode === 'Japonés' && !empty($record['Recargo'])) {
+            if ($vehicleTypeCode === 'Japonés' && ! empty($record['Recargo'])) {
                 $amount *= 1.30;
             }
 

@@ -5,6 +5,7 @@ return [
 
     Modules\Infrastructure\Zoho\Providers\AppServiceProvider::class,
     Modules\Infrastructure\Insurances\Products\Humano\Providers\AppServiceProvider::class,
+    Modules\Infrastructure\Insurances\Products\Monumental\Providers\AppServiceProvider::class,
     Modules\Infrastructure\CRM\Providers\AppServiceProvider::class,
     Modules\Infrastructure\Organization\Locations\Providers\AppServiceProvider::class,
     Modules\Infrastructure\Catalogs\Vehicles\Providers\AppServiceProvider::class,
