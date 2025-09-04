@@ -1,18 +1,17 @@
 <?php
 
-namespace App\Imports\Migrate\Unemployment;
+namespace App\Imports\Migrate\Unemployment2;
 
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
-class MigrateUnemployment implements WithHeadingRow, WithMultipleSheets
+class MigrateUnemployment2 implements WithHeadingRow, WithMultipleSheets
 {
     public function sheets(): array
     {
         return [
             0 => new Sheet1,
             1 => new Sheet2,
-            2 => new Sheet3,
         ];
     }
 }

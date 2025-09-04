@@ -1,25 +1,25 @@
 <?php
 
-namespace App\Imports\Migrate\Life;
+namespace App\Imports\Migrate\Unemployment;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\ToCollection;
-use Maatwebsite\Excel\Concerns\WithCalculatedFormulas;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Modules\Domain\CRM\Enums\LeadTypeEnum;
 use Modules\Domain\Quotations\Core\Enums\QuoteLineStatusEnum;
 use Modules\Domain\Quotations\Core\Enums\QuoteStatusEnum;
 use Modules\Domain\Quotations\Core\Enums\QuoteTypeEnum;
-use Modules\Domain\Quotations\Products\Life\Enums\QuoteLifeCreditTypeEnum;
+use Modules\Domain\Quotations\Products\Unemployment\Enums\QuoteUnemploymentEmploymentTypeEnum;
+use Modules\Domain\Quotations\Products\Unemployment\Enums\QuoteUnemploymentPaymentTypeEnum;
 use Modules\Infrastructure\CRM\Persistence\Models\Lead;
 use Modules\Infrastructure\Organization\Locations\Persistence\Models\Branch;
 use Modules\Infrastructure\Quotations\Core\Persistence\Models\Quote;
 use Modules\Infrastructure\Quotations\Core\Persistence\Models\QuoteLine;
-use Modules\Infrastructure\Quotations\Products\Life\Persistence\Models\QuoteLife;
-use Modules\Infrastructure\Quotations\Products\Life\Persistence\Models\QuoteLifeLine;
+use Modules\Infrastructure\Quotations\Products\Unemployment\Persistence\Models\QuoteUnemployment;
+use Modules\Infrastructure\Quotations\Products\Unemployment\Persistence\Models\QuoteUnemploymentLine;
 
-class Sheet3 implements ToCollection, WithCalculatedFormulas, WithChunkReading
+class Sheet2 implements ToCollection, WithChunkReading
 {
     public function collection(Collection $collection)
     {
@@ -29,7 +29,7 @@ class Sheet3 implements ToCollection, WithCalculatedFormulas, WithChunkReading
                     continue;
                 }
 
-                if (empty($row->get(5))) {
+                if (empty($row->get(1))) {
                     break;
                 }
 
@@ -41,52 +41,41 @@ class Sheet3 implements ToCollection, WithCalculatedFormulas, WithChunkReading
                 $borrower = Lead::create([
                     'full_name' => $row->get(4),
                     'identity_number' => $row->get(3),
-                    'age' => $row->get(12),
-                    'birth_date' => date('Y-m-d', strtotime($row->get(13))),
                     'lead_type_id' => LeadTypeEnum::PUBLIC->value,
                 ]);
 
-                if (! empty($row->get(16))) {
-                    $coBorrower = Lead::create([
-                        'full_name' => $row->get(17),
-                        'identity_number' => $row->get(16),
-                        'age' => $row->get(18),
-                        'lead_type_id' => LeadTypeEnum::PUBLIC->value,
-                    ]);
-                }
-
                 $quote = Quote::create([
-                    'quote_type_id' => QuoteTypeEnum::LIFE->value,
+                    'quote_type_id' => QuoteTypeEnum::UNEMPLOYMENT->value,
                     'quote_status_id' => QuoteStatusEnum::APPROVED->value,
                     'lead_id' => $borrower->id,
-                    'start_date' => date('Y-m-d', strtotime($row->get(5))),
-                    'end_date' => date('Y-m-d', strtotime($row->get(7))),
+                    'start_date' => date('Y-m-d', strtotime($row->get(8))),
+                    'end_date' => date('Y-m-d', strtotime($row->get(9))),
                     'branch_id' => $branch->id,
                 ]);
 
                 $quoteLine = QuoteLine::create([
-                    'name' => 'Humano',
-                    'description' => $row->get(15),
+                    'name' => 'Reservas',
+                    'description' => $row->get(8),
                     'quote_id' => $quote->id,
                     'quantity' => 1,
-                    'subtotal' => $row->get(10),
-                    'total' => $row->get(11),
                     'quote_line_status_id' => QuoteLineStatusEnum::ACCEPTED->value,
+                    'subtotal' => $row->get(8),
+                    'total' => $row->get(7),
                 ]);
 
-                $quoteLife = QuoteLife::create([
+                $quoteUnemployment = QuoteUnemployment::create([
                     'quote_id' => $quote->id,
-                    'co_borrower_id' => $coBorrower?->id ?? null,
-                    'quote_life_credit_type_id' => QuoteLifeCreditTypeEnum::PERSONAL_LOAN->value,
-                    'deadline_month' => round($row->get(6), 0),
-                    'insured_amount' => $row->get(9),
                     'branch_id' => $branch->id,
+                    'quote_unemployment_employment_type_id' => QuoteUnemploymentEmploymentTypeEnum::PUBLIC->value,
+                    'quote_unemployment_payment_type_id' => QuoteUnemploymentPaymentTypeEnum::MONTHLY->value,
+                    'deadline_month' => $row->get(10),
+                    'loan_installment' => $row->get(6),
+                    'insured_amount' => $row->get(5),
                 ]);
 
-                $quoteLifeLine = QuoteLifeLine::create([
-                    'quote_life_id' => $quoteLife->id,
+                $quoteUnemploymentLine = QuoteUnemploymentLine::create([
+                    'quote_unemployment_id' => $quoteUnemployment->id,
                     'quote_line_id' => $quoteLine->id,
-                    'borrower_rate' => $row->get(8),
                 ]);
             }
         });

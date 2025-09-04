@@ -10,17 +10,12 @@ use Modules\Domain\CRM\Enums\LeadTypeEnum;
 use Modules\Domain\Quotations\Core\Enums\QuoteLineStatusEnum;
 use Modules\Domain\Quotations\Core\Enums\QuoteStatusEnum;
 use Modules\Domain\Quotations\Core\Enums\QuoteTypeEnum;
-use Modules\Domain\Quotations\Products\Fire\Enums\QuoteFireConstructionTypeEnum;
-use Modules\Domain\Quotations\Products\Fire\Enums\QuoteFireCreditTypeEnum;
-use Modules\Domain\Quotations\Products\Fire\Enums\QuoteFireRiskTypeEnum;
 use Modules\Domain\Quotations\Products\Unemployment\Enums\QuoteUnemploymentEmploymentTypeEnum;
 use Modules\Domain\Quotations\Products\Unemployment\Enums\QuoteUnemploymentPaymentTypeEnum;
 use Modules\Infrastructure\CRM\Persistence\Models\Lead;
 use Modules\Infrastructure\Organization\Locations\Persistence\Models\Branch;
 use Modules\Infrastructure\Quotations\Core\Persistence\Models\Quote;
 use Modules\Infrastructure\Quotations\Core\Persistence\Models\QuoteLine;
-use Modules\Infrastructure\Quotations\Products\Fire\Persistence\Models\QuoteFire;
-use Modules\Infrastructure\Quotations\Products\Fire\Persistence\Models\QuoteFireLine;
 use Modules\Infrastructure\Quotations\Products\Unemployment\Persistence\Models\QuoteUnemployment;
 use Modules\Infrastructure\Quotations\Products\Unemployment\Persistence\Models\QuoteUnemploymentLine;
 
@@ -30,7 +25,7 @@ class Sheet1 implements ToCollection, WithChunkReading
     {
         DB::transaction(function () use ($collection) {
             foreach ($collection as $row) {
-                if ($row->get(0) === "#") {
+                if ($row->get(0) === '#') {
                     continue;
                 }
 
@@ -60,11 +55,9 @@ class Sheet1 implements ToCollection, WithChunkReading
 
                 $quoteLine = QuoteLine::create([
                     'name' => 'Mapfre',
-                    'description' => $row->get(8),
                     'quote_id' => $quote->id,
                     'quantity' => 1,
                     'quote_line_status_id' => QuoteLineStatusEnum::ACCEPTED->value,
-                    'subtotal' => $row->get(8),
                     'total' => $row->get(7),
                 ]);
 

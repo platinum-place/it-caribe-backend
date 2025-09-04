@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Imports\Migrate\Fire\MigrateFire;
 use App\Imports\Migrate\Unemployment\MigrateUnemployment;
 use Illuminate\Database\Seeder;
 use Maatwebsite\Excel\Facades\Excel;
