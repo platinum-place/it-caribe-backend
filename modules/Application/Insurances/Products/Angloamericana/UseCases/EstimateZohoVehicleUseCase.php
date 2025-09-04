@@ -68,7 +68,7 @@ class EstimateZohoVehicleUseCase implements EstimateVehicleAngloamericanaInterfa
                 80,
                 $rate,
                 $record['id'],
-                'Sura',
+                'Angloamericana',
                 round($amountTaxed, 2),
                 16,
                 round($taxesAmount, 2),
