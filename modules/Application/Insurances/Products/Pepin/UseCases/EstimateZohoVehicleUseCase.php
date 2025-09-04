@@ -24,7 +24,7 @@ class EstimateZohoVehicleUseCase implements EstimateVehiclePepinInterface
 
         $r = null;
 
-        $criteria = '((Vendor_Name:equals:'. 3222373000005945063 .') and (Corredor:equals:'. 3222373000092390001 .') and (Product_Category:equals:Auto))';
+        $criteria = '((Vendor_Name:equals:'. 3222373000171500842 .') and (Corredor:equals:'. 3222373000092390001 .') and (Product_Category:equals:Auto))';
         $records = $this->findZohoRecord->handle('Products', $criteria);
 
         //        $services = array_column($records, 'Plan');
