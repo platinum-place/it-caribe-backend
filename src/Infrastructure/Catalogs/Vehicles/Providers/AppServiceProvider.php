@@ -18,6 +18,8 @@ class AppServiceProvider extends ServiceProvider
         foreach ($this->contracts as $interface => $class) {
             $this->app->singleton($interface, $class);
         }
+
+        $this->app->register(FilamentServiceProvider::class);
     }
 
     /**

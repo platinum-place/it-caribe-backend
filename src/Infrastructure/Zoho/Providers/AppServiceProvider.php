@@ -37,6 +37,8 @@ class AppServiceProvider extends ServiceProvider
             base_path('src/Infrastructure/Zoho/Config/zoho.php'),
             'zoho'
         );
+
+        $this->app->register(FilamentServiceProvider::class);
     }
 
     /**
