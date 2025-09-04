@@ -16,8 +16,15 @@ class EstimateZohoVehicleUseCase implements EstimateVehicleAngloamericanaInterfa
         protected FetchVehicleRateService $fetchVehicleRateService,
     ) {}
 
-    public function handle(string $vehicleMakeCode, string $vehicleModelCode, string $vehicleTypeCode, string $vehicleUtilityCode, string $vehicleYear, float $vehicleAmount, bool $leasing): ?InsuranceQuotation
-    {
+    public function handle(
+        string $vehicleMakeCode,
+        string $vehicleModelCode,
+        string $vehicleTypeCode,
+        string $vehicleUtilityCode,
+        string $vehicleYear,
+        float $vehicleAmount,
+        bool $leasing
+    ): ?InsuranceQuotation {
         if ($this->validateRestrictedService->handle($vehicleMakeCode, $vehicleModelCode)) {
             return null;
         }

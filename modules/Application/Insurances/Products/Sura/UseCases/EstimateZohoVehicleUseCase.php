@@ -16,8 +16,14 @@ class EstimateZohoVehicleUseCase implements EstimateVehicleSuraInterface
         protected FetchVehicleRateService $fetchVehicleRateService,
     ) {}
 
-    public function handle(string $vehicleMakeCode, string $vehicleModelCode, string $vehicleTypeCode, string $vehicleUtilityCode, string $vehicleYear, float $vehicleAmount): ?InsuranceQuotation
-    {
+    public function handle(
+        string $vehicleMakeCode,
+        string $vehicleModelCode,
+        string $vehicleTypeCode,
+        string $vehicleUtilityCode,
+        string $vehicleYear,
+        float $vehicleAmount
+    ): ?InsuranceQuotation {
         if ($vehicleUtilityCode === 'Japonés') {
             return null;
         }
