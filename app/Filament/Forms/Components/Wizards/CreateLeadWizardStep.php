@@ -12,7 +12,7 @@ class CreateLeadWizardStep
 {
     public static function make(): Step
     {
-        return Step::make(__('Debtor'))
+        return Step::make('Deudor')
             ->schema([
                 TextInput::make('lead.first_name')
                     ->label('Nombre')
