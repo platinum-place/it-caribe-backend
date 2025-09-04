@@ -16,7 +16,7 @@ class QuoteUnemployment extends Model
 
     protected $fillable = [
         'quote_id', 'branch_id', 'quote_unemployment_employment_type_id', 'quote_unemployment_payment_type_id',
-        'deadline_month', 'deadline_year', 'loan_installment','insured_amount',
+        'deadline_month', 'deadline_year', 'loan_installment', 'insured_amount',
         'created_by', 'updated_by', 'deleted_by',
     ];
 
