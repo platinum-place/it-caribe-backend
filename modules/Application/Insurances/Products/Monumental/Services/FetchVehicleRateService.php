@@ -23,14 +23,6 @@ class FetchVehicleRateService
                     continue;
                 }
 
-                if (! empty($rate['Suma_hasta']) && $vehicleAmount > $rate['Suma_hasta']) {
-                    continue;
-                }
-
-                if (! empty($rate['Suma_limite']) && $vehicleAmount < $rate['Suma_limite']) {
-                    continue;
-                }
-
                 $selectedRate = $rate['Name'];
             }
         } catch (\Throwable $e) {

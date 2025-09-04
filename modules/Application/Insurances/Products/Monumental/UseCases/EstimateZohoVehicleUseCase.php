@@ -27,7 +27,7 @@ class EstimateZohoVehicleUseCase implements EstimateMonumentalVehicleInsuranceIn
 
         $r = null;
 
-        $criteria = '((Vendor_Name:equals:' . 3222373000005945077 . ') and (Corredor:equals:' . 3222373000092390001 . ') and (Product_Category:equals:Auto))';
+        $criteria = '((Vendor_Name:equals:' . 3222373000203318064 . ') and (Corredor:equals:' . 3222373000092390001 . ') and (Product_Category:equals:Auto))';
         $records = $this->findZohoRecord->handle('Products', $criteria);
 
         $services = array_column($records, 'Plan');
@@ -68,7 +68,7 @@ class EstimateZohoVehicleUseCase implements EstimateMonumentalVehicleInsuranceIn
                 80,
                 $rate,
                 $record['id'],
-                'Humano',
+                'Monumental',
                 round($amountTaxed, 2),
                 16,
                 round($taxesAmount, 2),
