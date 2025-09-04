@@ -57,8 +57,8 @@ class EstimateZohoVehicleUseCase implements EstimateVehicleAngloamericanaInterfa
 
             $amount = $totalMonthly * 12;
 
-            if (!empty($product['Resp_civil']) && $leasing) {
-                $totalMonthly += $product['Leasing_mensual'];
+            if (!empty($record['Resp_civil']) && $leasing) {
+                $totalMonthly += $record['Leasing_mensual'];
                 $amount = $totalMonthly * 12;
             }
 
