@@ -5,14 +5,14 @@ namespace App\Providers;
 use Carbon\CarbonInterval;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Passport\Passport;
-use Modules\Domain\Zoho\Contracts\ZohoCRMInterface;
-use Modules\Domain\Zoho\Repositories\ZohoOauthAccessTokenRepositoryInterface;
-use Modules\Domain\Zoho\Repositories\ZohoOauthClientRepositoryInterface;
-use Modules\Domain\Zoho\Repositories\ZohoOauthRefreshTokenRepositoryInterface;
-use Modules\Infrastructure\Zoho\Adapters\ZohoApiAdapter;
-use Modules\Infrastructure\Zoho\Persistence\Repositories\ZohoOauthAccessTokenEloquentRepository;
-use Modules\Infrastructure\Zoho\Persistence\Repositories\ZohoOauthClientEloquentRepository;
-use Modules\Infrastructure\Zoho\Persistence\Repositories\ZohoOauthRefreshTokenEloquentRepository;
+use Modules\Domain\API\Zoho\Contracts\ZohoCRMInterface;
+use Modules\Domain\API\Zoho\Contracts\ZohoOauthAccessTokenRepositoryInterface;
+use Modules\Domain\API\Zoho\Contracts\ZohoOauthRefreshTokenRepositoryInterface;
+use Modules\Domain\API\Zoho\Repositories\ZohoOauthClientRepositoryInterface;
+use Modules\Infrastructure\API\Zoho\Adapters\ZohoApiAdapter;
+use Modules\Infrastructure\API\Zoho\Persistence\Repositories\ZohoOauthAccessTokenEloquentRepository;
+use Modules\Infrastructure\API\Zoho\Persistence\Repositories\ZohoOauthClientEloquentRepository;
+use Modules\Infrastructure\API\Zoho\Persistence\Repositories\ZohoOauthRefreshTokenEloquentRepository;
 
 class AppServiceProvider extends ServiceProvider
 {

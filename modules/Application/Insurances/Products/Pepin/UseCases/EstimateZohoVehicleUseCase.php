@@ -5,7 +5,7 @@ namespace Modules\Application\Insurances\Products\Pepin\UseCases;
 use Modules\Application\Insurances\Products\Pepin\Contracts\EstimateVehiclePepinInterface;
 use Modules\Application\Insurances\Products\Pepin\Services\FetchVehicleRateService;
 use Modules\Application\Insurances\Products\Pepin\Services\ValidateVehicleRestrictedService;
-use Modules\Application\Zoho\Contracts\FetchZohoRecordInterface;
+use Modules\Domain\API\Zoho\Contracts\FetchZohoRecordInterface;
 use Modules\Domain\Insurances\Core\ValueObjects\InsuranceQuotation;
 
 class EstimateZohoVehicleUseCase implements EstimateVehiclePepinInterface
@@ -40,7 +40,7 @@ class EstimateZohoVehicleUseCase implements EstimateVehiclePepinInterface
         //            $vehicleUtilityCode = 'Clásico';
         //        }
 
-        foreach ($records as $record) {
+        foreach ($records['data'] as $record) {
             $rate = $this->fetchVehicleRateService->handle($record['id'], $vehicleYear, $vehicleTypeCode, $vehicleAmount);
 
             if ($rate === 0) {

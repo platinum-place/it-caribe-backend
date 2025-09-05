@@ -5,7 +5,7 @@ namespace Modules\Application\Insurances\Products\Sura\UseCases;
 use Modules\Application\Insurances\Products\Sura\Contracts\EstimateVehicleSuraInterface;
 use Modules\Application\Insurances\Products\Sura\Services\FetchVehicleRateService;
 use Modules\Application\Insurances\Products\Sura\Services\ValidateVehicleRestrictedService;
-use Modules\Application\Zoho\Contracts\FetchZohoRecordInterface;
+use Modules\Domain\API\Zoho\Contracts\FetchZohoRecordInterface;
 use Modules\Domain\Insurances\Core\ValueObjects\InsuranceQuotation;
 
 class EstimateZohoVehicleUseCase implements EstimateVehicleSuraInterface
@@ -43,7 +43,7 @@ class EstimateZohoVehicleUseCase implements EstimateVehicleSuraInterface
         //            $vehicleUtilityCode = 'Clásico';
         //        }
 
-        foreach ($records as $record) {
+        foreach ($records['data'] as $record) {
             $rate = $this->fetchVehicleRateService->handle($record['id'], $vehicleYear, $vehicleTypeCode, $vehicleAmount);
 
             if ($rate === 0) {

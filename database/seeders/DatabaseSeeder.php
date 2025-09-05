@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             \Modules\Infrastructure\Quotations\Products\Life\Persistence\Seeders\DatabaseSeeder::class,
             \Modules\Infrastructure\Quotations\Products\Unemployment\Persistence\Seeders\DatabaseSeeder::class,
 
-            \Modules\Infrastructure\Zoho\Persistence\Seeders\DatabaseSeeder::class,
+            \Modules\Infrastructure\API\Zoho\Persistence\Seeders\DatabaseSeeder::class,
 
             /**
              * Migrate TODO

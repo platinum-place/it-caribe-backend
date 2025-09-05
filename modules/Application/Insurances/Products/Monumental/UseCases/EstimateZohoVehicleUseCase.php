@@ -5,7 +5,7 @@ namespace Modules\Application\Insurances\Products\Monumental\UseCases;
 use Modules\Application\Insurances\Products\Monumental\Contracts\EstimateVehicleMonumentalInterface;
 use Modules\Application\Insurances\Products\Monumental\Services\FetchVehicleRateService;
 use Modules\Application\Insurances\Products\Monumental\Services\ValidateVehicleRestrictedService;
-use Modules\Application\Zoho\Contracts\FetchZohoRecordInterface;
+use Modules\Domain\API\Zoho\Contracts\FetchZohoRecordInterface;
 use Modules\Domain\Insurances\Core\ValueObjects\InsuranceQuotation;
 
 class EstimateZohoVehicleUseCase implements EstimateVehicleMonumentalInterface
@@ -39,7 +39,7 @@ class EstimateZohoVehicleUseCase implements EstimateVehicleMonumentalInterface
         //            $vehicleUtilityCode = 'Clásico';
         //        }
 
-        foreach ($records as $record) {
+        foreach ($records['data'] as $record) {
             if ($record['Plan'] !== $vehicleUtilityCode) {
                 continue;
             }

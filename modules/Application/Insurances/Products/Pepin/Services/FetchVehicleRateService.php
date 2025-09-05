@@ -2,7 +2,7 @@
 
 namespace Modules\Application\Insurances\Products\Pepin\Services;
 
-use Modules\Application\Zoho\Contracts\FetchZohoRecordInterface;
+use Modules\Domain\API\Zoho\Contracts\FetchZohoRecordInterface;
 
 class FetchVehicleRateService
 {
@@ -22,7 +22,11 @@ class FetchVehicleRateService
             $rates = $this->findZohoRecord->handle('Tasas', $criteria);
         }
 
-        foreach ($rates as $rate) {
+        foreach ($rates['data'] as $rate) {
+            if (! empty($rate['A_o']) && $vehicleYear !== $rate['A_o']) {
+                continue;
+            }
+
             if (! in_array($vehicleTypeCode, $rate['Grupo_de_veh_culo'], true)) {
                 continue;
             }

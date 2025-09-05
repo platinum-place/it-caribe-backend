@@ -3,7 +3,7 @@
 return [
     App\Providers\AppServiceProvider::class,
 
-    Modules\Infrastructure\Zoho\Providers\AppServiceProvider::class,
+    \Modules\Infrastructure\API\Zoho\Providers\AppServiceProvider::class,
 
     Modules\Infrastructure\Insurances\Products\Humano\Providers\AppServiceProvider::class,
     Modules\Infrastructure\Insurances\Products\Monumental\Providers\AppServiceProvider::class,

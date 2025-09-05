@@ -2,7 +2,7 @@
 
 namespace Modules\Application\Insurances\Products\Sura\Services;
 
-use Modules\Application\Zoho\Contracts\FetchZohoRecordInterface;
+use Modules\Domain\API\Zoho\Contracts\FetchZohoRecordInterface;
 
 class FetchVehicleRateService
 {
@@ -18,7 +18,7 @@ class FetchVehicleRateService
             $criteria = '((Plan:equals:'.$serviceId.") and (A_o:equals:$vehicleYear))";
             $rates = $this->findZohoRecord->handle('Tasas', $criteria);
 
-            $selectedRate = $rates[0]['Name'];
+            $selectedRate = $rates['data'][0]['Name'];
         } catch (\Throwable $e) {
             //
         }

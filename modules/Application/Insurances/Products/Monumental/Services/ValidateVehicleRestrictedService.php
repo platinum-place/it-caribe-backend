@@ -2,7 +2,7 @@
 
 namespace Modules\Application\Insurances\Products\Monumental\Services;
 
-use Modules\Application\Zoho\Contracts\FetchZohoRecordInterface;
+use Modules\Domain\API\Zoho\Contracts\FetchZohoRecordInterface;
 
 class ValidateVehicleRestrictedService
 {
