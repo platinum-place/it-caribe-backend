@@ -30,7 +30,7 @@ class LinesRelationManager extends RelationManager
             ->recordTitleAttribute('id')
             ->columns([
                 TextColumn::make('quoteLine.name')
-                    ->label('Aseguradora'),
+                    ->label('Nombre'),
 
                 TextColumn::make('vehicle_rate')
                     ->label('Tasa')
