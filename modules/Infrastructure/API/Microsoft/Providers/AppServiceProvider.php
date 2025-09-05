@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Infrastructure\API\Mapfre\Providers;
+namespace Modules\Infrastructure\API\Microsoft\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Modules\Infrastructure\API\Zoho\Providers\FilamentServiceProvider;
@@ -20,8 +20,8 @@ class AppServiceProvider extends ServiceProvider
         }
 
         $this->mergeConfigFrom(
-            base_path('modules/Infrastructure/API/Mapfre/Config/app.php'),
-            'mapfre'
+            base_path('modules/Infrastructure/API/Microsoft/Config/app.php'),
+            'microsoft'
         );
 
         $this->app->register(FilamentServiceProvider::class);
@@ -33,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->loadMigrationsFrom(
-            base_path('modules/Infrastructure/API/Mapfre/Persistence/Migrations')
+            base_path('modules/Infrastructure/API/Microsoft/Persistence/Migrations')
         );
     }
 }

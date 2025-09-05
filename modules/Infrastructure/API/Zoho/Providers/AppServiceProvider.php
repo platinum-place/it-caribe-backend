@@ -31,7 +31,7 @@ class AppServiceProvider extends ServiceProvider
         }
 
         $this->mergeConfigFrom(
-            base_path('modules/Infrastructure/API/Zoho/Config/zoho.php'),
+            base_path('modules/Infrastructure/API/Zoho/Config/app.php'),
             'zoho'
         );
 

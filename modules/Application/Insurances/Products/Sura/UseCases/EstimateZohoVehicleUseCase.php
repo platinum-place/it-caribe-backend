@@ -37,11 +37,11 @@ class EstimateZohoVehicleUseCase implements EstimateVehicleSuraInterface
         $criteria = '((Vendor_Name:equals:'. 3222373000013629453 .') and (Corredor:equals:'. 3222373000092390001 .') and (Product_Category:equals:Auto))';
         $records = $this->findZohoRecord->handle('Products', $criteria);
 
-                $services = array_column($records, 'Plan');
+        $services = array_column($records, 'Plan');
 
-                if (! in_array($vehicleUtilityCode, $services, true)) {
-                    $vehicleUtilityCode = 'Clásico';
-                }
+        if (! in_array($vehicleUtilityCode, $services, true)) {
+            $vehicleUtilityCode = 'Clásico';
+        }
 
         foreach ($records['data'] as $record) {
             $rate = $this->fetchVehicleRateService->handle($record['id'], $vehicleYear, $vehicleTypeCode, $vehicleAmount);

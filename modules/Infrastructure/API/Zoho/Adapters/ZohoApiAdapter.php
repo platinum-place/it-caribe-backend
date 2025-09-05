@@ -15,19 +15,24 @@ class ZohoApiAdapter implements ZohoCRMInterface
      */
     public function fetchRefreshToken(string $grantToken): array
     {
-        $response = Http::asForm()
-            ->post(config('zoho.domains.accounts').'/'.config('zoho.uri.oauth').'/token', [
+        $url = config('zoho.oauth.domain').'/'.config('zoho.oauth.endpoints.token');
+
+        $response = Http::timeout(config('zoho.timeout'))
+            ->retry(config('zoho.retry_attempts'), config('zoho.retry_delay'))
+            ->withUserAgent(config('zoho.user_agent'))
+            ->asForm()
+            ->post($url, [
                 'grant_type' => 'authorization_code',
-                'client_id' => config('zoho.credentials.client_id'),
-                'client_secret' => config('zoho.credentials.client_secret'),
-                'redirect_uri' => config('zoho.credentials.redirect_uri'),
+                'client_id' => config('zoho.oauth.credentials.client_id'),
+                'client_secret' => config('zoho.oauth.credentials.client_secret'),
+                'redirect_uri' => config('zoho.oauth.credentials.redirect_uri'),
                 'code' => $grantToken,
             ])
             ->throw()
             ->json();
 
         if (isset($response['error'])) {
-            throw new \RuntimeException($response['error']);
+            throw new \RuntimeException('Zoho OAuth Error: '.$response['error']);
         }
 
         return $response;
@@ -39,18 +44,23 @@ class ZohoApiAdapter implements ZohoCRMInterface
      */
     public function fetchAccessToken(string $refreshToken): array
     {
-        $response = Http::asForm()
-            ->post(config('zoho.domains.accounts').'/'.config('zoho.uri.oauth').'/token', [
+        $url = config('zoho.oauth.domain').'/'.config('zoho.oauth.endpoints.refresh');
+
+        $response = Http::timeout(config('zoho.timeout'))
+            ->retry(config('zoho.retry_attempts'), config('zoho.retry_delay'))
+            ->withUserAgent(config('zoho.user_agent'))
+            ->asForm()
+            ->post($url, [
                 'grant_type' => 'refresh_token',
-                'client_id' => config('zoho.credentials.client_id'),
-                'client_secret' => config('zoho.credentials.client_secret'),
+                'client_id' => config('zoho.oauth.credentials.client_id'),
+                'client_secret' => config('zoho.oauth.credentials.client_secret'),
                 'refresh_token' => $refreshToken,
             ])
             ->throw()
             ->json();
 
         if (isset($response['error'])) {
-            throw new \RuntimeException($response['error']);
+            throw new \RuntimeException('Zoho Token Refresh Error: '.$response['error']);
         }
 
         return $response;
@@ -60,21 +70,27 @@ class ZohoApiAdapter implements ZohoCRMInterface
      * @throws RequestException
      * @throws ConnectionException
      */
-    public function fetchRecordsByCriteria(string $module, string $token, string $criteria, int $page = 1, int $perPage = 200): ?array
+    public function fetchRecordsByCriteria(string $module, string $token, string $criteria, ?int $page = null, ?int $perPage = null): ?array
     {
-        $url = sprintf('%s/%s/search', config('zoho.domains.api').'/'.config('zoho.uri.crm'), $module);
+        $page = $page ?? (int)config('zoho.api.pagination.page');
+        $perPage = $perPage ??(int) config('zoho.api.pagination.per_page');
+        $crmVersion = config('zoho.api.versions.crm');
+        $url = sprintf('%s/%s/%s/search', config('zoho.api.domain'), $crmVersion, $module);
 
-        $response = Http::withToken($token, 'Zoho-oauthtoken')
-            ->get($url, http_build_query([
+        $response = Http::timeout(config('zoho.timeout'))
+            ->retry(config('zoho.retry_attempts'), config('zoho.retry_delay'))
+            ->withUserAgent(config('zoho.user_agent'))
+            ->withToken($token, 'Zoho-oauthtoken')
+            ->get($url, [
                 'criteria' => $criteria,
                 'page' => $page,
-                'per_page' => $perPage,
-            ]))
+                'per_page' => min($perPage, config('zoho.api.pagination.max_per_page')),
+            ])
             ->throw()
             ->json();
 
         if (isset($response['error'])) {
-            throw new \RuntimeException($response['error']);
+            throw new \RuntimeException('Zoho Search Error: '.$response['error']);
         }
 
         return $response;
@@ -86,9 +102,13 @@ class ZohoApiAdapter implements ZohoCRMInterface
      */
     public function fetchRecords(string $module, string $token, array $fields, ?string $id = ''): array
     {
-        $url = sprintf('%s/%s%s', config('zoho.domains.api').'/'.config('zoho.uri.crm'), $module, $id ? "/$id" : '');
+        $crmVersion = config('zoho.api.versions.crm');
+        $url = sprintf('%s/%s/%s%s', config('zoho.api.domain'), $crmVersion, $module, $id ? "/$id" : '');
 
-        $response = Http::withToken($token, 'Zoho-oauthtoken')
+        $response = Http::timeout(config('zoho.timeout'))
+            ->retry(config('zoho.retry_attempts'), config('zoho.retry_delay'))
+            ->withUserAgent(config('zoho.user_agent'))
+            ->withToken($token, 'Zoho-oauthtoken')
             ->get($url, [
                 'fields' => implode(',', $fields),
             ])
@@ -96,7 +116,7 @@ class ZohoApiAdapter implements ZohoCRMInterface
             ->json();
 
         if (isset($response['error'])) {
-            throw new \RuntimeException($response['error']);
+            throw new \RuntimeException('Zoho Fetch Records Error: '.$response['error']);
         }
 
         return $response;
@@ -108,12 +128,22 @@ class ZohoApiAdapter implements ZohoCRMInterface
      */
     public function getListOfAttachments(string $module, string $token, string $id, array $fields): ?array
     {
-        $url = sprintf('%s/%s/%s/Attachments', config('zoho.domains.api').'/'.config('zoho.uri.crm'), $module, $id);
+        $crmVersion = config('zoho.api.versions.crm');
+        $url = sprintf('%s/%s/%s/%s/Attachments', config('zoho.api.domain'), $crmVersion, $module, $id);
 
-        return Http::withToken($token, 'Zoho-oauthtoken')
+        $response = Http::timeout(config('zoho.timeout'))
+            ->retry(config('zoho.retry_attempts'), config('zoho.retry_delay'))
+            ->withUserAgent(config('zoho.user_agent'))
+            ->withToken($token, 'Zoho-oauthtoken')
             ->get($url, ['fields' => implode(',', $fields)])
             ->throw()
             ->json();
+
+        if (isset($response['error'])) {
+            throw new \RuntimeException('Zoho Attachments Error: '.$response['error']);
+        }
+
+        return $response;
     }
 
     /**
@@ -122,9 +152,13 @@ class ZohoApiAdapter implements ZohoCRMInterface
      */
     public function downloadAnAttachment(string $module, string $token, string $recordId, string $attachmentId): string
     {
-        $url = sprintf('%s/%s/%s/Attachments/%s', config('zoho.domains.api').'/'.config('zoho.uri.crm'), $module, $recordId, $attachmentId);
+        $crmVersion = config('zoho.api.versions.crm');
+        $url = sprintf('%s/%s/%s/%s/Attachments/%s', config('zoho.api.domain'), $crmVersion, $module, $recordId, $attachmentId);
 
-        return Http::withToken($token, 'Zoho-oauthtoken')
+        return Http::timeout(config('zoho.timeout'))
+            ->retry(config('zoho.retry_attempts'), config('zoho.retry_delay'))
+            ->withUserAgent(config('zoho.user_agent'))
+            ->withToken($token, 'Zoho-oauthtoken')
             ->get($url)
             ->throw()
             ->body();
@@ -136,14 +170,22 @@ class ZohoApiAdapter implements ZohoCRMInterface
      */
     public function insertRecords(string $module, string $token, array $data): ?array
     {
-        $url = sprintf('%s/%s', config('zoho.domains.api').'/'.config('zoho.uri.crm'), $module);
+        $crmVersion = config('zoho.api.versions.crm');
+        $url = sprintf('%s/%s/%s', config('zoho.api.domain'), $crmVersion, $module);
 
-        return Http::withToken($token, 'Zoho-oauthtoken')
-            ->post($url, [
-                'data' => $data,
-            ])
+        $response = Http::timeout(config('zoho.timeout'))
+            ->retry(config('zoho.retry_attempts'), config('zoho.retry_delay'))
+            ->withUserAgent(config('zoho.user_agent'))
+            ->withToken($token, 'Zoho-oauthtoken')
+            ->post($url, ['data' => $data])
             ->throw()
             ->json();
+
+        if (isset($response['error'])) {
+            throw new \RuntimeException('Zoho Insert Records Error: '.$response['error']);
+        }
+
+        return $response;
     }
 
     /**
@@ -152,13 +194,21 @@ class ZohoApiAdapter implements ZohoCRMInterface
      */
     public function updateRecords(string $module, string $token, string $id, array $data): ?array
     {
-        $url = sprintf('%s/%s/%s', config('zoho.domains.api').'/'.config('zoho.uri.crm'), $module, $id);
+        $crmVersion = config('zoho.api.versions.crm');
+        $url = sprintf('%s/%s/%s/%s', config('zoho.api.domain'), $crmVersion, $module, $id);
 
-        return Http::withToken($token, 'Zoho-oauthtoken')
-            ->put($url, [
-                'data' => $data,
-            ])
+        $response = Http::timeout(config('zoho.timeout'))
+            ->retry(config('zoho.retry_attempts'), config('zoho.retry_delay'))
+            ->withUserAgent(config('zoho.user_agent'))
+            ->withToken($token, 'Zoho-oauthtoken')
+            ->put($url, ['data' => $data])
             ->throw()
             ->json();
+
+        if (isset($response['error'])) {
+            throw new \RuntimeException('Zoho Update Records Error: '.$response['error']);
+        }
+
+        return $response;
     }
 }
